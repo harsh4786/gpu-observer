@@ -1,0 +1,33 @@
+
+==========
+== vLLM ==
+==========
+
+NVIDIA Release 26.05 (build 313685831)
+vLLM Version 0.20.1+7124b12a
+Container image Copyright (c) 2026, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+Various files include modifications (c) NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+
+GOVERNING TERMS: The software and materials are governed by the NVIDIA Software License Agreement
+(found at https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/)
+and the Product-Specific Terms for NVIDIA AI Products
+(found at https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/).
+
+WARNING: The NVIDIA Driver was not detected.  GPU functionality will not be available.
+   Use the NVIDIA Container Toolkit to start this container with GPU support; see
+   https://docs.nvidia.com/datacenter/cloud-native/ .
+
+NOTE: The SHMEM allocation limit is set to the default of 64MB.  This may be
+   insufficient for vLLM.  NVIDIA recommends the use of the following flags:
+   docker run --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 ...
+
+attached pid=270152 symbols=cuLaunchKernel,cuLaunchKernelEx ring=8MiB duration=20s
+ts=279922950223092 cpu=16 pid=270152 tid=270152 seq=0 api=cuLaunchKernel fn=0x1d5cae60 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+ts=279922964269065 cpu=16 pid=270152 tid=270152 seq=1 api=cuLaunchKernel fn=0x360532d0 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+ts=279922965364390 cpu=16 pid=270152 tid=270152 seq=2 api=cuLaunchKernel fn=0x23722890 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+ts=279922968071421 cpu=16 pid=270152 tid=270152 seq=3 api=cuLaunchKernel fn=0x395094d0 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+ts=279922969187690 cpu=16 pid=270152 tid=270152 seq=4 api=cuLaunchKernel fn=0x39553cf0 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+ts=279922969212826 cpu=16 pid=270152 tid=270152 seq=5 api=cuLaunchKernel fn=0x1d5c4200 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+ts=279923026751194 cpu=16 pid=270152 tid=270152 seq=6 api=cuLaunchKernelEx fn=0x31bc1be0 stream=0x0 grid=(2,1,1) block=(128,1,1) smem=0 flags=0x5
+ts=279923026917978 cpu=16 pid=270152 tid=270152 seq=7 api=cuLaunchKernel fn=0x39564be0 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1

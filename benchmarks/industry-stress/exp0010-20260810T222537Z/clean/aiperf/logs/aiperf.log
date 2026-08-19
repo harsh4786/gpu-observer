@@ -1,0 +1,53 @@
+2026-08-10 15:30:51.805 - aiperf.cli_runner._multi_run - INFO - ================================================================================
+2026-08-10 15:30:51.805 - aiperf.cli_runner._multi_run - INFO - Starting Multi-Run Benchmark
+2026-08-10 15:30:51.805 - aiperf.cli_runner._multi_run - INFO -   Configurations: 4
+2026-08-10 15:30:51.805 - aiperf.cli_runner._multi_run - INFO -   Trials per config: 1
+2026-08-10 15:30:51.805 - aiperf.cli_runner._multi_run - INFO -   Total runs: 4
+2026-08-10 15:30:51.805 - aiperf.cli_runner._multi_run - INFO -   Confidence level: 95%
+2026-08-10 15:30:51.806 - aiperf.cli_runner._multi_run - INFO -   Cooldown between runs: 0.0s
+2026-08-10 15:30:51.806 - aiperf.cli_runner._multi_run - INFO - ================================================================================
+2026-08-10 15:30:51.868 - aiperf.orchestrator.orchestrator - INFO - Starting multi-run benchmark (repeated): 1 trials x 4 variations
+2026-08-10 15:30:51.869 - aiperf.orchestrator.orchestrator - INFO - [v0 t0] Executing run_0001...
+2026-08-10 15:30:52.179 - aiperf.cli_runner._single_run - INFO - Starting AIPerf System
+2026-08-10 15:30:52.182 - aiperf.config.resolution.resolvers - INFO - ✓ Tokenizer Qwen/Qwen3-14B detected
+2026-08-10 15:30:52.182 - aiperf.config.resolution.resolvers - INFO - 1 tokenizer validated • 0.0s
+2026-08-10 15:30:52.182 - aiperf.config.resolution.resolvers - INFO - HF offline mode already set, skipping cache warming
+2026-08-10 15:39:54.341 - aiperf.orchestrator.orchestrator - INFO - [v1 t0] Executing run_0001...
+2026-08-10 15:39:54.648 - aiperf.cli_runner._single_run - INFO - Starting AIPerf System
+2026-08-10 15:39:54.650 - aiperf.config.resolution.resolvers - INFO - ✓ Tokenizer Qwen/Qwen3-14B detected
+2026-08-10 15:39:54.650 - aiperf.config.resolution.resolvers - INFO - 1 tokenizer validated • 0.0s
+2026-08-10 15:39:54.650 - aiperf.config.resolution.resolvers - INFO - HF offline mode already set, skipping cache warming
+2026-08-10 15:45:58.486 - aiperf.orchestrator.orchestrator - INFO - [v2 t0] Executing run_0001...
+2026-08-10 15:45:58.792 - aiperf.cli_runner._single_run - INFO - Starting AIPerf System
+2026-08-10 15:45:58.794 - aiperf.config.resolution.resolvers - INFO - ✓ Tokenizer Qwen/Qwen3-14B detected
+2026-08-10 15:45:58.794 - aiperf.config.resolution.resolvers - INFO - 1 tokenizer validated • 0.0s
+2026-08-10 15:45:58.794 - aiperf.config.resolution.resolvers - INFO - HF offline mode already set, skipping cache warming
+2026-08-10 15:50:32.979 - aiperf.orchestrator.orchestrator - INFO - [v3 t0] Executing run_0001...
+2026-08-10 15:50:33.286 - aiperf.cli_runner._single_run - INFO - Starting AIPerf System
+2026-08-10 15:50:33.288 - aiperf.config.resolution.resolvers - INFO - ✓ Tokenizer Qwen/Qwen3-14B detected
+2026-08-10 15:50:33.288 - aiperf.config.resolution.resolvers - INFO - 1 tokenizer validated • 0.0s
+2026-08-10 15:50:33.288 - aiperf.config.resolution.resolvers - INFO - HF offline mode already set, skipping cache warming
+2026-08-10 15:54:26.033 - aiperf.orchestrator.orchestrator - INFO - Repeated mode complete: 4/4 runs successful
+2026-08-10 15:54:26.033 - aiperf.cli_runner._multi_run - INFO - ================================================================================
+2026-08-10 15:54:26.033 - aiperf.cli_runner._multi_run - INFO - ================================================================================
+2026-08-10 15:54:26.033 - aiperf.cli_runner._multi_run - INFO - Computing aggregate statistics...
+2026-08-10 15:54:26.115 - aiperf.orchestrator.aggregation.confidence - WARNING - ConfidenceAggregation: only 1 successful run (num_successful=1 / total=1); reporting point estimates with std=0 and CI collapsed to the mean. Set num_profile_runs >= 2 for meaningful confidence intervals.
+2026-08-10 15:54:26.122 - AggregateConfidenceJsonExporter - INFO - Exported aggregate data to: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_4/profile_export_aiperf_aggregate.json
+2026-08-10 15:54:26.123 - AggregateSweepCsvExporter - INFO - Exported aggregate data to: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/sweep_aggregate/profile_export_aiperf_sweep.csv
+2026-08-10 15:54:26.123 - AggregateConfidenceCsvExporter - INFO - Exported aggregate data to: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_4/profile_export_aiperf_aggregate.csv
+2026-08-10 15:54:26.123 - AggregateSweepJsonExporter - INFO - Exported aggregate data to: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/sweep_aggregate/profile_export_aiperf_sweep.json
+2026-08-10 15:54:26.123 - aiperf.cli_runner._multi_run - INFO - Per-variation aggregate (phases.profiling.concurrency=4) JSON: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_4/profile_export_aiperf_aggregate.json; CSV: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_4/profile_export_aiperf_aggregate.csv
+2026-08-10 15:54:26.123 - aiperf.orchestrator.aggregation.confidence - WARNING - ConfidenceAggregation: only 1 successful run (num_successful=1 / total=1); reporting point estimates with std=0 and CI collapsed to the mean. Set num_profile_runs >= 2 for meaningful confidence intervals.
+2026-08-10 15:54:26.123 - aiperf.cli_runner._multi_run - INFO - Sweep aggregate JSON written to: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/sweep_aggregate/profile_export_aiperf_sweep.json
+2026-08-10 15:54:26.123 - aiperf.cli_runner._multi_run - INFO - Sweep aggregate CSV written to: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/sweep_aggregate/profile_export_aiperf_sweep.csv
+2026-08-10 15:54:26.126 - AggregateConfidenceCsvExporter - INFO - Exported aggregate data to: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_8/profile_export_aiperf_aggregate.csv
+2026-08-10 15:54:26.127 - AggregateConfidenceJsonExporter - INFO - Exported aggregate data to: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_8/profile_export_aiperf_aggregate.json
+2026-08-10 15:54:26.127 - aiperf.cli_runner._multi_run - INFO - Per-variation aggregate (phases.profiling.concurrency=8) JSON: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_8/profile_export_aiperf_aggregate.json; CSV: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_8/profile_export_aiperf_aggregate.csv
+2026-08-10 15:54:26.127 - aiperf.orchestrator.aggregation.confidence - WARNING - ConfidenceAggregation: only 1 successful run (num_successful=1 / total=1); reporting point estimates with std=0 and CI collapsed to the mean. Set num_profile_runs >= 2 for meaningful confidence intervals.
+2026-08-10 15:54:26.130 - AggregateConfidenceCsvExporter - INFO - Exported aggregate data to: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_16/profile_export_aiperf_aggregate.csv
+2026-08-10 15:54:26.131 - AggregateConfidenceJsonExporter - INFO - Exported aggregate data to: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_16/profile_export_aiperf_aggregate.json
+2026-08-10 15:54:26.131 - aiperf.cli_runner._multi_run - INFO - Per-variation aggregate (phases.profiling.concurrency=16) JSON: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_16/profile_export_aiperf_aggregate.json; CSV: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_16/profile_export_aiperf_aggregate.csv
+2026-08-10 15:54:26.131 - aiperf.orchestrator.aggregation.confidence - WARNING - ConfidenceAggregation: only 1 successful run (num_successful=1 / total=1); reporting point estimates with std=0 and CI collapsed to the mean. Set num_profile_runs >= 2 for meaningful confidence intervals.
+2026-08-10 15:54:26.135 - AggregateConfidenceCsvExporter - INFO - Exported aggregate data to: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_32/profile_export_aiperf_aggregate.csv
+2026-08-10 15:54:26.135 - AggregateConfidenceJsonExporter - INFO - Exported aggregate data to: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_32/profile_export_aiperf_aggregate.json
+2026-08-10 15:54:26.135 - aiperf.cli_runner._multi_run - INFO - Per-variation aggregate (phases.profiling.concurrency=32) JSON: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_32/profile_export_aiperf_aggregate.json; CSV: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0010-20260810T222537Z/clean/aiperf/aggregate/concurrency_32/profile_export_aiperf_aggregate.csv

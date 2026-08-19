@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>GPU Observer — Query to SASS</title>
+  <link rel="stylesheet" href="./trace.css?v=graph24">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <span class="masthead-title">GPU Observer · causal trace</span>
+        <h1 class="masthead-subtitle">Query → tokens → engine step → kernel → SASS</h1>
+        <p id="run-subtitle">No request yet — send a message, or open a sealed trace.</p>
+      </div>
+      <div class="top-actions">
+        <label class="file-button">Open TraceBundle v2<input id="trace-file" type="file" accept=".json,application/json"></label>
+        <span id="capture-status" class="status hidden">loading</span>
+      </div>
+    </header>
+
+    <section id="error-panel" class="error-panel hidden" role="alert"></section>
+
+    <section class="chat-card" aria-label="Live request to vLLM">
+      <div class="section-title">
+        <div><span class="eyebrow">Live mode</span><h2>Ask Qwen3-14B, watch it execute</h2></div>
+        <span id="ws-status" class="status">connecting</span>
+      </div>
+      <form id="chat-form" class="chat-form">
+        <input id="chat-input" type="text" placeholder="Type a message…" autocomplete="off">
+        <button type="submit" id="chat-send">Send</button>
+      </form>
+    </section>
+
+    <section class="graph-card" aria-label="Interactive causal execution graph">
+      <div class="section-title graph-title">
+        <div>
+          <span class="eyebrow">Interactive causal execution graph</span>
+          <h2>One request transformed into scheduled, packed, and GPU work</h2>
+        </div>
+        <div class="graph-controls">
+          <label class="step-select-label">Graph step <select id="graph-step-select"></select></label>
+          <div class="graph-legend" aria-label="Evidence legend">
+            <span><i class="graph-key measured"></i>measured</span>
+            <span><i class="graph-key reconstructed"></i>reconstructed</span>
+            <span><i class="graph-key matched"></i>matched replay</span>
+            <span><i class="graph-key unknown"></i>unavailable</span>
+          </div>
+        </div>
+      </div>
+      <div id="graph-idle" class="graph-idle">Send a message above — the graph forms here as it happens, lane by lane.</div>
+      <div id="graph-scroll" class="graph-scroll hidden">
+        <svg id="causal-graph" role="img" aria-label="Query to tokenizer to scheduler slices to packed rows to GPU execution, accepted output, and SASS replay"></svg>
+      </div>
+      <p class="graph-help">Choose an engine step, click a node to jump to its evidence, or click the GPU node to cycle kernels. Crossing request-colored edges expose vLLM row reordering.</p>
+    </section>
+
+    <div id="output-connector" class="output-connector" aria-hidden="true"><span>↓ decoded output</span></div>
+
+    <section class="output-card" aria-label="Decoded model output, streaming downstream of the graph above as the network decodes">
+      <div class="section-title">
+        <div><span class="eyebrow">Downstream of the graph above</span><h2>Decoded output</h2></div>
+      </div>
+      <div id="chat-reply" class="chat-reply" aria-live="polite"></div>
+      <div class="chat-status-row">
+        <p id="chat-waiting" class="chat-waiting"></p>
+        <span id="chat-confirmed" class="chat-confirmed"></span>
+      </div>
+    </section>
+
+    <section class="kernel-activity-card" aria-label="Real-time GPU kernel activity and request attribution from the shadow container's Compute Sanitizer device probe">
+      <div class="section-title">
+        <div>
+          <span class="eyebrow">Shadow container · mirrored request · live device events</span>
+          <h2>reshape_and_cache_flash_kernel <span class="badge measured">measured</span></h2>
+        </div>
+        <span id="kernel-activity-status" class="status">connecting</span>
+      </div>
+      <p class="why">Every chat request is mirrored to a second vLLM container running the Compute Sanitizer instead of CUPTI (the two can't share a process on this stack — see docs). Its reply is never shown; only its real block-entry events are, attributed to a request by matching the block index against that request's <span class="badge measured">authoritative_packed_rows</span> range — the same formula the offline exporter uses. The kernel's grid-shape validity precondition (grid.y=grid.z=1) is carried over as a structural assumption, not re-verified live.</p>
+      <div class="metric-row">
+        <div class="metric"><strong id="ka-step-progress">0/40</strong><small>layers this step</small></div>
+        <div class="metric"><strong id="ka-step-count">0</strong><small>events this step</small></div>
+        <div class="metric"><strong id="ka-total-count">0</strong><small>events this session</small></div>
+      </div>
+      <div class="ka-progress-track"><div id="ka-progress-fill" class="ka-progress-fill"></div></div>
+      <div id="kernel-activity-feed" class="kernel-activity-feed"></div>
+      <div class="sm-grid-head">
+        <span class="eyebrow">SM occupancy · GB10 · 48 SMs</span>
+        <span id="sm-grid-subtitle" class="sm-grid-subtitle">waiting for the first real block-entry event…</span>
+      </div>
+      <div id="sm-grid" class="sm-grid"></div>
+    </section>
+
+    <section class="hero-grid">
+      <article class="query-card">
+        <div class="card-head"><span class="stage-number">1</span><div><span class="eyebrow">Human intent</span><h2>Foreground query</h2></div></div>
+        <blockquote id="query-text"></blockquote>
+        <button id="prompt-toggle" class="text-button" type="button">Show rendered model prompt</button>
+        <pre id="rendered-prompt" class="rendered-prompt hidden"></pre>
+      </article>
+      <article class="answer-card">
+        <div class="card-head"><span class="stage-number">6</span><div><span class="eyebrow">Latency outcome</span><h2>Model response</h2></div></div>
+        <p id="answer-text"></p>
+        <div id="outcome-metrics" class="metric-row"></div>
+      </article>
+    </section>
+
+    <section class="token-card">
+      <div class="section-title">
+        <div><span class="eyebrow">Exact tokenizer boundary</span><h2>Prompt token ribbon</h2></div>
+        <div class="legend"><span class="badge measured">measured</span><span id="token-detail">Select a token</span></div>
+      </div>
+      <div id="prompt-tokens" class="token-ribbon" aria-label="Prompt tokens"></div>
+      <div class="output-divider"><span>accepted output tokens</span></div>
+      <div id="output-tokens" class="token-ribbon" aria-label="Output tokens"></div>
+    </section>
+
+    <section class="causal-flow" aria-label="Selected engine step execution flow">
+      <article class="flow-stage">
+        <div class="card-head"><span class="stage-number">2</span><div><span class="eyebrow">SchedulerOutput</span><h2>Who was selected?</h2></div></div>
+        <p class="why">The Python scheduler chooses request slices under token and KV-cache budgets.</p>
+        <div id="scheduler-slices" class="stack-list"></div>
+      </article>
+      <div class="flow-arrow"><span>membership</span>→</div>
+      <article class="flow-stage">
+        <div class="card-head"><span class="stage-number">3</span><div><span class="eyebrow">GPUModelRunner</span><h2>How were rows packed?</h2></div></div>
+        <p class="why">These are authoritative model-input rows after compaction and reordering.</p>
+        <div id="packed-slices" class="stack-list"></div>
+      </article>
+      <div class="flow-arrow"><span>launch + time</span>→</div>
+      <article class="flow-stage wide">
+        <div class="card-head"><span class="stage-number">4</span><div><span class="eyebrow">CUPTI actual GPU time</span><h2>Which kernels ran?</h2></div></div>
+        <p class="why">Host submission and actual GPU execution share the normalized monotonic timeline.</p>
+        <div id="kernel-timeline" class="kernel-timeline"></div>
+        <div id="kernel-list" class="kernel-list"></div>
+      </article>
+    </section>
+
+    <section class="microscope-grid">
+      <article class="kernel-detail-card">
+        <div class="card-head"><span class="stage-number">5</span><div><span class="eyebrow">Validated attribution boundary</span><h2>Kernel work ownership</h2></div></div>
+        <div id="kernel-detail"></div>
+        <div id="ownership-list" class="ownership-list"></div>
+      </article>
+      <article class="sass-card">
+        <div class="section-title">
+          <div><span class="eyebrow">Matched diagnostic replay</span><h2>SASS microscope</h2></div>
+          <span id="sass-status" class="badge unknown">unknown</span>
+        </div>
+        <div class="ptx-warning"><strong>PTX layer:</strong> unavailable in the shipped BF16 binary. No PTX is invented.</div>
+        <div id="sass-content"></div>
+      </article>
+    </section>
+
+    <section class="evidence-card">
+      <div><span class="eyebrow">Epistemic contract</span><h2>What each edge means</h2></div>
+      <div id="evidence-grid" class="evidence-grid"></div>
+    </section>
+
+    <footer>
+      Sealed traces are rendered offline. Raw ring, CUPTI, and sanitizer artifacts remain the source of truth.
+    </footer>
+  </main>
+  <script type="module" src="./trace.js?v=graph24"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+vllm:prefix_cache_queries_total 88
+vllm:prefix_cache_hits_total 32
+vllm:prompt_tokens_by_source_total{source="local_compute"} 56
+vllm:prompt_tokens_by_source_total{source="local_cache_hit"} 32
+

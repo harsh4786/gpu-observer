@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>GPU Observer — Causal Trace</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="request-sidebar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div>
+            <p class="eyebrow">GPU Observer</p>
+            <h1>Causal Trace</h1>
+          </div>
+        </div>
+
+        <div class="run-card">
+          <div class="run-status"><span class="status-dot"></span><span id="run-result">Loading</span></div>
+          <strong id="run-id">—</strong>
+          <span id="run-model">—</span>
+          <small id="run-mode">—</small>
+        </div>
+
+        <div class="sidebar-heading">
+          <span>Requests</span>
+          <span id="request-count">0</span>
+        </div>
+        <nav id="request-list" class="request-list" aria-label="Requests"></nav>
+
+        <div class="sidebar-note">
+          <span class="note-icon">i</span>
+          <p>This view is generated from a sealed cold trace. It never runs in the inference hot path.</p>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Request → scheduler → packed batch → GPU</p>
+            <h2 id="page-title">Loading causal trace…</h2>
+          </div>
+          <div class="quality-pills" id="quality-pills"></div>
+        </header>
+
+        <section class="hero-grid" aria-label="Selected request summary">
+          <article class="hero-copy">
+            <span class="section-kicker">Selected execution path</span>
+            <h3 id="hero-title">—</h3>
+            <p id="hero-description">—</p>
+          </article>
+          <div class="metric-grid" id="metric-grid"></div>
+        </section>
+
+        <section class="panel path-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-kicker">Causality ladder</span>
+              <h3>What this request became</h3>
+            </div>
+            <span class="evidence-tag inferred">Measured + reconstructed</span>
+          </div>
+          <div id="causal-path" class="causal-path"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-kicker">Across the run</span>
+              <h3>Engine-step membership</h3>
+            </div>
+            <div class="step-legend">
+              <span><i class="phase-dot prefill"></i>Prefill</span>
+              <span><i class="phase-dot mixed"></i>Mixed</span>
+              <span><i class="phase-dot decode"></i>Decode</span>
+            </div>
+          </div>
+          <div id="step-rail" class="step-rail" role="listbox" aria-label="Engine steps"></div>
+        </section>
+
+        <section class="detail-grid">
+          <article class="panel timeline-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">Normalized monotonic timeline</span>
+                <h3 id="timeline-title">Step —</h3>
+              </div>
+              <span class="evidence-tag measured">Actual CUPTI intervals</span>
+            </div>
+            <div id="timeline" class="timeline"></div>
+          </article>
+
+          <article class="panel packing-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">Inside GPUModelRunner</span>
+                <h3>Scheduler order vs packed rows</h3>
+              </div>
+              <span id="reorder-badge" class="reorder-badge">—</span>
+            </div>
+            <div id="packing-comparison" class="packing-comparison"></div>
+          </article>
+        </section>
+
+        <section class="panel kernel-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-kicker">Selected kernel family</span>
+              <h3>Layer-by-layer cache writes</h3>
+            </div>
+            <span class="mono" id="kernel-family">—</span>
+          </div>
+          <div id="kernel-grid" class="kernel-grid"></div>
+        </section>
+
+        <section class="evidence-grid" id="evidence-grid"></section>
+
+        <footer>
+          <span id="artifact-path">—</span>
+          <span>GPU Observer · cold correlation UI v0.1</span>
+        </footer>
+      </main>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

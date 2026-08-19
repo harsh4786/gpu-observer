@@ -1,0 +1,17 @@
+[live BTF required gpu_ext types]
+gpu_mem_ops ABSENT
+gpu_sched_ops ABSENT
+[minimal policy artifacts]
+/home/harsh4786/gpu_ext-v0.0.21/extension/struct_ops:               ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=4ac28c916c127dc1b9a8a3043e48c57855d5d152, for GNU/Linux 3.7.0, with debug_info, not stripped
+/home/harsh4786/gpu_ext-v0.0.21/extension/.output/struct_ops.bpf.o: ELF 64-bit LSB relocatable, eBPF, version 1 (SYSV), not stripped
+1602248 /home/harsh4786/gpu_ext-v0.0.21/extension/struct_ops
+6856 /home/harsh4786/gpu_ext-v0.0.21/extension/.output/struct_ops.bpf.o
+26962 /home/harsh4786/gpu_ext-v0.0.21/extension/.output/struct_ops.skel.h
+  [ 3] struct_ops/gpu_test_trigger PROGBITS 0000000000000000 0003e0 000370 00  AX  0   0  8
+  [ 5] .struct_ops       PROGBITS        0000000000000000 000758 000030 00  WA  0   0  8
+  [ 8] .relstruct_ops/gpu_test_trigger REL 0000000000000000 000858 000070 10   I  2   3  8
+  [ 9] .rel.struct_ops   REL             0000000000000000 0008c8 000010 10   I  2   5  8
+  [10] .BTF              PROGBITS        0000000000000000 0008d8 000d60 00      0   0  8
+  [11] .BTF.ext          PROGBITS        0000000000000000 001638 000190 00      0   0  8
+41b5890c9330d30c91e805f9cad4309c6915b8976850218e37960d28f613064e  /home/harsh4786/gpu_ext-v0.0.21/extension/struct_ops
+195c8f92bc10093b7fee771024e7eb300bc9ac2959f39d59ac8acbd089cad8e2  /home/harsh4786/gpu_ext-v0.0.21/extension/.output/struct_ops.bpf.o

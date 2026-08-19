@@ -1,0 +1,8 @@
+╭─ Error ──────────────────────────────────────────────────────────────────────╮
+│ 1 validation error for CLIConfig                                             │
+│ warmup_request_count                                                         │
+│   Input should be greater than 0 [type=greater_than, input_value='0',        │
+│ input_type=str]                                                              │
+│     For further information visit                                            │
+│ https://errors.pydantic.dev/2.13/v/greater_than                              │
+╰──────────────────────────────────────────────────────────────────────────────╯

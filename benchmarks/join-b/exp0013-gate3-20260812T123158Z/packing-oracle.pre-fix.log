@@ -1,0 +1,161 @@
+step=2 scheduled=58 slices=1 oracle_timestamp_ns=630176142531092 oracle_pid=294 packing=matched
+step=3 scheduled=237 slices=8 oracle_timestamp_ns=630176285491912 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,25) tokens=24
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[25,95) tokens=70
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[95,165) tokens=70
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[165,183) tokens=18
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[183,208) tokens=25
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[208,221) tokens=13
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[221,237) tokens=16
+step=4 scheduled=8 slices=8 oracle_timestamp_ns=630176449126450 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+step=5 scheduled=1039 slices=9 oracle_timestamp_ns=630176678774359 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,1039) tokens=1031
+step=6 scheduled=9 slices=9 oracle_timestamp_ns=630177082269949 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,9) tokens=1
+step=7 scheduled=9 slices=9 oracle_timestamp_ns=630177212871672 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,9) tokens=1
+step=8 scheduled=9 slices=9 oracle_timestamp_ns=630177341753545 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,9) tokens=1
+step=9 scheduled=9 slices=9 oracle_timestamp_ns=630177469346707 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,9) tokens=1
+step=10 scheduled=9 slices=9 oracle_timestamp_ns=630177597464064 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,9) tokens=1
+step=11 scheduled=9 slices=9 oracle_timestamp_ns=630177725234603 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,9) tokens=1
+step=12 scheduled=9 slices=9 oracle_timestamp_ns=630177852484706 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,9) tokens=1
+step=13 scheduled=9 slices=9 oracle_timestamp_ns=630177979657160 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,9) tokens=1
+step=14 scheduled=9 slices=9 oracle_timestamp_ns=630178107284768 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,9) tokens=1
+step=15 scheduled=9 slices=9 oracle_timestamp_ns=630178234430277 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,9) tokens=1
+step=16 scheduled=9 slices=9 oracle_timestamp_ns=630178361499434 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,9) tokens=1
+step=17 scheduled=9 slices=9 oracle_timestamp_ns=630178488552143 oracle_pid=294 packing=matched
+  packed_request=0x3f8a581a320e2df4 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+  packed_request=0xb126f07c5c1fde60 packed_index=8 row_range=[8,9) tokens=1
+step=18 scheduled=8 slices=8 oracle_timestamp_ns=630178616331719 oracle_pid=294 packing=mismatch
+  packed_request=0xb126f07c5c1fde60 packed_index=0 row_range=[0,1) tokens=1
+  packed_request=0xdf67a278ee35b0bc packed_index=1 row_range=[1,2) tokens=1
+  packed_request=0x40bb45182ae45a1a packed_index=2 row_range=[2,3) tokens=1
+  packed_request=0xea87823b274e44e2 packed_index=3 row_range=[3,4) tokens=1
+  packed_request=0x54aee976b0f1205b packed_index=4 row_range=[4,5) tokens=1
+  packed_request=0x7c660dd27489f939 packed_index=5 row_range=[5,6) tokens=1
+  packed_request=0xddae17be85bbd366 packed_index=6 row_range=[6,7) tokens=1
+  packed_request=0x5ce2f361eae39066 packed_index=7 row_range=[7,8) tokens=1
+step=19 scheduled=1 slices=1 oracle_timestamp_ns=630178743311852 oracle_pid=294 packing=matched
+step=20 scheduled=1 slices=1 oracle_timestamp_ns=630178942887709 oracle_pid=294 packing=matched
+summary semantic_records=182 semantic_loss=0 steps=19 oracle_records=167 oracle_observations=21 assigned_observations=19 unassigned_observations=2 missing_steps=0 duplicate_steps=0 flag_failures=1 range_mismatches=8 mixed_steps=16 clock=clock_monotonic ownership=oracle_validated

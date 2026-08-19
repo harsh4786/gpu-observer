@@ -1,0 +1,27 @@
+experiment=EXP-0017
+started_utc=2026-08-12T22:28:29Z
+question=Can production async vLLM preserve authoritative scheduler-to-packed-row ownership under a 100-request AIPerf ShareGPT workload?
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+image=nvcr.io/nvidia/vllm:26.05-py3
+execution_mode=FULL_AND_PIECEWISE_CUDA_GRAPHS
+async_scheduling=production_default_must_validate_true
+prefix_caching=false
+aiperf_version=0.10.0
+dataset=frozen_real_ShareGPT_raw_payload_jsonl
+dataset_entries=12
+dataset_model_input_tokens_max=90
+warmup_requests=8
+measured_requests=100
+concurrency=8
+output_tokens_per_request=128
+semantic_abi_version=2
+ownership=authoritative_packed_layout_required
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+NVIDIA GB10, 580.173.02, 38, 5.21 W
+image_id=sha256:c5c116c732f24a640650e1e6e399112ef7c2b1e80c5fd7c13808b10a579646e6 image_digests=["nvcr.io/nvidia/vllm@sha256:654e563e727be1968487d453de0733fb074cb59adf424c779d0f9e7cfcb2b6b6"]
+894a9eab9526b3db4b0029029465305a96cc737e7131aefa3413de7e19cc1cca  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-corrected.jsonl
+dad445584a4e3fd104e61e5f4b37d6da24521f3fba74f818c232c3c09e9e33ea  /home/harsh4786/gpu-observer/target/release/libgpu_observer_vllm_bridge.so
+1cb28df43cd7b4f813f093ba6f7011e4d8281744b42882d415b8e59e9576faee  /home/harsh4786/gpu-observer/vllm-adapter/overlay/vllm/v1/engine/core.py
+1be9c05121960a1ae7bea94bf61ccd1d204197a70133fd47a2968c19b88b1828  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_semantic.py
+dd8e552931fb001e7f8961c9dd5832eaea9c1dce64f835cccad36a188c6dd4f8  /home/harsh4786/gpu-observer/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py

@@ -1,0 +1,354 @@
+[
+  {
+    "sequence": 0,
+    "offset_ns": 0,
+    "x_request_id": "393598c3-9733-41d7-8ea4-016d3ea76558",
+    "conversation_id": "session_000008",
+    "turn_index": 0,
+    "input_tokens": 62,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "ArrayList seats = new ArrayList();\n\nSeatExtended extends the class of Seat which is:\n\npublic class Seat {\n\n @XmlElement(name = \"Row\", required = true, nillable = true)\n protected String row;\n @XmlElement(name = \"Column\", required = true, nillable = true)\n protected String column;"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 1,
+    "offset_ns": 90368,
+    "x_request_id": "ce73c7e8-74a2-4700-b729-61b4012d31e2",
+    "conversation_id": "session_000001",
+    "turn_index": 0,
+    "input_tokens": 17,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "How to tell if a customer segment is well segmented? In 3 bullet points."
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 2,
+    "offset_ns": 116736,
+    "x_request_id": "eadcabd9-3bfd-49ff-a765-c251afba7050",
+    "conversation_id": "session_000002",
+    "turn_index": 0,
+    "input_tokens": 62,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "In Java, I want to replace string like \"This is a new {object} at {place}\" with a Map, {object: \"student\", \"point 3, 4\"}, and get a result \"This is a new student at point 3, 4\". How can I do?"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 3,
+    "offset_ns": 129024,
+    "x_request_id": "807035d0-f15a-422a-979b-aa90dfcf94cd",
+    "conversation_id": "session_000006",
+    "turn_index": 0,
+    "input_tokens": 50,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "can you design a referral system similar on how dropbox did? I need a technical overview on how it should work, instead of free space we use the generic term \"credits\" where users can get more credits for every 3 friends they recommend."
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 4,
+    "offset_ns": 164096,
+    "x_request_id": "c984bdf3-83c9-4407-a291-a8aecc2ad4ba",
+    "conversation_id": "session_000004",
+    "turn_index": 0,
+    "input_tokens": 16,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "how do I add multiple new columns in m for power query or power bi?"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 5,
+    "offset_ns": 306176,
+    "x_request_id": "9055a94f-d29d-4366-b40f-8f411882dcf2",
+    "conversation_id": "session_000003",
+    "turn_index": 0,
+    "input_tokens": 270,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "I have the following C++ function: \nvoid add\\_player(vector& players)\n{\n string player\\_name;\n string player\\_class;\n string dummy;\n PlayerClass pc;\n string player\\_sex;\n int player\\_gold;\n\n cout << \" Create a Mage, Warrior, Bowman, or Thief\" << endl;\n\n cout << \"Name: \";\n getline(cin, player\\_name);\n\n cout << \"Class: \";\n getline(cin, player\\_class);\n pc = get\\_player\\_class\\_from\\_string(player\\_class);\n while (pc == PlayerClass::InvalidPlayerClass)\n {\n cout << \" Invalid class, try again\" << endl;\n cout << \"Class: \";\n getline(cin, player\\_class);\n pc = get\\_player\\_class\\_from\\_string(player\\_class);\n }\n\n cout << \"Sex: \";\n getline(cin, player\\_sex);\n\n cout << \"Gold: \";\n cin >> player\\_gold;\n getline(cin, dummy); //consume newline\n\n GamePlayer new\\_player;\n new\\_player.name = player\\_name;\n new\\_player.occupation = pc;\n new\\_player.gender = player\\_sex;\n new\\_player.gold = player\\_gold;\n\n //add to vector\n players.push\\_back(new\\_player);\n\n //add to file\n write\\_players\\_file(players);\n}\nCan you explain to me how the dummy variable is being used?"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 6,
+    "offset_ns": 391680,
+    "x_request_id": "c29a881e-d903-4b64-986a-418d154953db",
+    "conversation_id": "session_000007",
+    "turn_index": 0,
+    "input_tokens": 10,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "Java add to the arraylist of a class type"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 7,
+    "offset_ns": 484864,
+    "x_request_id": "f90451b2-35b1-4a65-8c89-e41c1d04c805",
+    "conversation_id": "session_000005",
+    "turn_index": 0,
+    "input_tokens": 5,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "Poly Ether Ether Ketone"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 8,
+    "offset_ns": 7789943552,
+    "x_request_id": "7081a98b-949e-48b7-ad9e-1426a273c9a9",
+    "conversation_id": "session_000008",
+    "turn_index": 1,
+    "input_tokens": 194,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "ArrayList seats = new ArrayList();\n\nSeatExtended extends the class of Seat which is:\n\npublic class Seat {\n protected String row;\n protected String column;\n}\n\nAnd SeatExtended is:\n\npublic class SeatExtended extends Seat {\n\n public SeatStatus availablity;\n}\n\nProvide a function to return the index of element inside SeatExtended which takes Seat as an argument"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 9,
+    "offset_ns": 7906025472,
+    "x_request_id": "01b43788-9242-4417-a91d-e496f4e5a718",
+    "conversation_id": "session_000004",
+    "turn_index": 1,
+    "input_tokens": 89,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "can you show me the m code?"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 10,
+    "offset_ns": 7906058752,
+    "x_request_id": "ee689811-a8ad-4010-ae90-dd0b36b922b0",
+    "conversation_id": "session_000006",
+    "turn_index": 1,
+    "input_tokens": 126,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "is there other systems similar with referral to achieve growth?"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 11,
+    "offset_ns": 7906146560,
+    "x_request_id": "0658e37e-709c-4d83-9dd9-e26a3f2bd123",
+    "conversation_id": "session_000005",
+    "turn_index": 1,
+    "input_tokens": 75,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "Application in Membrane manufacturing"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 12,
+    "offset_ns": 7906159616,
+    "x_request_id": "94eb5018-7e70-45c0-b18f-876acef2520a",
+    "conversation_id": "session_000007",
+    "turn_index": 1,
+    "input_tokens": 86,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "Do the code above with for loop for number of instances"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 13,
+    "offset_ns": 7906713856,
+    "x_request_id": "b44cdb23-40bd-4e9b-b6d1-8ec654d13933",
+    "conversation_id": "session_000011",
+    "turn_index": 0,
+    "input_tokens": 47,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "I want to do a road trip from Pune to Gujarat. Me and my wife will be travelling and we dont prefer very long driving sessions. Can you suggest a plan starting from Thursday early morning and ending in Pune on Sunday late night."
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 14,
+    "offset_ns": 7906739968,
+    "x_request_id": "b9a70ea4-fff7-455e-8958-e1f5edb605c8",
+    "conversation_id": "session_000010",
+    "turn_index": 0,
+    "input_tokens": 8,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "this is not less code this is java"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  },
+  {
+    "sequence": 15,
+    "offset_ns": 7906878976,
+    "x_request_id": "eacc0bc7-ddb2-4649-a1e7-49c1c3995f22",
+    "conversation_id": "session_000009",
+    "turn_index": 0,
+    "input_tokens": 8,
+    "output_tokens": 64,
+    "payload": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "Java get n th index of arraylist"
+        }
+      ],
+      "model": "Qwen/Qwen3-14B",
+      "stream": true,
+      "max_completion_tokens": 64,
+      "temperature": 0,
+      "ignore_eos": true
+    }
+  }
+]

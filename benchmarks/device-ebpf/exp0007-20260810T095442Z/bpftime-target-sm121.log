@@ -1,0 +1,107 @@
+[2026-08-10 02:58:32.997] [info] [bpftime_shm_internal.cpp:1074] Registered shared memory with CUDA: addr=0xf83adc4f0000 size=268435456
+[2026-08-10 02:58:32.997] [info] [bpftime_shm_internal.cpp:859] Global shm constructed. shm_open_type 1 for bpftime_maps_shm
+[2026-08-10 02:58:32.997] [info] [bpftime_shm_internal.cpp:48] Global shm initialized
+[2026-08-10 02:58:32][info][415665] bpf_attach_ctx constructed
+[2026-08-10 02:58:32][info][415665] Initializing CUDA shared memory
+[2026-08-10 02:58:32][info][415665] CommSharedMem host 0xf83adc5ec7e8 mapped to device 0xf83adc5ec7e8
+[2026-08-10 02:58:32][info][415665] CUDA context created
+[2026-08-10 02:58:32][info][415665] Register attach-impl defined helper bpf_get_func_arg, index 183
+[2026-08-10 02:58:32][info][415665] Register attach-impl defined helper bpf_get_func_ret_id, index 184
+[2026-08-10 02:58:32][info][415665] Register attach-impl defined helper bpf_get_retval, index 186
+[2026-08-10 02:58:32][info][415665] Starting nv_attach_impl
+[2026-08-10 02:58:33][info][415665] Parsing bundled libraries: /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so:/home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kretprobe/libptxpass_kretprobe.so:/home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_memcapture/libptxpass_kprobe_memcapture.so
+[2026-08-10 02:58:33][info][415665] Found path: /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so, executing..
+[2026-08-10 02:58:33][info][415665] Retrived config of /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so
+[2026-08-10 02:58:33][info][415665] Found path: /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kretprobe/libptxpass_kretprobe.so, executing..
+[2026-08-10 02:58:33][info][415665] Retrived config of /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kretprobe/libptxpass_kretprobe.so
+[2026-08-10 02:58:33][info][415665] Found path: /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_memcapture/libptxpass_kprobe_memcapture.so, executing..
+[2026-08-10 02:58:33][info][415665] Retrived config of /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_memcapture/libptxpass_kprobe_memcapture.so
+[2026-08-10 02:58:33][info][415665] Initializing agent..
+[2026-08-10 02:58:33][info][415665] bpftime: shm epoch_seq = 4
+[2026-08-10 02:58:33][info][415665] Instantiating bpf link 40 and the corresponding program cuda__kernel_tr is cuda program
+[2026-08-10 02:58:33][info][415665] Skipping nv attach handler 40 since we are not handling nv handles
+[2026-08-10 02:58:33][info][415665] Instantiating bpf link 40 and the corresponding program cuda__kernel_tr is cuda program
+[2026-08-10 02:58:33][info][415665] Handling link to CUDA program: 40, recording it..
+[2026-08-10 02:58:33][info][415665] Loaded 46 instructions (original) for cuda ebpf program
+[2026-08-10 02:58:33][info][415665] Initializing nv_gpu_ringbuf_map_impl at pid 415665
+[2026-08-10 02:58:33][info][415665] Mapped GPU memory for gpu ringbuf map: 272931691089248
+[2026-08-10 02:58:33][info][415665] Copying map fd 16 to device, key size=4, value size=56, max ent=16, map_type = 1527, gpu_buffer = f83adc7ecd60
+[2026-08-10 02:58:33][info][415665] Cached shared_mem_ptr at f83adc5ec7e8
+[2026-08-10 02:58:33][info][415665] Recorded pass /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so for func _Z9vectorAddPKfS0_Pfi
+[2026-08-10 02:58:33][info][415665] nv_attach_impl: cached 280739 host symbols
+[2026-08-10 02:58:33][info][415665] nv_attach_impl: late attach bootstrap scanning fatbins..
+[2026-08-10 02:58:33][info][415665] Temporary fatbin written to /tmp/bpftime-fatbin-work.9FD70C/temp.fatbin
+[2026-08-10 02:58:33][info][415665] Extracting PTX in the fatbin...
+[2026-08-10 02:58:33][info][415665] Calling cuobjdump: /usr/local/cuda-13.0/bin/cuobjdump --extract-ptx all /tmp/bpftime-fatbin-work.9FD70C/temp.fatbin
+cuobjdump fatal   : Invalid fatbin header in '/tmp/bpftime-fatbin-work.9FD70C/temp.fatbin'
+[2026-08-10 02:58:33][error][415665] cuobjdump failed: status=256
+[2026-08-10 02:58:33][info][415665] nv_attach_impl: late attach bootstrap ingested 0 fatbin(s)
+[2026-08-10 02:58:33][info][415665] agent ipc: listening (abstract) for pid 415665
+[2026-08-10 02:58:33][info][415665] Attach successfully
+[2026-08-10 02:58:33.435] [warning] [bpftime_vm_compat.hpp:251] VM factory for name: llvm already registered, overwriting
+[2026-08-10 02:58:33.665] [info] [bpftime_shm_internal.cpp:1074] Registered shared memory with CUDA: addr=0xec5e16e40000 size=268435456
+[2026-08-10 02:58:33.665] [info] [bpftime_shm_internal.cpp:859] Global shm constructed. shm_open_type 1 for bpftime_maps_shm
+[2026-08-10 02:58:33.665] [info] [bpftime_shm_internal.cpp:48] Global shm initialized
+[2026-08-10 02:58:33][info][415673] bpf_attach_ctx constructed
+[2026-08-10 02:58:33][info][415673] Initializing CUDA shared memory
+[2026-08-10 02:58:33][info][415673] CommSharedMem host 0xec5e16f3c7e8 mapped to device 0xec5e16f3c7e8
+[2026-08-10 02:58:33][info][415673] CUDA context created
+[2026-08-10 02:58:33][info][415673] Register attach-impl defined helper bpf_get_func_arg, index 183
+[2026-08-10 02:58:33][info][415673] Register attach-impl defined helper bpf_get_func_ret_id, index 184
+[2026-08-10 02:58:33][info][415673] Register attach-impl defined helper bpf_get_retval, index 186
+[2026-08-10 02:58:33][info][415673] Starting nv_attach_impl
+[2026-08-10 02:58:33][info][415673] Parsing bundled libraries: /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so:/home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kretprobe/libptxpass_kretprobe.so:/home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_memcapture/libptxpass_kprobe_memcapture.so
+[2026-08-10 02:58:33][info][415673] Found path: /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so, executing..
+[2026-08-10 02:58:33][info][415673] Retrived config of /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so
+[2026-08-10 02:58:33][info][415673] Found path: /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kretprobe/libptxpass_kretprobe.so, executing..
+[2026-08-10 02:58:33][info][415673] Retrived config of /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kretprobe/libptxpass_kretprobe.so
+[2026-08-10 02:58:33][info][415673] Found path: /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_memcapture/libptxpass_kprobe_memcapture.so, executing..
+[2026-08-10 02:58:33][info][415673] Retrived config of /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_memcapture/libptxpass_kprobe_memcapture.so
+[2026-08-10 02:58:33][info][415673] Initializing agent..
+[2026-08-10 02:58:33][info][415673] bpftime: shm epoch_seq = 4
+[2026-08-10 02:58:33][info][415673] Instantiating bpf link 40 and the corresponding program cuda__kernel_tr is cuda program
+[2026-08-10 02:58:33][info][415673] Skipping nv attach handler 40 since we are not handling nv handles
+[2026-08-10 02:58:33][info][415673] Instantiating bpf link 40 and the corresponding program cuda__kernel_tr is cuda program
+[2026-08-10 02:58:33][info][415673] Handling link to CUDA program: 40, recording it..
+[2026-08-10 02:58:33][info][415673] Loaded 46 instructions (original) for cuda ebpf program
+[2026-08-10 02:58:33][info][415673] Initializing nv_gpu_ringbuf_map_impl at pid 415673
+[2026-08-10 02:58:33][info][415673] Mapped GPU memory for gpu ringbuf map: 259888858254688
+[2026-08-10 02:58:33][info][415673] Copying map fd 16 to device, key size=4, value size=56, max ent=16, map_type = 1527, gpu_buffer = ec5e1713cd60
+[2026-08-10 02:58:33][info][415673] Cached shared_mem_ptr at ec5e16f3c7e8
+[2026-08-10 02:58:33][info][415673] Recorded pass /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so for func _Z9vectorAddPKfS0_Pfi
+[2026-08-10 02:58:34][info][415673] nv_attach_impl: cached 280805 host symbols
+[2026-08-10 02:58:34][info][415673] nv_attach_impl: late attach bootstrap scanning fatbins..
+[2026-08-10 02:58:34][info][415673] Temporary fatbin written to /tmp/bpftime-fatbin-work.oyJEU8/temp.fatbin
+[2026-08-10 02:58:34][info][415673] Extracting PTX in the fatbin...
+[2026-08-10 02:58:34][info][415673] Calling cuobjdump: /usr/local/cuda-13.0/bin/cuobjdump --extract-ptx all /tmp/bpftime-fatbin-work.oyJEU8/temp.fatbin
+cuobjdump info    : No PTX file found to extract from '/tmp/bpftime-fatbin-work.oyJEU8/temp.fatbin'. You may try with -all option.
+[2026-08-10 02:58:34][info][415673] Remove extracted files..
+[2026-08-10 02:58:34][info][415673] Got 0 PTX files
+[2026-08-10 02:58:34][info][415673] nv_attach_impl: found 2 fatbin wrapper(s) in /home/harsh4786/gpu-observer/benchmarks/device-ebpf/exp0007-20260810T095442Z/vec_add-sm121
+[2026-08-10 02:58:34][info][415673] Temporary fatbin written to /tmp/bpftime-fatbin-work.QKR4W5/temp.fatbin
+[2026-08-10 02:58:34][info][415673] Extracting PTX in the fatbin...
+[2026-08-10 02:58:34][info][415673] Calling cuobjdump: /usr/local/cuda-13.0/bin/cuobjdump --extract-ptx all /tmp/bpftime-fatbin-work.QKR4W5/temp.fatbin
+cuobjdump info    : No PTX file found to extract from '/tmp/bpftime-fatbin-work.QKR4W5/temp.fatbin'. You may try with -all option.
+[2026-08-10 02:58:34][info][415673] Remove extracted files..
+[2026-08-10 02:58:34][info][415673] Got 0 PTX files
+[2026-08-10 02:58:34][info][415673] Temporary fatbin written to /tmp/bpftime-fatbin-work.I3R8TV/temp.fatbin
+[2026-08-10 02:58:34][info][415673] Extracting PTX in the fatbin...
+[2026-08-10 02:58:34][info][415673] Calling cuobjdump: /usr/local/cuda-13.0/bin/cuobjdump --extract-ptx all /tmp/bpftime-fatbin-work.I3R8TV/temp.fatbin
+Extracting PTX file and ptxas options    1: temp.1.sm_121.ptx -arch=sm_121 
+[2026-08-10 02:58:34][info][415673] Remove extracted files..
+[2026-08-10 02:58:34][info][415673] Got 1 PTX files
+[2026-08-10 02:58:34][info][415673] Loading & patching current fatbin..
+[2026-08-10 02:58:34][info][415703] Patching PTX: temp.1.sm_121.ptx
+[2026-08-10 02:58:34][info][415703] Patching request 97b0e3b1bd245698b58c01a2bd1d7510386a1df827307de7f78e7a7c99238031 not found in cache, patching..
+[2026-08-10 02:58:34.101] [info] [core.cpp:321] [ptxpass] kprobe_entry: matched=1, in=1058, out=4369
+[2026-08-10 02:58:34][info][415673] Auto-detected GPU SM arch: sm_121 (compute capability 12.1)
+[2026-08-10 02:58:34][info][415673] Compiling PTXs with sm_arch sm_121
+[2026-08-10 02:58:34][info][415673] Compiler version: 13.0
+[2026-08-10 02:58:34][info][415723] Start compiling patched.temp.1.sm_121.ptx, not found in cache
+[2026-08-10 02:58:34.117] [error] [ptx_compiler.cpp:76] Unable to compile: 3
+[2026-08-10 02:58:34][error][415723] Unable to compile: -1, error = ptxas <macro util>, line 2; error   : PTX .version 8.7 does not support .target sm_121
+ptxas fatal   : Ptx assembly aborted due to errors
+
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Unable to compile
+timeout: the monitored command dumped core

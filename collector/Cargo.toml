@@ -1,0 +1,18 @@
+[package]
+name = "gpu-observer-collector"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+gpu-observer-core.workspace = true
+gpu-observer-host-probe-common.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+libc.workspace = true
+tungstenite.workspace = true
+
+[dev-dependencies]
+gpu-observer-vllm-bridge = { path = "../vllm-adapter/native" }
+

@@ -1,0 +1,5 @@
+semantic_ring_bytes=6291712 mode=600 owner=root:root
+semantic_wire_record_bytes=96
+cuda_launch_record_bytes=88
+preallocated_python_slice_bytes=24576
+semantic_ring_capacity_records=65536

@@ -1,0 +1,41 @@
+schema_version = 1
+experiment_id = "EXP-0008"
+created_utc = "2026-08-10T19:16:07Z"
+status = "complete"
+title = "Compute Sanitizer SASS-instrumentation overhead ladder on Qwen3-14B BF16"
+hardware = "NVIDIA DGX Spark / GB10"
+gpu_architecture = "sm_121"
+host_architecture = "aarch64"
+host_os = "Ubuntu 24.04"
+driver = "580.173.02"
+cuda = "13.2.1"
+model = "Qwen/Qwen3-14B"
+model_revision = "40c069824f4251a91eefaf281ebe4c544efd3e18"
+dtype = "BF16"
+execution_mode = "eager"
+requests_comparable_rungs = 64
+input_tokens_per_request = 128
+output_tokens_per_request = 64
+concurrency = 8
+seed = 20260809
+
+[results]
+sass_only_bf16_patching_worked = true
+all_requests_succeeded = true
+semantic_events_dropped = 0
+clean_output_tokens_per_second = 61.628962
+subscriber_output_delta_percent = -0.215169
+block_noop_output_delta_percent = -0.218785
+block_counter_output_delta_percent = -0.829177
+block_event_output_delta_percent = -1.275093
+sampled_memory_barrier_output_delta_percent = -2.910666
+block_counter_expected_callbacks = 344907690
+block_counter_actual_callbacks = 344907690
+full_memory_callbacks_one_request = 573785088
+
+[artifact_policy]
+raw_logs_preserved = true
+exact_source_snapshotted = true
+per_rung_checksums_present = true
+root_checksums_required = true
+off_device_backup_present = false

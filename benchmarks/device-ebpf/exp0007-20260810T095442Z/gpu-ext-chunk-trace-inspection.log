@@ -1,0 +1,30 @@
+[artifacts]
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace:                ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=3c533a83a8d7df06fca372ab688272799d44ffcb, for GNU/Linux 3.7.0, with debug_info, not stripped
+/home/harsh4786/gpu_ext-v0.0.21/extension/.output/chunk_trace.bpf.o:  ELF 64-bit LSB relocatable, eBPF, version 1 (SYSV), not stripped
+/home/harsh4786/gpu_ext-v0.0.21/extension/.output/chunk_trace.skel.h: C source, ASCII text
+1627624 /home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace
+43584 /home/harsh4786/gpu_ext-v0.0.21/extension/.output/chunk_trace.bpf.o
+144813 /home/harsh4786/gpu_ext-v0.0.21/extension/.output/chunk_trace.skel.h
+d94ed266a2407861cc14e63d05bfcd99452af146de4e42a3ba46a50a93059e59  /home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace
+640ab65c3d36bf8a1e1c983ea6a1e578690b2f030a5b6f60bfb96167a3f345d7  /home/harsh4786/gpu_ext-v0.0.21/extension/.output/chunk_trace.bpf.o
+[bpf sections]
+  [ 7] .maps             PROGBITS        0000000000000000 000ff8 000030 00  WA  0   0  8
+  [11] .BTF              PROGBITS        0000000000000000 0010b8 008b32 00      0   0  8
+  [12] .BTF.ext          PROGBITS        0000000000000000 009bf0 000b0c 00      0   0  8
+[required hooks in source]
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace.c:171:    skel = chunk_trace_bpf__open();
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace.c:173:        fprintf(stderr, "Failed to open BPF skeleton\n");
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace.c:178:    err = chunk_trace_bpf__load(skel);
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace.c:180:        fprintf(stderr, "Failed to load and verify BPF skeleton: %d\n", err);
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace.c:185:    err = chunk_trace_bpf__attach(skel);
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace.c:187:        fprintf(stderr, "Failed to attach BPF skeleton: %d\n", err);
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace.bpf.c:18:char LICENSE[] SEC("license") = "GPL";
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace.bpf.c:24:} events SEC(".maps");
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace.bpf.c:32:} stats SEC(".maps");
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace.bpf.c:119:SEC("kprobe/uvm_bpf_call_pmm_chunk_activate")
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace.bpf.c:128:SEC("kprobe/uvm_bpf_call_pmm_chunk_used")
+/home/harsh4786/gpu_ext-v0.0.21/extension/chunk_trace.bpf.c:137:SEC("kprobe/uvm_bpf_call_pmm_eviction_prepare")
+[live module BTF files]
+[loaded module versions]
+580.173.02
+580.173.02

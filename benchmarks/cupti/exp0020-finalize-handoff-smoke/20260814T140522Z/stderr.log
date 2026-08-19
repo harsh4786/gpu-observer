@@ -1,0 +1,8 @@
+gpu-observer-cupti: deferred target=vector_add_handoff bounded_buffer_bytes=8388608
+gpu-observer-sanitizer: initialized mode=block_event capacity=65536 sample=1/1024 target=vector_add_handoff callback_data_scope=function launch_identity=0 passive_launch_records=0 graph_node_identity=0 cupti_handoff=1
+gpu-observer-cupti: handoff cuptiFinalize=CUPTI_SUCCESS
+gpu-observer-cupti: register=CUPTI_ERROR_MULTIPLE_SUBSCRIBERS_NOT_SUPPORTED enable=CUPTI_ERROR_UNKNOWN target=vector_add_handoff bounded_buffer_bytes=8388608
+gpu-observer-sanitizer: CUPTI handoff complete status=1
+gpu-observer-sanitizer: flush global driver copy failed push=no error copy=invalid argument pop=no error
+gpu-observer-sanitizer: flushed prefix=/results/device-probe
+gpu-observer-sanitizer: handoff flush complete cupti_status=1 state=4

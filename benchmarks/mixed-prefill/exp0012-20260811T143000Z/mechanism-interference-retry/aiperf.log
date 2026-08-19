@@ -1,0 +1,185 @@
+07:39:50.747 INFO     Starting AIPerf System (_single_run.py:64)
+07:39:50.750 INFO     ✓ Tokenizer Qwen/Qwen3-14B detected (tokenizer_display.py:297)
+07:39:50.750 INFO     1 tokenizer validated • 0.0s (tokenizer_display.py:306)
+07:39:50.750 INFO     HF cache hit (skipping prefetch): ['Qwen/Qwen3-14B'] (tokenizer_validator.py:99)
+07:39:50.842 WARNING  Multiple loaders match dataset '/home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-corrected.jsonl', skipping auto-detection (resolver.py:295)
+07:39:50.979 INFO     Server Metrics: Discovered 1 endpoints: ['http://127.0.0.1:8000/metrics'] (manager.py:74)
+07:39:50.980 INFO     GPU telemetry export enabled: /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/mechanism-interference-retry/aiperf/gpu_telemetry_export.jsonl (jsonl_writer.py:56)
+07:39:50.985 INFO     Telemetry streaming is disabled (set --otel-url and/or --mlflow-tracking-uri to enable) (otel_metrics_results_processor.py:128)
+07:39:50.985 INFO     OTel metrics streamer is disabled and will not be used: Telemetry streaming is disabled (set --otel-url and/or --mlflow-tracking-uri to enable) (records_manager.py:206)
+07:39:50.986 INFO     Record metrics export enabled: /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/mechanism-interference-retry/aiperf/profile_export.jsonl (record_export_results_processor.py:58)
+07:39:51.081 INFO     Registered Worker Manager (id: 'worker_manager') (system_controller.py:387)
+07:39:51.082 INFO     Registered Dataset Manager (id: 'dataset_manager') (system_controller.py:387)
+07:39:51.082 INFO     Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager') (system_controller.py:387)
+07:39:51.110 INFO     Registered Server Metrics Manager (id: 'server_metrics_manager') (system_controller.py:387)
+07:39:51.113 INFO     Registered Records Manager (id: 'records_manager') (system_controller.py:387)
+07:39:51.149 INFO     Registered Timing Manager (id: 'timing_manager') (system_controller.py:387)
+07:39:51.234 INFO     Registered Record Processor (id: 'record_processor_bcc2f0e9') (system_controller.py:387)
+07:39:51.255 INFO     Registered Record Processor (id: 'record_processor_171ccdb1') (system_controller.py:387)
+07:39:51.327 INFO     Registered Worker (id: 'worker_4be23b62') (system_controller.py:387)
+07:39:51.327 INFO     Registered Worker (id: 'worker_76cb4eb1') (system_controller.py:387)
+07:39:51.327 INFO     Registered Worker (id: 'worker_84394a12') (system_controller.py:387)
+07:39:51.328 INFO     Registered Worker (id: 'worker_5f71fd39') (system_controller.py:387)
+07:39:51.336 INFO     Registered Worker (id: 'worker_94717f30') (system_controller.py:387)
+07:39:51.336 INFO     Registered Worker (id: 'worker_a65581c2') (system_controller.py:387)
+07:39:51.341 INFO     Registered Worker (id: 'worker_1f1e8d29') (system_controller.py:387)
+07:39:51.341 INFO     Registered Worker (id: 'worker_e52288c8') (system_controller.py:387)
+07:39:51.469 INFO     AIPerf System is CONFIGURING (system_controller.py:276)
+07:39:51.469 INFO     Configuring all services to start profiling (system_controller.py:289)
+07:39:51.471 INFO     Configuring tokenizers for inference result parser (resolve_alias: True) (inference_result_parser.py:75)
+07:39:51.471 INFO     Configuring tokenizers for inference result parser (resolve_alias: True) (inference_result_parser.py:75)
+07:39:51.471 INFO     Waiting for dataset to be configured before configuring timing (manager.py:122)
+07:39:51.471 INFO     Configuring tokenizer(s) for dataset manager (dataset_manager.py:139)
+07:39:51.477 INFO     Server Metrics: Capturing baseline metrics... (manager.py:156)
+07:39:51.480 WARNING  GPU Telemetry: http://localhost:9400/metrics is not reachable (manager.py:243)
+07:39:51.481 WARNING  GPU Telemetry: http://localhost:9401/metrics is not reachable (manager.py:243)
+07:39:51.482 INFO     DCGM telemetry skipped: no DCGM endpoints reachable (system_controller.py:501)
+07:39:51.484 INFO     Skipping unsupported summary metric: http_request_size_bytes (data_collector.py:285)
+07:39:51.484 INFO     Skipping unsupported summary metric: http_response_size_bytes (data_collector.py:285)
+07:39:51.485 INFO     Server metrics enabled - 1/1 endpoint(s) reachable. (system_controller.py:527)
+07:39:52.199 INFO     HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:52.203 INFO     HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:52.222 INFO     HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:52.318 INFO     HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-14B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect" (_client.py:1025)
+07:39:52.318 INFO     HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-14B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect" (_client.py:1025)
+07:39:52.319 WARNING  Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads. (_http.py:953)
+07:39:52.319 WARNING  Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads. (_http.py:953)
+07:39:52.343 INFO     HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-14B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect" (_client.py:1025)
+07:39:52.343 INFO     HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18/config.json "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:52.343 WARNING  Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads. (_http.py:953)
+07:39:52.352 INFO     HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18/config.json "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:52.366 INFO     HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18/config.json "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:52.453 INFO     HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-14B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect" (_client.py:1025)
+07:39:52.457 INFO     HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-14B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect" (_client.py:1025)
+07:39:52.467 INFO     HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-14B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect" (_client.py:1025)
+07:39:52.474 INFO     HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18/tokenizer_config.json "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:52.477 INFO     HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18/tokenizer_config.json "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:52.486 INFO     HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18/tokenizer_config.json "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:52.580 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found" (_client.py:1025)
+07:39:52.585 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found" (_client.py:1025)
+07:39:52.591 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found" (_client.py:1025)
+07:39:52.683 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:52.688 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:52.703 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:53.109 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:53.109 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:53.110 INFO     Initialized tokenizers: {'Qwen/Qwen3-14B': {'class': 'Qwen2Tokenizer', 'name_or_path': 'Qwen/Qwen3-14B'}} in 1.64 seconds (inference_result_parser.py:98)
+07:39:53.110 INFO     Initialized tokenizers: {'Qwen/Qwen3-14B': {'class': 'Qwen2Tokenizer', 'name_or_path': 'Qwen/Qwen3-14B'}} in 1.64 seconds (inference_result_parser.py:98)
+07:39:53.114 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B "HTTP/1.1 200 OK" (_client.py:1025)
+07:39:53.116 INFO     Tokenizer(s) configured in 1.64 seconds (dataset_manager.py:143)
+07:39:53.117 INFO     Configuring dataset for dataset_manager (dataset_manager.py:149)
+07:39:53.402 INFO     Using explicit dataset format: raw_payload (custom.py:60)
+07:39:53.403 INFO     Loaded 12 raw payload conversations from file (raw_payload.py:90)
+07:39:53.415 INFO     Memory-mapped backing store initialized (streaming to /tmp/aiperf_mmap_266fa0f9d796/dataset.dat) (memory_map_utils.py:141)
+07:39:53.416 INFO     Data file finalized: 12 conversations, 0.01 MB (memory_map_utils.py:245)
+07:39:53.417 INFO     Index file created: /tmp/aiperf_mmap_266fa0f9d796/index.dat (memory_map_utils.py:252)
+07:39:53.417 INFO     Backing store finalized: client_type=DatasetClientStoreType.MEMORY_MAP data_file_path=PosixPath('/tmp/aiperf_mmap_266fa0f9d796/dataset.dat') index_file_path=PosixPath('/tmp/aiperf_mmap_266fa0f9d796/index.dat') conversation_count=12 total_size_bytes=9702 compressed_data_file_path=None compressed_index_file_path=None compressed_size_bytes=0 (dataset_manager.py:479)
+07:39:53.417 INFO     sampling strategy: sequential, unique conversations: 12, unique turn count: 12 (dataset_manager.py:497)
+07:39:53.418 INFO     Generating inputs.json file at /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/mechanism-interference-retry/aiperf/inputs.json (dataset_manager.py:337)
+07:39:53.419 INFO     inputs.json file generated in 0.00 seconds (dataset_manager.py:356)
+07:39:53.426 INFO     Initialized 2 phase(s): ['Warmup', 'Profiling'] (phase_orchestrator.py:165)
+07:39:53.486 INFO     Dataset client initialized and freed 12 conversations from memory (dataset_manager.py:185)
+07:39:53.486 INFO     Dataset configured in 0.37 seconds (dataset_manager.py:156)
+07:39:53.487 INFO     All services configured in 2.02 seconds (system_controller.py:300)
+07:39:53.488 INFO     AIPerf System is CONFIGURED (system_controller.py:278)
+07:39:53.489 INFO     Server Metrics: Started 1 collector(s) successfully (manager.py:220)
+07:39:53.490 INFO     All services started profiling successfully (system_controller.py:322)
+07:39:53.490 INFO     AIPerf System is PROFILING (system_controller.py:280)
+07:39:53.491 INFO     Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None (request_rate.py:114)
+07:39:53.491 NOTICE   Phase warmup started | target: 1 requests (runner.py:369)
+07:39:53.492 NOTICE   Phase warmup sending complete | sent=1, completed=0, in_flight=1 | sessions: sent=1, completed=0 (runner.py:608)
+07:39:53.492 INFO     Credit phase start: warmup (records_manager.py:518)
+07:40:08.432 NOTICE   Phase warmup complete | completed=1, cancelled=0, errors=0 | sessions: completed=1, cancelled=0 | elapsed=14.94s (runner.py:686)
+07:40:08.432 INFO     Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None (request_rate.py:114)
+07:40:08.433 NOTICE   Phase profiling started | target: 12 requests (runner.py:369)
+07:40:08.434 INFO     Credit phase start: profiling (records_manager.py:518)
+07:40:25.126 NOTICE   Phase profiling sending complete | sent=12, completed=6, in_flight=6 | sessions: sent=12, completed=6 (runner.py:608)
+07:40:25.127 INFO     Sent 12 requests. Waiting for all to complete... (records_manager.py:534)
+07:40:40.481 NOTICE   Phase profiling complete | completed=12, cancelled=0, errors=0 | sessions: completed=12, cancelled=0 | elapsed=32.05s (runner.py:686)
+07:40:40.481 NOTICE   All credits completed (phase_orchestrator.py:180)
+07:40:40.482 INFO     Received credits complete from 'timing_manager' (system_controller.py:422)
+07:40:40.482 INFO     Received CREDIT_PHASE_COMPLETE message, Phase complete: PhaseRecordsStats(phase=CreditPhase.PROFILING, start_ns=1786459208433028297, sent_end_ns=1786459225126622200, requests_end_ns=1786459240481239234, total_expected_requests=12, expected_duration_sec=None, expected_num_sessions=None, expected_grace_period_sec=None, final_requests_sent=None, final_requests_completed=12, final_requests_cancelled=0, final_request_errors=0, final_sent_sessions=None, final_completed_sessions=None, final_cancelled_sessions=None, timeout_triggered=False, grace_period_timeout_triggered=False, was_cancelled=False, records_end_ns=None, success_records=9, error_records=0) (records_manager.py:560)
+07:40:40.482 NOTICE   All requests have completed, please wait for the results to be processed (currently 9 of 12 records processed)... (records_manager.py:565)
+07:40:40.482 INFO     All credits complete, please wait for the results to be processed... (records_manager.py:589)
+07:40:40.488 INFO     Processed 12 valid requests and 0 errors (12 total). (records_manager.py:296)
+07:40:40.488 INFO     Received all records, processing now... (records_manager.py:302)
+07:40:40.491 INFO     Server Metrics: Profiling complete, capturing final metrics... (manager.py:250)
+07:40:40.492 INFO     Waiting 2.0s for server metrics flush period... (records_manager.py:352)
+07:40:42.482 INFO     Processing records results... (records_manager.py:777)
+07:40:42.489 INFO     Summarizing timeslice metric results... (timeslice_metric_results_processor.py:103)
+07:40:42.491 INFO     Summarized 2 timeslice metric results (timeslice_metric_results_processor.py:121)
+07:40:42.494 INFO     Waiting for server metrics results... (system_controller.py:779)
+07:40:42.494 INFO     Waiting for server metrics results... (system_controller.py:779)
+07:40:42.498 INFO     _finalize_and_process_results completed (records_manager.py:359)
+07:40:42.502 INFO     All results received, initiating shutdown (system_controller.py:774)
+07:40:43.105 INFO     Exporting all records (exporter_manager.py:62)
+07:40:43.144 INFO     Exporting console data (exporter_manager.py:134)
+
+
+                                    NVIDIA AIPerf | LLM Metrics                                     
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━┓
+┃          Metric ┃       avg ┃       min ┃       max ┃       p99 ┃       p90 ┃       p50 ┃    std ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━┩
+│   Time to First │    285.82 │    152.21 │    371.73 │    371.72 │    371.66 │    273.40 │  59.43 │
+│      Token (ms) │           │           │           │           │           │           │        │
+│  Time to Second │    118.36 │    117.12 │    121.37 │    121.05 │    118.46 │    118.39 │   1.01 │
+│      Token (ms) │           │           │           │           │           │           │        │
+│   Time to First │    285.82 │    152.21 │    371.73 │    371.72 │    371.66 │    273.40 │  59.43 │
+│    Output Token │           │           │           │           │           │           │        │
+│            (ms) │           │           │           │           │           │           │        │
+│ Request Latency │ 16,224.94 │ 15,237.40 │ 16,690.65 │ 16,690.63 │ 16,690.50 │ 16,690.38 │ 638.67 │
+│            (ms) │           │           │           │           │           │           │        │
+│     Inter Token │    125.50 │    117.96 │    129.28 │    129.28 │    129.27 │    129.27 │   5.32 │
+│    Latency (ms) │           │           │           │           │           │           │        │
+│    Output Token │      7.98 │      7.74 │      8.48 │      8.48 │      8.48 │      7.74 │   0.35 │
+│  Throughput Per │           │           │           │           │           │           │        │
+│            User │           │           │           │           │           │           │        │
+│ (tokens/sec/us… │           │           │           │           │           │           │        │
+│      E2E Output │      7.90 │      7.67 │      8.40 │      8.39 │      8.34 │      7.67 │   0.32 │
+│           Token │           │           │           │           │           │           │        │
+│      Throughput │           │           │           │           │           │           │        │
+│ (tokens/sec/us… │           │           │           │           │           │           │        │
+│ Output Sequence │    128.00 │    128.00 │    128.00 │    128.00 │    128.00 │    128.00 │   0.00 │
+│ Length (tokens) │           │           │           │           │           │           │        │
+│    Output Token │     47.93 │       N/A │       N/A │       N/A │       N/A │       N/A │    N/A │
+│      Throughput │           │           │           │           │           │           │        │
+│    (tokens/sec) │           │           │           │           │           │           │        │
+│         Request │      0.37 │       N/A │       N/A │       N/A │       N/A │       N/A │    N/A │
+│      Throughput │           │           │           │           │           │           │        │
+│  (requests/sec) │           │           │           │           │           │           │        │
+│   Request Count │     12.00 │       N/A │       N/A │       N/A │       N/A │       N/A │    N/A │
+│      (requests) │           │           │           │           │           │           │        │
+└─────────────────┴───────────┴───────────┴───────────┴───────────┴───────────┴───────────┴────────┘
+
+
+No GPU telemetry data collected during the benchmarking run.
+
+CLI Command: aiperf profile --model 'Qwen/Qwen3-14B' --url 'http://127.0.0.1:8000' --endpoint-type 
+'chat' --streaming --input-file 
+'benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-correcte
+d.jsonl' --custom-dataset-type 'raw-payload' --dataset-sampling-strategy 'sequential' 
+--warmup-request-count 1 --request-count 12 --concurrency 8 --slice-duration 10 --artifact-dir 
+'benchmarks/mixed-prefill/exp0012-20260811T143000Z/mechanism-interference-retry/aiperf'
+Benchmark Duration: 32.05 sec
+CSV Export: 
+/home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/mechanism-interferenc
+e-retry/aiperf/profile_export_aiperf.csv
+JSON Export: 
+/home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/mechanism-interferenc
+e-retry/aiperf/profile_export_aiperf.json
+Server Metrics CSV Export: 
+/home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/mechanism-interferenc
+e-retry/aiperf/server_metrics_export.csv
+Server Metrics JSON Export: 
+/home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/mechanism-interferenc
+e-retry/aiperf/server_metrics_export.json
+Timeslice CSV Export: 
+/home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/mechanism-interferenc
+e-retry/aiperf/profile_export_aiperf_timeslices.csv
+Timeslice JSON Export: 
+/home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/mechanism-interferenc
+e-retry/aiperf/profile_export_aiperf_timeslices.json
+Log File: 
+/home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/mechanism-interferenc
+e-retry/aiperf/logs/aiperf.log
+

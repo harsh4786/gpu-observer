@@ -1,0 +1,169 @@
+diff --git a/attach/nv_attach_impl/nv_attach_impl.cpp b/attach/nv_attach_impl/nv_attach_impl.cpp
+index e2d3412..06bfe09 100644
+--- a/attach/nv_attach_impl/nv_attach_impl.cpp
++++ b/attach/nv_attach_impl/nv_attach_impl.cpp
+@@ -1216,7 +1216,13 @@ int nv_attach_impl::run_attach_entry_on_gpu(int attach_id, int run_count,
+ 		CUDA_SAFE_CALL(cuInit(0));
+ 		CUDA_SAFE_CALL(cuDeviceGet(&cuDevice, 0));
+ 
++#if CUDA_VERSION >= 13000
++		// CUDA 13.0+ uses 4-parameter cuCtxCreate_v4
++		CUDA_SAFE_CALL(cuCtxCreate(&context, nullptr, 0, cuDevice));
++#else
++		// CUDA 12.x and earlier use 3-parameter cuCtxCreate
+ 		CUDA_SAFE_CALL(cuCtxCreate(&context, 0, cuDevice));
++#endif
+ 		CUDA_SAFE_CALL(cuModuleLoadDataEx(&module, output_elf.data(), 0,
+ 						  0, 0));
+ 		// fill data into it
+diff --git a/attach/nv_attach_impl/nv_attach_impl_frida_setup.cpp b/attach/nv_attach_impl/nv_attach_impl_frida_setup.cpp
+index 84158a1..6e916af 100644
+--- a/attach/nv_attach_impl/nv_attach_impl_frida_setup.cpp
++++ b/attach/nv_attach_impl/nv_attach_impl_frida_setup.cpp
+@@ -200,8 +200,29 @@ cuda_launch_kernel_common(nv_attach_impl *impl, void *original_fn_ptr,
+ 
+ 	// Fallback path for late attach: resolve host stub symbol name to
+ 	// locate the patched CUfunction mapping.
+-	if (auto name = impl->resolve_host_function_symbol((void *)func);
+-	    name) {
++	std::optional<std::string> name;
++#if CUDA_VERSION >= 13000
++	using cu_kernel_get_name_fn_t =
++		CUresult (*)(const char **, CUkernel);
++	static cu_kernel_get_name_fn_t cu_kernel_get_name =
++		reinterpret_cast<cu_kernel_get_name_fn_t>(
++			dlsym(RTLD_DEFAULT, "cuKernelGetName"));
++	const char *kernel_name = nullptr;
++	if (cu_kernel_get_name != nullptr &&
++	    cu_kernel_get_name(
++		    &kernel_name,
++		    reinterpret_cast<CUkernel>(const_cast<void *>(func))) ==
++		    CUDA_SUCCESS &&
++	    kernel_name != nullptr && kernel_name[0] != '\0') {
++		name = std::string(kernel_name);
++		SPDLOG_DEBUG(
++			"CUDA 13 launch: resolved kernel handle {}",
++			name->c_str());
++	}
++#endif
++	if (!name)
++		name = impl->resolve_host_function_symbol((void *)func);
++	if (name) {
+ 		if (auto patched = impl->find_patched_kernel_function(*name);
+ 		    patched) {
+ 			SPDLOG_DEBUG(
+diff --git a/attach/nv_attach_impl/nv_attach_utils.cpp b/attach/nv_attach_impl/nv_attach_utils.cpp
+index a000953..d0a02d7 100644
+--- a/attach/nv_attach_impl/nv_attach_utils.cpp
++++ b/attach/nv_attach_impl/nv_attach_utils.cpp
+@@ -27,9 +27,12 @@ std::string rewrite_ptx_target(std::string ptx,
+ 	if (sm_arch.empty())
+ 		return ptx;
+ 
+-	// Rewrite .version based on SM arch (sm_120+ needs 8.7, sm_100+ needs 8.5)
++	// Rewrite .version based on SM arch. CUDA 13 emits PTX 9.0 for
++	// compute_121, and ptxas rejects PTX 8.7 when targeting sm_121.
+ 	int sm_num = (sm_arch.size() > 3) ? std::atoi(sm_arch.c_str() + 3) : 0;
+-	const char *ptx_ver = (sm_num >= 120) ? "8.7" : (sm_num >= 100) ? "8.5" : nullptr;
++	const char *ptx_ver = (sm_num >= 121) ? "9.0" :
++			      (sm_num >= 120) ? "8.7" :
++			      (sm_num >= 100) ? "8.5" : nullptr;
+ 	if (ptx_ver) {
+ 		auto vpos = ptx.find(".version");
+ 		if (vpos != std::string::npos) {
+diff --git a/cmake/cuda.cmake b/cmake/cuda.cmake
+index 77521ae..a46b91f 100644
+--- a/cmake/cuda.cmake
++++ b/cmake/cuda.cmake
+@@ -6,16 +6,33 @@ function(find_cuda)
+         message(FATAL_ERROR "To use NV attach, set BPFTIME_CUDA_ROOT to the root of CUDA installation, such as /usr/local/cuda-12.6")
+     endif()
+ 
+-    # Detect target platform based on CMAKE_SYSTEM_PROCESSOR
++    # Detect target platform based on CMAKE_SYSTEM_PROCESSOR. ARM toolkits ship
++    # either the embedded (aarch64-linux) or the server (sbsa-linux) layout, so
++    # probe the candidates and use whichever this installation actually has.
+     if(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64|arm64")
+-        set(CUDA_TARGET_ARCH "aarch64-linux")
++        set(CUDA_TARGET_ARCH_CANDIDATES "aarch64-linux" "sbsa-linux")
+     elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|amd64")
+-        set(CUDA_TARGET_ARCH "x86_64-linux")
++        set(CUDA_TARGET_ARCH_CANDIDATES "x86_64-linux")
+     else()
+         message(WARNING "Unsupported architecture ${CMAKE_SYSTEM_PROCESSOR}, defaulting to x86_64-linux")
+-        set(CUDA_TARGET_ARCH "x86_64-linux")
++        set(CUDA_TARGET_ARCH_CANDIDATES "x86_64-linux")
+     endif()
+ 
++    set(CUDA_TARGET_ARCH "")
++    foreach(arch IN LISTS CUDA_TARGET_ARCH_CANDIDATES)
++        if(EXISTS "${BPFTIME_CUDA_ROOT}/targets/${arch}/include")
++            set(CUDA_TARGET_ARCH "${arch}")
++            break()
++        endif()
++    endforeach()
++
++    if(NOT CUDA_TARGET_ARCH)
++        list(GET CUDA_TARGET_ARCH_CANDIDATES 0 CUDA_TARGET_ARCH)
++        message(WARNING "No CUDA target layout found under ${BPFTIME_CUDA_ROOT}/targets, defaulting to ${CUDA_TARGET_ARCH}")
++    endif()
++
++    message(STATUS "Using CUDA target layout: ${CUDA_TARGET_ARCH}")
++
+     set(CUDA_LIBRARY_PATH ${BPFTIME_CUDA_ROOT}/targets/${CUDA_TARGET_ARCH}/lib/ ${BPFTIME_CUDA_ROOT}/targets/${CUDA_TARGET_ARCH}/lib/stubs/ ${BPFTIME_CUDA_ROOT}/extras/CUPTI/lib64/ PARENT_SCOPE)
+ 
+     # Detect CUDA version from version.json or version.txt
+@@ -38,10 +55,17 @@ function(find_cuda)
+     endif()
+ 
+     # Prefer canonical CUPTI include path; fall back to versioned layout if needed.
+-    set(_CUDA_CUPTI_INCLUDE "${BPFTIME_CUDA_ROOT}/extras/CUPTI/include")
+-    if(NOT EXISTS "${_CUDA_CUPTI_INCLUDE}")
+-        set(_CUDA_CUPTI_INCLUDE "${BPFTIME_CUDA_ROOT}/cuda-${CUDA_VERSION_MAJOR}.${CUDA_VERSION_MINOR}/extras/CUPTI/include")
+-    endif()
++    # CUDA 13 drops extras/CUPTI/include and ships the headers next to the rest
++    # of the toolkit, which the target include directory already covers.
++    set(_CUDA_CUPTI_INCLUDE "")
++    foreach(candidate
++            "${BPFTIME_CUDA_ROOT}/extras/CUPTI/include"
++            "${BPFTIME_CUDA_ROOT}/cuda-${CUDA_VERSION_MAJOR}.${CUDA_VERSION_MINOR}/extras/CUPTI/include")
++        if(EXISTS "${candidate}")
++            set(_CUDA_CUPTI_INCLUDE "${candidate}")
++            break()
++        endif()
++    endforeach()
+     set(CUDA_INCLUDE_PATH ${BPFTIME_CUDA_ROOT}/targets/${CUDA_TARGET_ARCH}/include ${_CUDA_CUPTI_INCLUDE} PARENT_SCOPE)
+ 
+     message(STATUS "Detected CUDA version: ${CUDA_VERSION_MAJOR}.${CUDA_VERSION_MINOR}")
+diff --git a/runtime/src/handler/map_handler.cpp b/runtime/src/handler/map_handler.cpp
+index 7cc5f7a..3bf79b9 100644
+--- a/runtime/src/handler/map_handler.cpp
++++ b/runtime/src/handler/map_handler.cpp
+@@ -1005,7 +1005,13 @@ int bpf_map_handler::map_init(managed_shared_memory &memory)
+ 		shm_holder.global_shared_memory.set_enable_mock(false);
+ 		if (!device) {
+ 			cuDeviceGet(&device, 0);
++#if CUDA_VERSION >= 13000
++			// CUDA 13.0+ uses 4-parameter cuCtxCreate_v4
++			cuCtxCreate(&context, nullptr, 0, device);
++#else
++			// CUDA 12.x and earlier use 3-parameter cuCtxCreate
+ 			cuCtxCreate(&context, 0, device);
++#endif
+ 			SPDLOG_INFO(
+ 				"CUDA context for thread {} has been set to {:x}",
+ 				gettid(), (uintptr_t)context);
+@@ -1024,7 +1030,13 @@ int bpf_map_handler::map_init(managed_shared_memory &memory)
+ 		shm_holder.global_shared_memory.set_enable_mock(false);
+ 		if (!device) {
+ 			cuDeviceGet(&device, 0);
++#if CUDA_VERSION >= 13000
++			// CUDA 13.0+ uses 4-parameter cuCtxCreate_v4
++			cuCtxCreate(&context, nullptr, 0, device);
++#else
++			// CUDA 12.x and earlier use 3-parameter cuCtxCreate
+ 			cuCtxCreate(&context, 0, device);
++#endif
+ 			SPDLOG_INFO(
+ 				"CUDA context for thread {} has been set to {:x}",
+ 				gettid(), (uintptr_t)context);

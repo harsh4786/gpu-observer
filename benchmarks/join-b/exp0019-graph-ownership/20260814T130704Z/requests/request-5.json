@@ -1,0 +1,13 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "how do I add multiple new columns in m for power query or power bi?"
+    }
+  ],
+  "model": "Qwen/Qwen3-14B",
+  "stream": false,
+  "max_completion_tokens": 24,
+  "temperature": 0,
+  "ignore_eos": true
+}

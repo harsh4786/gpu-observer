@@ -1,0 +1,4 @@
+gpu-observer-cupti: deferred target=vector_add_handoff bounded_buffer_bytes=8388608
+gpu-observer-cupti: register=CUPTI_SUCCESS enable=CUPTI_SUCCESS target=vector_add_handoff bounded_buffer_bytes=8388608
+gpu-observer-cupti: control command=S status=0
+gpu-observer-cupti: control command=F status=0

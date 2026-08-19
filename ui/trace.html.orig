@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>GPU Observer — Query to SASS</title>
+  <link rel="stylesheet" href="./trace.css?v=graph2">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">GPU Observer · causal trace</span>
+        <h1>Query → tokens → engine step → kernel → SASS</h1>
+        <p id="run-subtitle">Loading sealed trace…</p>
+      </div>
+      <div class="top-actions">
+        <label class="file-button">Open TraceBundle v2<input id="trace-file" type="file" accept=".json,application/json"></label>
+        <span id="capture-status" class="status">loading</span>
+      </div>
+    </header>
+
+    <section id="error-panel" class="error-panel hidden" role="alert"></section>
+
+    <section class="hero-grid">
+      <article class="query-card">
+        <div class="card-head"><span class="stage-number">1</span><div><span class="eyebrow">Human intent</span><h2>Foreground query</h2></div></div>
+        <blockquote id="query-text"></blockquote>
+        <button id="prompt-toggle" class="text-button" type="button">Show rendered model prompt</button>
+        <pre id="rendered-prompt" class="rendered-prompt hidden"></pre>
+      </article>
+      <article class="answer-card">
+        <div class="card-head"><span class="stage-number">6</span><div><span class="eyebrow">Latency outcome</span><h2>Model response</h2></div></div>
+        <p id="answer-text"></p>
+        <div id="outcome-metrics" class="metric-row"></div>
+      </article>
+    </section>
+
+    <section class="token-card">
+      <div class="section-title">
+        <div><span class="eyebrow">Exact tokenizer boundary</span><h2>Prompt token ribbon</h2></div>
+        <div class="legend"><span class="badge measured">measured</span><span id="token-detail">Select a token</span></div>
+      </div>
+      <div id="prompt-tokens" class="token-ribbon" aria-label="Prompt tokens"></div>
+      <div class="output-divider"><span>accepted output tokens</span></div>
+      <div id="output-tokens" class="token-ribbon" aria-label="Output tokens"></div>
+    </section>
+
+    <section class="step-card">
+      <div class="section-title">
+        <div><span class="eyebrow">Python vLLM EngineCore</span><h2>Continuous-batching steps</h2></div>
+        <label class="step-select-label">Inspect step <select id="step-select"></select></label>
+      </div>
+      <div id="step-rail" class="step-rail"></div>
+      <div id="step-metrics" class="metric-row"></div>
+    </section>
+
+    <section class="causal-flow" aria-label="Selected engine step execution flow">
+      <article class="flow-stage">
+        <div class="card-head"><span class="stage-number">2</span><div><span class="eyebrow">SchedulerOutput</span><h2>Who was selected?</h2></div></div>
+        <p class="why">The Python scheduler chooses request slices under token and KV-cache budgets.</p>
+        <div id="scheduler-slices" class="stack-list"></div>
+      </article>
+      <div class="flow-arrow"><span>membership</span>→</div>
+      <article class="flow-stage">
+        <div class="card-head"><span class="stage-number">3</span><div><span class="eyebrow">GPUModelRunner</span><h2>How were rows packed?</h2></div></div>
+        <p class="why">These are authoritative model-input rows after compaction and reordering.</p>
+        <div id="packed-slices" class="stack-list"></div>
+      </article>
+      <div class="flow-arrow"><span>launch + time</span>→</div>
+      <article class="flow-stage wide">
+        <div class="card-head"><span class="stage-number">4</span><div><span class="eyebrow">CUPTI actual GPU time</span><h2>Which kernels ran?</h2></div></div>
+        <p class="why">Host submission and actual GPU execution share the normalized monotonic timeline.</p>
+        <div id="kernel-timeline" class="kernel-timeline"></div>
+        <div id="kernel-list" class="kernel-list"></div>
+      </article>
+    </section>
+
+    <section class="microscope-grid">
+      <article class="kernel-detail-card">
+        <div class="card-head"><span class="stage-number">5</span><div><span class="eyebrow">Validated attribution boundary</span><h2>Kernel work ownership</h2></div></div>
+        <div id="kernel-detail"></div>
+        <div id="ownership-list" class="ownership-list"></div>
+      </article>
+      <article class="sass-card">
+        <div class="section-title">
+          <div><span class="eyebrow">Matched diagnostic replay</span><h2>SASS microscope</h2></div>
+          <span id="sass-status" class="badge unknown">unknown</span>
+        </div>
+        <div class="ptx-warning"><strong>PTX layer:</strong> unavailable in the shipped BF16 binary. No PTX is invented.</div>
+        <div id="sass-content"></div>
+      </article>
+    </section>
+
+    <section class="evidence-card">
+      <div><span class="eyebrow">Epistemic contract</span><h2>What each edge means</h2></div>
+      <div id="evidence-grid" class="evidence-grid"></div>
+    </section>
+
+    <footer>
+      Sealed traces are rendered offline. Raw ring, CUPTI, and sanitizer artifacts remain the source of truth.
+    </footer>
+  </main>
+  <script type="module" src="./trace.js?v=graph2"></script>
+</body>
+</html>

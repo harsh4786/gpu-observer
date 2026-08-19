@@ -1,0 +1,32 @@
+experiment=EXP0012
+captured_utc=2026-08-11
+host=spark-3be9
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+os_release:
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.4 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=noble
+gpu:
+NVIDIA GB10, 580.173.02, 12.1, 32
+image:
+nvcr.io/nvidia/vllm@sha256:654e563e727be1968487d453de0733fb074cb59adf424c779d0f9e7cfcb2b6b6
+model=Qwen/Qwen3-14B
+model_revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+vllm=0.20.1+7124b12a.nv26.5
+aiperf:
+0.10.0
+aiperf_source_commit=bf70bd968f44b7d34026554e8dc629d39440d106
+rust:
+rustc 1.97.1 (8bab26f4f 2026-07-14)
+cargo 1.97.1 (c980f4866 2026-06-30)
+nsight:
+NVIDIA Nsight Systems version 2025.3.2.474-253236389321v0

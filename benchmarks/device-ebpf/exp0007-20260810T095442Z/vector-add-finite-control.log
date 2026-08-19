@@ -1,0 +1,4 @@
+Script started on 2026-08-10 03:04:10-07:00 [COMMAND="/home/harsh4786/gpu-observer/benchmarks/device-ebpf/exp0007-20260810T095442Z/vec_add_once-sm121" <not executed on terminal>]
+vectorAdd C[0]=0.0 C[1]=4.0 blocks=32 threads=128 status=PASS
+
+Script done on 2026-08-10 03:04:11-07:00 [COMMAND_EXIT_CODE="0"]

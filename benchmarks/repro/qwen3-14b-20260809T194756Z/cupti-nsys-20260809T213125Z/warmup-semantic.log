@@ -1,0 +1,10 @@
+begin ts=403337116749134 seq=0 step=1 scheduled=24 prefill=24 decode=0 queue=0 active=1 slices=1 kv_permyriad=6 flags=0x0
+slice ts=403337116749134 seq=1 step=1 request=0xeb0887881735311c phase=1 tokens=24
+end ts=403337368239979 seq=2 step=1 status=0 flags=0x0
+begin ts=403337368444474 seq=3 step=2 scheduled=1 prefill=0 decode=1 queue=0 active=1 slices=1 kv_permyriad=6 flags=0x0
+slice ts=403337368444474 seq=4 step=2 request=0xeb0887881735311c phase=2 tokens=1
+end ts=403337677504732 seq=5 step=2 status=0 flags=0x0
+begin ts=403337677664075 seq=6 step=3 scheduled=1 prefill=0 decode=1 queue=0 active=1 slices=1 kv_permyriad=6 flags=0x0
+slice ts=403337677664075 seq=7 step=3 request=0xeb0887881735311c phase=2 tokens=1
+end ts=403337801323945 seq=8 step=3 status=0 flags=0x0
+summary records=9 begins=3 slices=3 ends=3 producer_dropped=0

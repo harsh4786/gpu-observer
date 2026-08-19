@@ -1,0 +1,203 @@
+step=5 packing_generation=5 scheduled=8 decode=8 requests=8 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1484014 kernel_sum_ns=287136 busy_union_ns=287136 overlap_ns=0 first_gpu_lag_ns=144899692 gpu_tail_to_step_end_ns=9382922 padding_blocks=0 reordered_positions=0
+  request=0xbd8f6ecadb475e74 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x6a2152939eef79cf phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[6,7) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x384d180a746a2ae3 phase=2 rows=[7,8) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=6 packing_generation=6 scheduled=8 decode=8 requests=8 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1152238 kernel_sum_ns=270560 busy_union_ns=270560 overlap_ns=0 first_gpu_lag_ns=123125846 gpu_tail_to_step_end_ns=9661340 padding_blocks=0 reordered_positions=0
+  request=0xbd8f6ecadb475e74 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x6a2152939eef79cf phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[6,7) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x384d180a746a2ae3 phase=2 rows=[7,8) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=7 packing_generation=7 scheduled=8 decode=8 requests=8 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1148143 kernel_sum_ns=270688 busy_union_ns=270688 overlap_ns=0 first_gpu_lag_ns=120642007 gpu_tail_to_step_end_ns=9482224 padding_blocks=0 reordered_positions=0
+  request=0xbd8f6ecadb475e74 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x6a2152939eef79cf phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[6,7) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x384d180a746a2ae3 phase=2 rows=[7,8) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=8 packing_generation=8 scheduled=8 decode=8 requests=8 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=13136158 kernel_sum_ns=264928 busy_union_ns=264928 overlap_ns=0 first_gpu_lag_ns=120694868 gpu_tail_to_step_end_ns=9461586 padding_blocks=0 reordered_positions=0
+  request=0xbd8f6ecadb475e74 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x6a2152939eef79cf phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[6,7) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x384d180a746a2ae3 phase=2 rows=[7,8) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=9 packing_generation=9 scheduled=8 decode=8 requests=8 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1130927 kernel_sum_ns=263232 busy_union_ns=263232 overlap_ns=0 first_gpu_lag_ns=121972544 gpu_tail_to_step_end_ns=9751700 padding_blocks=0 reordered_positions=0
+  request=0xbd8f6ecadb475e74 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x6a2152939eef79cf phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[6,7) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x384d180a746a2ae3 phase=2 rows=[7,8) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=10 packing_generation=10 scheduled=8 decode=8 requests=8 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1280622 kernel_sum_ns=260736 busy_union_ns=260736 overlap_ns=0 first_gpu_lag_ns=120690783 gpu_tail_to_step_end_ns=11480324 padding_blocks=0 reordered_positions=0
+  request=0xbd8f6ecadb475e74 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x6a2152939eef79cf phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[6,7) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x384d180a746a2ae3 phase=2 rows=[7,8) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=11 packing_generation=11 scheduled=7 decode=7 requests=7 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=369248 kernel_sum_ns=206336 busy_union_ns=206336 overlap_ns=0 first_gpu_lag_ns=122411449 gpu_tail_to_step_end_ns=9717928 padding_blocks=40 reordered_positions=7
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x6a2152939eef79cf phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[6,7) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=12 packing_generation=12 scheduled=7 decode=7 requests=7 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1037230 kernel_sum_ns=189727 busy_union_ns=189727 overlap_ns=0 first_gpu_lag_ns=119901963 gpu_tail_to_step_end_ns=9833740 padding_blocks=40 reordered_positions=7
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x6a2152939eef79cf phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[6,7) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=13 packing_generation=13 scheduled=7 decode=7 requests=7 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1391822 kernel_sum_ns=190816 busy_union_ns=190816 overlap_ns=0 first_gpu_lag_ns=120815303 gpu_tail_to_step_end_ns=9544382 padding_blocks=40 reordered_positions=7
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x6a2152939eef79cf phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[6,7) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=14 packing_generation=14 scheduled=7 decode=7 requests=7 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1082783 kernel_sum_ns=190943 busy_union_ns=190943 overlap_ns=0 first_gpu_lag_ns=120747477 gpu_tail_to_step_end_ns=9465425 padding_blocks=40 reordered_positions=7
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x6a2152939eef79cf phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[6,7) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=15 packing_generation=15 scheduled=7 decode=7 requests=7 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=12536112 kernel_sum_ns=177984 busy_union_ns=177984 overlap_ns=0 first_gpu_lag_ns=120798050 gpu_tail_to_step_end_ns=9701762 padding_blocks=40 reordered_positions=7
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x6a2152939eef79cf phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[6,7) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=16 packing_generation=16 scheduled=6 decode=6 requests=6 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1242798 kernel_sum_ns=250496 busy_union_ns=250496 overlap_ns=0 first_gpu_lag_ns=120503088 gpu_tail_to_step_end_ns=9777283 padding_blocks=80 reordered_positions=6
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=17 packing_generation=17 scheduled=6 decode=6 requests=6 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1165039 kernel_sum_ns=250591 busy_union_ns=250591 overlap_ns=0 first_gpu_lag_ns=120431422 gpu_tail_to_step_end_ns=9354310 padding_blocks=80 reordered_positions=6
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=18 packing_generation=18 scheduled=6 decode=6 requests=6 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1067663 kernel_sum_ns=250336 busy_union_ns=250336 overlap_ns=0 first_gpu_lag_ns=121185772 gpu_tail_to_step_end_ns=9673752 padding_blocks=80 reordered_positions=6
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=19 packing_generation=19 scheduled=6 decode=6 requests=6 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=980015 kernel_sum_ns=251584 busy_union_ns=251584 overlap_ns=0 first_gpu_lag_ns=120886154 gpu_tail_to_step_end_ns=9341514 padding_blocks=80 reordered_positions=6
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x82c069fa66e8f18e phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[5,6) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=20 packing_generation=20 scheduled=5 decode=5 requests=5 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1135519 kernel_sum_ns=176992 busy_union_ns=176992 overlap_ns=0 first_gpu_lag_ns=120249961 gpu_tail_to_step_end_ns=9344653 padding_blocks=120 reordered_positions=4
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=21 packing_generation=21 scheduled=5 decode=5 requests=5 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1076495 kernel_sum_ns=172288 busy_union_ns=172288 overlap_ns=0 first_gpu_lag_ns=120728614 gpu_tail_to_step_end_ns=9415759 padding_blocks=120 reordered_positions=4
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=22 packing_generation=22 scheduled=5 decode=5 requests=5 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1005103 kernel_sum_ns=174752 busy_union_ns=174752 overlap_ns=0 first_gpu_lag_ns=120985331 gpu_tail_to_step_end_ns=9635295 padding_blocks=120 reordered_positions=4
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=23 packing_generation=23 scheduled=5 decode=5 requests=5 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1222430 kernel_sum_ns=169888 busy_union_ns=169888 overlap_ns=0 first_gpu_lag_ns=120519939 gpu_tail_to_step_end_ns=9671601 padding_blocks=120 reordered_positions=4
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x93b77486e305a9e9 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[4,5) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=24 packing_generation=24 scheduled=4 decode=4 requests=4 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1999950 kernel_sum_ns=244352 busy_union_ns=244352 overlap_ns=0 first_gpu_lag_ns=119879507 gpu_tail_to_step_end_ns=9646707 padding_blocks=0 reordered_positions=4
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=25 packing_generation=25 scheduled=4 decode=4 requests=4 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1198511 kernel_sum_ns=241280 busy_union_ns=241280 overlap_ns=0 first_gpu_lag_ns=119554881 gpu_tail_to_step_end_ns=9493909 padding_blocks=0 reordered_positions=4
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=26 packing_generation=26 scheduled=4 decode=4 requests=4 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1081902 kernel_sum_ns=241664 busy_union_ns=241664 overlap_ns=0 first_gpu_lag_ns=119821103 gpu_tail_to_step_end_ns=9636166 padding_blocks=0 reordered_positions=4
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=27 packing_generation=27 scheduled=4 decode=4 requests=4 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1093918 kernel_sum_ns=252352 busy_union_ns=252352 overlap_ns=0 first_gpu_lag_ns=119385421 gpu_tail_to_step_end_ns=10228150 padding_blocks=0 reordered_positions=4
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xf323c27fd4814f46 phase=2 rows=[3,4) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=28 packing_generation=28 scheduled=3 decode=3 requests=3 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1050719 kernel_sum_ns=162816 busy_union_ns=162816 overlap_ns=0 first_gpu_lag_ns=122392696 gpu_tail_to_step_end_ns=9164537 padding_blocks=40 reordered_positions=2
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=29 packing_generation=29 scheduled=3 decode=3 requests=3 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1040015 kernel_sum_ns=163296 busy_union_ns=163296 overlap_ns=0 first_gpu_lag_ns=120095161 gpu_tail_to_step_end_ns=9625548 padding_blocks=40 reordered_positions=2
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=30 packing_generation=30 scheduled=3 decode=3 requests=3 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1157439 kernel_sum_ns=162016 busy_union_ns=162016 overlap_ns=0 first_gpu_lag_ns=120312678 gpu_tail_to_step_end_ns=9312826 padding_blocks=40 reordered_positions=2
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=31 packing_generation=31 scheduled=3 decode=3 requests=3 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1430206 kernel_sum_ns=161760 busy_union_ns=161760 overlap_ns=0 first_gpu_lag_ns=118476923 gpu_tail_to_step_end_ns=9350232 padding_blocks=40 reordered_positions=2
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0xbd94c35efb2951a3 phase=2 rows=[2,3) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=32 packing_generation=32 scheduled=2 decode=2 requests=2 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1736846 kernel_sum_ns=237344 busy_union_ns=237344 overlap_ns=0 first_gpu_lag_ns=119314331 gpu_tail_to_step_end_ns=9261704 padding_blocks=0 reordered_positions=2
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=33 packing_generation=33 scheduled=2 decode=2 requests=2 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1031759 kernel_sum_ns=238016 busy_union_ns=238016 overlap_ns=0 first_gpu_lag_ns=119749804 gpu_tail_to_step_end_ns=9300165 padding_blocks=0 reordered_positions=2
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=34 packing_generation=34 scheduled=2 decode=2 requests=2 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1064735 kernel_sum_ns=238656 busy_union_ns=238656 overlap_ns=0 first_gpu_lag_ns=119956733 gpu_tail_to_step_end_ns=9536692 padding_blocks=0 reordered_positions=2
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=35 packing_generation=35 scheduled=2 decode=2 requests=2 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1061711 kernel_sum_ns=236864 busy_union_ns=236864 overlap_ns=0 first_gpu_lag_ns=119592143 gpu_tail_to_step_end_ns=9282050 padding_blocks=0 reordered_positions=2
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+  request=0x4a007d1d3bc3ab9a phase=2 rows=[1,2) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=36 packing_generation=36 scheduled=1 decode=1 requests=1 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1330238 kernel_sum_ns=148544 busy_union_ns=148544 overlap_ns=0 first_gpu_lag_ns=119374449 gpu_tail_to_step_end_ns=11483389 padding_blocks=0 reordered_positions=0
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=37 packing_generation=37 scheduled=1 decode=1 requests=1 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1083551 kernel_sum_ns=147199 busy_union_ns=147199 overlap_ns=0 first_gpu_lag_ns=117617637 gpu_tail_to_step_end_ns=11194812 padding_blocks=0 reordered_positions=0
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=38 packing_generation=38 scheduled=1 decode=1 requests=1 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1027855 kernel_sum_ns=147328 busy_union_ns=147328 overlap_ns=0 first_gpu_lag_ns=118405607 gpu_tail_to_step_end_ns=11522873 padding_blocks=0 reordered_positions=0
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+step=39 packing_generation=39 scheduled=1 decode=1 requests=1 kernels=40 graph_kernels=40 ordinary_kernels=0 streams=1 runtime_submit_span_ns=1266974 kernel_sum_ns=146816 busy_union_ns=146816 overlap_ns=0 first_gpu_lag_ns=118090232 gpu_tail_to_step_end_ns=11308296 padding_blocks=0 reordered_positions=0
+  request=0x384d180a746a2ae3 phase=2 rows=[0,1) geometry_inferred_blocks=40 evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+summary status=PASS semantic_records=463 semantic_loss=0 packed_steps=37 max_steps_in_flight=2 scheduler_order_mismatch_steps=25 eligible_decode_steps=35 selected_reordered_steps=25 cupti_records_seen=41530 target_kernels=1480 selected_kernels=1400 kernels_outside_suffix=80 graph_kernels=1400 ordinary_kernels=0 runtime_records=20596 buffers_requested=7 buffers_completed=7 unmatched_correlations=0 unassigned_kernels=0 runtime_pid_mismatches=0 invalid_geometry=0 kernel_count_mismatches=0 request_count_mismatches=0 kernel_sum_ns=7440316 busy_union_ns=7440316 overlap_ns=0 padding_blocks=1160 clock_start_uncertainty_ns=64 clock_end_uncertainty_ns=64 clock_offset_drift_ns=0 assignment=runtime_correlation_then_packed_window timing=normalized_CUPTI_actual_intervals ownership=authoritative_packed_rows_plus_CUPTI_launch_geometry device_internal_events=absent

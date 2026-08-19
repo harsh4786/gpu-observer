@@ -1,0 +1,22 @@
+Experiment: EXP-0001
+Host: spark-3be9
+Kernel: Linux 6.17.0-1029-nvidia aarch64
+GPU: NVIDIA GB10
+Driver: 580.173.02
+Unified memory: 128 GB
+GPU state at archival check: 39 C, 11.60 W, 0% utilization
+
+Container: vllm-prof-06b
+Container ID: e359359c9725279266d1b88606027113add8ad4162c23a7bed807490a2a7b336
+Image: nvcr.io/nvidia/vllm:26.05-py3
+Image ID: sha256:c5c116c732f24a640650e1e6e399112ef7c2b1e80c5fd7c13808b10a579646e6
+vLLM: 0.20.1+7124b12a.dev
+PyTorch: 2.12.0a0+5aff3928d8.nv26.05
+Triton: 3.6.0
+Container CUDA: 13.2
+Model revision: c1899de289a04d12100db370d81485cdf75e47ca
+
+Rust: rustc 1.97.1 (8bab26f4f 2026-07-14)
+Cargo: cargo 1.97.1 (c980f4866 2026-06-30)
+Host Python: 3.12.3
+Repository state: local workspace was not a Git repository during EXP-0001; exact relevant source hashes are in manifest.toml.

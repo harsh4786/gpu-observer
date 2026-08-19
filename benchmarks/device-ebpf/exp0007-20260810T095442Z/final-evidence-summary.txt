@@ -1,0 +1,60 @@
+[bpftime success evidence]
+88:[2026-08-10 03:09:56][debug][420736] Created kprobe/kretprobe private data at id 39, string value nv_attach_private_data: func_name=_Z9vectorAddPKfS0_Pfi func_names=_Z9vectorAddPKfS0_Pfi comm_shared_mem=0 
+123:[2026-08-10 03:09:56][info][420736] Recorded pass /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so for func _Z9vectorAddPKfS0_Pfi
+139:[2026-08-10 03:09:56][debug][420765] Input: {"ebpf_instructions":[{"lower_32bit":439,"upper_32bit":0},{"lower_32bit":4294449787,"upper_32bit":0},{"lower_32bit":4293925499,"upper_32bit":0},{"lower_32bit":4293401211,"upper_32bit":0},{"lower_32bit":4292876923,"upper_32bit":0},{"lower_32bit":4292352635,"upper_32bit":0},{"lower_32bit":4291828347,"upper_32bit":0},{"lower_32bit":4291304059,"upper_32bit":0},{"lower_32bit":41407,"upper_32bit":0},{"lower_32bit":263,"upper_32bit":4294967240},{"lower_32bit":41663,"upper_32bit":0},{"lower_32bit":519,"upper_32bit":4294967248},{"lower_32bit":41919,"upper_32bit":0},{"lower_32bit":775,"upper_32bit":4294967256},{"lower_32bit":133,"upper_32bit":503},{"lower_32bit":41407,"upper_32bit":0},{"lower_32bit":263,"upper_32bit":4294967264},{"lower_32bit":41663,"upper_32bit":0},{"lower_32bit":519,"upper_32bit":4294967272},{"lower_32bit":41919,"upper_32bit":0},{"lower_32bit":775,"upper_32bit":4294967280},{"lower_32bit":133,"upper_32bit":505},{"lower_32bit":4291338617,"upper_32bit":0},{"lower_32bit":1311061,"upper_32bit":0},{"lower_32bit":4291862905,"upper_32bit":0},{"lower_32bit":1179989,"upper_32bit":0},{"lower_32bit":4292387193,"upper_32bit":0},{"lower_32bit":1048917,"upper_32bit":0},{"lower_32bit":4292911481,"upper_32bit":0},{"lower_32bit":917845,"upper_32bit":0},{"lower_32bit":4293435769,"upper_32bit":0},{"lower_32bit":786773,"upper_32bit":0},{"lower_32bit":4293960057,"upper_32bit":0},{"lower_32bit":655701,"upper_32bit":0},{"lower_32bit":133,"upper_32bit":502},{"lower_32bit":4294445691,"upper_32bit":0},{"lower_32bit":42175,"upper_32bit":0},{"lower_32bit":1031,"upper_32bit":4294967240},{"lower_32bit":439,"upper_32bit":0},{"lower_32bit":4632,"upper_32bit":16},{"lower_32bit":0,"upper_32bit":0},{"lower_32bit":951,"upper_32bit":0},{"lower_32bit":1463,"upper_32bit":56},{"lower_32bit":133,"upper_32bit":25},{"lower_32bit":183,"upper_32bit":0},{"lower_32bit":149,"upper_32bit":0}],"input":{"ebpf_communication_data_symbol":"constData","full_ptx":"\n\n\n\n\n\n\n\n.version 9.0\n.target sm_121\n.address_size 64\n\n\n\n.visible .entry _Z9vectorAddPKfS0_Pfi(\n.param .u64 .ptr .align 1 _Z9vectorAddPKfS0_Pfi_param_0,\n.param .u64 .ptr .align 1 _Z9vectorAddPKfS0_Pfi_param_1,\n.param .u64 .ptr .align 1 _Z9vectorAddPKfS0_Pfi_param_2,\n.param .u32 _Z9vectorAddPKfS0_Pfi_param_3\n)\n{\n.reg .pred %p<2>;\n.reg .b32 %r<6>;\n.reg .b32 %f<4>;\n.reg .b64 %rd<11>;\n.loc\t1 7 0\n\nld.param.u64 %rd1, [_Z9vectorAddPKfS0_Pfi_param_0];\nld.param.u64 %rd2, [_Z9vectorAddPKfS0_Pfi_param_1];\nld.param.u64 %rd3, [_Z9vectorAddPKfS0_Pfi_param_2];\nld.param.u32 %r2, [_Z9vectorAddPKfS0_Pfi_param_3];\n.loc\t1 9 2\nmov.u32 %r3, %ctaid.x;\nmov.u32 %r4, %ntid.x;\nmov.u32 %r5, %tid.x;\nmad.lo.s32 %r1, %r3, %r4, %r5;\n.loc\t1 10 2\nsetp.ge.s32 %p1, %r1, %r2;\n@%p1 bra $L__BB0_2;\n.loc\t1 9 2\ncvta.to.global.u64 %rd4, %rd1;\ncvta.to.global.u64 %rd5, %rd2;\ncvta.to.global.u64 %rd6, %rd3;\n.loc\t1 11 3\nmul.wide.s32 %rd7, %r1, 4;\nadd.s64 %rd8, %rd4, %rd7;\nld.global.f32 %f1, [%rd8];\nadd.s64 %rd9, %rd5, %rd7;\nld.global.f32 %f2, [%rd9];\nadd.f32 %f3, %f1, %f2;\nadd.s64 %rd10, %rd6, %rd7;\nst.global.f32 [%rd10], %f3;\n$L__BB0_2:\n.loc\t1 12 1\nret;\n\n}\n.file\t1 \"/home/harsh4786/gpu-observer/benchmarks/device-ebpf/exp0007-20260810T095442Z/vec_add_once.cu\"\n","global_ebpf_map_info_symbol":"map_info","to_patch_kernel":"_Z9vectorAddPKfS0_Pfi"}}
+147:[2026-08-10 03:09:56][debug][420785] Info: ptxas info    : 346 bytes gmem
+148:ptxas info    : Compiling entry function '_Z9vectorAddPKfS0_Pfi' for 'sm_121'
+149:ptxas info    : Function properties for _Z9vectorAddPKfS0_Pfi
+151:ptxas info    : Used 32 registers, used 0 barriers, 16464 bytes cumulative stack size
+152:ptxas info    : Compile time = 10.291 ms
+153:ptxas info    : Function properties for __probe_func___Z9vectorAddPKfS0_Pfi
+155:ptxas info    : Function properties for _bpf_helper_ext_0025
+157:ptxas info    : Function properties for _bpf_helper_ext_0502
+159:ptxas info    : Function properties for _bpf_helper_ext_0503
+161:ptxas info    : Function properties for _bpf_helper_ext_0505
+172:[2026-08-10 03:09:56][debug][420736] Prefilled patched CUDA kernel _Z9vectorAddPKfS0_Pfi
+181:[2026-08-10 03:09:56][debug][420736] CUDA 13 launch: resolved kernel handle _Z9vectorAddPKfS0_Pfi
+182:[2026-08-10 03:09:56][debug][420736] Late attach launch: resolved _Z9vectorAddPKfS0_Pfi -> patched CUfunction
+184:vectorAdd C[0]=0.0 C[1]=4.0 blocks=32 threads=128 status=PASS
+[device event evidence]
+1109:[kernel_trace] ts=448699029972160 block=(0,0,0) thread=(0,0,0)
+1110:[kernel_trace] total events: 1
+1111:[kernel_trace] total events: 1
+1112:[kernel_trace] total events: 1
+1113:[kernel_trace] total events: 1
+1114:[kernel_trace] total events: 1
+1115:[kernel_trace] total events: 1
+1116:[kernel_trace] total events: 1
+1117:[kernel_trace] total events: 1
+1118:[kernel_trace] total events: 1
+1119:[kernel_trace] total events: 1
+1120:[kernel_trace] total events: 1
+[process status]
+target_status=0
+tracer_status=124
+[bpftime worktree]
+96be3e0b99882624c80502f9d3bbb1a6af5c86f8
+ M attach/nv_attach_impl/nv_attach_impl.cpp
+ M attach/nv_attach_impl/nv_attach_impl_frida_setup.cpp
+ M attach/nv_attach_impl/nv_attach_utils.cpp
+ M cmake/cuda.cmake
+ M runtime/src/handler/map_handler.cpp
+ ? vm/llvm-jit
+[gpu_ext worktree]
+2cf51085670c3d64bdd7a5ec6b612570a9fd9440
+ M vmlinux/arm64/vmlinux_601.h
+ 4a0b800a1d3b0c54544df153bcaa4f443b3deb76 bpftool (4a0b800)
+ 02bdeb7a2c2e7cb2c9cecb125527a9c5a6bbf139 bpftool/libbpf (02bdeb7)
+-0884b66349d7cd96948580b91f1fa2e8077036be docs/paper
+ 921567e16857811de57d57aef111782df70847e2 kernel-module/nvidia-module (heads/test-sched)
+ 02bdeb7a2c2e7cb2c9cecb125527a9c5a6bbf139 libbpf (02bdeb7)
+-221b5c2450f80d0710bbe392be8c48ead6bd1a9d workloads/faiss/faiss
+-26836b27ae1ec9d6e94c6b56306cca75c7e86814 workloads/llama.cpp/llama.cpp
+-3ec7b051563670b3af9cf5c10bc8ba3295ec125f workloads/vllm/vllm
+[machine]
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+NVIDIA GB10, 580.173.02, 32, 0 %, 4.80 W
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Wed_Aug_20_01:57:39_PM_PDT_2025
+Cuda compilation tools, release 13.0, V13.0.88
+Build cuda_13.0.r13.0/compiler.36424714_0

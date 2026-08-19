@@ -1,0 +1,5 @@
+FROM nvcr.io/nvidia/cuda:13.2.1-devel-ubuntu24.04 AS cuda_tools
+
+FROM nvcr.io/nvidia/vllm:26.05-py3
+COPY --from=cuda_tools /usr/local/cuda-13.2/compute-sanitizer /usr/local/cuda-13.2/compute-sanitizer
+

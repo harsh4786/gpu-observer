@@ -1,0 +1,1 @@
+summary semantic_records=33063 semantic_loss=0 steps=1805 max_steps_in_flight=2 packed_steps=1805 scheduler_order_mismatch_steps=1 scheduler_order_mismatch_slices=4 scheduled_tokens=17289 prefill_tokens=3573 decode_tokens=13716 prefill_only_steps=14 decode_only_steps=1778 mixed_steps=13 max_slices=8 ownership=authoritative_packed_layout

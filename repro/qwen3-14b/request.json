@@ -1,0 +1,12 @@
+{
+  "model": "Qwen/Qwen3-14B",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Count from one to three. Return only the three numerals separated by spaces."
+    }
+  ],
+  "temperature": 0,
+  "max_tokens": 3,
+  "stream": false
+}

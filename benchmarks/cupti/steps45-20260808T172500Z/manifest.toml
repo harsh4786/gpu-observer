@@ -1,0 +1,122 @@
+schema_version = 1
+experiment_id = "EXP-0005"
+title = "Engine-step GPU timing and eager versus CUDA Graph visibility"
+status = "complete"
+started_utc = "2026-08-08T17:25:00Z"
+completed_utc = "2026-08-08T17:43:00Z"
+artifact_root = "benchmarks/cupti/steps45-20260808T172500Z"
+
+[hypothesis]
+original = "CUPTI activity can supply actual GPU time per vLLM engine step, and CUDA Graph replay will compress host launch visibility while retaining device activity."
+outcome = "supported_for_visibility_and_single_warmed_request; performance_causality_not_isolated"
+
+[hardware]
+system = "NVIDIA DGX Spark"
+gpu = "NVIDIA GB10"
+architecture = "sm_121"
+memory = "128 GB unified CPU/GPU memory"
+host_architecture = "aarch64"
+driver = "580.173.02"
+
+[software]
+container_image = "nvcr.io/nvidia/vllm:26.05-py3"
+container_image_id = "sha256:c5c116c732f24a640650e1e6e399112ef7c2b1e80c5fd7c13808b10a579646e6"
+vllm = "0.20.1+7124b12a.dev"
+torch = "2.12.0a0+5aff3928d8.nv26.05"
+triton = "3.6.0"
+cuda_runtime = "13.2"
+nsight_systems = "2025.3.2"
+model_revision = "c1899de289a04d12100db370d81485cdf75e47ca"
+
+[server_common]
+model = "Qwen/Qwen3-0.6B"
+dtype = "bfloat16"
+attention_backend = "FlashAttention 2"
+async_scheduling = false
+prefix_caching = false
+max_model_len = 4096
+kv_cache_bytes = 8589934592
+
+[workload]
+requests_per_measured_trace = 1
+warmup_requests_before_measured_trace = 1
+prompt_tokens = 39
+completion_tokens = 3
+temperature = 0
+stream = false
+identical_response_content = true
+
+[instrumentation]
+semantic_transport = "mmap SPSC ring"
+semantic_record_bytes = 96
+semantic_records_per_measured_run = 9
+semantic_drops = 0
+gpu_activity = "Nsight Systems CUPTI export"
+cuda_graph_trace_granularity = "node"
+cpu_sampling = false
+context_switch_tracing = false
+raw_nsys_rep_preserved = true
+raw_sqlite_preserved = true
+
+[clock_normalization]
+cupti_calibration_experiment = "EXP-0004"
+method = "Nsight utcEpochNs plus per-run realtime-to-CLOCK_MONOTONIC offset"
+warm_eager_offset_ns = -1785907916133281728
+warm_eager_offset_pair_span_ns = 352
+warm_graph_offset_ns = -1785907916133282048
+warm_graph_offset_pair_span_ns = 496
+
+[warmed_eager]
+engine_steps = 3
+step_wall_ns = [12688582, 12038007, 12385047]
+kernel_count = 1146
+kernel_count_per_step = [382, 382, 382]
+summed_kernel_ns = 33684382
+summed_kernel_ns_per_step = [11032318, 11315040, 11337024]
+overlap_safe_busy_ns_per_step = [11020094, 11315040, 11337024]
+host_launch_apis_in_steps = 1146
+distinct_kernel_correlation_ids = 1146
+graph_node_kernels = 0
+streams = 1
+client_elapsed_seconds_rounded = 0.04
+
+[warmed_cuda_graphs]
+engine_steps = 3
+step_wall_ns = [8392685, 8532508, 8440813]
+kernel_count = 1030
+kernel_count_per_step = [326, 352, 352]
+summed_kernel_ns = 21528608
+summed_kernel_ns_per_step = [6804768, 7340960, 7382880]
+overlap_safe_busy_ns_per_step = [6804480, 7340960, 7382880]
+host_launch_apis_in_steps = 134
+distinct_kernel_correlation_ids = 134
+graph_node_kernels = 927
+streams = 1
+client_elapsed_seconds_rounded = 0.03
+
+[comparison]
+host_launch_api_reduction_percent = 88.307
+device_kernel_count_reduction_percent = 10.122
+summed_kernel_time_reduction_percent = 36.087
+summed_step_wall_time_reduction_percent = 31.649
+decode_graph_launch_fanout_kernels = 337
+all_kernel_records_matched_runtime_correlation = true
+all_kernel_records_assigned_to_semantic_step = true
+
+[quality]
+cold_first_request_confound_preserved = true
+corrected_warm_runs_preserved = true
+prefix_cache_disabled_in_corrected_runs = true
+warmup_semantics_drained_before_capture = true
+workspace_tests_passed = true
+transport_benchmark_events_per_second = 51145962
+gpu_temperature_final_c = 33
+all_servers_stopped = true
+checksums_present = true
+
+[limitations]
+sample_size = "one warmed request per mode; not a p50/p95/p99 benchmark"
+causality = "removing enforce-eager enables both torch.compile and CUDA Graphs, so device-time changes cannot be attributed to graph replay alone"
+profiler_overhead = "node-level graph tracing can add significant overhead and has not been quantified here"
+host_probe = "Aya uprobes were not repeated because non-interactive sudo was unavailable; CUPTI runtime activities supplied host API correlation"
+model_scope = "0.6B debug model, not the 8B demonstration model"

@@ -1,0 +1,39 @@
+experiment=EXP-0013-gate3
+started_utc=2026-08-12T12:31:58Z
+question=Does actual model-runner packed row ownership match the scheduler-derived block ownership?
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+image=gpu-observer/vllm-sanitizer:cuda13.2
+execution_mode=eager
+async_scheduling=false
+prefix_caching=false
+target_kernel=reshape_and_cache_flash_kernel
+event_capacity=262144
+event_size_bytes=64
+event_buffer_bytes=16777216
+interactive_requests=8
+interactive_output_tokens=16
+injection_delay_seconds=0.5
+ownership=packing_oracle_required
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+NVIDIA GB10, 580.173.02, 33, 4.92 W
+image_id=sha256:e4409f94c58463513df2e5abca7855b906fcb78b87d1f7190af2b7968d3de4f4 image_digests=[]
+894a9eab9526b3db4b0029029465305a96cc737e7131aefa3413de7e19cc1cca  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-corrected.jsonl
+3b556e56d79d69540e95e30a02a84a4197e15efb1a121c732103bcef78ace440  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/background-long-payloads.jsonl
+e0829f49785d20eff1021e815d32ae79428f44842c235a4dfbb4e39c73e0e838  /home/harsh4786/gpu-observer/target/release/libgpu_observer_vllm_bridge.so
+1cb28df43cd7b4f813f093ba6f7011e4d8281744b42882d415b8e59e9576faee  /home/harsh4786/gpu-observer/vllm-adapter/overlay/vllm/v1/engine/core.py
+dee4a7651a39cdd77abbf6fbf3fa5306633094252372400af6363dfc82876bf5  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_semantic.py
+8dfe00b8c58ff52ce1442eff9055b7790fdbd72996b6222549c62768a543d291  /home/harsh4786/gpu-observer/vllm-adapter/oracle-overlay/vllm/v1/worker/gpu_model_runner.py
+13dab489a6b930d3a00844d47b2c0214802ec3dd4f7bed516a46dc9563993595  /home/harsh4786/gpu-observer/vllm-adapter/oracle-overlay/vllm/v1/worker/gpu_observer_packing_oracle.py
+96fba06355adbde45a8257444b15328ffa3ee9b76fe09ca597819899f0ecd622  /home/harsh4786/gpu-observer/target/release/packing_oracle_check
+28e7c73646d58273c10239f544ad277700854a69d600138a80106c19a3b2d1df  /home/harsh4786/gpu-observer/device-probes/compute-sanitizer/build/libgpu_observer_sanitizer.so
+691578ba8ea24a726da2b99e2e5e8f3930640db0bd9e494302d80a462a18c5b4  /home/harsh4786/gpu-observer/device-probes/compute-sanitizer/build/gpu_observer_sanitizer_patches.cubin
+c75f2c2fe4e9391208d8e0a0518dde7232c0a9d85677c7fe87864e8f80934a76  /home/harsh4786/gpu-observer/target/release/join_b_cache
+capture_armed_after_warmup=true
+harness_recovery=packing_oracle_permission_only
+ownership=oracle_validated
+correction=prior_ownership_oracle_validated_line_was_invalid_due_recovery_shell_not_using_set_e
+packing_oracle_exit_status=1
+ownership=oracle_rejected
+measured_flag_failures=1
+measured_range_mismatches=8

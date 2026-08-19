@@ -1,0 +1,280 @@
+:root {
+  --bg: #07100f;
+  --panel: #0c1816;
+  --panel-2: #11211e;
+  --line: rgba(220, 240, 231, .13);
+  --line-strong: rgba(220, 240, 231, .24);
+  --text: #eef7f2;
+  --muted: #9aafa7;
+  --dim: #60756d;
+  --mint: #72e3b1;
+  --cyan: #64c7e8;
+  --amber: #ffc66d;
+  --violet: #b89cff;
+  --red: #ff8b7a;
+  color: var(--text);
+  background: var(--bg);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: radial-gradient(circle at 73% -20%, rgba(100,199,232,.12), transparent 38rem), var(--bg); }
+button, select, input { font: inherit; }
+.app { width: min(1540px, calc(100% - 36px)); margin: auto; padding: 34px 0 48px; }
+.topbar { display: flex; justify-content: space-between; gap: 24px; align-items: center; margin-bottom: 26px; }
+h1 { margin: 7px 0; font-size: clamp(30px, 3.6vw, 46px); font-weight: 800; letter-spacing: -.045em; }
+h2 { margin: 3px 0 0; font-size: 15px; letter-spacing: -.02em; }
+p { color: var(--muted); }
+.topbar p { margin: 0; font-size: 11px; }
+.eyebrow { color: var(--mint); font-size: 9px; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
+.masthead-title { display: block; color: var(--mint); font-size: clamp(28px, 3.4vw, 42px); font-weight: 850; letter-spacing: -.01em; text-transform: uppercase; }
+.masthead-subtitle { margin: 6px 0 0; color: var(--muted); font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+.top-actions { display: flex; align-items: center; gap: 9px; }
+.file-button, .status { padding: 9px 12px; border: 1px solid var(--line-strong); border-radius: 10px; background: var(--panel-2); font-size: 10px; }
+.file-button { cursor: pointer; }
+.file-button:hover { border-color: var(--mint); }
+.file-button input { display: none; }
+.status { color: var(--mint); text-transform: uppercase; letter-spacing: .08em; }
+.status.fixture { color: var(--amber); }
+.status.illustrative { color: var(--cyan); }
+.hidden { display: none !important; }
+.error-panel { margin-bottom: 14px; padding: 14px; color: #ffd8d1; border: 1px solid rgba(255,139,122,.4); border-radius: 12px; background: rgba(255,139,122,.08); }
+.hero-grid, .microscope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.graph-card, .query-card, .answer-card, .token-card, .flow-stage, .kernel-detail-card, .sass-card, .evidence-card {
+  border: 1px solid var(--line); border-radius: 17px; background: rgba(12,24,22,.9);
+}
+.chat-card, .output-card { border: 1px solid var(--line); border-radius: 17px; background: rgba(12,24,22,.9); margin-bottom: 12px; padding: 18px; }
+.output-connector { display: flex; justify-content: center; margin: -4px 0 8px; color: var(--dim); font-size: 10px; font-family: ui-monospace, monospace; letter-spacing: .04em; }
+.output-connector.active { color: var(--mint); animation: graph-pulse-glow 1.3s ease-in-out infinite; }
+.chat-form { display: flex; gap: 8px; margin-top: 10px; }
+.chat-form input { flex: 1; padding: 11px 13px; color: var(--text); border: 1px solid var(--line-strong); border-radius: 10px; background: var(--panel-2); font-size: 13px; }
+.chat-form input:focus { outline: none; border-color: var(--mint); }
+.chat-form button { padding: 11px 18px; color: var(--bg); border: 0; border-radius: 10px; background: var(--mint); font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; cursor: pointer; }
+.chat-form button:disabled { background: var(--dim); cursor: not-allowed; }
+.chat-reply { min-height: 24px; margin-top: 12px; padding: 12px; color: var(--text); border: 1px solid var(--line); border-radius: 10px; background: #07100f; font-size: 13px; line-height: 1.6; white-space: pre-wrap; }
+.chat-reply:empty { display: none; }
+.chat-status-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin-top: 8px; }
+.chat-waiting { margin: 0; color: var(--cyan); font-size: 10px; font-family: ui-monospace, monospace; }
+.chat-waiting:empty { display: none; }
+.chat-confirmed { color: var(--dim); font-size: 9px; font-family: ui-monospace, monospace; white-space: nowrap; }
+.chat-confirmed:empty { display: none; }
+.status.connected { color: var(--mint); }
+.status.disconnected { color: var(--red); }
+.query-card, .answer-card, .kernel-detail-card, .sass-card { padding: 18px; }
+.card-head { display: flex; align-items: center; gap: 10px; }
+.stage-number { display: grid; place-items: center; flex: 0 0 31px; width: 31px; height: 31px; color: var(--mint); border: 1px solid rgba(114,227,177,.28); border-radius: 9px; background: rgba(114,227,177,.08); font: 800 10px ui-monospace, monospace; }
+blockquote { margin: 18px 0 13px; padding-left: 15px; border-left: 2px solid var(--mint); color: var(--text); font-size: 15px; line-height: 1.55; }
+.answer-card > p { min-height: 72px; margin: 18px 0 13px; font-size: 13px; line-height: 1.6; }
+.text-button { padding: 0; color: var(--cyan); border: 0; background: none; cursor: pointer; font-size: 10px; }
+.rendered-prompt { max-height: 260px; overflow: auto; white-space: pre-wrap; margin: 12px 0 0; padding: 12px; color: #c3d3cd; border: 1px solid var(--line); border-radius: 10px; background: #07100f; font: 10px/1.55 ui-monospace, monospace; }
+.token-card, .evidence-card { margin-bottom: 12px; padding: 18px; }
+.section-title { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 13px; }
+.graph-card { margin-bottom: 12px; padding: 18px; overflow: hidden; }
+.graph-title { align-items: flex-start; }
+.graph-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; }
+.graph-legend { display: flex; flex-wrap: wrap; gap: 9px; color: var(--dim); font-size: 8px; letter-spacing: .05em; text-transform: uppercase; }
+.graph-legend span { white-space: nowrap; }
+.graph-key { display: inline-block; width: 20px; height: 3px; margin-right: 4px; border-radius: 2px; vertical-align: middle; }
+.graph-key.measured { background: var(--mint); }
+.graph-key.reconstructed { background: var(--amber); }
+.graph-key.matched { background: var(--violet); }
+.graph-key.unknown { background: var(--red); }
+.graph-key.illustrative { background: var(--cyan); }
+.graph-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(rgba(220,240,231,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(220,240,231,.025) 1px, transparent 1px), #07100f; background-size: 24px 24px; }
+.graph-idle { display: grid; place-items: center; height: 180px; padding: 20px; color: var(--dim); border: 1px dashed var(--line-strong); border-radius: 12px; text-align: center; font-size: 12px; }
+#causal-graph { display: block; width: 100%; min-width: 620px; }
+.graph-lane-title { fill: var(--text); font: 800 13px ui-monospace, monospace; letter-spacing: .06em; }
+.graph-lane-subtitle { fill: var(--dim); font: 11px ui-monospace, monospace; }
+/* Idle/settled nodes get a calmer, translucent border -- full-saturation
+   color on every node at once (11 simultaneously in the live kernel graph)
+   read as loud/cheap, not as more information. live-active and focus keep
+   full-strength color below, so the node that's actually doing something
+   still pops against the calmer field. */
+.graph-node rect { fill: #10201d; stroke: color-mix(in srgb, var(--node-color) 55%, transparent); stroke-width: 1.5; }
+.graph-node.focus rect { stroke-width: 2.5; filter: drop-shadow(0 0 5px var(--node-color)); }
+.graph-node.interactive { cursor: pointer; }
+.graph-node.interactive:hover rect, .graph-node.interactive:focus rect { fill: #17302a; stroke-width: 2.5; outline: none; }
+.graph-node-title { fill: var(--text); font: 800 12.5px ui-monospace, monospace; }
+.graph-node-line { fill: var(--muted); font: 10.5px ui-monospace, monospace; }
+.graph-node-badge { fill: var(--node-color); font: 800 9px ui-monospace, monospace; letter-spacing: .04em; }
+/* "Now executing" hero panel (causal-graph.js renderLiveGraph) -- the
+   node-link diagram it replaced tested as unreadable; this answers one
+   question, unmissably: what is the GPU doing right now. */
+.graph-hero-label { fill: var(--node-color); font: 800 11px ui-monospace, monospace; letter-spacing: .14em; text-transform: uppercase; }
+.graph-hero-title { fill: var(--text); font: 800 30px Inter, ui-sans-serif, sans-serif; letter-spacing: -.01em; }
+.graph-hero-detail { fill: var(--muted); font: 11.5px ui-monospace, monospace; }
+.graph-hero-badge { fill: var(--node-color); font: 800 11px ui-monospace, monospace; letter-spacing: .06em; text-transform: uppercase; }
+.graph-edge { fill: none; opacity: .72; }
+.graph-edge.reconstructed { opacity: .9; }
+.graph-edge.matched { opacity: .8; }
+.graph-edge.unknown { opacity: .55; }
+.graph-edge.illustrative { opacity: .85; stroke-dasharray: 4 4; }
+
+/* Live-graph motion. The renderer tears down and rebuilds the whole SVG on
+   every update (see causal-graph.js), so a blanket "fade in on insert"
+   animation on .graph-node replays for every node on every single WS patch
+   -- during decode that's several times a second, which reads as the whole
+   graph flashing/strobing, not "alive." Motion is intentionally reserved for
+   .live-active only: the specific node(s) actually responsible for the step
+   in flight, not the graph as a whole. */
+@keyframes graph-pulse-glow {
+  0%, 100% { filter: drop-shadow(0 0 3px var(--node-color)); }
+  50% { filter: drop-shadow(0 0 11px var(--node-color)); }
+}
+@keyframes graph-dash-flow { to { stroke-dashoffset: -24; } }
+
+/* live-active: the node belongs to a step currently in flight (between its
+   step_begin and step_end), not just a historical/settled one -- this is
+   the "breathing" active-node pulse used across live topology dashboards
+   (Kiali/Istio, Datadog service map) to distinguish "happening now" from
+   "already happened." Every other node renders statically. */
+.graph-node.live-active rect {
+  animation: graph-pulse-glow 1.3s ease-in-out infinite;
+}
+/* flowing: data actually in transit along this edge right now -- traveling
+   dashes are the standard way live network/service graphs show direction
+   and activity (same technique Kiali uses for in-flight request traffic). */
+.graph-edge.flowing { stroke-dasharray: 6 6; animation: graph-dash-flow .7s linear infinite; }
+.progress-ring-track { fill: none; stroke: rgba(220,240,231,.14); stroke-width: 3; }
+.progress-ring-arc { fill: none; stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset .4s ease; }
+.progress-ring-label { fill: var(--text); font: 800 8px ui-monospace, monospace; }
+.progress-bar-track { fill: rgba(220,240,231,.1); }
+.progress-bar-fill { transition: width .3s ease; }
+/* Compact 11-chip stepper (causal-graph.js's live GPU EXECUTION lane): much
+   smaller than a full graph-node card, real per-launch data upgrades a chip
+   from illustrative (cyan) to measured (mint) via --node-color, same as
+   graph-node's stroke coloring. */
+.stage-chip rect { fill: #10201d; stroke: color-mix(in srgb, var(--node-color) 55%, transparent); stroke-width: 1.4; }
+.stage-chip.interactive { cursor: pointer; }
+.stage-chip.interactive:hover rect, .stage-chip.interactive:focus rect { fill: #17302a; stroke-width: 2; outline: none; }
+.stage-chip.active rect { animation: graph-pulse-glow 1.3s ease-in-out infinite; }
+.stage-chip-label { fill: var(--text); font: 700 9.5px ui-monospace, monospace; text-anchor: middle; }
+
+/* Layer sweep rail: 40 small cells read as a heatmap/progress rail at a
+   glance, so unlike the history ticker's chips they need a filled state,
+   not just a stroke -- scoped to this rail only, ticker chips unaffected. */
+.layer-sweep .stage-chip.measured rect { fill: color-mix(in srgb, var(--node-color) 62%, #10201d); }
+.layer-sweep .stage-chip.illustrative rect { fill: #10201d; }
+.layer-sweep .stage-chip.active rect { stroke-width: 2; }
+.graph-edge-label { fill: var(--muted); stroke: #07100f; stroke-width: 6px; stroke-linejoin: round; paint-order: stroke; font: 10px ui-monospace, monospace; }
+.graph-edge-label.reconstructed { fill: var(--amber); }
+.graph-edge-label.matched { fill: var(--violet); }
+.graph-edge-label.unknown { fill: var(--red); }
+.graph-edge-label.illustrative { fill: var(--cyan); }
+.graph-footnote { fill: var(--dim); font: 10.5px ui-monospace, monospace; }
+.graph-help { margin: 10px 2px 0; color: var(--dim); font-size: 9px; }
+.legend { display: flex; align-items: center; gap: 9px; color: var(--dim); font-size: 9px; }
+.badge { display: inline-block; padding: 4px 7px; border: 1px solid var(--line); border-radius: 999px; font-size: 8px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.badge.measured { color: var(--mint); border-color: rgba(114,227,177,.3); background: rgba(114,227,177,.07); }
+.badge.reconstructed { color: var(--amber); border-color: rgba(255,198,109,.3); }
+.badge.matched { color: var(--violet); border-color: rgba(184,156,255,.32); }
+.badge.unknown { color: var(--red); border-color: rgba(255,139,122,.32); }
+.badge.illustrative { color: var(--cyan); border-color: rgba(100,199,232,.32); background: rgba(100,199,232,.07); }
+.token-ribbon { display: flex; gap: 4px; overflow-x: auto; padding: 6px 2px 10px; scrollbar-color: var(--dim) transparent; }
+.token { flex: 0 0 auto; min-width: 34px; max-width: 130px; padding: 8px 7px; color: var(--muted); border: 1px solid var(--line); border-radius: 8px; background: var(--panel-2); cursor: pointer; text-align: center; }
+.token:hover, .token.selected { color: var(--text); border-color: var(--cyan); background: rgba(100,199,232,.1); }
+.token strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: pre; font: 10px ui-monospace, monospace; }
+.token small { color: var(--dim); font: 7px ui-monospace, monospace; }
+.output-divider { display: flex; align-items: center; gap: 9px; margin: 5px 0; color: var(--dim); font-size: 8px; text-transform: uppercase; letter-spacing: .1em; }
+.output-divider::before, .output-divider::after { content: ""; height: 1px; flex: 1; background: var(--line); }
+.step-select-label { color: var(--dim); font-size: 9px; }
+select { margin-left: 7px; padding: 8px 10px; color: var(--text); border: 1px solid var(--line-strong); border-radius: 8px; background: var(--panel-2); }
+.metric-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.metric { min-width: 84px; padding: 9px 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel-2); }
+.metric strong { display: block; color: var(--text); font-size: 14px; }
+.metric small { color: var(--dim); font-size: 7px; text-transform: uppercase; letter-spacing: .06em; }
+.causal-flow { display: grid; grid-template-columns: minmax(220px,.85fr) 58px minmax(220px,.85fr) 58px minmax(330px,1.3fr); gap: 9px; align-items: stretch; margin-bottom: 12px; }
+.flow-stage { min-width: 0; padding: 16px; }
+.flow-stage.wide { min-width: 330px; }
+.why { min-height: 32px; margin: 12px 0; font-size: 9px; line-height: 1.45; }
+.flow-arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--mint); font-size: 22px; }
+.flow-arrow span { color: var(--dim); font-size: 7px; text-transform: uppercase; writing-mode: vertical-rl; margin-bottom: 8px; }
+.stack-list { display: grid; gap: 6px; }
+.stack-item { padding: 9px; border: 1px solid var(--line); border-left: 3px solid var(--item-color, var(--dim)); border-radius: 8px; background: var(--panel-2); }
+.stack-item.focus { box-shadow: 0 0 0 1px var(--mint) inset; }
+.stack-item .line { display: flex; justify-content: space-between; gap: 8px; font-size: 9px; }
+.stack-item small { color: var(--dim); font: 8px ui-monospace, monospace; }
+.kernel-timeline { position: relative; height: 68px; margin: 11px 0; border: 1px solid var(--line); border-radius: 9px; background: repeating-linear-gradient(90deg, transparent 0 19%, rgba(220,240,231,.05) 20%); overflow: hidden; }
+.kernel-bar { position: absolute; top: 11px; height: 23px; min-width: 3px; border: 0; border-radius: 4px; background: var(--cyan); opacity: .62; cursor: pointer; }
+.kernel-bar:nth-child(even) { top: 37px; background: var(--violet); }
+.kernel-bar.selected { opacity: 1; box-shadow: 0 0 8px currentColor; outline: 1px solid white; }
+.timeline-label { position: absolute; bottom: 3px; color: var(--dim); font: 7px ui-monospace, monospace; }
+.timeline-label.end { right: 5px; }
+.timeline-label.start { left: 5px; }
+.kernel-list { display: flex; gap: 5px; overflow-x: auto; }
+.kernel-chip { flex: 0 0 auto; max-width: 160px; padding: 7px; color: var(--muted); border: 1px solid var(--line); border-radius: 7px; background: var(--panel-2); cursor: pointer; font: 8px ui-monospace, monospace; overflow: hidden; text-overflow: ellipsis; }
+.kernel-chip.selected { color: var(--text); border-color: var(--cyan); }
+.kernel-detail-card h3 { margin: 14px 0 6px; font: 12px ui-monospace, monospace; overflow-wrap: anywhere; }
+.detail-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; }
+.detail-cell { padding: 9px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel-2); }
+.detail-cell strong { display: block; font-size: 11px; }
+.detail-cell small { color: var(--dim); font-size: 7px; text-transform: uppercase; }
+.ownership-list { margin-top: 12px; display: grid; gap: 5px; }
+.owner-row { display: grid; grid-template-columns: 110px 1fr auto; align-items: center; gap: 8px; font-size: 8px; }
+.owner-track { height: 8px; border-radius: 5px; background: #1b2c28; overflow: hidden; }
+.owner-fill { height: 100%; background: var(--owner-color); }
+.ptx-warning { margin-bottom: 12px; padding: 10px; color: var(--amber); border: 1px solid rgba(255,198,109,.24); border-radius: 9px; background: rgba(255,198,109,.06); font-size: 9px; }
+.sass-meta { margin-bottom: 8px; color: var(--dim); font: 8px ui-monospace, monospace; overflow-wrap: anywhere; }
+.sass-table { max-height: 330px; overflow: auto; border: 1px solid var(--line); border-radius: 9px; background: #07100f; }
+.sass-row { display: grid; grid-template-columns: 54px 1fr 65px; gap: 10px; padding: 7px 9px; border-bottom: 1px solid rgba(220,240,231,.06); font: 9px ui-monospace, monospace; }
+.sass-row.hit { background: rgba(184,156,255,.09); }
+.sass-row .offset { color: var(--cyan); }
+.sass-row .samples { color: var(--violet); text-align: right; }
+.empty-state { padding: 22px; color: var(--muted); border: 1px dashed var(--line-strong); border-radius: 9px; text-align: center; font-size: 10px; line-height: 1.6; }
+.evidence-card { display: grid; grid-template-columns: 190px 1fr; gap: 20px; align-items: start; }
+.evidence-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(170px,1fr)); gap: 8px; }
+.evidence-column { padding: 11px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel-2); }
+.evidence-column ul { padding-left: 15px; margin: 9px 0 0; color: var(--muted); font-size: 8px; line-height: 1.55; }
+footer { padding: 8px; color: var(--dim); text-align: center; font-size: 8px; }
+@media (max-width: 1100px) {
+  .causal-flow { grid-template-columns: 1fr; }
+  .flow-arrow { flex-direction: row; gap: 7px; padding: 2px; }
+  .flow-arrow span { writing-mode: initial; margin: 0; }
+  .flow-stage.wide { min-width: 0; }
+}
+.kernel-activity-card { border: 1px solid var(--line); border-radius: 17px; background: rgba(12,24,22,.9); margin-bottom: 12px; padding: 18px; }
+.kernel-activity-card h2 { display: flex; align-items: center; gap: 8px; }
+.kernel-activity-card .why { margin: 2px 0 12px; font-size: 10px; }
+.kernel-activity-card .metric-row { margin-bottom: 10px; }
+.ka-progress-track { height: 5px; margin-bottom: 12px; border-radius: 3px; background: var(--panel-2); overflow: hidden; }
+.ka-progress-fill { height: 100%; border-radius: 3px; background: var(--mint); transition: width .25s ease; }
+.kernel-activity-feed { display: flex; flex-direction: column; gap: 4px; max-height: 168px; overflow-y: auto; }
+.ka-event { display: flex; gap: 14px; padding: 6px 9px; color: var(--muted); border: 1px solid var(--line); border-radius: 7px; background: var(--panel-2); font: 10px ui-monospace, monospace; }
+.ka-event-kernel { flex: 1; overflow: hidden; color: var(--mint); text-overflow: ellipsis; white-space: nowrap; }
+.ka-event-owner { color: var(--amber); font-weight: 700; }
+.ka-event-owner.unattributed { color: var(--dim); font-weight: 400; }
+
+.sm-grid-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin: 16px 0 8px; }
+.sm-grid-subtitle { color: var(--dim); font-size: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.sm-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; }
+.sm-cell {
+  aspect-ratio: 1; border-radius: 4px; background: var(--panel-2); border: 1px solid var(--line);
+  --sm-color: var(--mint);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--dim); font: 7px ui-monospace, monospace; user-select: none;
+  transition: background .4s ease, border-color .4s ease, color .4s ease;
+}
+/* Permanent low tint once an SM has ever fired -- separate from the blink,
+   so a cell that goes quiet still reads as "visited", not "never touched". */
+.sm-cell.touched {
+  background: color-mix(in srgb, var(--sm-color) 14%, var(--panel-2));
+  border-color: color-mix(in srgb, var(--sm-color) 30%, var(--line));
+  color: color-mix(in srgb, var(--sm-color) 70%, var(--muted));
+}
+/* Real per-launch flash: restarted from JS on every event via a classList
+   remove+reflow+add, even for repeat hits on the same SM. Ends by settling
+   back into .touched's resting tint, in the same request color. */
+.sm-cell.blink { animation: sm-blink .65s ease-out; color: var(--bg); font-weight: 700; }
+@keyframes sm-blink {
+  0% { background: var(--sm-color); border-color: var(--sm-color); box-shadow: 0 0 10px color-mix(in srgb, var(--sm-color) 75%, transparent); }
+  100% { background: color-mix(in srgb, var(--sm-color) 14%, var(--panel-2)); border-color: color-mix(in srgb, var(--sm-color) 30%, var(--line)); box-shadow: none; }
+}
+@media (max-width: 520px) { .sm-grid { grid-template-columns: repeat(8, 1fr); } }
+@media (max-width: 760px) {
+  .app { width: min(100% - 20px, 1540px); }
+  .topbar, .section-title { align-items: flex-start; flex-direction: column; }
+  .graph-controls { justify-content: flex-start; }
+  .hero-grid, .microscope-grid { grid-template-columns: 1fr; }
+  .evidence-card { grid-template-columns: 1fr; }
+  .evidence-grid { grid-template-columns: 1fr; }
+  .detail-grid { grid-template-columns: 1fr 1fr; }
+}

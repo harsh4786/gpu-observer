@@ -1,0 +1,111 @@
+Randomness seeded to: 2123215267
+
+.func __memcapture__15 
+	// .globl	bpf_main
+{
+	.local .align 8 .b8 	__local_depot0[16464];
+	.reg .b64 	%SP;
+	.reg .b64 	%SPL;
+	.reg .b16 	%rs<3>;
+	.reg .b64 	%rd<9>;
+	.local .align 8 .b8 	__ptx_register_save_area[96];
+	.reg .b64 %rd_ptx_instr_base;
+	.reg .b64 %rd_ptx_instr_addr;
+	// --- BEGIN REGISTER SAVING (PUSH to __ptx_register_save_area) ---
+	mov.u64 %rd_ptx_instr_base, __ptx_register_save_area;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 0;
+	st.local.u16 [%rd_ptx_instr_addr], %rs0;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 8;
+	st.local.u16 [%rd_ptx_instr_addr], %rs1;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 16;
+	st.local.u16 [%rd_ptx_instr_addr], %rs2;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 24;
+	st.local.u64 [%rd_ptx_instr_addr], %rd0;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 32;
+	st.local.u64 [%rd_ptx_instr_addr], %rd1;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 40;
+	st.local.u64 [%rd_ptx_instr_addr], %rd2;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 48;
+	st.local.u64 [%rd_ptx_instr_addr], %rd3;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 56;
+	st.local.u64 [%rd_ptx_instr_addr], %rd4;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 64;
+	st.local.u64 [%rd_ptx_instr_addr], %rd5;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 72;
+	st.local.u64 [%rd_ptx_instr_addr], %rd6;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 80;
+	st.local.u64 [%rd_ptx_instr_addr], %rd7;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 88;
+	st.local.u64 [%rd_ptx_instr_addr], %rd8;
+	// --- END REGISTER SAVING (PUSH to __ptx_register_save_area) ---
+	mov.u64 	%SPL, __local_depot0;
+	cvta.local.u64 	%SP, %SPL;
+	add.u64 	%rd1, %SP, 0;
+	add.u64 	%rd2, %SPL, 0;
+	mov.b16 	%rs1, 30828;
+	st.local.u16 	[%rd2+16376], %rs1;
+	mov.b64 	%rd3, 2675186987289295430;
+	st.local.u64 	[%rd2+16368], %rd3;
+	mov.b64 	%rd4, 5783296061446517350;
+	st.local.u64 	[%rd2+16360], %rd4;
+	mov.b64 	%rd5, 2334385650107901261;
+	st.local.u64 	[%rd2+16352], %rd5;
+	mov.b16 	%rs2, 0;
+	st.local.u8 	[%rd2+16378], %rs2;
+	add.s64 	%rd6, %rd1, 16352;
+	{ // callseq 14, 0
+	.param .b64 param0;
+	st.param.b64 	[param0], %rd6;
+	.param .b64 param1;
+	st.param.b64 	[param1], 27;
+	.param .b64 param2;
+	st.param.b64 	[param2], 10;
+	.param .b64 param3;
+	st.param.b64 	[param3], 20;
+	.param .b64 param4;
+	.param .b64 retval0;
+	call.uni (retval0), 
+	_bpf_helper_ext_0006, 
+	(
+	param0, 
+	param1, 
+	param2, 
+	param3, 
+	param4
+	);
+	ld.param.b64 	%rd7, [retval0];
+	} // callseq 14
+
+	// --- BEGIN REGISTER RESTORING (POP from __ptx_register_save_area) ---
+	mov.u64 %rd_ptx_instr_base, __ptx_register_save_area;
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 88;
+	ld.local.u64 %rd8, [%rd_ptx_instr_addr];
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 80;
+	ld.local.u64 %rd7, [%rd_ptx_instr_addr];
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 72;
+	ld.local.u64 %rd6, [%rd_ptx_instr_addr];
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 64;
+	ld.local.u64 %rd5, [%rd_ptx_instr_addr];
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 56;
+	ld.local.u64 %rd4, [%rd_ptx_instr_addr];
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 48;
+	ld.local.u64 %rd3, [%rd_ptx_instr_addr];
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 40;
+	ld.local.u64 %rd2, [%rd_ptx_instr_addr];
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 32;
+	ld.local.u64 %rd1, [%rd_ptx_instr_addr];
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 24;
+	ld.local.u64 %rd0, [%rd_ptx_instr_addr];
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 16;
+	ld.local.u16 %rs2, [%rd_ptx_instr_addr];
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 8;
+	ld.local.u16 %rs1, [%rd_ptx_instr_addr];
+	add.u64 %rd_ptx_instr_addr, %rd_ptx_instr_base, 0;
+	ld.local.u16 %rs0, [%rd_ptx_instr_addr];
+	// --- END REGISTER RESTORING (POP from __ptx_register_save_area) ---
+	ret;
+}
+
+===============================================================================
+All tests passed (94 assertions in 21 test cases)
+

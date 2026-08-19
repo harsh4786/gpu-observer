@@ -1,0 +1,162 @@
+[
+  {
+    "sequence": 0,
+    "offset_ns": 0,
+    "x_request_id": "393598c3-9733-41d7-8ea4-016d3ea76558",
+    "conversation_id": "session_000008",
+    "turn_index": 0,
+    "input_tokens": 62,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 1,
+    "offset_ns": 90368,
+    "x_request_id": "ce73c7e8-74a2-4700-b729-61b4012d31e2",
+    "conversation_id": "session_000001",
+    "turn_index": 0,
+    "input_tokens": 17,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 2,
+    "offset_ns": 116736,
+    "x_request_id": "eadcabd9-3bfd-49ff-a765-c251afba7050",
+    "conversation_id": "session_000002",
+    "turn_index": 0,
+    "input_tokens": 62,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 3,
+    "offset_ns": 129024,
+    "x_request_id": "807035d0-f15a-422a-979b-aa90dfcf94cd",
+    "conversation_id": "session_000006",
+    "turn_index": 0,
+    "input_tokens": 50,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 4,
+    "offset_ns": 164096,
+    "x_request_id": "c984bdf3-83c9-4407-a291-a8aecc2ad4ba",
+    "conversation_id": "session_000004",
+    "turn_index": 0,
+    "input_tokens": 16,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 5,
+    "offset_ns": 306176,
+    "x_request_id": "9055a94f-d29d-4366-b40f-8f411882dcf2",
+    "conversation_id": "session_000003",
+    "turn_index": 0,
+    "input_tokens": 270,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 6,
+    "offset_ns": 391680,
+    "x_request_id": "c29a881e-d903-4b64-986a-418d154953db",
+    "conversation_id": "session_000007",
+    "turn_index": 0,
+    "input_tokens": 10,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 7,
+    "offset_ns": 484864,
+    "x_request_id": "f90451b2-35b1-4a65-8c89-e41c1d04c805",
+    "conversation_id": "session_000005",
+    "turn_index": 0,
+    "input_tokens": 5,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 8,
+    "offset_ns": 7789943552,
+    "x_request_id": "7081a98b-949e-48b7-ad9e-1426a273c9a9",
+    "conversation_id": "session_000008",
+    "turn_index": 1,
+    "input_tokens": 194,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 9,
+    "offset_ns": 7906025472,
+    "x_request_id": "01b43788-9242-4417-a91d-e496f4e5a718",
+    "conversation_id": "session_000004",
+    "turn_index": 1,
+    "input_tokens": 89,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 10,
+    "offset_ns": 7906058752,
+    "x_request_id": "ee689811-a8ad-4010-ae90-dd0b36b922b0",
+    "conversation_id": "session_000006",
+    "turn_index": 1,
+    "input_tokens": 126,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 11,
+    "offset_ns": 7906146560,
+    "x_request_id": "0658e37e-709c-4d83-9dd9-e26a3f2bd123",
+    "conversation_id": "session_000005",
+    "turn_index": 1,
+    "input_tokens": 75,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 12,
+    "offset_ns": 7906159616,
+    "x_request_id": "94eb5018-7e70-45c0-b18f-876acef2520a",
+    "conversation_id": "session_000007",
+    "turn_index": 1,
+    "input_tokens": 86,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 13,
+    "offset_ns": 7906713856,
+    "x_request_id": "b44cdb23-40bd-4e9b-b6d1-8ec654d13933",
+    "conversation_id": "session_000011",
+    "turn_index": 0,
+    "input_tokens": 47,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 14,
+    "offset_ns": 7906739968,
+    "x_request_id": "b9a70ea4-fff7-455e-8958-e1f5edb605c8",
+    "conversation_id": "session_000010",
+    "turn_index": 0,
+    "input_tokens": 8,
+    "output_tokens": 64,
+    "payload": null
+  },
+  {
+    "sequence": 15,
+    "offset_ns": 7906878976,
+    "x_request_id": "eacc0bc7-ddb2-4649-a1e7-49c1c3995f22",
+    "conversation_id": "session_000009",
+    "turn_index": 0,
+    "input_tokens": 8,
+    "output_tokens": 64,
+    "payload": null
+  }
+]

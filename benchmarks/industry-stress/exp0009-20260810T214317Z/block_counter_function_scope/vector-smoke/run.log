@@ -1,0 +1,3 @@
+gpu-observer-sanitizer: initialized mode=block_counter callback_data_scope=function capacity=1024 sample=1/1024 target=<all-modules>
+gpu-observer-sanitizer: flushed prefix=/results/device-probe
+vector_add_ok launches=3

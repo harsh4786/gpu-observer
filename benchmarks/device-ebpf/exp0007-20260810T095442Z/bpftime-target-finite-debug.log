@@ -1,0 +1,183 @@
+[2026-08-10 03:06:30.318] [warning] [bpftime_vm_compat.hpp:251] VM factory for name: llvm already registered, overwriting
+[2026-08-10 03:06:30.557] [info] [bpftime_shm_internal.cpp:1074] Registered shared memory with CUDA: addr=0xee36f9570000 size=268435456
+[2026-08-10 03:06:30.557] [info] [bpftime_shm_internal.cpp:859] Global shm constructed. shm_open_type 1 for bpftime_maps_shm
+[2026-08-10 03:06:30.557] [info] [bpftime_shm_internal.cpp:48] Global shm initialized
+[2026-08-10 03:06:30][info][419246] bpf_attach_ctx constructed
+[2026-08-10 03:06:30][info][419246] Initializing CUDA shared memory
+[2026-08-10 03:06:30][info][419246] CommSharedMem host 0xee36f966c7e8 mapped to device 0xee36f966c7e8
+[2026-08-10 03:06:30][info][419246] CUDA context created
+[2026-08-10 03:06:30][debug][419246] Register attach type 2 with attach impl PN7bpftime6attach16base_attach_implE
+[2026-08-10 03:06:30][debug][419246] Initializing frida attach manager
+[2026-08-10 03:06:30][info][419246] Register attach-impl defined helper bpf_get_func_arg, index 183
+[2026-08-10 03:06:30][info][419246] Register attach-impl defined helper bpf_get_func_ret_id, index 184
+[2026-08-10 03:06:30][info][419246] Register attach-impl defined helper bpf_get_retval, index 186
+[2026-08-10 03:06:30][debug][419246] Register attach type 6 with attach impl PN7bpftime6attach16base_attach_implE
+[2026-08-10 03:06:30][debug][419246] Register attach type 7 with attach impl PN7bpftime6attach16base_attach_implE
+[2026-08-10 03:06:30][debug][419246] Register attach type 1008 with attach impl PN7bpftime6attach16base_attach_implE
+[2026-08-10 03:06:30][debug][419246] Register attach type 1009 with attach impl PN7bpftime6attach16base_attach_implE
+[2026-08-10 03:06:30][info][419246] Starting nv_attach_impl
+[2026-08-10 03:06:30][info][419246] Parsing bundled libraries: /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so:/home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kretprobe/libptxpass_kretprobe.so:/home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_memcapture/libptxpass_kprobe_memcapture.so
+[2026-08-10 03:06:30][info][419246] Found path: /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so, executing..
+[2026-08-10 03:06:30][info][419246] Retrived config of /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so
+[2026-08-10 03:06:30][debug][419246] Config {
+    "attach_points": {
+        "excludes": [
+            "^kprobe/__memcapture$"
+        ],
+        "includes": [
+            "^kprobe/.*$"
+        ]
+    },
+    "attach_type": 8,
+    "description": "Instrument PTX at kprobe entry points, excluding __memcapture",
+    "name": "kprobe_entry",
+    "parameters": {
+        "emit_nops_for_alignment": false,
+        "pad_nops": 0,
+        "save_strategy": "minimal",
+        "stub_name": "__bpftime_cuda__kernel_trace"
+    },
+    "validation": null
+}
+[2026-08-10 03:06:30][info][419246] Found path: /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kretprobe/libptxpass_kretprobe.so, executing..
+[2026-08-10 03:06:30][info][419246] Retrived config of /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kretprobe/libptxpass_kretprobe.so
+[2026-08-10 03:06:30][debug][419246] Config {
+    "attach_points": {
+        "excludes": [],
+        "includes": [
+            "^kretprobe/.*$"
+        ]
+    },
+    "attach_type": 9,
+    "description": "Inject call before ret/exit for kretprobe/*",
+    "name": "kretprobe",
+    "parameters": {},
+    "validation": {}
+}
+[2026-08-10 03:06:30][info][419246] Found path: /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_memcapture/libptxpass_kprobe_memcapture.so, executing..
+[2026-08-10 03:06:30][info][419246] Retrived config of /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_memcapture/libptxpass_kprobe_memcapture.so
+[2026-08-10 03:06:30][debug][419246] Config {
+    "attach_points": {
+        "excludes": [],
+        "includes": [
+            "^kprobe/__memcapture$"
+        ]
+    },
+    "attach_type": 8,
+    "description": "Emit a probe per ld/st and push source line text to eBPF stack",
+    "name": "kprobe_memcapture",
+    "parameters": {},
+    "validation": {}
+}
+[2026-08-10 03:06:30][debug][419246] Register attach type 8 with attach impl PN7bpftime6attach16base_attach_implE
+[2026-08-10 03:06:30][debug][419246] Register attach type 9 with attach impl PN7bpftime6attach16base_attach_implE
+[2026-08-10 03:06:30][info][419246] Initializing agent..
+[2026-08-10 03:06:30][debug][419246] Set environment variable BPFTIME_USED
+[2026-08-10 03:06:30][info][419246] bpftime: shm epoch_seq = 10
+[2026-08-10 03:06:30][debug][419246] Instantiating handler at 16
+[2026-08-10 03:06:30][debug][419246] Instantiating type 1
+[2026-08-10 03:06:30][debug][419246] Instantiating done: 16
+[2026-08-10 03:06:30][debug][419246] Instantiating handler at 17
+[2026-08-10 03:06:30][debug][419246] Creating bpftime_prog with name cuda__kernel_tr
+[2026-08-10 03:06:30][debug][419246] Creating vm with name llvm
+[2026-08-10 03:06:30][debug][419246] Initializing llvm
+[2026-08-10 03:06:30][debug][419246] Load insn cnt 46
+[2026-08-10 03:06:30][debug][419246] Instantiating done: 17
+[2026-08-10 03:06:30][debug][419246] Instantiating handler at 39
+[2026-08-10 03:06:30][debug][419246] Instantiating perf event handler at 39, type 8
+[2026-08-10 03:06:30][debug][419246] Created kprobe/kretprobe private data at id 39, string value nv_attach_private_data: func_name=_Z9vectorAddPKfS0_Pfi func_names=_Z9vectorAddPKfS0_Pfi comm_shared_mem=0 
+[2026-08-10 03:06:30][debug][419246] Instantiated perf event handler 39
+[2026-08-10 03:06:30][debug][419246] Instantiating done: 39
+[2026-08-10 03:06:30][debug][419246] Instantiating handler at 40
+[2026-08-10 03:06:30][debug][419246] Instantiating handler at 17
+[2026-08-10 03:06:30][debug][419246] Handler 17 already instantiated
+[2026-08-10 03:06:30][debug][419246] Instantiating handler at 39
+[2026-08-10 03:06:30][debug][419246] Handler 39 already instantiated
+[2026-08-10 03:06:30][debug][419246] Instantiating link handler: prog 17 -> perf event 39, cookie 0
+[2026-08-10 03:06:30][debug][419246] Instantiating bpf link 40, bpftime_prog->prog_name() = cuda__kernel_tr
+[2026-08-10 03:06:30][info][419246] Instantiating bpf link 40 and the corresponding program cuda__kernel_tr is cuda program
+[2026-08-10 03:06:30][info][419246] Skipping nv attach handler 40 since we are not handling nv handles
+[2026-08-10 03:06:30][debug][419246] Instantiating done: 40
+[2026-08-10 03:06:30][debug][419246] Main initializing for handlers done; initializing CUDA link handles
+[2026-08-10 03:06:30][debug][419246] Instantiating handler at 16
+[2026-08-10 03:06:30][debug][419246] Instantiating type 1
+[2026-08-10 03:06:30][debug][419246] Instantiating done: 16
+[2026-08-10 03:06:30][debug][419246] Instantiating handler at 17
+[2026-08-10 03:06:30][debug][419246] Handler 17 already instantiated
+[2026-08-10 03:06:30][debug][419246] Instantiating handler at 39
+[2026-08-10 03:06:30][debug][419246] Handler 39 already instantiated
+[2026-08-10 03:06:30][debug][419246] Instantiating handler at 40
+[2026-08-10 03:06:30][debug][419246] Instantiating handler at 17
+[2026-08-10 03:06:30][debug][419246] Handler 17 already instantiated
+[2026-08-10 03:06:30][debug][419246] Instantiating handler at 39
+[2026-08-10 03:06:30][debug][419246] Handler 39 already instantiated
+[2026-08-10 03:06:30][debug][419246] Instantiating link handler: prog 17 -> perf event 39, cookie 0
+[2026-08-10 03:06:30][debug][419246] Instantiating bpf link 40, bpftime_prog->prog_name() = cuda__kernel_tr
+[2026-08-10 03:06:30][info][419246] Instantiating bpf link 40 and the corresponding program cuda__kernel_tr is cuda program
+[2026-08-10 03:06:30][info][419246] Handling link to CUDA program: 40, recording it..
+[2026-08-10 03:06:30][info][419246] Loaded 46 instructions (original) for cuda ebpf program
+[2026-08-10 03:06:30][info][419246] Initializing nv_gpu_ringbuf_map_impl at pid 419246
+[2026-08-10 03:06:30][info][419246] Mapped GPU memory for gpu ringbuf map: 261919882005856
+[2026-08-10 03:06:30][info][419246] Copying map fd 16 to device, key size=4, value size=56, max ent=16, map_type = 1527, gpu_buffer = ee36f986cd60
+[2026-08-10 03:06:30][info][419246] Cached shared_mem_ptr at ee36f966c7e8
+[2026-08-10 03:06:30][info][419246] Recorded pass /home/harsh4786/bpftime/build-gpu/attach/nv_attach_impl/pass/ptxpass_kprobe_entry/libptxpass_kprobe_entry.so for func _Z9vectorAddPKfS0_Pfi
+[2026-08-10 03:06:30][info][419246] nv_attach_impl: cached 280758 host symbols
+[2026-08-10 03:06:30][info][419246] nv_attach_impl: late attach bootstrap scanning fatbins..
+[2026-08-10 03:06:30][info][419246] Temporary fatbin written to /tmp/bpftime-fatbin-work.xPoYmM/temp.fatbin
+[2026-08-10 03:06:30][info][419246] Extracting PTX in the fatbin...
+[2026-08-10 03:06:30][info][419246] Calling cuobjdump: /usr/local/cuda-13.0/bin/cuobjdump --extract-ptx all /tmp/bpftime-fatbin-work.xPoYmM/temp.fatbin
+cuobjdump info    : No PTX file found to extract from '/tmp/bpftime-fatbin-work.xPoYmM/temp.fatbin'. You may try with -all option.
+[2026-08-10 03:06:30][info][419246] Got 0 PTX files
+[2026-08-10 03:06:30][info][419246] nv_attach_impl: found 1 fatbin wrapper(s) in /home/harsh4786/gpu-observer/benchmarks/device-ebpf/exp0007-20260810T095442Z/vec_add_once-sm121
+[2026-08-10 03:06:30][info][419246] Temporary fatbin written to /tmp/bpftime-fatbin-work.kyrQ3F/temp.fatbin
+[2026-08-10 03:06:30][info][419246] Extracting PTX in the fatbin...
+[2026-08-10 03:06:30][info][419246] Calling cuobjdump: /usr/local/cuda-13.0/bin/cuobjdump --extract-ptx all /tmp/bpftime-fatbin-work.kyrQ3F/temp.fatbin
+Extracting PTX file and ptxas options    1: vec_add_once.sm_121.ptx -arch=sm_121  --generate-line-info 
+[2026-08-10 03:06:30][info][419246] Got 1 PTX files
+[2026-08-10 03:06:30][info][419246] Loading & patching current fatbin..
+[2026-08-10 03:06:30][info][419275] Patching PTX: vec_add_once.sm_121.ptx
+[2026-08-10 03:06:30][debug][419275] Input: {"ebpf_instructions":[{"lower_32bit":439,"upper_32bit":0},{"lower_32bit":4294449787,"upper_32bit":0},{"lower_32bit":4293925499,"upper_32bit":0},{"lower_32bit":4293401211,"upper_32bit":0},{"lower_32bit":4292876923,"upper_32bit":0},{"lower_32bit":4292352635,"upper_32bit":0},{"lower_32bit":4291828347,"upper_32bit":0},{"lower_32bit":4291304059,"upper_32bit":0},{"lower_32bit":41407,"upper_32bit":0},{"lower_32bit":263,"upper_32bit":4294967240},{"lower_32bit":41663,"upper_32bit":0},{"lower_32bit":519,"upper_32bit":4294967248},{"lower_32bit":41919,"upper_32bit":0},{"lower_32bit":775,"upper_32bit":4294967256},{"lower_32bit":133,"upper_32bit":503},{"lower_32bit":41407,"upper_32bit":0},{"lower_32bit":263,"upper_32bit":4294967264},{"lower_32bit":41663,"upper_32bit":0},{"lower_32bit":519,"upper_32bit":4294967272},{"lower_32bit":41919,"upper_32bit":0},{"lower_32bit":775,"upper_32bit":4294967280},{"lower_32bit":133,"upper_32bit":505},{"lower_32bit":4291338617,"upper_32bit":0},{"lower_32bit":1311061,"upper_32bit":0},{"lower_32bit":4291862905,"upper_32bit":0},{"lower_32bit":1179989,"upper_32bit":0},{"lower_32bit":4292387193,"upper_32bit":0},{"lower_32bit":1048917,"upper_32bit":0},{"lower_32bit":4292911481,"upper_32bit":0},{"lower_32bit":917845,"upper_32bit":0},{"lower_32bit":4293435769,"upper_32bit":0},{"lower_32bit":786773,"upper_32bit":0},{"lower_32bit":4293960057,"upper_32bit":0},{"lower_32bit":655701,"upper_32bit":0},{"lower_32bit":133,"upper_32bit":502},{"lower_32bit":4294445691,"upper_32bit":0},{"lower_32bit":42175,"upper_32bit":0},{"lower_32bit":1031,"upper_32bit":4294967240},{"lower_32bit":439,"upper_32bit":0},{"lower_32bit":4632,"upper_32bit":16},{"lower_32bit":0,"upper_32bit":0},{"lower_32bit":951,"upper_32bit":0},{"lower_32bit":1463,"upper_32bit":56},{"lower_32bit":133,"upper_32bit":25},{"lower_32bit":183,"upper_32bit":0},{"lower_32bit":149,"upper_32bit":0}],"input":{"ebpf_communication_data_symbol":"constData","full_ptx":"\n\n\n\n\n\n\n\n.version 9.0\n.target sm_121\n.address_size 64\n\n\n\n.visible .entry _Z9vectorAddPKfS0_Pfi(\n.param .u64 .ptr .align 1 _Z9vectorAddPKfS0_Pfi_param_0,\n.param .u64 .ptr .align 1 _Z9vectorAddPKfS0_Pfi_param_1,\n.param .u64 .ptr .align 1 _Z9vectorAddPKfS0_Pfi_param_2,\n.param .u32 _Z9vectorAddPKfS0_Pfi_param_3\n)\n{\n.reg .pred %p<2>;\n.reg .b32 %r<6>;\n.reg .b32 %f<4>;\n.reg .b64 %rd<11>;\n.loc\t1 7 0\n\nld.param.u64 %rd1, [_Z9vectorAddPKfS0_Pfi_param_0];\nld.param.u64 %rd2, [_Z9vectorAddPKfS0_Pfi_param_1];\nld.param.u64 %rd3, [_Z9vectorAddPKfS0_Pfi_param_2];\nld.param.u32 %r2, [_Z9vectorAddPKfS0_Pfi_param_3];\n.loc\t1 9 2\nmov.u32 %r3, %ctaid.x;\nmov.u32 %r4, %ntid.x;\nmov.u32 %r5, %tid.x;\nmad.lo.s32 %r1, %r3, %r4, %r5;\n.loc\t1 10 2\nsetp.ge.s32 %p1, %r1, %r2;\n@%p1 bra $L__BB0_2;\n.loc\t1 9 2\ncvta.to.global.u64 %rd4, %rd1;\ncvta.to.global.u64 %rd5, %rd2;\ncvta.to.global.u64 %rd6, %rd3;\n.loc\t1 11 3\nmul.wide.s32 %rd7, %r1, 4;\nadd.s64 %rd8, %rd4, %rd7;\nld.global.f32 %f1, [%rd8];\nadd.s64 %rd9, %rd5, %rd7;\nld.global.f32 %f2, [%rd9];\nadd.f32 %f3, %f1, %f2;\nadd.s64 %rd10, %rd6, %rd7;\nst.global.f32 [%rd10], %f3;\n$L__BB0_2:\n.loc\t1 12 1\nret;\n\n}\n.file\t1 \"/home/harsh4786/gpu-observer/benchmarks/device-ebpf/exp0007-20260810T095442Z/vec_add_once.cu\"\n","global_ebpf_map_info_symbol":"map_info","to_patch_kernel":"_Z9vectorAddPKfS0_Pfi"}}
+[2026-08-10 03:06:30][info][419275] Patching request cf0bfc4042944f9ffa7811b2a4f1702fd298e804263b5ef9aad1c185f3047a5c not found in cache, patching..
+[2026-08-10 03:06:31.002] [info] [core.cpp:321] [ptxpass] kprobe_entry: matched=1, in=1230, out=4541
+[2026-08-10 03:06:31][debug][419246] Writing patched PTX to /tmp/bpftime-fatbin-work.eW6Kx9
+[2026-08-10 03:06:31][info][419246] Auto-detected GPU SM arch: sm_121 (compute capability 12.1)
+[2026-08-10 03:06:31][info][419246] Compiling PTXs with sm_arch sm_121
+[2026-08-10 03:06:31][info][419246] Compiler version: 13.0
+[2026-08-10 03:06:31][info][419276] Start compiling patched.vec_add_once.sm_121.ptx, not found in cache
+[2026-08-10 03:06:31][debug][419276] Info: ptxas info    : 346 bytes gmem
+ptxas info    : Compiling entry function '_Z9vectorAddPKfS0_Pfi' for 'sm_121'
+ptxas info    : Function properties for _Z9vectorAddPKfS0_Pfi
+ptxas         .     16464 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 32 registers, used 0 barriers, 16464 bytes cumulative stack size
+ptxas info    : Compile time = 10.180 ms
+ptxas info    : Function properties for __probe_func___Z9vectorAddPKfS0_Pfi
+ptxas         .     0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for _bpf_helper_ext_0025
+ptxas         .     0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for _bpf_helper_ext_0502
+ptxas         .     0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for _bpf_helper_ext_0503
+ptxas         .     0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for _bpf_helper_ext_0505
+ptxas         .     0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+
+[2026-08-10 03:06:31][info][419276] Compile of patched.vec_add_once.sm_121.ptx done
+[2026-08-10 03:06:31][info][419246] Loading module: patched.vec_add_once.sm_121.ptx, not found in cache
+[2026-08-10 03:06:31][info][419246] Copying trampoline data to device
+[2026-08-10 03:06:31][info][419246] constData symbol device_ptr=32ee00000 size=8 shared_mem_ptr=ee36f966c7e8
+[2026-08-10 03:06:31][info][419246] map_info symbol device_ptr=32ee00008 size=40960
+[2026-08-10 03:06:31][info][419246] Trampoline data copied
+[2026-08-10 03:06:31][info][419246] Loaded module: patched.vec_add_once.sm_121.ptx
+[2026-08-10 03:06:31][info][419246] nv_attach_impl: late attach bootstrap ingested 1 fatbin(s)
+[2026-08-10 03:06:31][debug][419246] Prefilled patched CUDA kernel _Z9vectorAddPKfS0_Pfi
+[2026-08-10 03:06:31][debug][419246] Instantiating done: 40
+[2026-08-10 03:06:31][info][419246] agent ipc: listening (abstract) for pid 419246
+[2026-08-10 03:06:31][info][419246] Attach successfully
+[2026-08-10 03:06:31][debug][419246] Entering cudaMalloc..
+[2026-08-10 03:06:31][debug][419246] Entering cudaMalloc..
+[2026-08-10 03:06:31][debug][419246] Entering cudaMalloc..
+[2026-08-10 03:06:31][debug][419246] grid_dim: 32, 1, 1
+[2026-08-10 03:06:31][debug][419246] block_dim: 128, 1, 1
+[2026-08-10 03:06:31][debug][419246] Late attach launch: resolved _fini but no patched CUfunction is registered
+[2026-08-10 03:06:31][info][419250] Exiting CUDA watcher thread
+vectorAdd C[0]=0.0 C[1]=4.0 blocks=32 threads=128 status=PASS

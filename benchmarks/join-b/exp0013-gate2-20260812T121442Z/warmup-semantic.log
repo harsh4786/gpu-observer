@@ -1,0 +1,4 @@
+begin ts=629133223116715 seq=0 step=1 scheduled=70 prefill=70 decode=0 queue=0 active=1 slices=1 kv_permyriad=15 flags=0x0
+slice ts=629133223116715 seq=1 step=1 request=0xecda2c1d3d032aa0 phase=1 tokens=70
+end ts=629133463051617 seq=2 step=1 status=0 flags=0x0
+summary records=3 begins=1 slices=1 ends=1 producer_dropped=0

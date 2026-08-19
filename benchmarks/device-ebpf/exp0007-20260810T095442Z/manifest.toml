@@ -1,0 +1,41 @@
+schema_version = 1
+experiment_id = "EXP-0007"
+created_utc = "2026-08-10T09:54:42Z"
+status = "complete"
+title = "Standalone bpftime GPU-eBPF and gpu_ext availability baselines"
+hardware = "NVIDIA DGX Spark / GB10"
+gpu_architecture = "sm_121"
+host_architecture = "aarch64"
+host_os = "Ubuntu 24.04"
+kernel = "6.17.0-1029-nvidia"
+driver = "580.173.02"
+cuda_toolkit = "13.0"
+bpftime_commit = "96be3e0b99882624c80502f9d3bbb1a6af5c86f8"
+bpftime_worktree_clean = false
+bpftime_example = "example/gpu/kernel_trace"
+gpu_ext_commit = "2cf51085670c3d64bdd7a5ec6b612570a9fd9440"
+gpu_ext_release = "v0.0.21"
+gpu_ext_driver_base = "575.57.08"
+gpu_ext_source_status = "pinned_public_source_cloned_and_arm64_policies_compiled"
+gpu_ext_runtime_status = "blocked_live_driver_lacks_custom_hooks_and_struct_ops_types"
+live_driver_mutated = false
+
+[results]
+bpftime_control_correct = true
+bpftime_instrumented_correct = true
+bpftime_device_events = 1
+bpftime_unit_test_cases_passed = 21
+bpftime_unit_test_assertions_passed = 94
+bpftime_target_exit_status = 0
+bpftime_tracer_exit_status = 124
+bpftime_tracer_timeout_expected = true
+gpu_ext_chunk_trace_build_status = 0
+gpu_ext_struct_ops_build_status = 0
+gpu_ext_live_hook_symbols_present = 0
+gpu_ext_live_required_btf_types_present = 0
+performance_claim = false
+
+[artifact_policy]
+raw_logs_preserved = true
+derived_report_separate = true
+checksums_required = true

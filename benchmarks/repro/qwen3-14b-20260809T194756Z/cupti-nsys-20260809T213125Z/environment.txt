@@ -1,0 +1,6 @@
+captured_utc=2026-08-09T21:37:40Z
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+image_id=sha256:c5c116c732f24a640650e1e6e399112ef7c2b1e80c5fd7c13808b10a579646e6 created=2026-05-08T03:45:41.473567193Z
+NVIDIA GB10, 580.173.02, 37
+model_revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+nsight=NVIDIA Nsight Systems version 2025.3.2.474-253236389321v0

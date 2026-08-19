@@ -1,0 +1,15 @@
+[package]
+name = "gpu-observer-host-probe"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "gpu-observer-host-probe"
+path = "src/main.rs"
+
+[dependencies]
+aya.workspace = true
+gpu-observer-host-probe-common = { path = "../common", features = ["user"] }
+libc.workspace = true

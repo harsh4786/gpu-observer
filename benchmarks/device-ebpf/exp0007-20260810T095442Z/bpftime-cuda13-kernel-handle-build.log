@@ -1,0 +1,97 @@
+Script started on 2026-08-10 03:09:13-07:00 [COMMAND="cmake --build /home/harsh4786/bpftime/build-gpu -j8" <not executed on terminal>]
+[  2%] Built target FridaCore
+[  2%] [34m[1mPerforming update step for 'libbpf_project'[0m
+[  4%] Built target FridaGum
+[  6%] Built target bpftool
+[  8%] Built target ubpf
+[  8%] [34m[1mPerforming build step for 'libbpf'[0m
+[ 10%] Built target spdlog
+make[3]: warning: -j0 forced in submake: resetting jobserver mode.
+[ 10%] Built target bpftime_syscall_trace_syscall_id_table
+[ 11%] Built target embedfile
+  INSTALL  bpf.h libbpf.h btf.h libbpf_common.h libbpf_legacy.h bpf_helpers.h bpf_helper_defs.h bpf_tracing.h bpf_endian.h bpf_core_read.h skel_internal.h libbpf_version.h usdt.bpf.h
+  INSTALL  /home/harsh4786/bpftime/build-gpu/libbpf/libbpf/libbpf.pc
+[ 11%] [34m[1mNo patch step for 'libbpf_project'[0m
+  INSTALL  /home/harsh4786/bpftime/build-gpu/libbpf/libbpf/libbpf.a /home/harsh4786/bpftime/build-gpu/libbpf/libbpf/libbpf.so /home/harsh4786/bpftime/build-gpu/libbpf/libbpf/libbpf.so.1 /home/harsh4786/bpftime/build-gpu/libbpf/libbpf/libbpf.so.1.7.0
+[ 12%] Built target bpftime_ubpf_vm_obj
+[ 14%] Built target bpftime_frida_uprobe_attach_impl
+[ 15%] Built target llvmbpf_vm
+[ 16%] Built target bpftime_simple_attach_impl
+[ 17%] Built target bpftime_syscall_trace_attach_impl
+[ 17%] [34m[1mNo install step for 'libbpf'[0m
+[ 18%] [34m[1mNo configure step for 'libbpf_project'[0m
+[ 37%] Built target bpftime_llvm_vm_obj
+[ 48%] Built target Catch2
+[ 48%] Built target nv_attach_impl_ptx_compiler
+[ 49%] Built target bpftime_text_segment_transformer
+[ 51%] Built target vm-llvm-example
+[ 51%] Built target maps-example
+[ 51%] [34m[1mCompleted 'libbpf'[0m
+[ 51%] Built target bpftime_ubpf_vm
+[ 52%] Built target ptxpass_core
+[ 53%] Built target bpftime_llvm_vm
+[ 54%] Built target Catch2WithMain
+[ 54%] [34m[1mPerforming build step for 'libbpf_project'[0m
+make[3]: warning: -j0 forced in submake: resetting jobserver mode.
+[ 55%] Built target ptxpass_kprobe_entry
+[ 55%] Built target bpftime_vm
+[ 56%] Built target ptxpass_kretprobe
+[ 56%] Built target ptxpass_kprobe_memcapture
+[ 57%] Built target bpftime_syscall_trace_attach_tests
+[ 59%] Built target libbpf
+[ 61%] Built target bpftime_frida_uprobe_attach_tests
+[ 61%] [34m[1mNo install step for 'libbpf_project'[0m
+[ 61%] [34m[1mCopying headers[0m
+[ 61%] [32mBuilding C object benchmark/CMakeFiles/simple-benchmark-with-embed-ebpf-calling.dir/test_embed.c.o[0m
+[34m[1mCopying relo_core.h[0m
+[ 61%] [34m[1mCompleted 'libbpf_project'[0m
+[34m[1mCopying hashmap.h[0m
+[ 61%] [32mBuilding CXX object attach/nv_attach_impl/CMakeFiles/bpftime_nv_attach_impl.dir/nv_attach_impl_frida_setup.cpp.o[0m
+[ 62%] Built target libbpf_project
+[34m[1mCopying nlattr.h[0m
+[34m[1mCopying libbpf_internal.h[0m
+[ 62%] Built target bpftime-vm-cli
+[ 62%] [32m[1mLinking CXX executable simple-benchmark-with-embed-ebpf-calling[0m
+[ 73%] Built target copy_headers
+[ 73%] [32mBuilding CXX object runtime/object/CMakeFiles/bpftime-object.dir/bpf_object.cpp.o[0m
+[ 74%] Built target bpftime_daemon_ebpf_target
+[ 74%] Built target bpftime_daemon_ebpf_skel
+[ 74%] Built target bpftime-object
+[ 74%] Built target simple-benchmark-with-embed-ebpf-calling
+[ 74%] [32m[1mLinking CXX static library libbpftime_nv_attach_impl.a[0m
+[ 76%] Built target bpftime_nv_attach_impl
+[ 76%] [32m[1mLinking CXX executable bpftime_nv_attach_tests[0m
+[ 76%] [32mBuilding CXX object runtime/CMakeFiles/runtime.dir/src/bpf_helper.cpp.o[0m
+[ 76%] [32mBuilding CXX object runtime/CMakeFiles/runtime.dir/src/bpf_map/gpu_kernel_shared/array_map_kernel_gpu.cpp.o[0m
+[ 77%] [32mBuilding CXX object runtime/CMakeFiles/runtime.dir/src/bpf_map/shared/hash_map_kernel_user.cpp.o[0m
+[ 77%] [32mBuilding CXX object runtime/CMakeFiles/runtime.dir/src/bpf_map/shared/perf_event_array_kernel_user.cpp.o[0m
+[ 77%] [32mBuilding CXX object runtime/CMakeFiles/runtime.dir/src/bpf_map/shared/array_map_kernel_user.cpp.o[0m
+[ 77%] [32mBuilding CXX object runtime/CMakeFiles/runtime.dir/src/bpf_map/shared/percpu_array_map_kernel_user.cpp.o[0m
+[ 78%] Built target bpftime_nv_attach_tests
+[ 79%] [32m[1mLinking CXX static library libruntime.a[0m
+[ 90%] Built target runtime
+[ 90%] [32m[1mLinking CXX executable bpftimetool[0m
+[ 90%] [32m[1mLinking CXX shared library libbpftime-agent.so[0m
+[ 90%] [32m[1mLinking CXX executable bpftime[0m
+[ 90%] [32m[1mLinking CXX executable gpu/host/gpu_array_map_host_perf[0m
+[ 90%] [32m[1mLinking CXX executable gpu/host/gpu_per_thread_array_map_host_perf[0m
+[ 91%] [32mBuilding CXX object daemon/CMakeFiles/libbpftime_daemon.dir/user/bpf_tracer.cpp.o[0m
+[ 92%] [32mBuilding CXX object runtime/syscall-server/CMakeFiles/bpftime-syscall-server.dir/syscall_context.cpp.o[0m
+[ 92%] [32mBuilding CXX object tools/aot/CMakeFiles/bpftime-aot-cli.dir/main.cpp.o[0m
+[ 92%] [32mBuilding CXX object daemon/CMakeFiles/libbpftime_daemon.dir/user/handle_bpf_event.cpp.o[0m
+[ 92%] [32mBuilding CXX object daemon/CMakeFiles/libbpftime_daemon.dir/user/bpftime_driver.cpp.o[0m
+[ 93%] Built target gpu_per_thread_array_map_host_perf
+[ 94%] Built target bpftime-agent
+[ 94%] Built target gpu_array_map_host_perf
+[ 95%] Built target bpftimetool
+[ 95%] [32m[1mLinking CXX static library liblibbpftime_daemon.a[0m
+[ 95%] Built target bpftime-cli-cpp
+[ 96%] Built target libbpftime_daemon
+[ 97%] [32m[1mLinking CXX executable bpftime_daemon[0m
+[ 98%] [32m[1mLinking CXX executable bpftime-aot[0m
+[100%] [32m[1mLinking CXX shared library libbpftime-syscall-server.so[0m
+[100%] Built target bpftime_daemon
+[100%] Built target bpftime-aot-cli
+[100%] Built target bpftime-syscall-server
+
+Script done on 2026-08-10 03:09:26-07:00 [COMMAND_EXIT_CODE="0"]

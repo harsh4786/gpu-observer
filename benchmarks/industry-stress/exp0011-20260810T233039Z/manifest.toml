@@ -1,0 +1,74 @@
+schema_version = 1
+experiment_id = "EXP-0011"
+created_utc = "2026-08-10T23:30:39Z"
+status = "complete"
+title = "BurstGPT P90 five-minute fixed-schedule replay on Qwen3-14B"
+hardware = "NVIDIA DGX Spark / GB10"
+gpu_architecture = "sm_121"
+host_architecture = "aarch64"
+host_os = "Ubuntu 24.04"
+kernel = "6.17.0-1029-nvidia"
+driver = "580.173.02"
+cuda = "13.2.1"
+model = "Qwen/Qwen3-14B"
+model_revision = "40c069824f4251a91eefaf281ebe4c544efd3e18"
+dtype = "BF16"
+vllm_image = "nvcr.io/nvidia/vllm:26.05-py3"
+sanitizer_image_id = "e4409f94c584"
+aiperf_version = "0.10.0"
+aiperf_commit = "bf70bd968f44b7d34026554e8dc629d39440d106"
+burstgpt_commit = "d895a53bb7b8ec137d0d2fe203b335835a78c10a"
+trace_sha256 = "eca664032ac9b70253d05f7d87681c872a5c36642ebdb6d09b40421d7e130cf0"
+execution_mode = "cuda_graph_async_production"
+max_model_len = 8192
+kv_cache_memory_bytes = 8589934592
+max_num_seqs = 32
+
+[workload]
+trace = "benchmarks/industry-stress/20260810-aiperf/burstgpt-p90-5min.csv"
+trace_duration_seconds = 299
+requests = 271
+input_tokens_total = 141859
+output_tokens_total = 18915
+max_input_tokens = 2431
+max_output_tokens = 859
+fixed_schedule_auto_offset = true
+client_concurrency_ceiling = 271
+streaming = true
+temperature = 0
+ignore_eos = true
+
+[instrumented_arm]
+mode = "block_counter"
+kernel_substring = "nvjet_sm121_tst_mma_192x144x64_2_48x72x64_tmaAB_alignCD4_bz_TNNN"
+
+[artifact_policy]
+raw_logs_preserved = true
+checksums_required = true
+server_stopped_after_each_arm = true
+exact_trace_request_count_required = true
+exact_output_token_total_required = true
+fatal_log_scan_required = true
+
+[results]
+token_count_source = "vllm_server_usage"
+server_prompt_tokens = 144027
+server_completion_tokens = 18915
+clean_duration_seconds = 364.817207753
+probe_duration_seconds = 365.318981393
+clean_output_tokens_per_second = 51.8478832632435
+probe_output_tokens_per_second = 51.776669057
+output_throughput_delta_percent = -0.1374
+clean_ttft_p99_ms = 1140.1889633
+probe_ttft_p99_ms = 1175.0192153
+clean_itl_avg_ms = 141.2292486487
+probe_itl_avg_ms = 142.132101945
+clean_request_latency_avg_ms = 10244.287483731
+probe_request_latency_avg_ms = 10300.691831908
+max_waiting_requests = 1
+max_running_requests = 16
+max_kv_cache_usage = 0.2537404580152671
+clean_dispatch_lag_p99_ms = 1.2980153
+probe_dispatch_lag_p99_ms = 0.7882793
+selected_counter_launches = 9600
+selected_counter_actual_callbacks = 9473312

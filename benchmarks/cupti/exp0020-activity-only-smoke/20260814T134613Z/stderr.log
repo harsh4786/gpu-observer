@@ -1,0 +1,3 @@
+gpu-observer-sanitizer: initialized mode=block_event capacity=65536 sample=1/1024 target=vector_add callback_data_scope=function launch_identity=0 passive_launch_records=0 graph_node_identity=0
+gpu-observer-cupti: register=CUPTI_ERROR_MULTIPLE_SUBSCRIBERS_NOT_SUPPORTED enable=CUPTI_ERROR_UNKNOWN target=vector_add bounded_buffer_bytes=8388608
+gpu-observer-sanitizer: flushed prefix=/results/device-probe

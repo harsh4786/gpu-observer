@@ -1,0 +1,1135 @@
+libbpf: loading object 'kernel_trace_bpf' from buffer
+[2026-08-10 03:09:54.274] [info] [bpftime_config.cpp:47] Setting BPFTIME_SHM_MEMORY_MB to: 256
+[2026-08-10 03:09:54.274] [info] [syscall_context.cpp:152] Init bpftime syscall mocking..
+[2026-08-10 03:09:54.274] [info] [syscall_context.cpp:153] The log will be written to: console
+[2026-08-10 03:09:54.274] [debug] fopen64 /proc/version_signature re
+[2026-08-10 03:09:54.274] [debug] [syscall_context.cpp:1083] Calling mocked fopen
+[2026-08-10 03:09:54.275] [info] [syscall_server_utils.cpp:45] Starting syscall server..
+[2026-08-10 03:09:54.275] [info] [bpftime_config.cpp:47] Setting BPFTIME_SHM_MEMORY_MB to: 256
+[2026-08-10 03:09:54][info][420710] Initialize syscall server
+[2026-08-10 03:09:54][info][420710] Setting BPFTIME_SHM_MEMORY_MB to: 256
+[2026-08-10 03:09:54][debug][420710] start: bpftime_shm for create or open setup for memory size 256
+[2026-08-10 03:09:54][debug][420710] mmap 0
+[2026-08-10 03:09:54][debug][420710] Closing fd 3
+[2026-08-10 03:09:54][debug][420710] done: bpftime_shm for server setup: manager
+[2026-08-10 03:09:54][debug][420710] done: bpftime_shm for server setup: syscall_pid_set
+[2026-08-10 03:09:54][debug][420710] done: bpftime_shm for open_or_create setup
+[2026-08-10 03:09:54][info][420710] Global shm constructed. shm_open_type 3 for bpftime_maps_shm
+[2026-08-10 03:09:54][info][420710] Global shm initialized
+[2026-08-10 03:09:54][info][420710] Initializing CUDA at syscall-server side
+[2026-08-10 03:09:54][debug][420710] fopen /proc/sys/vm/mmap_min_addr r
+[2026-08-10 03:09:54][debug][420710] fopen /proc/cpuinfo r
+[2026-08-10 03:09:54][debug][420710] fopen /proc/self/maps r
+[2026-08-10 03:09:54][debug][420710] fopen /proc/self/task/420711/comm wb
+[2026-08-10 03:09:54][debug][420710] fopen /home/harsh4786/.nv/nvidia-application-profile-globals-rc r
+[2026-08-10 03:09:54][debug][420710] fopen /home/harsh4786/.nv/nvidia-application-profiles-rc r
+[2026-08-10 03:09:54][debug][420710] fopen /home/harsh4786/.nv/nvidia-application-profiles-rc.d r
+[2026-08-10 03:09:54][debug][420710] fopen /etc/nvidia/nvidia-application-profiles-rc r
+[2026-08-10 03:09:54][debug][420710] fopen /etc/nvidia/nvidia-application-profiles-rc.d/ r
+[2026-08-10 03:09:54][debug][420710] fopen /usr/share/nvidia/nvidia-application-profiles-580.173.02-rc r
+[2026-08-10 03:09:54][debug][420710] fopen /usr/share/nvidia/nvidia-application-profiles-rc r
+[2026-08-10 03:09:54][debug][420710] fopen /proc/self/cmdline r
+[2026-08-10 03:09:54][debug][420710] Closing fd 8
+[2026-08-10 03:09:54][debug][420710] fopen /proc/driver/nvidia/params r
+[2026-08-10 03:09:54][debug][420710] open /sys/devices/system/memory/block_size_bytes 0 0
+[2026-08-10 03:09:54][debug][420710] Closing fd 9
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3221767894 281474552888976
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3372238536 253269792790304
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552889280
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552884976
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3222292009 281474552889312
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] Closing fd 8
+[2026-08-10 03:09:54][debug][420710] fopen /proc/driver/nvidia/params r
+[2026-08-10 03:09:54][debug][420710] open /sys/devices/system/memory/block_size_bytes 0 0
+[2026-08-10 03:09:54][debug][420710] Closing fd 9
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3221767894 281474552890432
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3372238536 253269792790304
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552890736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552886368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552886368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552890736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552886384
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] fopen /proc/self/status r
+[2026-08-10 03:09:54][debug][420710] fopen /sys/devices/system/node/node0/cpumap r
+[2026-08-10 03:09:54][debug][420710] fopen /proc/devices r
+[2026-08-10 03:09:54][debug][420710] open /dev/nvidia-uvm 524290 0
+[2026-08-10 03:09:54][debug][420710] open /dev/nvidia-uvm 524290 0
+[2026-08-10 03:09:54][debug][420710] ioctl 9 805306369 281474552891040
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 10 75 281474552891040
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 9 39 281474552891040
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878576
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552876704
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878496
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] fopen /proc/driver/nvidia/params r
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878960
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552875872
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878944
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3222292009 281474552883232
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] fopen /proc/driver/nvidia/params r
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3221505737 281474552883072
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3257943767 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878624
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883256
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878960
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878128
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878960
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878848
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] fopen /proc/driver/nvidia/params r
+[2026-08-10 03:09:54][debug][420710] ioctl 13 3221505737 281474552883072
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883312
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883312
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877920
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877840
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552876208
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552874160
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552875152
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877888
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878384
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877616
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877616
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877616
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877616
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877616
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552876912
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877344
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878016
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878384
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878384
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878336
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 14 3221505737 281474552882720
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 14 3222292174 281474552882720
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877616
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878128
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878128
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878128
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878128
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878128
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878112
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878000
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878128
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552863824
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552871152
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877424
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882656
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878064
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882624
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] mmap64 0
+[2026-08-10 03:09:54][debug][420710] Closing fd 15
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882656
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878064
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882624
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] mmap64 0
+[2026-08-10 03:09:54][debug][420710] Closing fd 15
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882816
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878096
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882656
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] mmap64 0
+[2026-08-10 03:09:54][debug][420710] Closing fd 15
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878352
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882712
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882712
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878256
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878240
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878512
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] fopen /sys/bus/pci/devices/000f:01:00.0/numa_node r
+[2026-08-10 03:09:54][debug][420710] mmap 0
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552883488
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552883488
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552879312
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552879312
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552881648
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 9 37 281474552889880
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 9 70 281474552889992
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 9 23 281474552891088
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552890432
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=false, initializing_cuda=true
+[2026-08-10 03:09:54][debug][420710] mmap 200000000
+[2026-08-10 03:09:54][debug][420710] mmap 0
+[2026-08-10 03:09:54][info][420710] CUDA initialized at syscall server side
+[2026-08-10 03:09:54][debug][420710] Set environment variable BPFTIME_USED
+[2026-08-10 03:09:54][info][420710] bpftime-syscall-server started
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /proc/version_signature
+libbpf: elf: section(2) .symtab, size 168, link 1, flags 0, type=2
+libbpf: elf: section(3) kprobe/_Z9vectorAddPKfS0_Pfi, size 368, link 0, flags 6, type=1
+libbpf: sec 'kprobe/_Z9vectorAddPKfS0_Pfi': found program 'cuda__kernel_trace' at insn offset 0 (0 bytes), code size 46 insns (368 bytes)
+libbpf: elf: section(4) .maps, size 32, link 0, flags 3, type=1
+libbpf: elf: section(5) license, size 4, link 0, flags 3, type=1
+libbpf: license of kernel_trace_bpf is GPL
+libbpf: elf: section(6) .relkprobe/_Z9vectorAddPKfS0_Pfi, size 16, link 2, flags 40, type=9
+libbpf: elf: section(7) .BTF, size 1215, link 0, flags 0, type=1
+libbpf: elf: section(8) .BTF.ext, size 256, link 0, flags 0, type=1
+libbpf: looking for externs among 7 symbols...
+libbpf: collected 0 externs total
+[2026-08-10 03:09:54][debug][420710] SYS_MEMFD_CREATE name=libbpf-placeholder-fd flags=9
+[2026-08-10 03:09:54][debug][420710] Calling mocked memfd_create libbpf-placeholder-fd, 9
+[2026-08-10 03:09:54][debug][420710] open /dev/null 0 9
+[2026-08-10 03:09:54][debug][420710] Calling mocked open
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /dev/null
+[2026-08-10 03:09:54][debug][420710] Handler at fd 16 set to type 6
+[2026-08-10 03:09:54][debug][420710] Created memfd handler at 16, name libbpf-placeholder-fd, flags 9
+libbpf: map 'events': at sec_idx 4, offset 0.
+libbpf: map 'events': found type = 1527.
+libbpf: map 'events': found key [8], sz = 4.
+libbpf: map 'events': found value [12], sz = 56.
+libbpf: map 'events': found max_entries = 16.
+libbpf: sec '.relkprobe/_Z9vectorAddPKfS0_Pfi': collecting relocation for section(3) 'kprobe/_Z9vectorAddPKfS0_Pfi'
+libbpf: sec '.relkprobe/_Z9vectorAddPKfS0_Pfi': relo #0: insn #39 against 'events'
+libbpf: prog 'cuda__kernel_trace': found map 0 (events, sec 4, off 0) for insn #39
+libbpf: object 'kernel_trace_bp': failed (-EACCES) to open BPF FS mount at '/sys/fs/bpf', skipping optional step...
+[2026-08-10 03:09:54][debug][420710] SYS_BPF 5 281474552894080 148 149 687194767493 10
+[2026-08-10 03:09:54][debug][420710] Loading program `` license `GPL` prog_type `1` attach_type 3871150704 map_type 1
+[2026-08-10 03:09:54][debug][420710] open /dev/null 0 281474552894064
+[2026-08-10 03:09:54][debug][420710] Calling mocked open
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /dev/null
+[2026-08-10 03:09:54][debug][420710] Set handler fd 17 to bpf_prog_handler, name , prog_type 1, insn_cnt 2
+[2026-08-10 03:09:54][debug][420710] Handler at fd 17 set to type 3
+[2026-08-10 03:09:54][debug][420710] Loaded program `` id=17
+[2026-08-10 03:09:54][debug][420710] Closing fd 17
+[2026-08-10 03:09:54][debug][420710] Calling mocked close
+[2026-08-10 03:09:54][debug][420710] Destroying prog ehandler 17
+[2026-08-10 03:09:54][debug][420710] SYS_BPF 5 281474552894144 152 0 0 281474552894680
+[2026-08-10 03:09:54][debug][420710] Loading program `` license `GPL` prog_type `1` attach_type 3871151440 map_type 1
+[2026-08-10 03:09:54][debug][420710] open /dev/null 0 281474552894800
+[2026-08-10 03:09:54][debug][420710] Calling mocked open
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /dev/null
+[2026-08-10 03:09:54][debug][420710] Set handler fd 17 to bpf_prog_handler, name , prog_type 1, insn_cnt 2
+[2026-08-10 03:09:54][debug][420710] Handler at fd 17 set to type 3
+[2026-08-10 03:09:54][debug][420710] Loaded program `` id=17
+[2026-08-10 03:09:54][debug][420710] Closing fd 17
+[2026-08-10 03:09:54][debug][420710] Calling mocked close
+[2026-08-10 03:09:54][debug][420710] Destroying prog ehandler 17
+[2026-08-10 03:09:54][debug][420710] SYS_BPF 18 281474552893744 40 281474552894064 201948913636113 6989718565027735808
+[2026-08-10 03:09:54][debug][420710] SYS_BPF 18 281474552893808 40 281474552894128 201948913660285 1734439936
+[2026-08-10 03:09:54][debug][420710] SYS_BPF 18 281474552893840 40 281474552894160 201948913638445 1953392896
+libbpf: Kernel doesn't support BTF, skipping uploading it.
+[2026-08-10 03:09:54][debug][420710] SYS_BPF 5 281474552893952 148 281474552894000 183 253269944045568
+[2026-08-10 03:09:54][debug][420710] Loading program `libbpf_nametest` license `GPL` prog_type `1` attach_type 3871150576 map_type 1
+[2026-08-10 03:09:54][debug][420710] open /dev/null 0 281474552893936
+[2026-08-10 03:09:54][debug][420710] Calling mocked open
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /dev/null
+[2026-08-10 03:09:54][debug][420710] Set handler fd 17 to bpf_prog_handler, name libbpf_nametest, prog_type 1, insn_cnt 2
+[2026-08-10 03:09:54][debug][420710] Handler at fd 17 set to type 3
+[2026-08-10 03:09:54][debug][420710] Loaded program `libbpf_nametest` id=17
+[2026-08-10 03:09:54][debug][420710] Closing fd 17
+[2026-08-10 03:09:54][debug][420710] Calling mocked close
+[2026-08-10 03:09:54][debug][420710] Destroying prog ehandler 17
+[2026-08-10 03:09:54][debug][420710] SYS_BPF 0 281474552893952 80 0 281474552894200 281474552894256
+[2026-08-10 03:09:54][debug][420710] Creating map type=1527, name=events, key_size=4, value_size=56
+[2026-08-10 03:09:54][debug][420710] open /dev/null 0 281474552893980
+[2026-08-10 03:09:54][debug][420710] Calling mocked open
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /dev/null
+[2026-08-10 03:09:54][debug][420710] Create map with type 1527
+[2026-08-10 03:09:54][debug][420710] Handler at fd 17 set to type 1
+[2026-08-10 03:09:54][info][420710] syscall server: Set enable_mock_after_initialized to false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552882576
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552882576
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552882640
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 25 281474552886912
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 0
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884064
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883240
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552874000
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 320000000
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883712
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552882888
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873648
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883712
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552882888
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873648
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884208
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883384
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552874144
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552885920
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552885920
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 200200000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552882016
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552881176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871936
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 200400000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552881520
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880680
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871440
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 e656d5bbe000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0xe656d5bbe000, length=4096, prot=3, flags=17, fd=19, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 19
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882480
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878240
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882800
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 200800000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0x200800000, length=2097152, prot=3, flags=17, fd=19, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 19
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552881656
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552872416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880448
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883024
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878784
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552883344
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 201a00000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0x201a00000, length=2097152, prot=3, flags=17, fd=19, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 19
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552882200
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552872960
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 201c00000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552881520
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880680
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871440
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 e656d5bbf000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0xe656d5bbf000, length=4096, prot=3, flags=17, fd=19, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 19
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880448
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 202000000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552881520
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880680
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871440
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 e656d5bc0000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0xe656d5bc0000, length=4096, prot=3, flags=17, fd=19, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 19
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880448
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 202400000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552881520
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880680
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871440
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 e656d5bc1000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0xe656d5bc1000, length=4096, prot=3, flags=17, fd=19, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 19
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880448
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 202800000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552881520
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880680
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871440
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 e656d5bc2000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0xe656d5bc2000, length=4096, prot=3, flags=17, fd=19, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 19
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880448
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 202c00000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552881520
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880680
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871440
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 e656d5bc3000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0xe656d5bc3000, length=4096, prot=3, flags=17, fd=19, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 19
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880448
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 203000000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552881520
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880680
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871440
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 e656d5bc4000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0xe656d5bc4000, length=4096, prot=3, flags=17, fd=19, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 19
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880448
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 203400000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552881520
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880680
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871440
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 e656d5bc5000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0xe656d5bc5000, length=4096, prot=3, flags=17, fd=19, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 19
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880448
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 27 281474552886400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 27 281474552886400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 27 281474552886400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 27 281474552886400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 27 281474552886400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 27 281474552886400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 27 281474552886400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 27 281474552886400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552882080
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 19 3221505737 281474552886176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 19 3222292174 281474552886176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 19 3224389163 281474552886128
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552885920
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 203800000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552881520
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880680
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871440
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 e656d5bc6000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0xe656d5bc6000, length=4096, prot=3, flags=17, fd=21, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 21
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880448
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 e656d5bc7000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0xe656d5bc7000, length=4096, prot=3, flags=17, fd=21, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 21
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880448
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 203a00000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552881520
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880680
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871440
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 e656d5bc8000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0xe656d5bc8000, length=4096, prot=3, flags=17, fd=21, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 21
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880448
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552882416
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552878176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552882736
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 e656d5bc9000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0xe656d5bc9000, length=4096, prot=3, flags=17, fd=21, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 21
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880448
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884688
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552880464
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 27 281474552886400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 27 281474552886400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 27 281474552886400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 27 281474552886400
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552882080
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 21 3221505737 281474552886176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 21 3222292174 281474552886176
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 21 3224389163 281474552886128
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883824
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883000
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873760
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 68 281474552874272
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 203c00000
+[2026-08-10 03:09:54][debug][420710] ioctl 9 72 281474552874072
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 23 281474552886800
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 23 281474552886800
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 23 281474552886800
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 23 281474552886800
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883824
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883000
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873760
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 23 281474552886800
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 23 281474552886800
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 23 281474552886800
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 324600000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552883392
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552882552
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873312
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 324800000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552883392
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552882552
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873312
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 324a00000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552883392
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552882552
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873312
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 324c00000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552883392
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552882552
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873312
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884144
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883320
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552874080
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884144
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883320
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552874080
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 324e00000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552883488
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552882648
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873408
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883472
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552882648
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873408
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 65 281474552883816
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 0
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552884672
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883832
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552874592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884656
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883832
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552874592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552884048
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552879808
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552884368
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 325400000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0x325400000, length=2097152, prot=3, flags=17, fd=24, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 24
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883224
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873984
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552881552
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877312
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552881872
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 325600000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0x325600000, length=2097152, prot=3, flags=17, fd=24, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 24
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880728
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871488
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552881488
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877248
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552881808
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 325800000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0x325800000, length=2097152, prot=3, flags=17, fd=24, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 24
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880664
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871424
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552881488
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552877248
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552881808
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 325a00000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0x325a00000, length=2097152, prot=3, flags=17, fd=24, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 24
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552880664
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552871424
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap 325c00000
+[2026-08-10 03:09:54][debug][420710] ioctl 12 3224913447 281474552884048
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883208
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873968
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552886912
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883616
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552879376
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224913486 281474552883936
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] mmap64 325e00000
+[2026-08-10 03:09:54][debug][420710] Calling mocked mmap64
+[2026-08-10 03:09:54][debug][420710] Calling original mmap64: addr=0x325e00000, length=6209536, prot=3, flags=17, fd=24, offset=0
+[2026-08-10 03:09:54][debug][420710] Closing fd 24
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552882792
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873552
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883552
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552882728
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873488
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883952
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883128
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873888
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883952
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883128
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873888
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 24 3221505737 281474552886592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 24 3222292174 281474552886592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 24 3224389163 281474552886544
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 26 3221505737 281474552886592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 26 3222292174 281474552886592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 26 3224389163 281474552886544
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 28 3221505737 281474552886592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 28 3222292174 281474552886592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 28 3224389163 281474552886544
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 30 3221505737 281474552886592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 30 3222292174 281474552886592
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 30 3224389163 281474552886544
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552882336
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552882480
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552882656
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3224389163 281474552883936
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 73 281474552883112
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 9 33 281474552873872
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] ioctl 8 3223340586 281474552882656
+[2026-08-10 03:09:54][debug][420710] Calling original ioctl, enable_lock=true, initializing_cuda=false
+[2026-08-10 03:09:54][debug][420710] fopen /proc/self/task/420715/comm wb
+[2026-08-10 03:09:54][info][420710] CUDA context for thread 420710 has been set to b7abe541a2d0
+[2026-08-10 03:09:54][info][420710] Map events (nv_gpu_ringbuf_map_impl) has space for thread count 8192
+[2026-08-10 03:09:54][info][420710] syscall server: Set enable_mock_after_initialized to true
+[2026-08-10 03:09:54][debug][420710] Created map 17, type=1527, name=events, key_size=4, value_size=56
+[2026-08-10 03:09:54][debug][420710] SYS_DUP3 oldfd=17 newfd=16 flags=524288
+[2026-08-10 03:09:54][debug][420710] Calling mocked dup3 17, 16
+[2026-08-10 03:09:54][debug][420710] Dup to fd 16, destroying old handler
+[2026-08-10 03:09:54][debug][420710] Create map with type 1527
+[2026-08-10 03:09:54][debug][420710] Handler at fd 16 set to type 1
+[2026-08-10 03:09:54][debug][420710] Closing fd 17
+[2026-08-10 03:09:54][debug][420710] Calling mocked close
+libbpf: map 'events': created successfully, fd=16
+[2026-08-10 03:09:54][debug][420710] SYS_BPF 5 281474552892272 152 0 0 281474552892688
+[2026-08-10 03:09:54][debug][420710] Loading program `cuda__kernel_tr` license `GPL` prog_type `2` attach_type 3846422128 map_type 2
+[2026-08-10 03:09:54][debug][420710] open /dev/null 0 201948913712752
+[2026-08-10 03:09:54][debug][420710] Calling mocked open
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /dev/null
+[2026-08-10 03:09:54][debug][420710] Set handler fd 17 to bpf_prog_handler, name cuda__kernel_tr, prog_type 2, insn_cnt 46
+[2026-08-10 03:09:54][debug][420710] Handler at fd 17 set to type 3
+[2026-08-10 03:09:54][debug][420710] Loaded program `cuda__kernel_tr` id=17
+[2026-08-10 03:09:54][debug][420710] fopen64 /sys/bus/event_source/devices/kprobe/type re
+[2026-08-10 03:09:54][debug][420710] Calling mocked fopen
+[2026-08-10 03:09:54][debug][420710] /sys/bus/event_source/devices/kprobe/type is kprobe type file
+[2026-08-10 03:09:54][debug][420710] fopen /tmp/bpftime-mock.bvCWUe r
+[2026-08-10 03:09:54][debug][420710] Calling mocked fopen
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /tmp/bpftime-mock.bvCWUe
+[2026-08-10 03:09:54][debug][420710] Created fake fd 34, replacement fp b7abe53fe100, written 1 bytes
+[2026-08-10 03:09:54][debug][420710] fopen64 /sys/bus/event_source/devices/kprobe/type re
+[2026-08-10 03:09:54][debug][420710] Calling mocked fopen
+[2026-08-10 03:09:54][debug][420710] /sys/bus/event_source/devices/kprobe/type is kprobe type file
+[2026-08-10 03:09:54][debug][420710] fopen /tmp/bpftime-mock.KBAX3b r
+[2026-08-10 03:09:54][debug][420710] Calling mocked fopen
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /tmp/bpftime-mock.KBAX3b
+[2026-08-10 03:09:54][debug][420710] Created fake fd 35, replacement fp b7abe53fe100, written 1 bytes
+[2026-08-10 03:09:54][debug][420710] SYS_PERF_EVENT_OPEN 281474552894144 4294967295 0 4294967295 8 136
+[2026-08-10 03:09:54][debug][420710] fopen /sys/bus/event_source/devices/uprobe/type re
+[2026-08-10 03:09:54][debug][420710] Calling mocked fopen
+[2026-08-10 03:09:54][debug][420710] /sys/bus/event_source/devices/uprobe/type is uprobe type file
+[2026-08-10 03:09:54][debug][420710] fopen /tmp/bpftime-mock.5d321K r
+[2026-08-10 03:09:54][debug][420710] Calling mocked fopen
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /tmp/bpftime-mock.5d321K
+[2026-08-10 03:09:54][debug][420710] Created fake fd 36, replacement fp b7abe53fe100, written 1 bytes
+[2026-08-10 03:09:54][debug][420710] fopen /sys/bus/event_source/devices/kprobe/type re
+[2026-08-10 03:09:54][debug][420710] Calling mocked fopen
+[2026-08-10 03:09:54][debug][420710] /sys/bus/event_source/devices/kprobe/type is kprobe type file
+[2026-08-10 03:09:54][debug][420710] fopen /tmp/bpftime-mock.SRDzZN r
+[2026-08-10 03:09:54][debug][420710] Calling mocked fopen
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /tmp/bpftime-mock.SRDzZN
+[2026-08-10 03:09:54][debug][420710] Created fake fd 37, replacement fp b7abe53fe100, written 1 bytes
+[2026-08-10 03:09:54][debug][420710] fopen /sys/bus/event_source/devices/kprobe/format/retprobe re
+[2026-08-10 03:09:54][debug][420710] Calling mocked fopen
+[2026-08-10 03:09:54][debug][420710] /sys/bus/event_source/devices/kprobe/format/retprobe is kretprobe bit file
+[2026-08-10 03:09:54][debug][420710] fopen /tmp/bpftime-mock.McSwSV r
+[2026-08-10 03:09:54][debug][420710] Calling mocked fopen
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /tmp/bpftime-mock.McSwSV
+[2026-08-10 03:09:54][debug][420710] Created fake fd 38, replacement fp b7abe53fe100, written 8 bytes
+[2026-08-10 03:09:54][debug][420710] Creating kprobe func_name=_Z9vectorAddPKfS0_Pfi addr=0 retprobe=false ref_ctr_off=0 attr->config=0
+[2026-08-10 03:09:54][debug][420710] open /dev/null 0 201948922651664
+[2026-08-10 03:09:54][debug][420710] Calling mocked open
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /dev/null
+[2026-08-10 03:09:54][debug][420710] Set fd 39 to kprobe, func_name=_Z9vectorAddPKfS0_Pfi,addr=0,retprobe=false,ref_ctr_off=0
+[2026-08-10 03:09:54][info][420710] Created kprobe/kretprobe perf event handler, func_name _Z9vectorAddPKfS0_Pfi, addr 0
+[2026-08-10 03:09:54][debug][420710] Handler at fd 39 set to type 4
+[2026-08-10 03:09:54][debug][420710] Created kprobe 39
+[2026-08-10 03:09:54][debug][420710] SYS_BPF 5 281474552893504 152 0 0 281474552893888
+[2026-08-10 03:09:54][debug][420710] Loading program `` license `GPL` prog_type `5` attach_type 3871150648 map_type 5
+[2026-08-10 03:09:54][debug][420710] open /dev/null 0 281474552894008
+[2026-08-10 03:09:54][debug][420710] Calling mocked open
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /dev/null
+[2026-08-10 03:09:54][debug][420710] Set handler fd 40 to bpf_prog_handler, name , prog_type 5, insn_cnt 2
+[2026-08-10 03:09:54][debug][420710] Handler at fd 40 set to type 3
+[2026-08-10 03:09:54][debug][420710] Loaded program `` id=40
+[2026-08-10 03:09:54][debug][420710] SYS_BPF 28 281474552893520 64 253269944134480 0 0
+[2026-08-10 03:09:54][debug][420710] Creating link 40 -> -1, attach type 41
+[2026-08-10 03:09:54][debug][420710] add_bpf_link: rejecting expected libbpf perf-link probe with target_fd -1
+[2026-08-10 03:09:54][debug][420710] Created link -1
+[2026-08-10 03:09:54][debug][420710] Closing fd 40
+[2026-08-10 03:09:54][debug][420710] Calling mocked close
+[2026-08-10 03:09:54][debug][420710] Destroying prog ehandler 40
+[2026-08-10 03:09:54][debug][420710] SYS_BPF 28 281474552893888 64 0 0 0
+[2026-08-10 03:09:54][debug][420710] Creating link 17 -> 39, attach type 41
+[2026-08-10 03:09:54][debug][420710] open /dev/null 0 253269416608096
+[2026-08-10 03:09:54][debug][420710] Calling mocked open
+[2026-08-10 03:09:54][debug][420710] Unmocked file path: /dev/null
+[2026-08-10 03:09:54][debug][420710] Handler at fd 40 set to type 2
+[2026-08-10 03:09:54][debug][420710] Created link 40
+[2026-08-10 03:09:54][debug][420710] ioctl 39 9216 0
+[2026-08-10 03:09:54][debug][420710] Calling mocked ioctl..
+[2026-08-10 03:09:54][debug][420710] Enabling perf event 39
+[kernel_trace] ts=448699029972160 block=(0,0,0) thread=(0,0,0)
+[kernel_trace] total events: 1
+[kernel_trace] total events: 1
+[kernel_trace] total events: 1
+[kernel_trace] total events: 1
+[kernel_trace] total events: 1
+[kernel_trace] total events: 1
+[kernel_trace] total events: 1
+[kernel_trace] total events: 1
+[kernel_trace] total events: 1
+[kernel_trace] total events: 1
+[kernel_trace] total events: 1
+[2026-08-10 03:10:08][debug][420710] ioctl 39 9217 0
+[2026-08-10 03:10:08][debug][420710] Calling mocked ioctl..
+[2026-08-10 03:10:08][debug][420710] Disabling perf event 39
+[2026-08-10 03:10:08][debug][420710] Closing fd 39
+[2026-08-10 03:10:08][debug][420710] Calling mocked close
+[2026-08-10 03:10:08][debug][420710] Destroying perf event handler 39
+[2026-08-10 03:10:08][debug][420710] Remove link handler with id 40, prog id 17, due to the removal of perf event 39
+[2026-08-10 03:10:08][debug][420710] Closing fd 40
+[2026-08-10 03:10:08][debug][420710] Calling mocked close
+[2026-08-10 03:10:08][debug][420710] Closing fd 16
+[2026-08-10 03:10:08][debug][420710] Calling mocked close
+[2026-08-10 03:10:08][debug][420710] Closing fd 17
+[2026-08-10 03:10:08][debug][420710] Calling mocked close
+[2026-08-10 03:10:08][debug][420710] Destroying prog ehandler 17
+[2026-08-10 03:10:08][debug][420710] munmap e658e19c0000 268435456

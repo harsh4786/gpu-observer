@@ -1,0 +1,1 @@
+samples=206 min_mem_available_kb=77022908 max_engine_cpu_pct=101.0 max_engine_rss_kb=2230896 max_engine_threads=125 mean_gpu_util_pct=93.19 max_gpu_util_pct=96 max_gpu_temp_c=63 mean_gpu_power_w=29.49 max_gpu_power_w=36.74

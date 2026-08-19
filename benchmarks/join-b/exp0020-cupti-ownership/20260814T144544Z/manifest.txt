@@ -1,0 +1,39 @@
+experiment=EXP-0020-cupti-ownership
+started_utc=2026-08-14T14:45:44Z
+question=Can CUPTI correlation IDs and actual GPU intervals replace ordered-count attribution while preserving authoritative packed-row ownership?
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+image=gpu-observer/vllm-sanitizer:cuda13.2
+execution_mode=FULL_AND_PIECEWISE_CUDA_GRAPHS
+async_scheduling=production_default
+prefix_caching=false
+target_kernel=reshape_and_cache_flash_kernel
+observer_semantic=vLLM_patched_CLOCK_MONOTONIC
+observer_gpu=CUPTI_CONCURRENT_KERNEL_actual_start_end
+observer_cuda_api=CUPTI_RUNTIME_activity_correlation_id
+clock_mapping=two_point_affine_CUPTI_to_CLOCK_MONOTONIC
+cupti_buffer_count=8
+cupti_buffer_bytes=1048576
+cupti_total_buffer_bytes=8388608
+cupti_runtime_record_capacity=65536
+device_internal_events=absent
+device_internal_reason=Compute_Sanitizer_and_direct_CUPTI_are_mutually_exclusive_subscribers
+ownership_evidence=authoritative_packed_rows_plus_CUPTI_launch_geometry
+request_count=8
+output_lengths=8 12 16 20 24 28 32 36
+ignore_eos=true
+expected_target_kernels_per_step=40
+semantic_abi_version=2
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:     130662936576  6582034432 40007315456   287924224 85534810112 124080902144
+Swap:    17179865088    36552704 17143312384
+NVIDIA GB10, 580.173.02, 32, 4.85 W
+image_id=sha256:e4409f94c58463513df2e5abca7855b906fcb78b87d1f7190af2b7968d3de4f4 image_digests=[]
+894a9eab9526b3db4b0029029465305a96cc737e7131aefa3413de7e19cc1cca  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-corrected.jsonl
+dad445584a4e3fd104e61e5f4b37d6da24521f3fba74f818c232c3c09e9e33ea  /home/harsh4786/gpu-observer/target/release/libgpu_observer_vllm_bridge.so
+1cb28df43cd7b4f813f093ba6f7011e4d8281744b42882d415b8e59e9576faee  /home/harsh4786/gpu-observer/vllm-adapter/overlay/vllm/v1/engine/core.py
+1be9c05121960a1ae7bea94bf61ccd1d204197a70133fd47a2968c19b88b1828  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_semantic.py
+dd8e552931fb001e7f8961c9dd5832eaea9c1dce64f835cccad36a188c6dd4f8  /home/harsh4786/gpu-observer/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py
+1f8d59eb28d01f176acb1847e43d912fcda58d6aa2868bdc418d5e37fe10ecd9  /home/harsh4786/gpu-observer/cupti-agent/activity/build-cuda1321/libgpu_observer_cupti_activity.so
+42bfde13955d677a0c977582bc1958288e9239e35695f63a945c0e6b781d78a6  /home/harsh4786/gpu-observer/target/release/join_b_cupti_cache

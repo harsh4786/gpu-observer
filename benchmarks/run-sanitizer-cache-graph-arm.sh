@@ -1,0 +1,153 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -ne 2 ]]; then
+  echo "usage: $0 {block_noop|block_counter|block_event} {launch|function}" >&2
+  exit 2
+fi
+mode=$1
+scope=$2
+case "$mode" in block_noop|block_counter|block_event) ;; *) exit 2;; esac
+case "$scope" in launch|function) ;; *) exit 2;; esac
+
+root=/home/harsh4786/gpu-observer
+image=gpu-observer/vllm-sanitizer:cuda13.2
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+payload="$root/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-corrected.jsonl"
+probe_build="$root/device-probes/compute-sanitizer/build-graph-identity"
+capacity=1
+[[ "$mode" == block_event ]] && capacity=1048576
+graph_nodes=${GPU_OBSERVER_TEST_GRAPH_NODES:-0}
+case "$graph_nodes" in 0|1) ;; *) exit 2;; esac
+stamp=$(date -u +%Y%m%dT%H%M%SZ)
+run_dir="$root/benchmarks/join-b/exp0018-graph-callback-matrix/$stamp-$mode-$scope"
+container="go-exp0018-$mode-$scope-$stamp"
+mkdir -p "$run_dir"
+chmod 0777 "$run_dir"
+logs_pid=
+
+cleanup() {
+  if docker ps --format '{{.Names}}' | grep -Fxq "$container"; then
+    docker stop --time 20 "$container" >/dev/null 2>&1 || true
+  fi
+  if [[ -n "$logs_pid" ]] && kill -0 "$logs_pid" 2>/dev/null; then
+    wait "$logs_pid" 2>/dev/null || true
+  fi
+  docker rm "$container" >/dev/null 2>&1 || true
+}
+trap cleanup EXIT INT TERM
+
+{
+  echo "experiment=EXP-0018"
+  echo "started_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  echo "mode=$mode"
+  echo "callback_data_scope=$scope"
+  echo "target=reshape_and_cache_flash_kernel"
+  echo "model=$model"
+  echo "revision=$revision"
+  echo "execution=async_FULL_AND_PIECEWISE_CUDA_GRAPHS"
+  echo "warmup_output_tokens=1"
+  echo "measured_output_tokens=8"
+  echo "event_capacity=$capacity"
+  echo "graph_node_identity=$graph_nodes"
+  sha256sum "$probe_build/libgpu_observer_sanitizer.so"             "$probe_build/gpu_observer_sanitizer_patches.cubin" "$payload"
+} > "$run_dir/manifest.txt"
+
+scope_args=()
+if [[ "$scope" == function ]]; then
+  scope_args=(-e GPU_OBSERVER_SAN_CALLBACK_DATA_SCOPE=function)
+fi
+
+graph_args=()
+if [[ "$graph_nodes" == 1 ]]; then
+  graph_args=(-e GPU_OBSERVER_SAN_GRAPH_NODES=1)
+fi
+
+docker run -d   --name "$container"   --gpus all   --ipc=host   --network=host   --security-opt label=disable   -e LD_PRELOAD=/observer/libgpu_observer_sanitizer.so   -e GPU_OBSERVER_SAN_MODE="$mode"   -e GPU_OBSERVER_SAN_PATCH_FILE=/observer/gpu_observer_sanitizer_patches.cubin   -e GPU_OBSERVER_SAN_OUTPUT_PREFIX=/results/device-probe   -e GPU_OBSERVER_SAN_EVENT_CAPACITY="$capacity"   -e GPU_OBSERVER_SAN_KERNEL_SUBSTRING=reshape_and_cache_flash_kernel   "${scope_args[@]}"   "${graph_args[@]}"   -v /home/harsh4786/.cache/huggingface:/root/.cache/huggingface   -v "$probe_build:/observer:ro"   -v "$run_dir:/results"   "$image"   vllm serve "$model"   --revision "$revision"   --port 8000   --dtype bfloat16   --max-model-len 4096   --kv-cache-memory-bytes 8G   --max-num-seqs 32   --no-enable-prefix-caching > "$run_dir/container-id.txt"
+
+docker logs -f "$container" > "$run_dir/server.log" 2>&1 &
+logs_pid=$!
+
+ready=0
+for _ in $(seq 1 900); do
+  if curl -fsS -o /dev/null http://127.0.0.1:8000/health 2>/dev/null; then
+    ready=1
+    break
+  fi
+  if ! docker ps --format '{{.Names}}' | grep -Fxq "$container"; then
+    break
+  fi
+  sleep 1
+done
+if [[ "$ready" != 1 ]]; then
+  echo "server_ready=false" > "$run_dir/outcome.env"
+  docker logs "$container" > "$run_dir/server-final.log" 2>&1 || true
+  exit 1
+fi
+
+rg -F "Asynchronous scheduling is enabled" "$run_dir/server.log" > "$run_dir/async-evidence.txt"
+rg -F "FULL_AND_PIECEWISE" "$run_dir/server.log" > "$run_dir/graph-evidence.txt"
+rg -F "initialized mode=$mode" "$run_dir/server.log" > "$run_dir/probe-init-evidence.txt"
+engine_pid=$(docker exec "$container" bash -lc "ps -eo pid,comm | awk '\$2 ~ /^VLLM::EngineCor/ {print \$1; exit}'")
+echo "$engine_pid" > "$run_dir/engine-container-pid.txt"
+
+head -1 "$payload" | jq '.stream=false | .max_completion_tokens=1' > "$run_dir/warmup-request.json"
+set +e
+warmup_http=$(curl -sS --max-time 60 -o "$run_dir/warmup-response.json" -w '%{http_code}'   -H 'Content-Type: application/json' --data-binary @"$run_dir/warmup-request.json"   http://127.0.0.1:8000/v1/chat/completions)
+warmup_curl=$?
+set -e
+echo "$warmup_http" > "$run_dir/warmup-http.txt"
+echo "$warmup_curl" > "$run_dir/warmup-curl-exit.txt"
+
+head -1 "$payload" | jq '.stream=false | .max_completion_tokens=8' > "$run_dir/measured-request.json"
+set +e
+measured_http=$(curl -sS --max-time 120 -o "$run_dir/measured-response.json" -w '%{http_code}'   -H 'Content-Type: application/json' --data-binary @"$run_dir/measured-request.json"   http://127.0.0.1:8000/v1/chat/completions 2> "$run_dir/measured-curl.stderr")
+measured_curl=$?
+set -e
+echo "$measured_http" > "$run_dir/measured-http.txt"
+echo "$measured_curl" > "$run_dir/measured-curl-exit.txt"
+sleep 1
+
+fatal_count=$(rg -i -c 'misaligned address|CUDA error|EngineCore encountered a fatal' "$run_dir/server.log" || true)
+fatal_count=${fatal_count:-0}
+completion_tokens=$(jq -r '.usage.completion_tokens // 0' "$run_dir/measured-response.json" 2>/dev/null || echo 0)
+probe_flushed=0
+if docker ps --format '{{.Names}}' | grep -Fxq "$container"; then
+  docker exec "$container" kill -USR2 "$engine_pid" || true
+  curl -sS --max-time 30 -o "$run_dir/flush-response.json"     -H 'Content-Type: application/json'     --data-binary @"$run_dir/warmup-request.json"     http://127.0.0.1:8000/v1/chat/completions >/dev/null 2>&1 || true
+  for _ in $(seq 1 100); do
+    if [[ -s "$run_dir/device-probe.summary.tsv" ]]; then
+      probe_flushed=1
+      break
+    fi
+    sleep 0.1
+  done
+fi
+
+{
+  echo "server_ready=true"
+  echo "warmup_http=$warmup_http"
+  echo "warmup_curl_exit=$warmup_curl"
+  echo "measured_http=$measured_http"
+  echo "measured_curl_exit=$measured_curl"
+  echo "completion_tokens=$completion_tokens"
+  echo "fatal_count=$fatal_count"
+  echo "probe_flushed=$probe_flushed"
+  if [[ "$measured_http" == 200 && "$measured_curl" == 0 && "$completion_tokens" == 8 && "$fatal_count" == 0 ]]; then
+    echo "result=pass"
+  else
+    echo "result=fail"
+  fi
+  echo "completed_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+} > "$run_dir/outcome.env"
+
+docker logs "$container" > "$run_dir/server-final.log" 2>&1 || true
+docker stop --time 20 "$container" >/dev/null 2>&1 || true
+wait "$logs_pid" 2>/dev/null || true
+logs_pid=
+docker rm "$container" >/dev/null 2>&1 || true
+nvidia-smi --query-gpu=temperature.gpu,utilization.gpu,power.draw --format=csv,noheader,nounits > "$run_dir/final-gpu.csv"
+"$root/benchmarks/seal-run.sh" "$run_dir"
+trap - EXIT INT TERM
+printf '%s\n' "$run_dir"

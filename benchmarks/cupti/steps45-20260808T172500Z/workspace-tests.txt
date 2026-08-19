@@ -1,0 +1,126 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running unittests src/lib.rs (target/debug/deps/gpu_observer_collector-a546359c859802d6)
+
+running 3 tests
+test io::tests::reports_the_physical_line_for_invalid_json ... ok
+test compact::tests::cupti_activity_after_step_end_still_matches_submission ... ok
+test compact::tests::compatibility_boundary_uses_compact_many_to_many_core ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/gpu_observer_collector-38b032c96e1ff75d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/join_a.rs (target/debug/deps/join_a-9db586eb4cbabd65)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/semantic_capture.rs (target/debug/deps/semantic_capture-f3a79c6f76cbc870)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/semantic_bridge.rs (target/debug/deps/semantic_bridge-b8978383ac053b25)
+
+running 1 test
+test native_producer_and_collector_share_fixed_records ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/gpu_observer_core-565211cb2f57d65d)
+
+running 14 tests
+test correlation::tests::hot_index_records_have_bounded_layouts ... ok
+test correlation::tests::loss_flag_downgrades_trace_precision ... ok
+test correlation::tests::mixed_step_stays_many_to_many_and_links_async_gpu_activity ... ok
+test emitter::tests::semantic_batch_is_all_or_nothing ... ok
+test event::tests::record_layout_is_fixed_and_dense ... ok
+test event::tests::typed_access_does_not_allocate_or_cast_invalid_payloads ... ok
+test emitter::tests::overload_is_nonblocking_and_next_record_exposes_the_gap ... ok
+test ring::tests::batched_operations_wrap_without_reordering ... ok
+test ring::tests::full_ring_returns_ownership_to_the_producer ... ok
+test ring::tests::rejects_capacities_that_make_masking_invalid ... ok
+test semantic::tests::semantic_record_layout_and_conversion_are_fixed ... ok
+test semantic::tests::decoder_rejects_invalid_phase_without_constructing_enum ... ok
+test semantic::tests::shared_header_separates_atomic_cursors_by_cache_line ... ok
+test ring::tests::producer_and_consumer_can_run_on_separate_cores ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/hot_path_allocations.rs (target/debug/deps/hot_path_allocations-3ffea7684057965f)
+
+running 1 test
+test steady_state_push_and_pop_allocate_nothing ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src/main.rs (target/debug/deps/gpu_observer_host_probe-7a8da1f44d55ac88)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/gpu_observer_host_probe_common-5d859fd6aa8617ee)
+
+running 2 tests
+test tests::wire_layout_is_fixed_and_round_trips ... ok
+test tests::decoder_rejects_wrong_length_and_version ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/gpu_observer_policy-f2bbd36d215dc2d6)
+
+running 1 test
+test tests::detects_only_the_interpretable_mixed_step_condition ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/gpu_observer_vllm_bridge-71b364017891de74)
+
+running 1 test
+test tests::python_slice_abi_is_fixed ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/gpu_observer_workload-886ce0d491be8580)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests gpu_observer_collector
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests gpu_observer_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests gpu_observer_host_probe_common
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests gpu_observer_policy
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests gpu_observer_vllm_bridge
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -1,0 +1,55 @@
+diff --git a/attach/nv_attach_impl/nv_attach_impl_frida_setup.cpp b/attach/nv_attach_impl/nv_attach_impl_frida_setup.cpp
+index 84158a1..6e916af 100644
+--- a/attach/nv_attach_impl/nv_attach_impl_frida_setup.cpp
++++ b/attach/nv_attach_impl/nv_attach_impl_frida_setup.cpp
+@@ -200,8 +200,29 @@ cuda_launch_kernel_common(nv_attach_impl *impl, void *original_fn_ptr,
+ 
+ 	// Fallback path for late attach: resolve host stub symbol name to
+ 	// locate the patched CUfunction mapping.
+-	if (auto name = impl->resolve_host_function_symbol((void *)func);
+-	    name) {
++	std::optional<std::string> name;
++#if CUDA_VERSION >= 13000
++	using cu_kernel_get_name_fn_t =
++		CUresult (*)(const char **, CUkernel);
++	static cu_kernel_get_name_fn_t cu_kernel_get_name =
++		reinterpret_cast<cu_kernel_get_name_fn_t>(
++			dlsym(RTLD_DEFAULT, "cuKernelGetName"));
++	const char *kernel_name = nullptr;
++	if (cu_kernel_get_name != nullptr &&
++	    cu_kernel_get_name(
++		    &kernel_name,
++		    reinterpret_cast<CUkernel>(const_cast<void *>(func))) ==
++		    CUDA_SUCCESS &&
++	    kernel_name != nullptr && kernel_name[0] != '\0') {
++		name = std::string(kernel_name);
++		SPDLOG_DEBUG(
++			"CUDA 13 launch: resolved kernel handle {}",
++			name->c_str());
++	}
++#endif
++	if (!name)
++		name = impl->resolve_host_function_symbol((void *)func);
++	if (name) {
+ 		if (auto patched = impl->find_patched_kernel_function(*name);
+ 		    patched) {
+ 			SPDLOG_DEBUG(
+diff --git a/attach/nv_attach_impl/nv_attach_utils.cpp b/attach/nv_attach_impl/nv_attach_utils.cpp
+index a000953..d0a02d7 100644
+--- a/attach/nv_attach_impl/nv_attach_utils.cpp
++++ b/attach/nv_attach_impl/nv_attach_utils.cpp
+@@ -27,9 +27,12 @@ std::string rewrite_ptx_target(std::string ptx,
+ 	if (sm_arch.empty())
+ 		return ptx;
+ 
+-	// Rewrite .version based on SM arch (sm_120+ needs 8.7, sm_100+ needs 8.5)
++	// Rewrite .version based on SM arch. CUDA 13 emits PTX 9.0 for
++	// compute_121, and ptxas rejects PTX 8.7 when targeting sm_121.
+ 	int sm_num = (sm_arch.size() > 3) ? std::atoi(sm_arch.c_str() + 3) : 0;
+-	const char *ptx_ver = (sm_num >= 120) ? "8.7" : (sm_num >= 100) ? "8.5" : nullptr;
++	const char *ptx_ver = (sm_num >= 121) ? "9.0" :
++			      (sm_num >= 120) ? "8.7" :
++			      (sm_num >= 100) ? "8.5" : nullptr;
+ 	if (ptx_ver) {
+ 		auto vpos = ptx.find(".version");
+ 		if (vpos != std::string::npos) {

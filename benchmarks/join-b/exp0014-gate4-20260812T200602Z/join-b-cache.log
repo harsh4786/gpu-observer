@@ -1,0 +1,164 @@
+step=2 scheduled=70 prefill=70 decode=0 slices=1 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=1 tokens=70 block_range=[0,70) events=2800 expected=2800
+step=3 scheduled=225 prefill=224 decode=1 slices=8 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=1 tokens=25 block_range=[1,26) events=1000 expected=1000
+  packed_request=0x6234d23f0025c3bd phase=1 tokens=70 block_range=[26,96) events=2800 expected=2800
+  packed_request=0x1afb692b6889be08 phase=1 tokens=13 block_range=[96,109) events=520 expected=520
+  packed_request=0xd27ffe652cfbcbbe phase=1 tokens=58 block_range=[109,167) events=2320 expected=2320
+  packed_request=0xa8ba821ec2e7c8b0 phase=1 tokens=16 block_range=[167,183) events=640 expected=640
+  packed_request=0x685841cd3c4d5d86 phase=1 tokens=24 block_range=[183,207) events=960 expected=960
+  packed_request=0x511ffbdde96261b8 phase=1 tokens=18 block_range=[207,225) events=720 expected=720
+step=4 scheduled=8 prefill=0 decode=8 slices=8 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+step=5 scheduled=1039 prefill=1031 decode=8 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=1 tokens=1031 block_range=[8,1039) events=41240 expected=41240
+step=6 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=7 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=8 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=9 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=10 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=11 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=12 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=13 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=14 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=15 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=16 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=17 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  packed_request=0x4ad3e7582b3873e1 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=18 scheduled=8 prefill=0 decode=8 slices=8 target_launches=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  packed_request=0x775e0c57233f1958 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  packed_request=0x6234d23f0025c3bd phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  packed_request=0x1afb692b6889be08 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  packed_request=0xd27ffe652cfbcbbe phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  packed_request=0xa8ba821ec2e7c8b0 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  packed_request=0x685841cd3c4d5d86 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  packed_request=0x511ffbdde96261b8 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+step=19 scheduled=1 prefill=0 decode=1 slices=1 target_launches=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+step=20 scheduled=1 prefill=0 decode=1 slices=1 target_launches=40
+  packed_request=0x5423abbf8719d9f8 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+summary semantic_records=345 semantic_loss=0 steps=19 packed_steps=19 scheduler_order_mismatch_steps=1 scheduler_order_mismatch_slices=8 launches_before_packed_layout=0 launches=760 assigned_launches=760 measured_launches=760 device_headers=1 device_retained=58400 measured_events=58400 device_write_attempts=58400 device_drops=0 device_sequence_errors=0 duplicate_launch_ids=0 orphan_events=0 zero_launch_events=0 incomplete_launches=0 duplicate_blocks=0 geometry_mismatches=0 token_grid_mismatches=0 kind_mismatches=0 kernel_slot_mismatches=0 unmapped_blocks=0 request_count_mismatches=0 distinct_sms=48 device_raw_first=657437455068032 device_raw_last=657440352194432 event_sequence_first=0 event_sequence_last=58399 device_clock=raw_globaltimer_not_normalized ownership=authoritative_packed_layout

@@ -1,0 +1,621 @@
+{
+  "schema": "GPU_OBSERVER_TRACE_V2",
+  "generatedBy": "schema fixture",
+  "run": {
+    "captureStatus": "schema_fixture_not_measurement",
+    "experiment": "UI-SCHEMA-01",
+    "model": "Qwen/Qwen3-14B",
+    "executionMode": "CUDA Graph",
+    "replayFingerprint": "fixture-fingerprint-not-evidence",
+    "semanticSignature": "fixture-semantic-signature-not-evidence"
+  },
+  "query": {
+    "schema": "GPU_OBSERVER_QUERY_01",
+    "kind": "query",
+    "timestamp_ns": 1000000,
+    "external_request_id": "go-agentic-debug-foreground",
+    "internal_request_id": "chatcmpl-go-agentic-debug-foreground",
+    "request": {
+      "model": "Qwen/Qwen3-14B",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Our vLLM server has stable throughput but interactive p99 doubled during a burst. Diagnose whether queueing, mixed prefill/decode batching, CUDA Graph replay, or GPU execution is responsible, and name the first experiment you would run."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 96
+    },
+    "rendered_prompt": "<|im_start|>user\nOur vLLM server has stable throughput but interactive p99 doubled during a burst. Diagnose the request-to-GPU path.<|im_end|>\n<|im_start|>assistant\n",
+    "tokenizer": {
+      "class": "Qwen2Tokenizer",
+      "is_fast": true,
+      "backend_class": "Tokenizer",
+      "name_or_path": "Qwen/Qwen3-14B"
+    },
+    "prompt_token_ids": [
+      151644,
+      872,
+      198,
+      5639,
+      348,
+      1125,
+      9112,
+      714,
+      15478,
+      37465,
+      13,
+      151645
+    ],
+    "tokens": [
+      {
+        "position": 0,
+        "id": 151644,
+        "raw": "<|im_start|>",
+        "display": "<|im_start|>",
+        "offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "position": 1,
+        "id": 872,
+        "raw": "user",
+        "display": "user",
+        "offset": [
+          12,
+          16
+        ]
+      },
+      {
+        "position": 2,
+        "id": 198,
+        "raw": "Ċ",
+        "display": "\n",
+        "offset": [
+          16,
+          17
+        ]
+      },
+      {
+        "position": 3,
+        "id": 5639,
+        "raw": "Our",
+        "display": "Our",
+        "offset": [
+          17,
+          20
+        ]
+      },
+      {
+        "position": 4,
+        "id": 348,
+        "raw": "Ġv",
+        "display": " v",
+        "offset": [
+          20,
+          22
+        ]
+      },
+      {
+        "position": 5,
+        "id": 1125,
+        "raw": "LLM",
+        "display": "LLM",
+        "offset": [
+          22,
+          25
+        ]
+      },
+      {
+        "position": 6,
+        "id": 9112,
+        "raw": "Ġserver",
+        "display": " server",
+        "offset": [
+          25,
+          32
+        ]
+      },
+      {
+        "position": 7,
+        "id": 714,
+        "raw": "Ġhas",
+        "display": " has",
+        "offset": [
+          32,
+          36
+        ]
+      },
+      {
+        "position": 8,
+        "id": 15478,
+        "raw": "Ġstable",
+        "display": " stable",
+        "offset": [
+          36,
+          43
+        ]
+      },
+      {
+        "position": 9,
+        "id": 37465,
+        "raw": "Ġthroughput",
+        "display": " throughput",
+        "offset": [
+          43,
+          54
+        ]
+      },
+      {
+        "position": 10,
+        "id": 13,
+        "raw": ".",
+        "display": ".",
+        "offset": [
+          54,
+          55
+        ]
+      },
+      {
+        "position": 11,
+        "id": 151645,
+        "raw": "<|im_end|>",
+        "display": "<|im_end|>",
+        "offset": [
+          55,
+          55
+        ]
+      }
+    ],
+    "offsets_verified": true
+  },
+  "outputManifest": {
+    "schema": "GPU_OBSERVER_QUERY_01",
+    "kind": "output",
+    "timestamp_ns": 2200000,
+    "external_request_id": "go-agentic-debug-foreground",
+    "internal_request_id": "chatcmpl-go-agentic-debug-foreground",
+    "choices": [
+      {
+        "index": 0,
+        "text": "Start with a controlled long-prefill interference run and bracket each engine step with CUPTI actual GPU time.",
+        "finish_reason": "stop",
+        "token_ids": [
+          4474,
+          448,
+          264,
+          7683,
+          1293,
+          785
+        ],
+        "tokens": [
+          {
+            "position": 0,
+            "id": 4474,
+            "raw": "Start",
+            "display": "Start"
+          },
+          {
+            "position": 1,
+            "id": 448,
+            "raw": "Ġwith",
+            "display": " with"
+          },
+          {
+            "position": 2,
+            "id": 264,
+            "raw": "Ġa",
+            "display": " a"
+          },
+          {
+            "position": 3,
+            "id": 7683,
+            "raw": "Ġcontrolled",
+            "display": " controlled"
+          },
+          {
+            "position": 4,
+            "id": 1293,
+            "raw": "Ġlong",
+            "display": " long"
+          },
+          {
+            "position": 5,
+            "id": 785,
+            "raw": "-prefill",
+            "display": "-prefill"
+          }
+        ]
+      }
+    ]
+  },
+  "focus": {
+    "externalRequestId": "go-agentic-debug-foreground",
+    "internalRequestId": "chatcmpl-go-agentic-debug-foreground",
+    "requestHash": "0x1e48db0927d08250"
+  },
+  "evidence": {
+    "measured": [
+      "Schema fixture shaped like request, tokenizer, EngineCore, GPUModelRunner, and CUPTI evidence",
+      "All numeric values in this fixture are illustrative, not benchmark results"
+    ],
+    "reconstructed": [
+      "Cache-kernel block ownership demonstrates the validated row-to-block rule"
+    ],
+    "matchedReplay": true,
+    "unavailable": [
+      "PTX for shipped BF16 binaries",
+      "This fixture is not admissible experimental evidence"
+    ],
+    "matched": [
+      "Illustrative replay PC samples map to illustrative SASS offsets",
+      "Fixture fingerprint and semantic signature are schema-only"
+    ]
+  },
+  "metrics": {
+    "semanticRecords": 18,
+    "semanticLossMarkers": 0,
+    "engineSteps": 2,
+    "packedSteps": 2,
+    "schedulerOrderMismatchSteps": 1,
+    "cuptiKernels": 3,
+    "clockStartUncertaintyNs": 64,
+    "clockEndUncertaintyNs": 64,
+    "clockOffsetDriftNs": 0
+  },
+  "steps": [
+    {
+      "id": 17,
+      "phase": "prefill",
+      "beginNs": "1000000",
+      "packedNs": "1010000",
+      "endNs": "1600000",
+      "wallUs": 600,
+      "scheduledTokens": 15,
+      "prefillTokens": 15,
+      "decodeTokens": 0,
+      "queueDepth": 7,
+      "activeRequests": 3,
+      "kvCacheUsagePermyriad": 2140,
+      "schedulerOrderMismatches": 0,
+      "schedulerSlices": [
+        {
+          "requestId": "0x1e48db0927d08250",
+          "phase": "prefill",
+          "scheduledTokens": 12
+        },
+        {
+          "requestId": "0xaaaaaaaaaaaaaaaa",
+          "phase": "prefill",
+          "scheduledTokens": 2
+        },
+        {
+          "requestId": "0xbbbbbbbbbbbbbbbb",
+          "phase": "decode",
+          "scheduledTokens": 1
+        }
+      ],
+      "packedSlices": [
+        {
+          "requestId": "0x1e48db0927d08250",
+          "packedIndex": 0,
+          "rowBegin": 0,
+          "rowEnd": 12,
+          "phase": "prefill",
+          "scheduledTokens": 12,
+          "authoritative": true
+        },
+        {
+          "requestId": "0xaaaaaaaaaaaaaaaa",
+          "packedIndex": 1,
+          "rowBegin": 12,
+          "rowEnd": 14,
+          "phase": "prefill",
+          "scheduledTokens": 2,
+          "authoritative": true
+        },
+        {
+          "requestId": "0xbbbbbbbbbbbbbbbb",
+          "packedIndex": 2,
+          "rowBegin": 14,
+          "rowEnd": 15,
+          "phase": "decode",
+          "scheduledTokens": 1,
+          "authoritative": true
+        }
+      ],
+      "focusedPackedTokens": [
+        {
+          "requestId": "0x1e48db0927d08250",
+          "packingGeneration": 17,
+          "packedRow": 0,
+          "sequencePosition": 0,
+          "tokenId": 151644,
+          "phase": "prefill",
+          "timestampNs": "1015000"
+        },
+        {
+          "requestId": "0x1e48db0927d08250",
+          "packingGeneration": 17,
+          "packedRow": 1,
+          "sequencePosition": 1,
+          "tokenId": 872,
+          "phase": "prefill",
+          "timestampNs": "1015000"
+        }
+      ],
+      "acceptedOutputTokens": [
+        {
+          "requestId": "0x1e48db0927d08250",
+          "outputPosition": 0,
+          "tokenId": 4474,
+          "timestampNs": "1610000"
+        }
+      ],
+      "kernels": [
+        {
+          "name": "reshape_and_cache_flash_kernel",
+          "correlationId": 801,
+          "runtimeSubmitNs": "1040000",
+          "runtimeSubmitFromStepUs": 40,
+          "gpuStartNs": "1100000",
+          "gpuEndNs": "1124000",
+          "startFromStepUs": 100,
+          "endFromStepUs": 124,
+          "durationUs": 24,
+          "process": 332,
+          "thread": 412,
+          "runtimeCbid": 211,
+          "stream": 7,
+          "gridId": 9501,
+          "graphNodeId": 73,
+          "graphId": 9,
+          "grid": [
+            16,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "requestBlockOwnership": [
+            {
+              "requestId": "0x1e48db0927d08250",
+              "blockBegin": 0,
+              "blockEnd": 12,
+              "phase": "prefill",
+              "basis": "authoritative_packed_rows"
+            },
+            {
+              "requestId": "0xaaaaaaaaaaaaaaaa",
+              "blockBegin": 12,
+              "blockEnd": 14,
+              "phase": "prefill",
+              "basis": "authoritative_packed_rows"
+            },
+            {
+              "requestId": "0xbbbbbbbbbbbbbbbb",
+              "blockBegin": 14,
+              "blockEnd": 15,
+              "phase": "decode",
+              "basis": "authoritative_packed_rows"
+            }
+          ],
+          "paddingBlocks": 1,
+          "attribution": "validated_cache_row_to_block"
+        },
+        {
+          "name": "flash_fwd_kernel",
+          "correlationId": 802,
+          "runtimeSubmitNs": "1060000",
+          "runtimeSubmitFromStepUs": 60,
+          "gpuStartNs": "1130000",
+          "gpuEndNs": "1300000",
+          "startFromStepUs": 130,
+          "endFromStepUs": 300,
+          "durationUs": 170,
+          "process": 332,
+          "thread": 412,
+          "runtimeCbid": 211,
+          "stream": 7,
+          "gridId": 9502,
+          "graphNodeId": 74,
+          "graphId": 9,
+          "grid": [
+            80,
+            1,
+            1
+          ],
+          "block": [
+            256,
+            1,
+            1
+          ],
+          "requestBlockOwnership": [],
+          "paddingBlocks": 0,
+          "attribution": "step_many_to_many_only"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "phase": "decode",
+      "beginNs": "1620000",
+      "packedNs": "1630000",
+      "endNs": "2050000",
+      "wallUs": 430,
+      "scheduledTokens": 3,
+      "prefillTokens": 0,
+      "decodeTokens": 3,
+      "queueDepth": 6,
+      "activeRequests": 3,
+      "kvCacheUsagePermyriad": 2180,
+      "schedulerOrderMismatches": 3,
+      "schedulerSlices": [
+        {
+          "requestId": "0x1e48db0927d08250",
+          "phase": "decode",
+          "scheduledTokens": 1
+        },
+        {
+          "requestId": "0xaaaaaaaaaaaaaaaa",
+          "phase": "decode",
+          "scheduledTokens": 1
+        },
+        {
+          "requestId": "0xbbbbbbbbbbbbbbbb",
+          "phase": "decode",
+          "scheduledTokens": 1
+        }
+      ],
+      "packedSlices": [
+        {
+          "requestId": "0xbbbbbbbbbbbbbbbb",
+          "packedIndex": 0,
+          "rowBegin": 0,
+          "rowEnd": 1,
+          "phase": "decode",
+          "scheduledTokens": 1,
+          "authoritative": true
+        },
+        {
+          "requestId": "0xaaaaaaaaaaaaaaaa",
+          "packedIndex": 1,
+          "rowBegin": 1,
+          "rowEnd": 2,
+          "phase": "decode",
+          "scheduledTokens": 1,
+          "authoritative": true
+        },
+        {
+          "requestId": "0x1e48db0927d08250",
+          "packedIndex": 2,
+          "rowBegin": 2,
+          "rowEnd": 3,
+          "phase": "decode",
+          "scheduledTokens": 1,
+          "authoritative": true
+        }
+      ],
+      "focusedPackedTokens": [
+        {
+          "requestId": "0x1e48db0927d08250",
+          "packingGeneration": 18,
+          "packedRow": 2,
+          "sequencePosition": 12,
+          "tokenId": 4474,
+          "phase": "decode",
+          "timestampNs": "1635000"
+        }
+      ],
+      "acceptedOutputTokens": [
+        {
+          "requestId": "0x1e48db0927d08250",
+          "outputPosition": 1,
+          "tokenId": 448,
+          "timestampNs": "2060000"
+        }
+      ],
+      "kernels": [
+        {
+          "name": "reshape_and_cache_flash_kernel",
+          "correlationId": 803,
+          "runtimeSubmitNs": "1650000",
+          "runtimeSubmitFromStepUs": 30,
+          "gpuStartNs": "1710000",
+          "gpuEndNs": "1722000",
+          "startFromStepUs": 90,
+          "endFromStepUs": 102,
+          "durationUs": 12,
+          "process": 332,
+          "thread": 417,
+          "runtimeCbid": 211,
+          "stream": 7,
+          "gridId": 9503,
+          "graphNodeId": 73,
+          "graphId": 9,
+          "grid": [
+            4,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "requestBlockOwnership": [
+            {
+              "requestId": "0xbbbbbbbbbbbbbbbb",
+              "blockBegin": 0,
+              "blockEnd": 1,
+              "phase": "decode",
+              "basis": "authoritative_packed_rows"
+            },
+            {
+              "requestId": "0xaaaaaaaaaaaaaaaa",
+              "blockBegin": 1,
+              "blockEnd": 2,
+              "phase": "decode",
+              "basis": "authoritative_packed_rows"
+            },
+            {
+              "requestId": "0x1e48db0927d08250",
+              "blockBegin": 2,
+              "blockEnd": 3,
+              "phase": "decode",
+              "basis": "authoritative_packed_rows"
+            }
+          ],
+          "paddingBlocks": 1,
+          "attribution": "validated_cache_row_to_block"
+        }
+      ]
+    }
+  ],
+  "deepReplay": {
+    "schema": "GPU_OBSERVER_DEEP_REPLAY_01",
+    "captureStatus": "schema_fixture_not_measurement",
+    "replayFingerprint": "fixture-fingerprint-not-evidence",
+    "functions": [
+      {
+        "name": "reshape_and_cache_flash_kernel",
+        "functionPc": "0x0000007f12000000",
+        "functionSize": 384,
+        "sass": [
+          {
+            "offset": "0x0000",
+            "instruction": "S2R R0, SR_CTAID.X;",
+            "samples": 1
+          },
+          {
+            "offset": "0x0010",
+            "instruction": "IMAD.WIDE R2, R0, 0x8, c[0x0][0x28];",
+            "samples": 0
+          },
+          {
+            "offset": "0x0020",
+            "instruction": "LDG.E.64 R4, [R2.64];",
+            "samples": 6
+          },
+          {
+            "offset": "0x0030",
+            "instruction": "STG.E.64 [R8.64], R4;",
+            "samples": 6
+          },
+          {
+            "offset": "0x0040",
+            "instruction": "EXIT;",
+            "samples": 1
+          }
+        ]
+      }
+    ],
+    "semanticSignature": "fixture-semantic-signature-not-evidence",
+    "moduleHash": "fixture-module-hash"
+  }
+}

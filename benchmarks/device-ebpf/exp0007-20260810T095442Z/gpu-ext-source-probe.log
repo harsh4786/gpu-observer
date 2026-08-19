@@ -1,0 +1,35 @@
+Script started on 2026-08-10 03:10:56-07:00 [COMMAND="export GIT_TERMINAL_PROMPT=0; for url in https://github.com/eunomia-bpf/gpu_ext.git https://github.com/eunomia-bpf/gpu-ext.git https://github.com/eunomia-bpf/gpuext.git; do printf "repository=%s\n" "$url"; timeout 15s git ls-remote "$url" 2>&1 || printf "ls_remote_status=%s\n" "$?"; done" <not executed on terminal>]
+repository=https://github.com/eunomia-bpf/gpu_ext.git
+2cf51085670c3d64bdd7a5ec6b612570a9fd9440	HEAD
+9ab29a27c96955cd125e92bdd6e45fbc51f6de98	refs/heads/fix/ci-build-extension-kmod
+2cf51085670c3d64bdd7a5ec6b612570a9fd9440	refs/heads/master
+9ab29a27c96955cd125e92bdd6e45fbc51f6de98	refs/pull/2/head
+517aeb705e2aa8ae818134f790b6ce0162e506ae	refs/tags/v0.0.1
+c120348823b26e9d9a610d1d04ba254b978fb811	refs/tags/v0.0.10
+06d47b30af2187c6ba567d2726b461764ea00dc3	refs/tags/v0.0.11
+3f6a9cee94945996399334ecb3aa167cb9588c8e	refs/tags/v0.0.12
+0b80a22488f09245ed6bfac4277d20075444eb3b	refs/tags/v0.0.13
+bf05e27a1e8fa082b232497569788267305f31c5	refs/tags/v0.0.14
+1a98371d37d529133d8779088765558f5b3faef1	refs/tags/v0.0.15
+377165ca7e6a65f35f20b2e99d7a3624b6acb916	refs/tags/v0.0.16
+3cb7782f73fc68695e7e5f082c24e94bf5c49318	refs/tags/v0.0.17
+1a065c34821ecd832d9f0c6f419fcd31900438ba	refs/tags/v0.0.18
+2384c92911a75a59949d6a5d8b363f686ef760a0	refs/tags/v0.0.19
+0e88d03b9d0520605fb8b1b0285820a9451b25c5	refs/tags/v0.0.2
+b0320ef1a646aee834e7901cb3d7f7071c1711cf	refs/tags/v0.0.20
+2cf51085670c3d64bdd7a5ec6b612570a9fd9440	refs/tags/v0.0.21
+aa81dbe9dd0a3cf5655a77dd95379e7baebf9d21	refs/tags/v0.0.3
+c38b456bba0b29925d67b8853bed76d693ae6f65	refs/tags/v0.0.4
+26e14205a88320af4e42b4bf105334ca3584752b	refs/tags/v0.0.5
+d0937b53fb17a4b76477e813f0d232d81de8d49e	refs/tags/v0.0.6
+77051e688b65eea0cef2f4e88344095be431e217	refs/tags/v0.0.7
+363b30ba2764d6730ed222c9962d5ad196cedb47	refs/tags/v0.0.8
+95a236dc680079368015b919036290ff66f2a215	refs/tags/v0.0.9
+repository=https://github.com/eunomia-bpf/gpu-ext.git
+fatal: could not read Username for 'https://github.com': terminal prompts disabled
+ls_remote_status=128
+repository=https://github.com/eunomia-bpf/gpuext.git
+fatal: could not read Username for 'https://github.com': terminal prompts disabled
+ls_remote_status=128
+
+Script done on 2026-08-10 03:10:57-07:00 [COMMAND_EXIT_CODE="0"]

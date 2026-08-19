@@ -1,0 +1,32 @@
+experiment=EXP-0014-gate4
+started_utc=2026-08-12T20:06:02Z
+question=Can authoritative GPUModelRunner packed row ranges replace the file oracle and recover per-request cache-kernel block ownership?
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+image=gpu-observer/vllm-sanitizer:cuda13.2
+execution_mode=eager
+async_scheduling=false
+prefix_caching=false
+target_kernel=reshape_and_cache_flash_kernel
+event_capacity=262144
+event_size_bytes=64
+event_buffer_bytes=16777216
+interactive_requests=8
+interactive_output_tokens=16
+injection_delay_seconds=0.5
+semantic_abi_version=2
+ownership=authoritative_packed_layout_required
+scheduler_order_counterexample_required=true
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+NVIDIA GB10, 580.173.02, 35, 5.03 W
+image_id=sha256:e4409f94c58463513df2e5abca7855b906fcb78b87d1f7190af2b7968d3de4f4 image_digests=[]
+894a9eab9526b3db4b0029029465305a96cc737e7131aefa3413de7e19cc1cca  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-corrected.jsonl
+3b556e56d79d69540e95e30a02a84a4197e15efb1a121c732103bcef78ace440  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/background-long-payloads.jsonl
+dad445584a4e3fd104e61e5f4b37d6da24521f3fba74f818c232c3c09e9e33ea  /home/harsh4786/gpu-observer/target/release/libgpu_observer_vllm_bridge.so
+1cb28df43cd7b4f813f093ba6f7011e4d8281744b42882d415b8e59e9576faee  /home/harsh4786/gpu-observer/vllm-adapter/overlay/vllm/v1/engine/core.py
+1be9c05121960a1ae7bea94bf61ccd1d204197a70133fd47a2968c19b88b1828  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_semantic.py
+dd8e552931fb001e7f8961c9dd5832eaea9c1dce64f835cccad36a188c6dd4f8  /home/harsh4786/gpu-observer/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py
+28e7c73646d58273c10239f544ad277700854a69d600138a80106c19a3b2d1df  /home/harsh4786/gpu-observer/device-probes/compute-sanitizer/build/libgpu_observer_sanitizer.so
+691578ba8ea24a726da2b99e2e5e8f3930640db0bd9e494302d80a462a18c5b4  /home/harsh4786/gpu-observer/device-probes/compute-sanitizer/build/gpu_observer_sanitizer_patches.cubin
+4e97e51d4c597d65ce91c904c1116d26ec283657ea3607a86c02882501caef7b  /home/harsh4786/gpu-observer/target/release/join_b_cache
+capture_armed_after_warmup=true

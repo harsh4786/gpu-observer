@@ -1,0 +1,18 @@
+# Claims
+
+Supported:
+
+- CUPTI/Nsight device activity can be normalized into the semantic CLOCK_MONOTONIC timeline with sub-microsecond offset stability for these short runs.
+- Every warmed eager and graph kernel record was assigned to one of three semantic engine steps.
+- Every device kernel had a CUPTI runtime correlation.
+- Eager emitted 1,146 host launch APIs for 1,146 device kernels.
+- Graph mode emitted 134 host launch APIs inside the steps while CUPTI retained 1,030 device kernel records.
+- Each warmed decode graph launch correlated with 337 device kernels.
+- Node-level CUPTI activity preserves device visibility that host launch tracing loses under graph replay.
+
+Not supported:
+
+- CUDA Graphs alone caused the 36.1 percent lower summed kernel time. Removing enforce-eager also enables torch.compile and changes fused kernels.
+- Graph mode improves latency by a stable percentage. The corrected comparison has one measured request per mode.
+- The measured numbers represent uninstrumented production performance.
+- p50, p95, p99, throughput, or instrumentation overhead are characterized.

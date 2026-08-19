@@ -1,0 +1,3 @@
+    Finished `release` profile [optimized] target(s) in 0.01s
+     Running `target/release/examples/ring_bench`
+events=10000000 capacity=65536 elapsed_ms=195.519 events_per_second=51145962 ns_per_event=19.55

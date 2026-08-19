@@ -1,0 +1,5 @@
+step=2 scheduled=128 prefill=128 decode=0 slices=1 target_launches=40
+  predicted_request=0xf90d5531b40b0562 phase=1 tokens=128 block_range=[0,128) events=5120 expected=5120
+step=3 scheduled=1 prefill=0 decode=1 slices=1 target_launches=40
+  predicted_request=0xf90d5531b40b0562 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+summary semantic_records=6 semantic_loss=0 steps=2 launches=80 assigned_launches=80 measured_launches=80 device_headers=1 device_retained=5160 measured_events=5160 device_write_attempts=5160 device_drops=0 device_sequence_errors=0 duplicate_launch_ids=0 orphan_events=0 zero_launch_events=0 incomplete_launches=0 duplicate_blocks=0 geometry_mismatches=0 token_grid_mismatches=0 kind_mismatches=0 kernel_slot_mismatches=0 unmapped_blocks=0 request_count_mismatches=0 distinct_sms=48 device_raw_first=628829086353664 device_raw_last=628829517367808 event_sequence_first=0 event_sequence_last=5159 device_clock=raw_globaltimer_not_normalized ownership=predicted_not_oracle_validated

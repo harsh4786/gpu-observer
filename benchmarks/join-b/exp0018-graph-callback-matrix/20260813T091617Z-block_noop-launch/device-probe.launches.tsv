@@ -1,0 +1,2 @@
+# format=GOSAN02 host_clock=CLOCK_MONOTONIC launch_id_scope=process
+launch_id	grid_id	host_timestamp_ns	context_slot	kernel_slot	stream	grid_x	grid_y	grid_z	block_x	block_y	block_z	expected_blocks	function

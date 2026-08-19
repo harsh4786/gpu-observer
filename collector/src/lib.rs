@@ -1,0 +1,14 @@
+pub mod compact;
+pub mod error;
+pub mod event;
+pub mod io;
+pub mod join_b_trace;
+pub mod msgpack;
+pub mod report;
+pub mod semantic;
+
+pub use compact::correlate;
+pub use error::{ObserverError, Result};
+pub use event::{Event, EventKind, CURRENT_SCHEMA_VERSION};
+pub use io::{parse_jsonl, read_jsonl};
+pub use report::CorrelationReport;

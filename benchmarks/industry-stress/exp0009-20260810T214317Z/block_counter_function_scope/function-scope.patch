@@ -1,0 +1,74 @@
+--- benchmarks/compute-sanitizer/exp0008-20260810T191607Z/source/subscriber.cpp	2026-08-10 12:42:02.000000000 -0700
++++ device-probes/compute-sanitizer/subscriber.cpp	2026-08-10 15:11:06.569224993 -0700
+@@ -46,6 +46,7 @@
+     uint64_t capacity{65536};
+     uint32_t sample_mask{1023};
+     bool flush_on_sync{false};
++    bool function_callback_data{false};
+     bool patch_all_modules{true};
+     char patch_path[PATH_MAX]{};
+     char output_prefix[PATH_MAX / 2]{};
+@@ -383,11 +384,12 @@
+     }
+ 
+     std::fprintf(summary,
+-                 "# mode=%s capacity=%llu sample_mask=%u buffer_bytes=%llu "
++                 "# mode=%s callback_data_scope=%s capacity=%llu sample_mask=%u buffer_bytes=%llu "
+                  "modules_seen=%llu modules_patched=%llu module_patch_failures=%llu "
+                  "launches_seen=%llu function_table_drops=%llu context_table_drops=%llu "
+                  "callback_data_failures=%llu setup_missed_launches=%llu\n",
+                  mode_name(g_tool.mode),
++                 g_tool.function_callback_data ? "function" : "launch",
+                  static_cast<unsigned long long>(g_tool.capacity),
+                  g_tool.sample_mask,
+                  static_cast<unsigned long long>(g_tool.capacity * sizeof(GoSanEvent)),
+@@ -556,15 +558,23 @@
+ 
+ 
+     GoSanKernelState* device_state = context->device_kernels + function->kernel_slot;
+-    if (function->launches.load(std::memory_order_relaxed) == 1 &&
++    const bool first_launch =
++        function->launches.load(std::memory_order_relaxed) == 1;
++    if (first_launch &&
+         !initialize_kernel_state(*context, *function, launch.hStream)) {
+         g_tool.callback_data_failures.fetch_add(1, std::memory_order_relaxed);
+         return;
+     }
+-    if (!ok(sanitizerSetLaunchCallbackData(launch.hLaunch, launch.function,
+-                                           launch.hStream, device_state),
+-            "sanitizerSetLaunchCallbackData"))
++    if (g_tool.function_callback_data) {
++        if (first_launch &&
++            !ok(sanitizerSetCallbackData(launch.function, device_state),
++                "sanitizerSetCallbackData"))
++            g_tool.callback_data_failures.fetch_add(1, std::memory_order_relaxed);
++    } else if (!ok(sanitizerSetLaunchCallbackData(launch.hLaunch, launch.function,
++                                                  launch.hStream, device_state),
++                   "sanitizerSetLaunchCallbackData")) {
+         g_tool.callback_data_failures.fetch_add(1, std::memory_order_relaxed);
++    }
+ }
+ 
+ void SANITIZERAPI callback(void*, Sanitizer_CallbackDomain domain,
+@@ -591,6 +601,9 @@
+                                            10, 30);
+     g_tool.sample_mask = sample_log2 == 0 ? 0U : ((1U << sample_log2) - 1U);
+     g_tool.flush_on_sync = std::getenv("GPU_OBSERVER_SAN_FLUSH_ON_SYNC") != nullptr;
++    const char* callback_scope = std::getenv("GPU_OBSERVER_SAN_CALLBACK_DATA_SCOPE");
++    g_tool.function_callback_data =
++        callback_scope != nullptr && std::strcmp(callback_scope, "function") == 0;
+ 
+     const char* patch = std::getenv("GPU_OBSERVER_SAN_PATCH_FILE");
+     const char* output = std::getenv("GPU_OBSERVER_SAN_OUTPUT_PREFIX");
+@@ -616,8 +629,10 @@
+         ok(sanitizerEnableDomain(1, g_tool.subscriber, SANITIZER_CB_DOMAIN_SYNCHRONIZE),
+            "enable synchronize domain");
+     std::fprintf(stderr,
+-                 "gpu-observer-sanitizer: initialized mode=%s capacity=%llu sample=1/%u target=%s\n",
++                 "gpu-observer-sanitizer: initialized mode=%s callback_data_scope=%s "
++                 "capacity=%llu sample=1/%u target=%s\n",
+                  mode_name(g_tool.mode),
++                 g_tool.function_callback_data ? "function" : "launch",
+                  static_cast<unsigned long long>(g_tool.capacity),
+                  g_tool.sample_mask + 1,
+                  g_tool.patch_all_modules ? "<all-modules>" : g_tool.target_substring);

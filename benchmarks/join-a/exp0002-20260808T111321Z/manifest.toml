@@ -1,0 +1,70 @@
+schema_version = 1
+experiment_id = "EXP-0002"
+title = "Async-scheduling boundary gate"
+status = "complete"
+started_utc = "2026-08-08T11:13:21Z"
+completed_utc = "2026-08-08T11:18:12Z"
+artifact_root = "benchmarks/join-a/exp0002-20260808T111321Z"
+
+[hypothesis]
+original = "Patching EngineCore.step captures the active vLLM V1 path on the NGC 26.05 TP=1 server."
+outcome = "falsified"
+corrected = "NGC 26.05 auto-enables asynchronous scheduling and dispatches through step_with_batch_queue when max_concurrent_batches exceeds one."
+
+[hardware]
+system = "NVIDIA DGX Spark"
+gpu = "NVIDIA GB10"
+architecture = "sm_121"
+memory = "128 GB unified CPU/GPU memory"
+host_architecture = "aarch64"
+driver = "580.173.02"
+
+[software]
+container_image = "nvcr.io/nvidia/vllm:26.05-py3"
+container_image_id = "sha256:c5c116c732f24a640650e1e6e399112ef7c2b1e80c5fd7c13808b10a579646e6"
+vllm = "0.20.1+7124b12a.dev"
+torch = "2.12.0a0+5aff3928d8.nv26.05"
+triton = "3.6.0"
+model_revision = "c1899de289a04d12100db370d81485cdf75e47ca"
+
+[server]
+model = "Qwen/Qwen3-0.6B"
+dtype = "bfloat16"
+execution_mode = "eager"
+async_scheduling = true
+max_model_len = 4096
+kv_cache_bytes = 8589934592
+command = "vllm serve Qwen/Qwen3-0.6B --port 8000 --enforce-eager --max-model-len 4096 --kv-cache-memory-bytes 8G"
+
+[workload]
+request_body = "request.json"
+requests = 1
+prompt_tokens = 39
+completion_tokens = 3
+temperature = 0
+
+[instrumentation]
+semantic_record_bytes = 96
+cuda_launch_record_bytes = 88
+host_probe_symbols = ["cuLaunchKernel", "cuLaunchKernelEx"]
+semantic_boundary = "EngineCore.step"
+clock = "CLOCK_MONOTONIC"
+
+[results]
+semantic_records = 0
+cuda_launch_records = 1143
+cuda_raw_bytes = 100584
+client_total_ms = 278.051
+gpu_temperature_before_c = 39
+gpu_temperature_after_c = 39
+
+[quality]
+raw_events_preserved = true
+cuda_file_length_valid = true
+semantic_join_succeeded = false
+host_probe_summary_preserved = false
+failure_explained_by_dispatch_evidence = true
+
+[limitations]
+cuda_loss_markers = "not revalidated offline in this gate run"
+gpu_execution_duration = "unavailable without CUPTI activity"

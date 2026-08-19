@@ -1,0 +1,39 @@
+experiment=EXP-0019-graph-ownership
+started_utc=2026-08-14T13:07:04Z
+question=Can authoritative packed rows plus graph replay/node identity recover per-request block ownership for Qwen3-14B decode after compaction?
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+image=gpu-observer/vllm-sanitizer:cuda13.2
+execution_mode=FULL_AND_PIECEWISE_CUDA_GRAPHS
+async_scheduling=production_default
+prefix_caching=false
+target_kernel=reshape_and_cache_flash_kernel
+observer_semantic=vLLM_patched_CLOCK_MONOTONIC
+observer_graph=Compute_Sanitizer_graph_node_begin_CLOCK_MONOTONIC
+observer_device=Compute_Sanitizer_SASS_block_entry_raw_globaltimer
+observer_ordinary_launch=Compute_Sanitizer_launch_begin_CLOCK_MONOTONIC
+event_partition_assumption=single_context_stream_order_and_complete_geometry
+device_window_assumption=explicit_tail_after_final_prefill
+event_capacity=1048576
+event_size_bytes=64
+event_buffer_bytes=67108864
+graph_node_capacity=65536
+request_count=8
+output_lengths=8 12 16 20 24 28 32 36
+ignore_eos=true
+expected_target_nodes_per_replay=40
+semantic_abi_version=2
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:     130662936576  7138963456 44330176512   288223232 80655519744 123523973120
+Swap:    17179865088    36261888 17143603200
+NVIDIA GB10, 580.173.02, 32, 4.75 W
+image_id=sha256:e4409f94c58463513df2e5abca7855b906fcb78b87d1f7190af2b7968d3de4f4 image_digests=[]
+894a9eab9526b3db4b0029029465305a96cc737e7131aefa3413de7e19cc1cca  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-corrected.jsonl
+dad445584a4e3fd104e61e5f4b37d6da24521f3fba74f818c232c3c09e9e33ea  /home/harsh4786/gpu-observer/target/release/libgpu_observer_vllm_bridge.so
+1cb28df43cd7b4f813f093ba6f7011e4d8281744b42882d415b8e59e9576faee  /home/harsh4786/gpu-observer/vllm-adapter/overlay/vllm/v1/engine/core.py
+1be9c05121960a1ae7bea94bf61ccd1d204197a70133fd47a2968c19b88b1828  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_semantic.py
+dd8e552931fb001e7f8961c9dd5832eaea9c1dce64f835cccad36a188c6dd4f8  /home/harsh4786/gpu-observer/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py
+dbda5e610c8e2420280170ccd765e2eb22fa11616fc960fc58136bba1c58f09b  /home/harsh4786/gpu-observer/device-probes/compute-sanitizer/build-graph-identity/libgpu_observer_sanitizer.so
+691578ba8ea24a726da2b99e2e5e8f3930640db0bd9e494302d80a462a18c5b4  /home/harsh4786/gpu-observer/device-probes/compute-sanitizer/build-graph-identity/gpu_observer_sanitizer_patches.cubin
+58afe7c99453560591bd9103a2c81048f6f38b2bd7847b0dbc464ea1d9530377  /home/harsh4786/gpu-observer/target/release/join_b_graph_cache

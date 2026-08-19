@@ -1,0 +1,4 @@
+PID                 COMMAND             COMMAND
+510971              vllm                /usr/bin/python /usr/local/bin/vllm serve Qwen/Qwen3-14B --port 8000 --dtype bfloat16 --max-model-len 8192 --kv-cache-memory-bytes 8G --max-num-seqs 32
+511391              python              /usr/bin/python -c from multiprocessing.resource_tracker import main;main(38)
+511392              VLLM::EngineCor     VLLM::EngineCore

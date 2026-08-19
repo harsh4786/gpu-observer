@@ -1,0 +1,114 @@
+schema_version = 1
+experiment_id = "EXP-0006"
+title = "Qwen3-14B engine-step wall decomposition with CUPTI"
+status = "complete"
+started_utc = "2026-08-09T21:31:25Z"
+completed_utc = "2026-08-09T21:37:40Z"
+artifact_root = "benchmarks/repro/qwen3-14b-20260809T194756Z/cupti-nsys-20260809T213125Z"
+
+[hypothesis]
+original = "The 114-121 ms interval after Aya's final host launch submission is predominantly asynchronous GPU execution being drained before vLLM can close the engine step."
+outcome = "supported_for_one_warmed_single-request_eager_trace"
+
+[hardware]
+system = "NVIDIA DGX Spark"
+gpu = "NVIDIA GB10"
+architecture = "sm_121"
+memory = "128 GB unified CPU/GPU memory"
+host_architecture = "aarch64"
+driver = "580.173.02"
+kernel = "6.17.0-1029-nvidia"
+
+[software]
+container_image = "nvcr.io/nvidia/vllm:26.05-py3"
+container_image_id = "sha256:c5c116c732f24a640650e1e6e399112ef7c2b1e80c5fd7c13808b10a579646e6"
+vllm = "0.20.1+7124b12a.dev"
+torch = "2.12.0a0+5aff3928d8.nv26.05"
+triton = "3.6.0"
+cuda_runtime = "13.2"
+nsight_systems = "2025.3.2.474-253236389321v0"
+model_revision = "40c069824f4251a91eefaf281ebe4c544efd3e18"
+
+[server]
+model = "Qwen/Qwen3-14B"
+dtype = "bfloat16"
+attention_backend = "FlashAttention 2"
+execution_mode = "eager"
+async_scheduling = false
+prefix_caching = false
+max_model_len = 4096
+kv_cache_bytes = 8589934592
+max_num_seqs = 32
+
+[workload]
+warmup_requests = 1
+measured_requests = 1
+prompt_tokens = 24
+completion_tokens = 3
+temperature = 0
+stream = false
+
+[instrumentation]
+semantic_transport = "mmap SPSC ring"
+semantic_record_bytes = 96
+semantic_records = 9
+semantic_drops = 0
+gpu_activity = "Nsight Systems CUPTI export"
+cuda_graph_trace_granularity = "node"
+cpu_sampling = false
+context_switch_tracing = false
+raw_nsys_rep_preserved = true
+raw_sqlite_preserved = true
+
+[clock_normalization]
+method = "Nsight session utcEpochNs plus midpoint of request-side CLOCK_MONOTONIC minus CLOCK_REALTIME offsets"
+offset_before_ns = -1785907916133281120
+offset_after_ns = -1785907916133281160
+offset_drift_ns = 40
+pair_uncertainty_before_ns = 800
+pair_uncertainty_after_ns = 976
+session_origin_monotonic_ns = 403339435433289
+
+[results]
+engine_steps = 3
+step_ids = [4, 5, 6]
+step_phases = ["prefill", "decode", "decode"]
+step_wall_ns = [135176840, 122548561, 123327695]
+kernel_count = 1614
+kernel_count_per_step = [538, 538, 538]
+summed_kernel_ns = 376915616
+summed_kernel_ns_per_step = [133418144, 121338496, 122158976]
+overlap_safe_busy_ns = 376894784
+overlap_safe_busy_ns_per_step = [133397312, 121338496, 122158976]
+first_gpu_lag_ns_per_step = [452312, 130673, 148416]
+last_gpu_to_step_end_ns_per_step = [46544, 45984, 43823]
+internal_gpu_gap_ns_per_step = [1280672, 1033408, 976480]
+event_synchronize_wait_ns = 347214512
+event_synchronize_wait_ns_per_step = [121410528, 112219296, 113584688]
+runtime_records = 3494
+memcpy_records = 113
+memcpy_bytes = 823459
+memset_records = 123
+memset_bytes = 87052
+cuda_streams = 1
+unassigned_kernels = 0
+kernels_without_runtime_correlation = 0
+
+[quality]
+warmup_completed_before_collection = true
+warmup_semantics_drained = true
+all_kernel_records_assigned_to_semantic_step = true
+all_kernel_records_matched_runtime_correlation = true
+clock_offset_stable_sub_microsecond = true
+raw_events_preserved = true
+source_hashes_present = true
+server_stopped_after_capture = true
+checksums_present = true
+
+[limitations]
+sample_size = "one warmed request; not a latency distribution"
+profiler_overhead = "Nsight/CUPTI overhead has not been isolated against repeated clean and Aya-only runs"
+causality = "device execution explains the timing interval, but this run does not identify memory bandwidth saturation or unified-memory migration"
+symbolization = "generic names kernel and Kernel2 account for most device time and require backend-specific symbol resolution"
+attribution = "single-request trace only; no per-request attribution inside mixed-batch kernels"
+

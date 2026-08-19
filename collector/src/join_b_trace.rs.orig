@@ -1,0 +1,890 @@
+use gpu_observer_core::{
+    SemanticRecordFlags, SemanticRecordKind, SemanticWireRecord, SEMANTIC_RECORD_BYTES,
+};
+use std::{
+    env,
+    error::Error,
+    fs::File,
+    io::{BufRead, BufReader, Read},
+    path::{Path, PathBuf},
+};
+
+const GO_SAN_HEADER_BYTES: usize = 64;
+const GO_SAN_EVENT_BYTES: usize = 64;
+const GO_SAN_FORMAT_VERSION: u32 = 2;
+const GO_SAN_BLOCK_EVENT: u16 = 1;
+const MAX_SEMANTIC_BYTES: u64 = 64 * 1024 * 1024;
+const MAX_LAUNCH_BYTES: u64 = 64 * 1024 * 1024;
+const MAX_DEVICE_BYTES: u64 = 64 * 1024 * 1024;
+
+#[derive(Default)]
+pub struct Step {
+    pub begin: SemanticWireRecord,
+    pub end_timestamp_ns: u64,
+    pub slice_start: usize,
+    pub slice_count: usize,
+    pub packed_begin: Option<SemanticWireRecord>,
+    pub packed_slice_start: usize,
+    pub packed_slice_count: usize,
+    pub packed_token_start: usize,
+    pub packed_token_count: usize,
+    pub output_token_start: usize,
+    pub output_token_count: usize,
+    pub owner_start: usize,
+    pub owner_count: usize,
+    pub scheduler_order_mismatches: u32,
+}
+
+#[derive(Clone, Copy)]
+pub struct OwnershipSlice {
+    pub request_id: u64,
+    pub phase: u8,
+    pub scheduled_tokens: u32,
+    pub row_begin: u32,
+    pub row_end: u32,
+    pub authoritative: bool,
+}
+
+pub struct SemanticTrace {
+    pub steps: Vec<Step>,
+    pub slices: Vec<SemanticWireRecord>,
+    pub packed_slices: Vec<SemanticWireRecord>,
+    pub packed_tokens: Vec<SemanticWireRecord>,
+    pub output_tokens: Vec<SemanticWireRecord>,
+    pub owners: Vec<OwnershipSlice>,
+    pub records: u64,
+    pub loss_markers: u64,
+    pub packed_steps: u64,
+    pub scheduler_order_mismatch_steps: u64,
+    pub scheduler_order_mismatch_slices: u64,
+    pub max_steps_in_flight: u64,
+}
+
+struct Launch {
+    launch_id: u64,
+    grid_id: u64,
+    host_timestamp_ns: u64,
+    context_slot: u32,
+    kernel_slot: u32,
+    stream: u64,
+    grid: [u32; 3],
+    block: [u32; 3],
+    expected_blocks: u64,
+    function: String,
+    step_index: Option<usize>,
+}
+
+#[derive(Clone, Copy)]
+pub struct DeviceEvent {
+    pub device_timestamp_raw: u64,
+    pub launch_id: u64,
+    pub sequence: u32,
+    pub kernel_slot: u32,
+    pub block: [u32; 3],
+    pub kind: u16,
+    pub sm_id: u16,
+}
+
+#[derive(Default)]
+pub struct DeviceQuality {
+    pub headers: u64,
+    pub write_attempts: u64,
+    pub retained: u64,
+    pub drops: u64,
+    pub sequence_errors: u64,
+}
+
+pub fn run_legacy() -> Result<(), Box<dyn Error>> {
+    let mut arguments = env::args_os();
+    let program = arguments.next().unwrap_or_default();
+    let usage = || {
+        format!(
+            "usage: {} SEMANTIC.bin (--semantic-only | DEVICE-PROBE.launches.tsv DEVICE-PROBE.events.bin [--require-packed] [--packed-window])",
+            PathBuf::from(&program).display()
+        )
+    };
+    let semantic_path = PathBuf::from(arguments.next().ok_or_else(&usage)?);
+    let second = arguments.next().ok_or_else(&usage)?;
+    if second == "--semantic-only" {
+        if arguments.next().is_some() {
+            return Err(usage().into());
+        }
+        let semantic = load_semantic(&semantic_path)?;
+        let mut scheduled_tokens = 0_u64;
+        let mut prefill_tokens = 0_u64;
+        let mut decode_tokens = 0_u64;
+        let mut prefill_only_steps = 0_u64;
+        let mut decode_only_steps = 0_u64;
+        let mut mixed_steps = 0_u64;
+        let mut max_slices = 0_u32;
+        for step in &semantic.steps {
+            scheduled_tokens += u64::from(step.begin.scheduled_tokens);
+            prefill_tokens += u64::from(step.begin.prefill_tokens);
+            decode_tokens += u64::from(step.begin.decode_tokens);
+            max_slices = max_slices.max(step.begin.expected_slices);
+            match (
+                step.begin.prefill_tokens != 0,
+                step.begin.decode_tokens != 0,
+            ) {
+                (true, false) => prefill_only_steps += 1,
+                (false, true) => decode_only_steps += 1,
+                (true, true) => mixed_steps += 1,
+                (false, false) => return Err("empty engine step".into()),
+            }
+        }
+        println!(
+            "summary semantic_records={} semantic_loss={} steps={} max_steps_in_flight={} packed_steps={} scheduler_order_mismatch_steps={} scheduler_order_mismatch_slices={} scheduled_tokens={} prefill_tokens={} decode_tokens={} prefill_only_steps={} decode_only_steps={} mixed_steps={} max_slices={} ownership=authoritative_packed_layout",
+            semantic.records,
+            semantic.loss_markers,
+            semantic.steps.len(),
+            semantic.max_steps_in_flight,
+            semantic.packed_steps,
+            semantic.scheduler_order_mismatch_steps,
+            semantic.scheduler_order_mismatch_slices,
+            scheduled_tokens,
+            prefill_tokens,
+            decode_tokens,
+            prefill_only_steps,
+            decode_only_steps,
+            mixed_steps,
+            max_slices,
+        );
+        if semantic.loss_markers != 0 || semantic.packed_steps != semantic.steps.len() as u64 {
+            return Err("packed semantic gate failed".into());
+        }
+        return Ok(());
+    }
+    let launch_path = PathBuf::from(second);
+    let device_path = PathBuf::from(arguments.next().ok_or_else(&usage)?);
+    let mut require_packed = false;
+    let mut packed_window = false;
+    for value in arguments {
+        if value == "--require-packed" {
+            require_packed = true;
+        } else if value == "--packed-window" {
+            packed_window = true;
+            require_packed = true;
+        } else {
+            return Err(usage().into());
+        }
+    }
+
+    let semantic = load_semantic(&semantic_path)?;
+    let steps = &semantic.steps;
+    let owners = &semantic.owners;
+    if steps.is_empty() {
+        return Err("semantic trace contains no complete engine steps".into());
+    }
+    let mut launches = load_launches(&launch_path)?;
+    if launches.is_empty() {
+        return Err("launch table contains no target-kernel launches".into());
+    }
+    let (mut events, device_quality) = load_device_events(&device_path)?;
+    if events.is_empty() {
+        return Err("device trace contains no block events".into());
+    }
+
+    launches.sort_unstable_by_key(|launch| launch.launch_id);
+    events.sort_unstable_by_key(|event| {
+        (
+            event.launch_id,
+            event.block[2],
+            event.block[1],
+            event.block[0],
+        )
+    });
+
+    let mut duplicate_launch_ids = 0_u64;
+    for pair in launches.windows(2) {
+        if pair[0].launch_id == pair[1].launch_id {
+            duplicate_launch_ids += 1;
+        }
+    }
+    let packed_timeline = if packed_window {
+        let mut timeline = Vec::new();
+        timeline.try_reserve(steps.len())?;
+        for (step_index, step) in steps.iter().enumerate() {
+            let packed = step
+                .packed_begin
+                .ok_or("packed-window assignment requires every step to have a packed layout")?;
+            timeline.push((packed.timestamp_ns, step_index));
+        }
+        timeline.sort_unstable_by_key(|entry| entry.0);
+        if timeline.windows(2).any(|pair| pair[0].0 >= pair[1].0) {
+            return Err("packed-layout timestamps are not strictly increasing".into());
+        }
+        timeline
+    } else {
+        Vec::new()
+    };
+    let mut launches_before_packed_layout = 0_u64;
+    let mut ambiguous_temporal_launches = 0_u64;
+    for launch in &mut launches {
+        launch.step_index = if packed_window {
+            step_for_packed_timestamp(launch.host_timestamp_ns, steps, &packed_timeline)
+        } else {
+            let (step_index, ambiguous) = step_for_timestamp(launch.host_timestamp_ns, steps);
+            ambiguous_temporal_launches += u64::from(ambiguous);
+            step_index
+        };
+        if let Some(step_index) = launch.step_index {
+            if steps[step_index]
+                .packed_begin
+                .is_some_and(|packed| launch.host_timestamp_ns < packed.timestamp_ns)
+            {
+                launches_before_packed_layout += 1;
+            }
+        }
+    }
+
+    let mut orphan_events = 0_u64;
+    let mut zero_launch_events = 0_u64;
+    for event in &events {
+        if event.launch_id == 0 {
+            zero_launch_events += 1;
+        }
+        if launches
+            .binary_search_by_key(&event.launch_id, |launch| launch.launch_id)
+            .is_err()
+        {
+            orphan_events += 1;
+        }
+    }
+
+    let mut event_cursor = 0_usize;
+    let mut measured_launches = 0_u64;
+    let mut measured_events = 0_u64;
+    let mut incomplete_launches = 0_u64;
+    let mut duplicate_blocks = 0_u64;
+    let mut geometry_mismatches = 0_u64;
+    let mut token_grid_mismatches = 0_u64;
+    let mut kind_mismatches = 0_u64;
+    let mut kernel_slot_mismatches = 0_u64;
+    let mut unmapped_blocks = 0_u64;
+    let mut padding_blocks = 0_u64;
+    let mut step_launch_counts = vec![0_u64; steps.len()];
+    let mut request_event_counts = vec![0_u64; owners.len()];
+
+    for launch in &launches {
+        while event_cursor < events.len() && events[event_cursor].launch_id < launch.launch_id {
+            event_cursor += 1;
+        }
+        let event_start = event_cursor;
+        while event_cursor < events.len() && events[event_cursor].launch_id == launch.launch_id {
+            event_cursor += 1;
+        }
+        let launch_events = &events[event_start..event_cursor];
+        let Some(step_index) = launch.step_index else {
+            continue;
+        };
+        measured_launches += 1;
+        measured_events += launch_events.len() as u64;
+        step_launch_counts[step_index] += 1;
+        let step = &steps[step_index];
+
+        let geometry_blocks =
+            u64::from(launch.grid[0]) * u64::from(launch.grid[1]) * u64::from(launch.grid[2]);
+        if geometry_blocks != launch.expected_blocks || launch.grid[1] != 1 || launch.grid[2] != 1 {
+            geometry_mismatches += 1;
+        }
+        if launch.grid[0] < step.begin.scheduled_tokens {
+            token_grid_mismatches += 1;
+        }
+        if launch_events.len() as u64 != launch.expected_blocks {
+            incomplete_launches += 1;
+        }
+
+        let step_owners = &owners[step.owner_start..step.owner_start + step.owner_count];
+        for (index, event) in launch_events.iter().enumerate() {
+            if event.kind != GO_SAN_BLOCK_EVENT {
+                kind_mismatches += 1;
+            }
+            if event.kernel_slot != launch.kernel_slot {
+                kernel_slot_mismatches += 1;
+            }
+            if index > 0 && event.block == launch_events[index - 1].block {
+                duplicate_blocks += 1;
+            }
+            if event.block[1] != 0 || event.block[2] != 0 || event.block[0] >= launch.grid[0] {
+                geometry_mismatches += 1;
+                continue;
+            }
+
+            let mut owner = None;
+            for (owner_offset, slice) in step_owners.iter().enumerate() {
+                if event.block[0] >= slice.row_begin && event.block[0] < slice.row_end {
+                    owner = Some(step.owner_start + owner_offset);
+                    break;
+                }
+            }
+            match owner {
+                Some(owner_index) => request_event_counts[owner_index] += 1,
+                None if event.block[0] >= step.begin.scheduled_tokens => padding_blocks += 1,
+                None => unmapped_blocks += 1,
+            }
+        }
+    }
+
+    let mut request_count_mismatches = 0_u64;
+    for (step_index, step) in steps.iter().enumerate() {
+        let launch_count = step_launch_counts[step_index];
+        println!(
+            "step={} scheduled={} prefill={} decode={} slices={} target_launches={}",
+            step.begin.step_id,
+            step.begin.scheduled_tokens,
+            step.begin.prefill_tokens,
+            step.begin.decode_tokens,
+            step.owner_count,
+            launch_count,
+        );
+        for owner_index in step.owner_start..step.owner_start + step.owner_count {
+            let slice = owners[owner_index];
+            let expected = u64::from(slice.scheduled_tokens) * launch_count;
+            let observed = request_event_counts[owner_index];
+            if observed != expected {
+                request_count_mismatches += 1;
+            }
+            println!(
+                "  {}_request=0x{:016x} phase={} tokens={} block_range=[{},{}) events={} expected={}",
+                if slice.authoritative {
+                    "packed"
+                } else {
+                    "predicted"
+                },
+                slice.request_id,
+                slice.phase,
+                slice.scheduled_tokens,
+                slice.row_begin,
+                slice.row_end,
+                observed,
+                expected,
+            );
+        }
+    }
+
+    let assigned_launches = launches
+        .iter()
+        .filter(|launch| launch.step_index.is_some())
+        .count() as u64;
+    let unassigned_launches = launches.len() as u64 - assigned_launches;
+    let steps_without_launches = step_launch_counts
+        .iter()
+        .filter(|count| **count == 0)
+        .count() as u64;
+    let raw_device_first = events
+        .iter()
+        .map(|event| event.device_timestamp_raw)
+        .min()
+        .unwrap_or(0);
+    let raw_device_last = events
+        .iter()
+        .map(|event| event.device_timestamp_raw)
+        .max()
+        .unwrap_or(0);
+    let distinct_sms = {
+        let mut sms: Vec<u16> = Vec::new();
+        for event in &events {
+            if !sms.contains(&event.sm_id) {
+                sms.try_reserve(1)?;
+                sms.push(event.sm_id);
+            }
+        }
+        sms.len()
+    };
+    let first_sequence = events.iter().map(|event| event.sequence).min().unwrap_or(0);
+    let last_sequence = events.iter().map(|event| event.sequence).max().unwrap_or(0);
+
+    let ownership = if semantic.packed_steps == steps.len() as u64 {
+        "authoritative_packed_layout"
+    } else {
+        "scheduler_order_fallback"
+    };
+    println!(
+        "summary semantic_records={} semantic_loss={} steps={} max_steps_in_flight={} packed_steps={} scheduler_order_mismatch_steps={} scheduler_order_mismatch_slices={} assignment={} ambiguous_temporal_launches={} launches_before_packed_layout={} launches={} assigned_launches={} unassigned_launches={} steps_without_launches={} measured_launches={} device_headers={} device_retained={} measured_events={} device_write_attempts={} device_drops={} device_sequence_errors={} duplicate_launch_ids={} orphan_events={} zero_launch_events={} incomplete_launches={} duplicate_blocks={} geometry_mismatches={} token_grid_mismatches={} padding_blocks={} kind_mismatches={} kernel_slot_mismatches={} unmapped_blocks={} request_count_mismatches={} distinct_sms={} device_raw_first={} device_raw_last={} event_sequence_first={} event_sequence_last={} device_clock=raw_globaltimer_not_normalized ownership={}",
+        semantic.records,
+        semantic.loss_markers,
+        steps.len(),
+        semantic.max_steps_in_flight,
+        semantic.packed_steps,
+        semantic.scheduler_order_mismatch_steps,
+        semantic.scheduler_order_mismatch_slices,
+        if packed_window { "packed_window" } else { "step_interval" },
+        ambiguous_temporal_launches,
+        launches_before_packed_layout,
+        launches.len(),
+        assigned_launches,
+        unassigned_launches,
+        steps_without_launches,
+        measured_launches,
+        device_quality.headers,
+        device_quality.retained,
+        measured_events,
+        device_quality.write_attempts,
+        device_quality.drops,
+        device_quality.sequence_errors,
+        duplicate_launch_ids,
+        orphan_events,
+        zero_launch_events,
+        incomplete_launches,
+        duplicate_blocks,
+        geometry_mismatches,
+        token_grid_mismatches,
+        padding_blocks,
+        kind_mismatches,
+        kernel_slot_mismatches,
+        unmapped_blocks,
+        request_count_mismatches,
+        distinct_sms,
+        raw_device_first,
+        raw_device_last,
+        first_sequence,
+        last_sequence,
+        ownership,
+    );
+
+    if semantic.loss_markers != 0
+        || (require_packed && semantic.packed_steps != steps.len() as u64)
+        || launches_before_packed_layout != 0
+        || ambiguous_temporal_launches != 0
+        || device_quality.drops != 0
+        || device_quality.sequence_errors != 0
+        || duplicate_launch_ids != 0
+        || orphan_events != 0
+        || zero_launch_events != 0
+        || unassigned_launches != 0
+        || steps_without_launches != 0
+        || measured_launches == 0
+        || incomplete_launches != 0
+        || duplicate_blocks != 0
+        || geometry_mismatches != 0
+        || token_grid_mismatches != 0
+        || kind_mismatches != 0
+        || kernel_slot_mismatches != 0
+        || unmapped_blocks != 0
+        || request_count_mismatches != 0
+    {
+        return Err("Join B geometry gate failed".into());
+    }
+    Ok(())
+}
+fn step_for_timestamp(timestamp_ns: u64, steps: &[Step]) -> (Option<usize>, bool) {
+    let mut matches = steps.iter().enumerate().filter(|(_, step)| {
+        timestamp_ns >= step.begin.timestamp_ns && timestamp_ns <= step.end_timestamp_ns
+    });
+    let first = matches.next().map(|(index, _)| index);
+    let ambiguous = matches.next().is_some();
+    (if ambiguous { None } else { first }, ambiguous)
+}
+
+fn step_for_packed_timestamp(
+    timestamp_ns: u64,
+    steps: &[Step],
+    packed_timeline: &[(u64, usize)],
+) -> Option<usize> {
+    let position = packed_timeline.partition_point(|entry| entry.0 <= timestamp_ns);
+    if position == 0 {
+        return None;
+    }
+    let step_index = packed_timeline[position - 1].1;
+    (timestamp_ns <= steps[step_index].end_timestamp_ns).then_some(step_index)
+}
+
+fn load_launches(path: &Path) -> Result<Vec<Launch>, Box<dyn Error>> {
+    let file = File::open(path)?;
+    let bytes = file.metadata()?.len();
+    if bytes == 0 || bytes > MAX_LAUNCH_BYTES {
+        return Err(format!("invalid launch-table size: {bytes}").into());
+    }
+    let mut launches = Vec::new();
+    launches.try_reserve((bytes as usize / 128).saturating_add(1))?;
+    for (line_number, line) in BufReader::new(file).lines().enumerate() {
+        let line = line?;
+        if line.is_empty() || line.starts_with('#') || line.starts_with("launch_id\t") {
+            continue;
+        }
+        let fields: Vec<&str> = line.splitn(14, '\t').collect();
+        if fields.len() != 14 {
+            return Err(format!("invalid launch row {}", line_number + 1).into());
+        }
+        launches.try_reserve(1)?;
+        launches.push(Launch {
+            launch_id: fields[0].parse()?,
+            grid_id: fields[1].parse()?,
+            host_timestamp_ns: fields[2].parse()?,
+            context_slot: fields[3].parse()?,
+            kernel_slot: fields[4].parse()?,
+            stream: parse_hex(fields[5])?,
+            grid: [fields[6].parse()?, fields[7].parse()?, fields[8].parse()?],
+            block: [fields[9].parse()?, fields[10].parse()?, fields[11].parse()?],
+            expected_blocks: fields[12].parse()?,
+            function: fields[13].to_owned(),
+            step_index: None,
+        });
+    }
+    for launch in &launches {
+        if launch.function.is_empty()
+            || launch.grid_id == 0
+            || launch.context_slot as usize >= 4
+            || launch.block.contains(&0)
+            || launch.stream == u64::MAX
+        {
+            return Err("launch table contains an invalid identity or geometry".into());
+        }
+    }
+    Ok(launches)
+}
+
+fn parse_hex(value: &str) -> Result<u64, Box<dyn Error>> {
+    Ok(u64::from_str_radix(
+        value.strip_prefix("0x").unwrap_or(value),
+        16,
+    )?)
+}
+
+pub fn load_device_events(
+    path: &Path,
+) -> Result<(Vec<DeviceEvent>, DeviceQuality), Box<dyn Error>> {
+    let file = File::open(path)?;
+    let bytes = file.metadata()?.len();
+    if bytes == 0 || bytes > MAX_DEVICE_BYTES {
+        return Err(format!("invalid device trace size: {bytes}").into());
+    }
+    let mut input = BufReader::with_capacity(1024 * 1024, file);
+    let mut events = Vec::new();
+    events.try_reserve((bytes as usize / GO_SAN_EVENT_BYTES).saturating_add(1))?;
+    let mut quality = DeviceQuality::default();
+    let mut consumed = 0_u64;
+    while consumed < bytes {
+        let mut header = [0_u8; GO_SAN_HEADER_BYTES];
+        input.read_exact(&mut header)?;
+        consumed += GO_SAN_HEADER_BYTES as u64;
+        if &header[0..7] != b"GOSAN02" || header[7] != 0 {
+            return Err("invalid GOSAN02 header magic".into());
+        }
+        if le_u32(&header, 8) != GO_SAN_FORMAT_VERSION
+            || le_u32(&header, 20) as usize != GO_SAN_EVENT_BYTES
+        {
+            return Err("unsupported device event format".into());
+        }
+        let capacity = le_u64(&header, 24);
+        let retained = le_u64(&header, 32);
+        let write_attempts = le_u64(&header, 40);
+        let drops = le_u64(&header, 48);
+        if retained > capacity || retained > u32::MAX as u64 {
+            return Err("invalid retained device event count".into());
+        }
+        quality.headers += 1;
+        quality.retained += retained;
+        quality.write_attempts += write_attempts;
+        quality.drops += drops;
+        events.try_reserve(retained as usize)?;
+        for expected_sequence in 0..retained {
+            let mut raw = [0_u8; GO_SAN_EVENT_BYTES];
+            input.read_exact(&mut raw)?;
+            consumed += GO_SAN_EVENT_BYTES as u64;
+            let event = DeviceEvent {
+                device_timestamp_raw: le_u64(&raw, 0),
+                launch_id: le_u64(&raw, 24),
+                sequence: le_u32(&raw, 32),
+                kernel_slot: le_u32(&raw, 36),
+                block: [le_u32(&raw, 40), le_u32(&raw, 44), le_u32(&raw, 48)],
+                kind: le_u16(&raw, 58),
+                sm_id: le_u16(&raw, 62),
+            };
+            if u64::from(event.sequence) != expected_sequence {
+                quality.sequence_errors += 1;
+            }
+            events.push(event);
+        }
+    }
+    if consumed != bytes {
+        return Err("device trace has trailing or truncated bytes".into());
+    }
+    Ok((events, quality))
+}
+
+fn le_u16(bytes: &[u8], offset: usize) -> u16 {
+    u16::from_le_bytes(bytes[offset..offset + 2].try_into().unwrap())
+}
+
+fn le_u32(bytes: &[u8], offset: usize) -> u32 {
+    u32::from_le_bytes(bytes[offset..offset + 4].try_into().unwrap())
+}
+
+fn le_u64(bytes: &[u8], offset: usize) -> u64 {
+    u64::from_le_bytes(bytes[offset..offset + 8].try_into().unwrap())
+}
+
+pub fn load_semantic(path: &Path) -> Result<SemanticTrace, Box<dyn Error>> {
+    let file = File::open(path)?;
+    let bytes = file.metadata()?.len();
+    if bytes == 0 || bytes > MAX_SEMANTIC_BYTES || bytes % SEMANTIC_RECORD_BYTES as u64 != 0 {
+        return Err(format!("invalid semantic trace size: {bytes}").into());
+    }
+    let record_count = bytes as usize / SEMANTIC_RECORD_BYTES;
+    let mut input = BufReader::with_capacity(1024 * 1024, file);
+    let mut steps = Vec::new();
+    let mut slices = Vec::new();
+    let mut packed_slices = Vec::new();
+    steps.try_reserve(record_count / 5 + 1)?;
+    slices.try_reserve(record_count / 3 + 1)?;
+    packed_slices.try_reserve(record_count / 3 + 1)?;
+    let mut wire_records = Vec::new();
+    wire_records.try_reserve(record_count)?;
+
+    let mut raw = [0_u8; SEMANTIC_RECORD_BYTES];
+    let mut records = 0_u64;
+    let mut loss_markers = 0_u64;
+    let mut previous_sequence = None;
+    while input.read_exact(&mut raw).is_ok() {
+        let record = SemanticWireRecord::decode(&raw)
+            .map_err(|error| format!("invalid semantic record {records}: {error:?}"))?;
+        if previous_sequence.is_some_and(|previous| record.sequence != previous + 1) {
+            return Err("semantic sequence gap".into());
+        }
+        previous_sequence = Some(record.sequence);
+        records += 1;
+        if record.flags & SemanticRecordFlags::DROPPED_BEFORE != 0 {
+            loss_markers += 1;
+        }
+        wire_records.push(record);
+    }
+    wire_records.sort_unstable_by_key(|record| {
+        (
+            record.step_id,
+            semantic_record_order(record.kind),
+            record.sequence,
+        )
+    });
+
+    for record in wire_records {
+        match record.kind {
+            SemanticRecordKind::ENGINE_STEP_BEGIN => {
+                if steps
+                    .last()
+                    .is_some_and(|step: &Step| step.end_timestamp_ns == 0)
+                {
+                    return Err("overlapping semantic steps".into());
+                }
+                steps.try_reserve(1)?;
+                steps.push(Step {
+                    begin: record,
+                    slice_start: slices.len(),
+                    packed_slice_start: packed_slices.len(),
+                    ..Step::default()
+                });
+            }
+            SemanticRecordKind::STEP_REQUEST_SLICE => {
+                let step = steps.last_mut().ok_or("slice before step begin")?;
+                if step.begin.step_id != record.step_id
+                    || step.end_timestamp_ns != 0
+                    || step.packed_begin.is_some()
+                {
+                    return Err("scheduler slice outside its dense step prefix".into());
+                }
+                slices.try_reserve(1)?;
+                slices.push(record);
+                step.slice_count += 1;
+            }
+            SemanticRecordKind::PACKED_LAYOUT_BEGIN => {
+                let step = steps.last_mut().ok_or("packed layout before step begin")?;
+                if step.begin.step_id != record.step_id
+                    || step.end_timestamp_ns != 0
+                    || step.packed_begin.is_some()
+                    || record.timestamp_ns < step.begin.timestamp_ns
+                {
+                    return Err("duplicate or misplaced packed-layout begin".into());
+                }
+                step.packed_begin = Some(record);
+            }
+            SemanticRecordKind::PACKED_REQUEST_SLICE => {
+                let step = steps.last_mut().ok_or("packed slice before step begin")?;
+                let packed_begin = step
+                    .packed_begin
+                    .ok_or("packed slice before packed-layout begin")?;
+                if step.begin.step_id != record.step_id
+                    || step.end_timestamp_ns != 0
+                    || record.sequence_id != packed_begin.sequence_id
+                    || record.timestamp_ns != packed_begin.timestamp_ns
+                {
+                    return Err("packed slice outside its packed-layout batch".into());
+                }
+                packed_slices.try_reserve(1)?;
+                packed_slices.push(record);
+                step.packed_slice_count += 1;
+            }
+            SemanticRecordKind::PACKED_TOKEN_ROW
+            | SemanticRecordKind::ACCEPTED_OUTPUT_TOKEN => {}
+            SemanticRecordKind::ENGINE_STEP_END => {
+                let step = steps.last_mut().ok_or("step end before begin")?;
+                if step.begin.step_id != record.step_id || step.end_timestamp_ns != 0 {
+                    return Err("mismatched semantic step end".into());
+                }
+                let step_slices = &slices[step.slice_start..step.slice_start + step.slice_count];
+                let token_sum: u32 = step_slices.iter().map(|slice| slice.scheduled_tokens).sum();
+                if step.slice_count != step.begin.expected_slices as usize
+                    || token_sum != step.begin.scheduled_tokens
+                    || record.status != 0
+                    || record.timestamp_ns < step.begin.timestamp_ns
+                {
+                    return Err("semantic step integrity check failed".into());
+                }
+                if let Some(packed_begin) = step.packed_begin {
+                    if step.packed_slice_count != packed_begin.expected_slices as usize
+                        || packed_begin.scheduled_tokens != step.begin.scheduled_tokens
+                        || packed_begin.timestamp_ns > record.timestamp_ns
+                    {
+                        return Err("packed-layout header integrity check failed".into());
+                    }
+                } else if step.packed_slice_count != 0 {
+                    return Err("packed slices exist without a header".into());
+                }
+                step.end_timestamp_ns = record.timestamp_ns;
+            }
+            _ => unreachable!(),
+        }
+    }
+    if steps.iter().any(|step| step.end_timestamp_ns == 0) {
+        return Err("unterminated semantic step".into());
+    }
+
+    let mut in_flight_timeline = Vec::new();
+    in_flight_timeline.try_reserve(steps.len() * 2)?;
+    for step in &steps {
+        in_flight_timeline.push((step.begin.timestamp_ns, 1_i8));
+        in_flight_timeline.push((step.end_timestamp_ns, -1_i8));
+    }
+    in_flight_timeline.sort_unstable_by_key(|entry| (entry.0, entry.1));
+    let mut in_flight = 0_i64;
+    let mut max_steps_in_flight = 0_u64;
+    for (_, delta) in in_flight_timeline {
+        in_flight += i64::from(delta);
+        if in_flight < 0 {
+            return Err("invalid semantic in-flight timeline".into());
+        }
+        max_steps_in_flight = max_steps_in_flight.max(in_flight as u64);
+    }
+    if in_flight != 0 {
+        return Err("unterminated semantic in-flight timeline".into());
+    }
+
+    let mut owners = Vec::new();
+    owners.try_reserve(slices.len().max(packed_slices.len()))?;
+    let mut packed_steps = 0_u64;
+    let mut scheduler_order_mismatch_steps = 0_u64;
+    let mut scheduler_order_mismatch_slices = 0_u64;
+    let mut previous_generation = 0_u64;
+
+    for step in &mut steps {
+        step.owner_start = owners.len();
+        let scheduler = &slices[step.slice_start..step.slice_start + step.slice_count];
+        if let Some(packed_begin) = step.packed_begin {
+            packed_steps += 1;
+            if packed_begin.sequence_id <= previous_generation {
+                return Err("packing generation is not strictly increasing".into());
+            }
+            previous_generation = packed_begin.sequence_id;
+            let packed = &packed_slices
+                [step.packed_slice_start..step.packed_slice_start + step.packed_slice_count];
+            let mut expected_row_begin = 0_u32;
+            let mut positional_mismatches = 0_u64;
+
+            for (packed_index, packed_slice) in packed.iter().enumerate() {
+                if packed_slice.queue_depth as usize != packed_index
+                    || packed_slice.prefill_tokens != expected_row_begin
+                    || packed_slice.decode_tokens < packed_slice.prefill_tokens
+                    || packed_slice.decode_tokens - packed_slice.prefill_tokens
+                        != packed_slice.scheduled_tokens
+                    || packed_slice.sequence_id != packed_begin.sequence_id
+                {
+                    return Err("invalid authoritative packed row range".into());
+                }
+                expected_row_begin = packed_slice.decode_tokens;
+
+                let scheduler_matches = scheduler
+                    .iter()
+                    .filter(|slice| slice.request_id == packed_slice.request_id)
+                    .count();
+                let scheduler_slice = scheduler
+                    .iter()
+                    .find(|slice| slice.request_id == packed_slice.request_id)
+                    .ok_or("packed request is absent from scheduler membership")?;
+                if scheduler_matches != 1
+                    || scheduler_slice.scheduled_tokens != packed_slice.scheduled_tokens
+                    || scheduler_slice.phase != packed_slice.phase
+                {
+                    return Err(
+                        "packed request metadata disagrees with scheduler membership".into(),
+                    );
+                }
+                if scheduler.get(packed_index).is_none_or(|predicted| {
+                    predicted.request_id != packed_slice.request_id
+                        || predicted.scheduled_tokens != packed_slice.scheduled_tokens
+                }) {
+                    positional_mismatches += 1;
+                }
+
+                owners.try_reserve(1)?;
+                owners.push(OwnershipSlice {
+                    request_id: packed_slice.request_id,
+                    phase: packed_slice.phase,
+                    scheduled_tokens: packed_slice.scheduled_tokens,
+                    row_begin: packed_slice.prefill_tokens,
+                    row_end: packed_slice.decode_tokens,
+                    authoritative: true,
+                });
+            }
+            if expected_row_begin != step.begin.scheduled_tokens || packed.len() != scheduler.len()
+            {
+                return Err("packed rows do not exactly cover the scheduled batch".into());
+            }
+            if positional_mismatches != 0 {
+                scheduler_order_mismatch_steps += 1;
+                scheduler_order_mismatch_slices += positional_mismatches;
+                step.scheduler_order_mismatches = u32::try_from(positional_mismatches)?;
+            }
+        } else {
+            let mut row_begin = 0_u32;
+            for slice in scheduler {
+                let row_end = row_begin
+                    .checked_add(slice.scheduled_tokens)
+                    .ok_or("predicted row range overflow")?;
+                owners.try_reserve(1)?;
+                owners.push(OwnershipSlice {
+                    request_id: slice.request_id,
+                    phase: slice.phase,
+                    scheduled_tokens: slice.scheduled_tokens,
+                    row_begin,
+                    row_end,
+                    authoritative: false,
+                });
+                row_begin = row_end;
+            }
+        }
+        step.owner_count = owners.len() - step.owner_start;
+    }
+
+    Ok(SemanticTrace {
+        steps,
+        owners,
+        records,
+        loss_markers,
+        packed_steps,
+        scheduler_order_mismatch_steps,
+        scheduler_order_mismatch_slices,
+        max_steps_in_flight,
+    })
+}
+
+fn semantic_record_order(kind: u8) -> u8 {
+    match kind {
+        SemanticRecordKind::ENGINE_STEP_BEGIN => 0,
+        SemanticRecordKind::STEP_REQUEST_SLICE => 1,
+        SemanticRecordKind::PACKED_LAYOUT_BEGIN => 2,
+        SemanticRecordKind::PACKED_REQUEST_SLICE => 3,
+        SemanticRecordKind::PACKED_TOKEN_ROW => 4,
+        SemanticRecordKind::ENGINE_STEP_END => 5,
+        SemanticRecordKind::ACCEPTED_OUTPUT_TOKEN => 6,
+        _ => u8::MAX,
+    }
+}

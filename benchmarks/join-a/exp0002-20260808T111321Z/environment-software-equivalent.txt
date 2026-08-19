@@ -1,0 +1,8 @@
+2026-08-08T11:28:34Z
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+NVIDIA GB10, 580.173.02, 39, 0 %
+image_id=sha256:c5c116c732f24a640650e1e6e399112ef7c2b1e80c5fd7c13808b10a579646e6
+vllm=0.20.1+7124b12a.nv26.5.50625635
+torch=2.12.0a0+5aff3928d8.nv26.5.50603568
+triton=3.6.0+git5d72932fc5.nv26.3
+container_cuda=

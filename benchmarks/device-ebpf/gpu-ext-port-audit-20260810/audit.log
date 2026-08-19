@@ -1,0 +1,68 @@
+started_utc=2026-08-10T11:19:13Z
+section=running_modules
+nvidia 580.173.02
+nvidia_uvm 580.173.02
+nvidia_modeset 580.173.02
+nvidia_drm 580.173.02
+section=module_metadata
+filename:       /lib/modules/6.17.0-1029-nvidia/kernel/nvidia-580-open/nvidia.ko
+import_ns:      DMA_BUF
+alias:          char-major-195-*
+description:    NVIDIA core GPU kernel module
+version:        580.173.02
+supported:      external
+license:        Dual MIT/GPL
+firmware:       nvidia/580.173.02/gsp_tu10x.bin
+firmware:       nvidia/580.173.02/gsp_ga10x.bin
+softdep:        pre: ecdh_generic,ecdsa_generic
+srcversion:     52D2A92AC12213C37D43C90
+alias:          pci:v000010DEd*sv*sd*bc06sc80i00*
+alias:          pci:v000010DEd*sv*sd*bc03sc02i00*
+alias:          pci:v000010DEd*sv*sd*bc03sc00i00*
+alias:          of:N*T*Cnvidia,tegra264-displayC*
+alias:          of:N*T*Cnvidia,tegra264-display
+alias:          of:N*T*Cnvidia,tegra234-displayC*
+alias:          of:N*T*Cnvidia,tegra234-display
+depends:        
+name:           nvidia
+vermagic:       6.17.0-1029-nvidia SMP preempt mod_unload modversions aarch64
+sig_id:         PKCS#7
+signer:         Canonical Ltd. Kernel Module Signing
+sig_key:        E9:DF:13:0F:92:92:A9:B7
+sig_hashalgo:   sha512
+signature:      9C:01:65:92:41:A3:19:16:89:8C:8E:A9:5F:17:4E:81:29:2B:1D:E9:
+		6E:D9:B5:6C:86:78:50:37:23:53:94:96:AD:C5:F5:50:5B:A2:D7:60:
+		11:E1:95:DE:61:E0:0F:DD:0E:18:FF:96:6B:80:F9:5A:07:51:BD:59:
+		00:D0:84:13:27:B3:00:E6:F8:95:61:83:58:70:FB:FF:86:EB:32:BC:
+		42:0A:C6:2B:45:B8:A7:37:8F:1C:A2:0A:EE:72:36:10:B3:42:A2:92:
+filename:       /lib/modules/6.17.0-1029-nvidia/kernel/nvidia-580-open/nvidia-uvm.ko
+description:    NVIDIA Unified Virtual Memory kernel module
+version:        580.173.02
+supported:      external
+license:        Dual MIT/GPL
+srcversion:     37971AB80004FB045CB799F
+depends:        nvidia
+name:           nvidia_uvm
+vermagic:       6.17.0-1029-nvidia SMP preempt mod_unload modversions aarch64
+sig_id:         PKCS#7
+signer:         Canonical Ltd. Kernel Module Signing
+sig_key:        E9:DF:13:0F:92:92:A9:B7
+sig_hashalgo:   sha512
+signature:      0E:B6:2F:00:C9:5D:3D:D3:EE:C8:26:A1:07:16:0E:87:F1:15:AE:F9:
+		B2:30:28:1F:B9:9D:ED:CB:76:2E:9B:A6:F2:64:5A:15:13:86:FF:3C:
+		22:E3:48:BF:E6:BD:6A:69:C4:5E:29:E6:43:A2:80:BB:0E:92:72:D0:
+		82:5C:6A:54:58:21:45:B9:CE:4B:C3:BA:88:A6:81:00:07:D4:E4:C4:
+		A5:63:C1:17:79:62:04:F4:6A:1B:E7:9A:6E:55:6F:AE:90:D2:3C:1D:
+		AE:15:76:86:F4:A5:BE:7B:71:2F:45:2C:07:C6:D7:95:E6:1F:6D:4E:
+		F0:A9:79:06:B8:7E:FC:ED:1B:66:B4:81:EA:A6:0A:8B:45:1E:14:2A:
+		33:E6:68:07:0E:50:0A:46:14:97:B3:19:7E:F4:3F:1D:06:37:05:46:
+		22:D0:22:35:80:7A:82:33:9E:CB:DB:3F:C0:D3:A9:2D:A6:47:69:85:
+		65:14:86:B1:2D:6E:A8:DE:4D:D6:AC:E9:E0:79:77:D3:6E:D3:34:BC:
+		A2:11:8C:1C:6D:E3:D6:0C:E1:D4:05:27:C2:7D:C8:94:51:05:11:D4:
+		D9:CE:FC:CB:AE:6E:24:73:1B:57:4C:85:A4:17:24:1D:9F:DE:19:5D:
+		D6:FB:47:EC:D9:EB:A0:48:0B:FA:53:CD:C5:71:18:CE:3D:F2:BF:25:
+		6C:D1:81:97:11:E0:24:55:27:CA:3D:B2:21:C8:FA:3C:7A:F6:36:E9:
+		7A:22:AB:CA:03:CC:C7:8E:C9:E7:73:26:58:59:99:ED:64:7D:59:B1:
+		CC:4F:9B:C8:2C:11:4F:60:58:C8:AF:43:6C:53:D7:C1:56:80:02:83:
+		0F:E1:AC:D6:BD:6F:A0:68:88:57:24:36:8F:B7:80:04:33:D8:99:69:
+section=packages

@@ -1,0 +1,26 @@
+# UI
+
+`trace.html` is the primary causal view. It consumes a sealed
+`GPU_OBSERVER_TRACE_V2` bundle and draws an interactive node-edge graph:
+
+```text
+query and answer
+  -> rendered prompt and exact tokenizer tokens
+  -> EngineCore scheduler steps and request membership
+  -> GPUModelRunner authoritative packed token rows
+  -> CUDA submission and CUPTI actual GPU intervals
+  -> validated block ownership for reshape_and_cache_flash_kernel
+  -> optional replay-matched SASS instruction offsets
+```
+
+Request-colored edges cross when scheduler order differs from authoritative packed-row order. Selecting a step redraws the graph; selecting the GPU node cycles through its CUPTI kernels.
+
+Each relationship carries an evidence label. The UI never presents inferred or
+matched-replay data as same-run measurement, and it explicitly marks PTX unavailable for
+the shipped Qwen3-14B BF16 binaries.
+
+The inference hot path has no UI dependency. JSON is generated only by the cold Rust
+exporter after raw fixed records have been captured. See [USAGE.md](USAGE.md) for the
+fixture, measured timed run, and deep replay commands.
+
+The older `index.html` and `flow.html` views remain available for archived experiments.

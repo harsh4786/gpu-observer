@@ -1,0 +1,711 @@
+use core::mem::size_of;
+use core::ptr;
+use core::sync::atomic::{AtomicU64, Ordering};
+
+use crate::event::{
+    AcceptedOutputTokenData, EngineStepBeginData, EngineStepEndData, EventContext, EventFlags,
+    EventRecord, PackedLayoutBeginData, PackedRequestSliceData, PackedTokenRowData, RequestPhase,
+    SourceKind, StepRequestSliceData,
+};
+
+pub const SEMANTIC_RECORD_MAGIC: u32 = u32::from_le_bytes(*b"GPOS");
+pub const SEMANTIC_RING_MAGIC: u32 = u32::from_le_bytes(*b"GPOR");
+pub const SEMANTIC_ABI_VERSION_V1: u16 = 1;
+pub const SEMANTIC_ABI_VERSION_V2: u16 = 2;
+pub const SEMANTIC_ABI_VERSION: u16 = 3;
+pub const SEMANTIC_RECORD_BYTES: usize = 96;
+pub const SEMANTIC_RING_HEADER_BYTES: usize = 256;
+pub const CLOCK_MONOTONIC_ID: u16 = 1;
+
+pub struct SemanticRecordKind;
+
+impl SemanticRecordKind {
+    pub const ENGINE_STEP_BEGIN: u8 = 1;
+    pub const STEP_REQUEST_SLICE: u8 = 2;
+    pub const ENGINE_STEP_END: u8 = 3;
+    pub const PACKED_TOKEN_ROW: u8 = 6;
+    pub const ACCEPTED_OUTPUT_TOKEN: u8 = 7;
+    pub const PACKED_LAYOUT_BEGIN: u8 = 4;
+    pub const PACKED_REQUEST_SLICE: u8 = 5;
+
+    #[inline]
+    pub const fn is_valid(kind: u8) -> bool {
+        matches!(
+            kind,
+            Self::ENGINE_STEP_BEGIN
+                | Self::PACKED_TOKEN_ROW
+                | Self::ACCEPTED_OUTPUT_TOKEN
+                | Self::STEP_REQUEST_SLICE
+                | Self::ENGINE_STEP_END
+                | Self::PACKED_LAYOUT_BEGIN
+                | Self::PACKED_REQUEST_SLICE
+        )
+    }
+}
+
+pub struct SemanticRecordFlags;
+
+impl SemanticRecordFlags {
+    pub const DROPPED_BEFORE: u32 = 1 << 0;
+}
+
+#[repr(C, align(8))]
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+pub struct SemanticWireRecord {
+    pub timestamp_ns: u64,
+    pub sequence: u64,
+    pub step_id: u64,
+    pub request_id: u64,
+    pub sequence_id: u64,
+    pub scheduled_tokens: u32,
+    pub prefill_tokens: u32,
+    pub decode_tokens: u32,
+    pub queue_depth: u32,
+    pub active_requests: u32,
+    pub expected_slices: u32,
+    pub pid: u32,
+    pub tid: u32,
+    pub kv_cache_usage_permyriad: u16,
+    pub service_class_id: u16,
+    pub kind: u8,
+    pub phase: u8,
+    pub status: u8,
+    pub reserved0: u8,
+    pub flags: u32,
+    pub magic: u32,
+    pub abi_version: u16,
+    pub record_size: u16,
+    pub reserved1: u32,
+}
+
+impl SemanticWireRecord {
+    #[allow(clippy::too_many_arguments)]
+    pub const fn step_begin(
+        timestamp_ns: u64,
+        sequence: u64,
+        step_id: u64,
+        scheduled_tokens: u32,
+        prefill_tokens: u32,
+        decode_tokens: u32,
+        queue_depth: u32,
+        active_requests: u32,
+        expected_slices: u32,
+        kv_cache_usage_permyriad: u16,
+        pid: u32,
+        tid: u32,
+        flags: u32,
+    ) -> Self {
+        Self {
+            timestamp_ns,
+            sequence,
+            step_id,
+            request_id: 0,
+            sequence_id: 0,
+            scheduled_tokens,
+            prefill_tokens,
+            decode_tokens,
+            queue_depth,
+            active_requests,
+            expected_slices,
+            pid,
+            tid,
+            kv_cache_usage_permyriad,
+            service_class_id: 0,
+            kind: SemanticRecordKind::ENGINE_STEP_BEGIN,
+            phase: 0,
+            status: 0,
+            reserved0: 0,
+            flags,
+            magic: SEMANTIC_RECORD_MAGIC,
+            abi_version: SEMANTIC_ABI_VERSION,
+            record_size: SEMANTIC_RECORD_BYTES as u16,
+            reserved1: 0,
+        }
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub const fn request_slice(
+        timestamp_ns: u64,
+        sequence: u64,
+        step_id: u64,
+        request_id: u64,
+        sequence_id: u64,
+        scheduled_tokens: u32,
+        service_class_id: u16,
+        phase: u8,
+        pid: u32,
+        tid: u32,
+    ) -> Self {
+        Self {
+            timestamp_ns,
+            sequence,
+            step_id,
+            request_id,
+            sequence_id,
+            scheduled_tokens,
+            prefill_tokens: 0,
+            decode_tokens: 0,
+            queue_depth: 0,
+            active_requests: 0,
+            expected_slices: 0,
+            pid,
+            tid,
+            kv_cache_usage_permyriad: 0,
+            service_class_id,
+            kind: SemanticRecordKind::STEP_REQUEST_SLICE,
+            phase,
+            status: 0,
+            reserved0: 0,
+            flags: 0,
+            magic: SEMANTIC_RECORD_MAGIC,
+            abi_version: SEMANTIC_ABI_VERSION,
+            record_size: SEMANTIC_RECORD_BYTES as u16,
+            reserved1: 0,
+        }
+    }
+
+    pub const fn step_end(
+        timestamp_ns: u64,
+        sequence: u64,
+        step_id: u64,
+        status: u8,
+        pid: u32,
+        tid: u32,
+        flags: u32,
+    ) -> Self {
+        Self {
+            timestamp_ns,
+            sequence,
+            step_id,
+            request_id: 0,
+            sequence_id: 0,
+            scheduled_tokens: 0,
+            prefill_tokens: 0,
+            decode_tokens: 0,
+            queue_depth: 0,
+            active_requests: 0,
+            expected_slices: 0,
+            pid,
+            tid,
+            kv_cache_usage_permyriad: 0,
+            service_class_id: 0,
+            kind: SemanticRecordKind::ENGINE_STEP_END,
+            phase: 0,
+            status,
+            reserved0: 0,
+            flags,
+            magic: SEMANTIC_RECORD_MAGIC,
+            abi_version: SEMANTIC_ABI_VERSION,
+            record_size: SEMANTIC_RECORD_BYTES as u16,
+            reserved1: 0,
+        }
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub const fn packed_layout_begin(
+        timestamp_ns: u64,
+        sequence: u64,
+        step_id: u64,
+        packing_generation: u64,
+        total_tokens: u32,
+        expected_slices: u32,
+        pid: u32,
+        tid: u32,
+        flags: u32,
+    ) -> Self {
+        Self {
+            timestamp_ns,
+            sequence,
+            step_id,
+            request_id: 0,
+            sequence_id: packing_generation,
+            scheduled_tokens: total_tokens,
+            prefill_tokens: 0,
+            decode_tokens: 0,
+            queue_depth: 0,
+            active_requests: 0,
+            expected_slices,
+            pid,
+            tid,
+            kv_cache_usage_permyriad: 0,
+            service_class_id: 0,
+            kind: SemanticRecordKind::PACKED_LAYOUT_BEGIN,
+            phase: 0,
+            status: 0,
+            reserved0: 0,
+            flags,
+            magic: SEMANTIC_RECORD_MAGIC,
+            abi_version: SEMANTIC_ABI_VERSION,
+            record_size: SEMANTIC_RECORD_BYTES as u16,
+            reserved1: 0,
+        }
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub const fn packed_request_slice(
+        timestamp_ns: u64,
+        sequence: u64,
+        step_id: u64,
+        request_id: u64,
+        packing_generation: u64,
+        row_begin: u32,
+        row_end: u32,
+        scheduled_tokens: u32,
+        packed_index: u32,
+        phase: u8,
+        pid: u32,
+        tid: u32,
+    ) -> Self {
+        Self {
+            timestamp_ns,
+            sequence,
+            step_id,
+            request_id,
+            sequence_id: packing_generation,
+            scheduled_tokens,
+            prefill_tokens: row_begin,
+            decode_tokens: row_end,
+            queue_depth: packed_index,
+            active_requests: 0,
+            expected_slices: 0,
+            pid,
+            tid,
+            kv_cache_usage_permyriad: 0,
+            service_class_id: 0,
+            kind: SemanticRecordKind::PACKED_REQUEST_SLICE,
+            phase,
+            status: 0,
+            reserved0: 0,
+            flags: 0,
+            magic: SEMANTIC_RECORD_MAGIC,
+            abi_version: SEMANTIC_ABI_VERSION,
+            record_size: SEMANTIC_RECORD_BYTES as u16,
+            reserved1: 0,
+        }
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub const fn packed_token_row(
+        timestamp_ns: u64,
+        sequence: u64,
+        step_id: u64,
+        request_id: u64,
+        packing_generation: u64,
+        packed_row: u32,
+        sequence_position: u32,
+        token_id: u32,
+        phase: u8,
+        pid: u32,
+        tid: u32,
+        flags: u32,
+    ) -> Self {
+        Self {
+            timestamp_ns,
+            sequence,
+            step_id,
+            request_id,
+            sequence_id: packing_generation,
+            scheduled_tokens: token_id,
+            prefill_tokens: packed_row,
+            decode_tokens: sequence_position,
+            queue_depth: 0,
+            active_requests: 0,
+            expected_slices: 0,
+            pid,
+            tid,
+            kv_cache_usage_permyriad: 0,
+            service_class_id: 0,
+            kind: SemanticRecordKind::PACKED_TOKEN_ROW,
+            phase,
+            status: 0,
+            reserved0: 0,
+            flags,
+            magic: SEMANTIC_RECORD_MAGIC,
+            abi_version: SEMANTIC_ABI_VERSION,
+            record_size: SEMANTIC_RECORD_BYTES as u16,
+            reserved1: 0,
+        }
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub const fn accepted_output_token(
+        timestamp_ns: u64,
+        sequence: u64,
+        step_id: u64,
+        request_id: u64,
+        output_position: u32,
+        token_id: u32,
+        pid: u32,
+        tid: u32,
+        flags: u32,
+    ) -> Self {
+        Self {
+            timestamp_ns,
+            sequence,
+            step_id,
+            request_id,
+            sequence_id: output_position as u64,
+            scheduled_tokens: token_id,
+            prefill_tokens: 0,
+            decode_tokens: 0,
+            queue_depth: 0,
+            active_requests: 0,
+            expected_slices: 0,
+            pid,
+            tid,
+            kv_cache_usage_permyriad: 0,
+            service_class_id: 0,
+            kind: SemanticRecordKind::ACCEPTED_OUTPUT_TOKEN,
+            phase: 0,
+            status: 0,
+            reserved0: 0,
+            flags: 0,
+            magic: SEMANTIC_RECORD_MAGIC,
+            abi_version: SEMANTIC_ABI_VERSION,
+            record_size: SEMANTIC_RECORD_BYTES as u16,
+            reserved1: 0,
+        }
+    }
+    pub fn decode(bytes: &[u8]) -> Result<Self, SemanticDecodeError> {
+        if bytes.len() != SEMANTIC_RECORD_BYTES {
+            return Err(SemanticDecodeError::Length);
+        }
+        let record = unsafe { ptr::read_unaligned(bytes.as_ptr().cast::<Self>()) };
+        record.validate()?;
+        Ok(record)
+    }
+
+    pub fn validate(&self) -> Result<(), SemanticDecodeError> {
+        if self.magic != SEMANTIC_RECORD_MAGIC {
+            return Err(SemanticDecodeError::Magic);
+        }
+        if self.abi_version != SEMANTIC_ABI_VERSION
+            && self.abi_version != SEMANTIC_ABI_VERSION_V2
+            && self.abi_version != SEMANTIC_ABI_VERSION_V1
+        {
+            return Err(SemanticDecodeError::Version);
+        }
+        if usize::from(self.record_size) != SEMANTIC_RECORD_BYTES {
+            return Err(SemanticDecodeError::RecordSize);
+        }
+        if !SemanticRecordKind::is_valid(self.kind) {
+            return Err(SemanticDecodeError::Kind);
+        }
+        if self.abi_version == SEMANTIC_ABI_VERSION_V1
+            && matches!(
+                self.kind,
+                SemanticRecordKind::PACKED_LAYOUT_BEGIN
+                    | SemanticRecordKind::PACKED_REQUEST_SLICE
+                    | SemanticRecordKind::PACKED_TOKEN_ROW
+                    | SemanticRecordKind::ACCEPTED_OUTPUT_TOKEN
+            )
+        if self.abi_version == SEMANTIC_ABI_VERSION_V2
+            && matches!(
+                self.kind,
+                SemanticRecordKind::PACKED_TOKEN_ROW
+                    | SemanticRecordKind::ACCEPTED_OUTPUT_TOKEN
+            )
+        {
+            return Err(SemanticDecodeError::Version);
+        }
+
+        {
+            return Err(SemanticDecodeError::Version);
+        }
+        if matches!(
+            self.kind,
+            SemanticRecordKind::STEP_REQUEST_SLICE
+                | SemanticRecordKind::PACKED_REQUEST_SLICE
+                | SemanticRecordKind::PACKED_TOKEN_ROW
+        ) && self.phase != RequestPhase::Prefill as u8
+            && self.phase != RequestPhase::Decode as u8
+        {
+            return Err(SemanticDecodeError::Phase);
+        }
+        if self.kind == SemanticRecordKind::PACKED_REQUEST_SLICE
+            && (self.decode_tokens < self.prefill_tokens
+                || self.decode_tokens - self.prefill_tokens != self.scheduled_tokens)
+        {
+            return Err(SemanticDecodeError::PackedRange);
+        }
+        Ok(())
+    }
+
+    pub fn to_event_record(&self) -> Result<EventRecord, SemanticDecodeError> {
+        self.validate()?;
+        let mut flags = EventFlags::TIMESTAMP_NORMALIZED;
+        if self.flags & SemanticRecordFlags::DROPPED_BEFORE != 0 {
+            flags |= EventFlags::DROPPED_BEFORE;
+        }
+        let context = EventContext {
+            source_timestamp_ns: self.timestamp_ns,
+            timestamp_ns: self.timestamp_ns,
+            sequence: self.sequence,
+            pid: self.pid,
+            tid: self.tid,
+            clock_id: CLOCK_MONOTONIC_ID,
+            flags,
+            source: SourceKind::Vllm,
+        };
+        match self.kind {
+            SemanticRecordKind::ENGINE_STEP_BEGIN => Ok(EventRecord::engine_step_begin(
+                context,
+                EngineStepBeginData {
+                    step_id: self.step_id,
+                    scheduled_tokens: self.scheduled_tokens,
+                    prefill_tokens: self.prefill_tokens,
+                    decode_tokens: self.decode_tokens,
+                    queue_depth: self.queue_depth,
+                    active_requests: self.active_requests,
+                    expected_slices: self.expected_slices,
+                    kv_cache_usage_permyriad: self.kv_cache_usage_permyriad,
+                    reserved: 0,
+                },
+            )),
+            SemanticRecordKind::STEP_REQUEST_SLICE => {
+                let phase = if self.phase == RequestPhase::Prefill as u8 {
+                    RequestPhase::Prefill
+                } else {
+                    RequestPhase::Decode
+                };
+                Ok(EventRecord::step_request_slice(
+                    context,
+                    StepRequestSliceData {
+                        step_id: self.step_id,
+                        request_id: self.request_id,
+                        sequence_id: self.sequence_id,
+                        scheduled_tokens: self.scheduled_tokens,
+                        service_class_id: self.service_class_id,
+                        phase,
+                        reserved: 0,
+                    },
+                ))
+            }
+            SemanticRecordKind::ENGINE_STEP_END => Ok(EventRecord::engine_step_end(
+                context,
+                EngineStepEndData {
+                    step_id: self.step_id,
+                    status: self.status,
+                    reserved: [0; 7],
+                },
+            )),
+            SemanticRecordKind::PACKED_LAYOUT_BEGIN => Ok(EventRecord::packed_layout_begin(
+                context,
+                PackedLayoutBeginData {
+                    step_id: self.step_id,
+                    packing_generation: self.sequence_id,
+                    total_tokens: self.scheduled_tokens,
+                    expected_slices: self.expected_slices,
+                },
+            )),
+            SemanticRecordKind::PACKED_REQUEST_SLICE => {
+                let phase = if self.phase == RequestPhase::Prefill as u8 {
+                    RequestPhase::Prefill
+                } else {
+                    RequestPhase::Decode
+                };
+                Ok(EventRecord::packed_request_slice(
+                    context,
+                    PackedRequestSliceData {
+                        step_id: self.step_id,
+                        request_id: self.request_id,
+                        packing_generation: self.sequence_id,
+                        row_begin: self.prefill_tokens,
+                        row_end: self.decode_tokens,
+                        scheduled_tokens: self.scheduled_tokens,
+                        packed_index: self.queue_depth,
+                        phase,
+                        reserved: [0; 7],
+                    },
+                ))
+            }
+            SemanticRecordKind::PACKED_TOKEN_ROW => {
+                let phase = if self.phase == RequestPhase::Prefill as u8 {
+                    RequestPhase::Prefill
+                } else {
+                    RequestPhase::Decode
+                };
+                Ok(EventRecord::packed_token_row(
+                    context,
+                    PackedTokenRowData {
+                        step_id: self.step_id,
+                        request_id: self.request_id,
+                        packing_generation: self.sequence_id,
+                        packed_row: self.prefill_tokens,
+                        sequence_position: self.decode_tokens,
+                        token_id: self.scheduled_tokens,
+                        phase,
+                        reserved: [0; 3],
+                    },
+                ))
+            }
+            SemanticRecordKind::ACCEPTED_OUTPUT_TOKEN => {
+                let output_position = u32::try_from(self.sequence_id)
+                    .map_err(|_| SemanticDecodeError::TokenPosition)?;
+                Ok(EventRecord::accepted_output_token(
+                    context,
+                    AcceptedOutputTokenData {
+                        step_id: self.step_id,
+                        request_id: self.request_id,
+                        output_position,
+                        token_id: self.scheduled_tokens,
+                    },
+                ))
+            }
+            _ => Err(SemanticDecodeError::Kind),
+        }
+    }
+
+    pub fn as_bytes(&self) -> &[u8] {
+        unsafe {
+            core::slice::from_raw_parts(ptr::from_ref(self).cast::<u8>(), SEMANTIC_RECORD_BYTES)
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum SemanticDecodeError {
+    Length,
+    Magic,
+    Version,
+    RecordSize,
+    Kind,
+    TokenPosition,
+    Phase,
+    PackedRange,
+}
+
+#[repr(C, align(64))]
+pub struct SemanticRingHeader {
+    pub magic: u32,
+    pub abi_version: u16,
+    pub record_size: u16,
+    pub capacity: u32,
+    pub header_size: u16,
+    pub feature_flags: u16,
+    metadata_padding: [u8; 48],
+    pub head: AtomicU64,
+    head_padding: [u8; 56],
+    pub tail: AtomicU64,
+    tail_padding: [u8; 56],
+    pub dropped: AtomicU64,
+    dropped_padding: [u8; 56],
+}
+
+impl SemanticRingHeader {
+    pub const fn new(capacity: u32) -> Self {
+        Self {
+            magic: SEMANTIC_RING_MAGIC,
+            abi_version: SEMANTIC_ABI_VERSION,
+            record_size: SEMANTIC_RECORD_BYTES as u16,
+            capacity,
+            header_size: SEMANTIC_RING_HEADER_BYTES as u16,
+            feature_flags: 0,
+            metadata_padding: [0; 48],
+            head: AtomicU64::new(0),
+            head_padding: [0; 56],
+            tail: AtomicU64::new(0),
+            tail_padding: [0; 56],
+            dropped: AtomicU64::new(0),
+            dropped_padding: [0; 56],
+        }
+    }
+
+    pub fn validate(&self) -> Result<(), SemanticDecodeError> {
+        if self.magic != SEMANTIC_RING_MAGIC {
+            return Err(SemanticDecodeError::Magic);
+        }
+        if self.abi_version != SEMANTIC_ABI_VERSION {
+            return Err(SemanticDecodeError::Version);
+        }
+        if usize::from(self.record_size) != SEMANTIC_RECORD_BYTES
+            || usize::from(self.header_size) != SEMANTIC_RING_HEADER_BYTES
+        {
+            return Err(SemanticDecodeError::RecordSize);
+        }
+        if self.capacity < 2 || !self.capacity.is_power_of_two() {
+            return Err(SemanticDecodeError::Length);
+        }
+        Ok(())
+    }
+
+    #[inline]
+    pub fn load_head(&self) -> u64 {
+        self.head.load(Ordering::Acquire)
+    }
+
+    #[inline]
+    pub fn publish_head(&self, value: u64) {
+        self.head.store(value, Ordering::Release);
+    }
+
+    #[inline]
+    pub fn load_tail(&self) -> u64 {
+        self.tail.load(Ordering::Acquire)
+    }
+
+    #[inline]
+    pub fn publish_tail(&self, value: u64) {
+        self.tail.store(value, Ordering::Release);
+    }
+}
+
+const _: () = assert!(size_of::<SemanticWireRecord>() == SEMANTIC_RECORD_BYTES);
+const _: () = assert!(size_of::<SemanticRingHeader>() == SEMANTIC_RING_HEADER_BYTES);
+const _: () = assert!(core::mem::align_of::<SemanticRingHeader>() == 64);
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn semantic_record_layout_and_conversion_are_fixed() {
+        let record =
+            SemanticWireRecord::step_begin(100, 7, 172, 258, 256, 2, 18, 3, 3, 7_500, 42, 43, 0);
+        assert_eq!(size_of::<SemanticWireRecord>(), SEMANTIC_RECORD_BYTES);
+        let decoded = SemanticWireRecord::decode(record.as_bytes()).unwrap();
+        let event = decoded.to_event_record().unwrap();
+        assert_eq!(event.as_engine_step_begin().unwrap().step_id, 172);
+    }
+
+    #[test]
+    fn shared_header_separates_atomic_cursors_by_cache_line() {
+        let header = SemanticRingHeader::new(1024);
+        assert_eq!(size_of::<SemanticRingHeader>(), 256);
+        assert_eq!(header.load_head(), 0);
+        assert_eq!(header.load_tail(), 0);
+        assert!(header.validate().is_ok());
+    }
+
+    #[test]
+    fn decoder_rejects_invalid_phase_without_constructing_enum() {
+        let mut record = SemanticWireRecord::request_slice(100, 8, 172, 12, 0, 1, 0, 99, 42, 43);
+        assert_eq!(record.validate(), Err(SemanticDecodeError::Phase));
+        record.phase = RequestPhase::Decode as u8;
+        assert!(record.validate().is_ok());
+    }
+
+    #[test]
+    fn decoder_reads_v1_base_records_but_rejects_v1_packed_records() {
+        let mut base = SemanticWireRecord::step_begin(100, 7, 172, 1, 0, 1, 0, 1, 1, 0, 42, 43, 0);
+        base.abi_version = SEMANTIC_ABI_VERSION_V1;
+        assert!(base.validate().is_ok());
+
+        let mut packed = SemanticWireRecord::packed_request_slice(
+            101,
+            8,
+            172,
+            12,
+            1,
+            0,
+            1,
+            1,
+            0,
+            RequestPhase::Decode as u8,
+            42,
+            43,
+        );
+        packed.abi_version = SEMANTIC_ABI_VERSION_V1;
+        assert_eq!(packed.validate(), Err(SemanticDecodeError::Version));
+    }
+}

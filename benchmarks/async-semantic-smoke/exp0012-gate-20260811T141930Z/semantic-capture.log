@@ -1,0 +1,13 @@
+begin ts=550142246872059 seq=0 step=1 scheduled=69 prefill=69 decode=0 queue=0 active=3 slices=3 kv_permyriad=12 flags=0x0
+slice ts=550142246872059 seq=1 step=1 request=0x01d3813acde08a7d phase=1 tokens=23
+slice ts=550142246872059 seq=2 step=1 request=0x01bce571779fe6f5 phase=1 tokens=23
+slice ts=550142246872059 seq=3 step=1 request=0x16e746eca12f2160 phase=1 tokens=23
+begin ts=550142346513808 seq=4 step=2 scheduled=26 prefill=23 decode=3 queue=0 active=4 slices=4 kv_permyriad=17 flags=0x0
+slice ts=550142346513808 seq=5 step=2 request=0x01d3813acde08a7d phase=2 tokens=1
+slice ts=550142346513808 seq=6 step=2 request=0x01bce571779fe6f5 phase=2 tokens=1
+slice ts=550142346513808 seq=7 step=2 request=0x16e746eca12f2160 phase=2 tokens=1
+slice ts=550142346513808 seq=8 step=2 request=0x8500a2d97d9846c2 phase=1 tokens=23
+end ts=550142353881706 seq=9 step=1 status=0 flags=0x0
+begin ts=550142354173432 seq=10 step=3 scheduled=4 prefill=0 decode=4 queue=0 active=4 slices=4 kv_permyriad=17 flags=0x0
+slice ts=550142354173432 seq=11 step=3 request=0x01d3813acde08a7d phase=2 tokens=1
+summary records=194 begins=33 slices=128 ends=33 producer_dropped=0

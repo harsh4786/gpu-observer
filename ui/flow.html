@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>GPU Observer — Request Flow Graph</title>
+    <link rel="stylesheet" href="./flow.css">
+  </head>
+  <body>
+    <main class="flow-app">
+      <header>
+        <div class="brand">
+          <div class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div>
+            <span class="eyebrow">GPU Observer · EXP-0020</span>
+            <h1>Request Flow Graph</h1>
+          </div>
+        </div>
+        <div class="run-facts">
+          <span><b>Qwen3-14B</b> model</span>
+          <span><b>CUDA Graph</b> execution</span>
+          <span><b>PASS</b> evidence gate</span>
+        </div>
+      </header>
+
+      <section class="control-bar">
+        <div>
+          <label for="request-select">Follow request</label>
+          <select id="request-select"></select>
+        </div>
+        <div>
+          <label for="step-select">Engine step</label>
+          <select id="step-select"></select>
+        </div>
+        <div class="read-direction">
+          <span>Read the graph</span>
+          <strong>left → right</strong>
+        </div>
+        <div class="legend">
+          <span><i class="legend-line solid"></i>Measured</span>
+          <span><i class="legend-line dashed"></i>Reconstructed</span>
+          <span><i class="legend-line dim"></i>Colocated request</span>
+        </div>
+      </section>
+
+      <section class="story-card">
+        <div class="story-index">01</div>
+        <div>
+          <span class="eyebrow">The result in one sentence</span>
+          <h2 id="story-title">Loading the trace…</h2>
+          <p id="story-detail"></p>
+        </div>
+        <div class="story-metrics" id="story-metrics"></div>
+      </section>
+
+      <section class="graph-card">
+        <div class="stage-headings" aria-hidden="true">
+          <div><span>1</span><strong>Scheduler decision</strong><small>Python EngineCore</small></div>
+          <div><span>2</span><strong>Packed tensor</strong><small>GPUModelRunner</small></div>
+          <div><span>3</span><strong>Shared GPU work</strong><small>CUPTI-timed</small></div>
+          <div><span>4</span><strong>Request ownership</strong><small>Geometry reconstruction</small></div>
+        </div>
+        <div class="graph-scroll">
+          <svg id="flow-graph" viewBox="0 0 1200 560" role="img" aria-labelledby="graph-title graph-description">
+            <title id="graph-title">Request to GPU execution flow</title>
+            <desc id="graph-description">Requests selected by the vLLM scheduler cross into authoritative packed tensor rows, pass through shared cache kernels, and map to request-owned CUDA blocks.</desc>
+          </svg>
+        </div>
+      </section>
+
+      <section class="formula-card">
+        <div>
+          <span class="eyebrow">Join B ownership rule</span>
+          <div class="formula" id="ownership-formula"></div>
+        </div>
+        <p id="formula-explanation"></p>
+      </section>
+
+      <section class="evidence-row">
+        <article>
+          <span class="evidence-dot measured"></span>
+          <div><strong>Measured</strong><p>Scheduler membership, packed row ranges, kernel start/end, stream, graph and launch geometry.</p></div>
+        </article>
+        <article>
+          <span class="evidence-dot inferred"></span>
+          <div><strong>Reconstructed</strong><p>Which grid.x block belongs to each request, using the authoritative packed row range.</p></div>
+        </article>
+        <article>
+          <span class="evidence-dot absent"></span>
+          <div><strong>Not claimed</strong><p>This timed run did not observe same-run SASS block callbacks or every non-cache kernel family.</p></div>
+        </article>
+      </section>
+    </main>
+    <script type="module" src="./flow.js"></script>
+  </body>
+</html>

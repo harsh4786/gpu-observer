@@ -1,0 +1,56 @@
+schema_version = 1
+experiment_id = "EXP-0004"
+title = "CUPTI 13.2.1 clock calibration and injection compatibility gate"
+status = "complete"
+started_utc = "2026-08-08T15:00:12Z"
+completed_utc = "2026-08-08T17:21:00Z"
+artifact_root = "benchmarks/cupti/calibration-20260808T150012Z"
+
+[hypothesis]
+original = "The exact CUDA 13.2.1 CUPTI runtime on DGX Spark can be injected into an unmodified CUDA process and its clock can be mapped to CLOCK_MONOTONIC with sub-microsecond uncertainty."
+outcome = "supported_for_standalone_cuda_workload"
+
+[hardware]
+system = "NVIDIA DGX Spark"
+gpu = "NVIDIA GB10"
+architecture = "sm_121"
+host_architecture = "aarch64"
+
+[software]
+application_image = "nvcr.io/nvidia/vllm:26.05-py3"
+developer_image = "nvcr.io/nvidia/cuda:13.2.1-devel-ubuntu24.04"
+cupti_header_api = 130201
+cupti_runtime_api = 130201
+nsight_systems = "2025.3.2"
+
+[clock_calibration]
+samples = 64
+warmup_samples = 8
+best_uncertainty_ns_vllm_runtime = 8
+median_uncertainty_ns_vllm_runtime = 24
+offset_span_ns_vllm_runtime = 16
+best_offset_ns_vllm_runtime = -1785907916133280904
+best_uncertainty_ns_developer_runtime = 24
+median_uncertainty_ns_developer_runtime = 24
+offset_span_ns_developer_runtime = 16
+best_offset_ns_developer_runtime = -1785907916133280904
+
+[injection_gate]
+workload = "three-launch vector add"
+runtime_launch_records = 3
+concurrent_kernel_records = 3
+runtime_correlation_ids = [126, 128, 130]
+kernel_correlation_ids = [126, 128, 130]
+correlation_match = true
+kernel_durations_ns = [1344, 928, 896]
+
+[quality]
+exact_header_runtime_api_match = true
+raw_output_preserved = true
+source_and_binary_hashes_present = true
+checksums_present = true
+
+[limitations]
+scope = "standalone CUDA workload, not vLLM"
+injection_library = "NVIDIA CUPTI sample; not the bounded production collector"
+drift = "short-run offset stability measured; long-duration affine drift remains to be characterized"

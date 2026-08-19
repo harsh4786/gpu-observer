@@ -1,0 +1,1 @@
+header_api=130201 runtime_api=130201 samples=64 best_offset_ns=-1785907916133280904 best_uncertainty_ns=8 median_uncertainty_ns=24 offset_span_ns=16

@@ -1,0 +1,15 @@
+/target/
+target/
+*.raw.jsonl
+*.report.json
+benchmarks/results/
+benchmarks/live-demo/
+.cache/
+workload/datasets/
+*.activities.tsv
+*.events.bin
+*.ring
+*.safetensors
+*.bin
+third_party/aiperf/
+benchmarks/mixed-prefill/*/preflight/aiperf/inputs.json

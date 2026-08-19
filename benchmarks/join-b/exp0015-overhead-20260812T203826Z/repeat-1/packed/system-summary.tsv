@@ -1,0 +1,12 @@
+metric	value	unit
+samples	68	count
+host_cpu_mean	6.47619	percent
+engine_cpu_mean	95.0559	percent_of_one_core
+engine_rss_max	2197828	KiB
+system_memory_used_mean	4.98049e+07	KiB
+system_memory_used_max	49888244	KiB
+gpu_util_mean	87.4853	percent
+gpu_util_max	96	percent
+gpu_temp_max	64	C
+gpu_power_mean	29.8207	W
+gpu_power_max	49.76	W

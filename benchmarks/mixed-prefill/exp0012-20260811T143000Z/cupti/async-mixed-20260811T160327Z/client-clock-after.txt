@@ -1,0 +1,1 @@
+monotonic_ns=556501551509305 realtime_ns=1786464417684790457 uncertainty_ns=800

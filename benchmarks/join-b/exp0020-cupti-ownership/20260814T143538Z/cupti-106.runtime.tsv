@@ -1,0 +1,2 @@
+# format=GOCUPTI_RUNTIME01 observer=cupti-runtime-api activity_clock=CUPTI_TIMESTAMP_NS max_records=65536
+start_ns	end_ns	process	thread	correlation	cbid	return_value

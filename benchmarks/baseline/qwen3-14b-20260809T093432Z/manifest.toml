@@ -1,0 +1,99 @@
+schema_version = 1
+experiment_id = "EXP-0006"
+title = "Qwen3-14B clean eager baseline"
+status = "workload_a_complete; baseline campaign open"
+started_utc = "2026-08-09T09:34:32Z"
+artifact_root = "benchmarks/baseline/qwen3-14b-20260809T093432Z"
+
+[hypothesis]
+original = "A warmed, uninstrumented Qwen3-14B eager server can provide a reproducible latency baseline before semantic, host-probe, or CUPTI instrumentation is enabled."
+outcome = "single_request_smoke_supported; distribution_not_yet_measured"
+
+[hardware]
+system = "NVIDIA DGX Spark"
+gpu = "NVIDIA GB10"
+architecture = "sm_121"
+memory = "128 GB unified CPU/GPU memory"
+host_architecture = "aarch64"
+driver = "580.173.02"
+kernel = "Linux 6.17.0-1029-nvidia"
+
+[software]
+container_image = "nvcr.io/nvidia/vllm:26.05-py3"
+container_image_digest = "sha256:654e563e727be1968487d453de0733fb074cb59adf424c779d0f9e7cfcb2b6b6"
+container_image_id = "sha256:c5c116c732f24a640650e1e6e399112ef7c2b1e80c5fd7c13808b10a579646e6"
+vllm = "0.20.1+7124b12a.dev"
+torch = "2.12.0a0+5aff3928d8.nv26.05"
+triton = "3.6.0"
+cuda_runtime = "13.2"
+model = "Qwen/Qwen3-14B"
+model_revision = "40c069824f4251a91eefaf281ebe4c544efd3e18"
+dtype = "bfloat16"
+attention_backend = "FlashAttention 2"
+
+[server]
+container_name = "vllm-baseline-qwen3-14b-eager"
+port = 8000
+execution_mode = "eager"
+async_scheduling = false
+prefix_caching = false
+max_model_len = 4096
+kv_cache_bytes = 8589934592
+max_num_seqs = 32
+tensor_parallel_size = 1
+model_load_gib = 27.52
+model_load_seconds = 180.397283
+initial_free_memory_gib = 115.78
+kv_cache_token_capacity = 52416
+max_full_context_concurrency = 12.80
+
+[instrumentation]
+semantic_events = false
+host_probes = false
+cupti = false
+nsight_systems = false
+torch_profiler = false
+
+[workload_a]
+client = "vllm bench serve"
+protocol = "OpenAI-compatible HTTP streaming completions"
+backend_argument = "openai"
+endpoint = "/v1/completions"
+seed = 20260809
+warmup_requests = 1
+measured_requests = 1
+max_concurrency = 1
+request_rate = "inf"
+input_tokens = 256
+output_tokens = 64
+ignore_eos = true
+temperature = 0
+random_range_ratio = 0.0
+completed = 1
+failed = 0
+
+[workload_a.results]
+duration_seconds = 7.880210159986746
+ttft_ms = 171.42826202325523
+mean_tpot_ms = 122.35941884056147
+mean_itl_ms = 122.35944144453646
+p50_itl_ms = 122.16696096584201
+p95_itl_ms = 124.0491482138168
+p99_itl_ms = 125.18391037825496
+e2e_ms = 7880.071648978628
+output_tokens_per_second = 8.121610807408675
+total_tokens_per_second = 40.608054037043374
+
+[quality]
+exact_input_length = true
+exact_output_length = true
+warmup_excluded = true
+raw_per_request_data_preserved = true
+gpu_temperature_after_run_c = 37
+
+[limitations]
+request_sample_size = "n=1; request-level p50/p95/p99 are all the same value and must not be treated as a latency distribution"
+inter_token_sample_size = "63 intervals from one 64-token completion"
+throughput = "single-request output throughput is a decode-rate smoke measurement, not saturated server throughput"
+client = "the benchmark client ran in a separate CPU-only container on host networking"
+campaign = "Workload B and three repeated measured runs remain outstanding"

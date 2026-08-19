@@ -1,0 +1,90 @@
+15:26:55.700 INFO     Starting AIPerf System (_single_run.py:64)
+15:26:55.702 INFO     ✓ Tokenizer Qwen/Qwen3-14B detected (tokenizer_display.py:297)
+15:26:55.702 INFO     1 tokenizer validated • 0.0s (tokenizer_display.py:306)
+15:26:55.703 INFO     HF cache hit (skipping prefetch): ['Qwen/Qwen3-14B'] (tokenizer_validator.py:99)
+15:26:55.928 INFO     Registered Worker Manager (id: 'worker_manager') (system_controller.py:387)
+15:26:55.930 INFO     Server Metrics: Discovered 1 endpoints: ['http://127.0.0.1:8000/metrics'] (manager.py:74)
+15:26:55.948 INFO     GPU telemetry export enabled: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0017-sharegpt-packed-20260812T222343Z/aiperf/gpu_telemetry_export.jsonl (jsonl_writer.py:56)
+15:26:55.953 INFO     Registered Server Metrics Manager (id: 'server_metrics_manager') (system_controller.py:387)
+15:26:55.954 INFO     Telemetry streaming is disabled (set --otel-url and/or --mlflow-tracking-uri to enable) (otel_metrics_results_processor.py:128)
+15:26:55.954 INFO     OTel metrics streamer is disabled and will not be used: Telemetry streaming is disabled (set --otel-url and/or --mlflow-tracking-uri to enable) (records_manager.py:206)
+15:26:55.954 INFO     Record metrics export enabled: /home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0017-sharegpt-packed-20260812T222343Z/aiperf/profile_export.jsonl (record_export_results_processor.py:58)
+15:26:56.032 INFO     Registered Dataset Manager (id: 'dataset_manager') (system_controller.py:387)
+15:26:56.047 INFO     Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager') (system_controller.py:387)
+15:26:56.072 INFO     Registered Record Processor (id: 'record_processor_390dc8c0') (system_controller.py:387)
+15:26:56.089 INFO     Registered Record Processor (id: 'record_processor_9fd589c0') (system_controller.py:387)
+15:26:56.108 INFO     Registered Records Manager (id: 'records_manager') (system_controller.py:387)
+15:26:56.131 INFO     Registered Timing Manager (id: 'timing_manager') (system_controller.py:387)
+15:26:56.166 INFO     Registered Worker (id: 'worker_c35caf9c') (system_controller.py:387)
+15:26:56.171 INFO     Registered Worker (id: 'worker_b1a0f9a0') (system_controller.py:387)
+15:26:56.172 INFO     Registered Worker (id: 'worker_9633893c') (system_controller.py:387)
+15:26:56.176 INFO     Registered Worker (id: 'worker_c17fec7d') (system_controller.py:387)
+15:26:56.176 INFO     Registered Worker (id: 'worker_7dc0df4c') (system_controller.py:387)
+15:26:56.185 INFO     Registered Worker (id: 'worker_03d432a3') (system_controller.py:387)
+15:26:56.186 INFO     Registered Worker (id: 'worker_db294694') (system_controller.py:387)
+15:26:56.195 INFO     Registered Worker (id: 'worker_2750458d') (system_controller.py:387)
+15:26:56.420 INFO     AIPerf System is CONFIGURING (system_controller.py:276)
+15:26:56.420 INFO     Configuring all services to start profiling (system_controller.py:289)
+15:26:56.421 INFO     Waiting for dataset to be configured before configuring timing (manager.py:122)
+15:26:56.421 INFO     Configuring tokenizers for inference result parser (resolve_alias: True) (inference_result_parser.py:75)
+15:26:56.421 INFO     Configuring tokenizer(s) for dataset manager (dataset_manager.py:139)
+15:26:56.421 INFO     Configuring tokenizers for inference result parser (resolve_alias: True) (inference_result_parser.py:75)
+15:26:56.429 INFO     Server Metrics: Capturing baseline metrics... (manager.py:156)
+15:26:56.430 WARNING  GPU Telemetry: http://localhost:9400/metrics is not reachable (manager.py:243)
+15:26:56.431 WARNING  GPU Telemetry: http://localhost:9401/metrics is not reachable (manager.py:243)
+15:26:56.432 INFO     DCGM telemetry skipped: no DCGM endpoints reachable (system_controller.py:501)
+15:26:56.446 INFO     Skipping unsupported summary metric: http_request_size_bytes (data_collector.py:285)
+15:26:56.446 INFO     Skipping unsupported summary metric: http_response_size_bytes (data_collector.py:285)
+15:26:56.448 INFO     Server metrics enabled - 1/1 endpoint(s) reachable. (system_controller.py:527)
+15:26:57.129 INFO     HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:57.136 INFO     HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:57.169 INFO     HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:57.232 INFO     HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-14B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect" (_client.py:1025)
+15:26:57.233 WARNING  Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads. (_http.py:953)
+15:26:57.252 INFO     HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18/config.json "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:57.258 INFO     HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-14B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect" (_client.py:1025)
+15:26:57.258 WARNING  Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads. (_http.py:953)
+15:26:57.283 INFO     HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18/config.json "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:57.292 INFO     HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-14B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect" (_client.py:1025)
+15:26:57.326 INFO     HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18/config.json "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:57.379 INFO     HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-14B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect" (_client.py:1025)
+15:26:57.397 INFO     HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18/tokenizer_config.json "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:57.417 INFO     HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-14B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect" (_client.py:1025)
+15:26:57.418 WARNING  Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads. (_http.py:953)
+15:26:57.435 INFO     HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18/tokenizer_config.json "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:57.439 INFO     HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-14B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect" (_client.py:1025)
+15:26:57.468 INFO     HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18/tokenizer_config.json "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:57.510 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found" (_client.py:1025)
+15:26:57.541 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found" (_client.py:1025)
+15:26:57.567 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found" (_client.py:1025)
+15:26:57.604 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:57.639 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:57.662 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:58.016 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:58.018 INFO     Initialized tokenizers: {'Qwen/Qwen3-14B': {'class': 'Qwen2Tokenizer', 'name_or_path': 'Qwen/Qwen3-14B'}} in 1.60 seconds (inference_result_parser.py:98)
+15:26:58.032 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:58.034 INFO     Initialized tokenizers: {'Qwen/Qwen3-14B': {'class': 'Qwen2Tokenizer', 'name_or_path': 'Qwen/Qwen3-14B'}} in 1.61 seconds (inference_result_parser.py:98)
+15:26:58.064 INFO     HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-14B "HTTP/1.1 200 OK" (_client.py:1025)
+15:26:58.066 INFO     Tokenizer(s) configured in 1.64 seconds (dataset_manager.py:143)
+15:26:58.066 INFO     Configuring dataset for dataset_manager (dataset_manager.py:149)
+15:26:58.362 INFO     Using explicit dataset format: inputs_json (custom.py:60)
+15:26:58.363 ERROR    Failed to handle command profile_configure with hook @on_command 🡒 DatasetManager._profile_configure_command: list indices must be integers or slices, not str (command_handler_mixin.py:131)
+15:26:58.364 ERROR    Error running Hook(func=<bound method SystemController._start_services of <SystemController system_controller (state=starting)>>, params=None) hook for SystemController: Failed to perform operation 'Configure Profiling' (aiperf_lifecycle_mixin.py:127)
+15:26:58.364 ERROR    Failed for SystemController (id=system_controller): SystemController._start_services: Failed to perform operation 'Configure Profiling' (aiperf_lifecycle_mixin.py:281)
+
+╭─ AIPerf System Exit Errors ──────────────────────────────────────────────────╮
+│ • Service: dataset_manager                                                   │
+│    Operation: Configure Profiling                                            │
+│    Error: TypeError                                                          │
+│    Reason: TypeError('list indices must be integers or slices, not str')     │
+│                                                                              │
+│ • Service: system_controller                                                 │
+│    Operation: Starting                                                       │
+│    Error: AIPerfMultiError                                                   │
+│    Reason: AIPerfMultiError("SystemController._start_services: Failed to     │
+│            perform operation 'Configure Profiling'")                         │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Log File: 
+/home/harsh4786/gpu-observer/benchmarks/industry-stress/exp0017-sharegpt-packed-
+20260812T222343Z/aiperf/logs/aiperf.log
+

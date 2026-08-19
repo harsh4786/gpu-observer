@@ -1,0 +1,96 @@
+schema_version = 1
+experiment_id = "EXP-0003"
+title = "Synchronous request-to-engine-step-to-CUDA submission join"
+status = "complete"
+started_utc = "2026-08-08T11:20:12Z"
+completed_utc = "2026-08-08T11:22:43Z"
+artifact_root = "benchmarks/join-a/exp0003-20260808T112012Z"
+
+[hypothesis]
+original = "With async scheduling disabled, fixed semantic step records and external CUDA submissions can be joined exactly on CLOCK_MONOTONIC."
+outcome = "supported_for_single_request_eager_run"
+
+[hardware]
+system = "NVIDIA DGX Spark"
+gpu = "NVIDIA GB10"
+architecture = "sm_121"
+memory = "128 GB unified CPU/GPU memory"
+host_architecture = "aarch64"
+driver = "580.173.02"
+
+[software]
+container_image = "nvcr.io/nvidia/vllm:26.05-py3"
+container_image_id = "sha256:c5c116c732f24a640650e1e6e399112ef7c2b1e80c5fd7c13808b10a579646e6"
+vllm = "0.20.1+7124b12a.dev"
+torch = "2.12.0a0+5aff3928d8.nv26.05"
+triton = "3.6.0"
+model_revision = "c1899de289a04d12100db370d81485cdf75e47ca"
+
+[server]
+model = "Qwen/Qwen3-0.6B"
+dtype = "bfloat16"
+attention_backend = "FlashAttention 2"
+execution_mode = "eager"
+async_scheduling = false
+max_model_len = 4096
+kv_cache_bytes = 8589934592
+command = "vllm serve Qwen/Qwen3-0.6B --port 8000 --enforce-eager --no-async-scheduling --max-model-len 4096 --kv-cache-memory-bytes 8G"
+
+[workload]
+request_body = "request.json"
+requests = 1
+prompt_tokens = 39
+completion_tokens = 3
+temperature = 0
+stream = false
+
+[instrumentation]
+semantic_transport = "mmap SPSC ring"
+semantic_ring_capacity = 65536
+semantic_ring_bytes = 6291712
+semantic_record_bytes = 96
+python_slice_capacity = 1024
+python_slice_bytes = 24576
+cuda_launch_record_bytes = 88
+host_probe_symbols = ["cuLaunchKernel", "cuLaunchKernelEx"]
+clock = "CLOCK_MONOTONIC"
+semantic_pid = 300
+cuda_host_pid = 273358
+launch_tids = 1
+
+[results]
+semantic_records = 9
+engine_steps = 3
+request_slices = 3
+cuda_launch_records = 1146
+assigned_cuda_launch_records = 1146
+unassigned_cuda_launch_records = 0
+regular_launch_records = 1059
+extended_launch_records = 87
+semantic_loss_markers = 0
+cuda_loss_markers = 0
+cuda_sequence_gaps = 0
+pid_mismatches_after_namespace_normalization = 0
+prefill_step_launches = 382
+decode_step_1_launches = 382
+decode_step_2_launches = 382
+prefill_step_wall_us = 115044.985
+decode_step_1_wall_us = 153594.534
+decode_step_2_wall_us = 12768.218
+client_total_ms = 292.630
+gpu_temperature_before_c = 40
+gpu_temperature_after_c = 39
+
+[quality]
+raw_events_preserved = true
+record_lengths_valid = true
+all_launches_temporally_assigned = true
+request_hash_stable_across_steps = true
+pid_namespace_mapping_explicit = true
+checksums_present = true
+
+[limitations]
+gpu_execution_duration = "unavailable without CUPTI activity"
+client_ttft = "not measured because the request was non-streaming"
+async_scheduling = "disabled; queued path remains to be instrumented"
+scope = "single request on the 0.6B debug model"

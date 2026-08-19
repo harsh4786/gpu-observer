@@ -1,0 +1,3 @@
+# mode=sampled_memory_barrier capacity=4096 sample_mask=255 buffer_bytes=262144 modules_seen=1 modules_patched=1 module_patch_failures=0 launches_seen=3 function_table_drops=0 context_table_drops=0 callback_data_failures=0 setup_missed_launches=0
+context_slot	kernel_slot	launches	expected_block_callbacks	actual_callbacks	emitted	dropped	module	function
+0	6228	3	48	24576	96	0	0xc59a49c6c980	_Z10vector_addPKfS0_Pfi

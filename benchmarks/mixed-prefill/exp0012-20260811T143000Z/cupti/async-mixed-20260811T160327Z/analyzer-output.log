@@ -1,0 +1,23 @@
+# Production-async Qwen3-14B CUPTI join
+
+## Measured result
+
+- Long mixed step 134: 1031 prefill + 8 decode tokens, 391.628064 ms GPU busy time.
+- Median ordinary decode GPU busy time: 120.563200 ms; the long mixed step used 3.25x as much device time.
+- Following decode step 135: kernels began 366.721525 ms after its scheduler begin, versus a 119.758547 ms ordinary-decode median.
+- The following decode step's semantic interval reached 490.396924 ms.
+
+## Join mechanism
+
+- Semantic engine-step begins are normalized to the Nsight/CUPTI clock and paired with the one-to-one NVTX forward, postprocess, and sample ranges.
+- CUDA runtime calls inside each NVTX range supply correlation IDs; CUPTI kernel records carrying those IDs are assigned to the step.
+- Assigned kernels: 11429/11429; unassigned: 0.
+- Clock offset drift: 24 ns; clock-pair uncertainty: 784/800 ns.
+
+## Precision boundary
+
+- Step-to-kernel attribution is measured. Each mixed-step kernel still belongs to the batch as a whole; request slices are preserved as a many-to-many relationship.
+- This does not claim that a specific GPU block, warp, or instruction belongs to one request. That remains Join B.
+
+Saved: /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/cupti/async-mixed-20260811T160327Z/cupti-step-join.tsv
+Saved: /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/cupti/async-mixed-20260811T160327Z/cupti-analysis.md

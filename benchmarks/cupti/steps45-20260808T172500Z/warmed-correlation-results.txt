@@ -1,0 +1,22 @@
+[warm-eager correlation fanout]
+step_id  api                     distinct_api_correlations  mapped_device_kernels  min_fanout  max_fanout
+-------  ----------------------  -------------------------  ---------------------  ----------  ----------
+4        cudaLaunchKernel_v7000  269                        269                    1           1         
+4        cuLaunchKernelEx        85                         85                     1           1         
+4        cuLaunchKernel          28                         28                     1           1         
+5        cudaLaunchKernel_v7000  381                        381                    1           1         
+5        cuLaunchKernelEx        1                          1                      1           1         
+6        cudaLaunchKernel_v7000  381                        381                    1           1         
+6        cuLaunchKernelEx        1                          1                      1           1         
+[warm-graphs correlation fanout]
+step_id  api                     distinct_api_correlations  mapped_device_kernels  min_fanout  max_fanout
+-------  ----------------------  -------------------------  ---------------------  ----------  ----------
+4        cudaGraphLaunch_v10000  29                         253                    4           9         
+4        cudaLaunchKernel_v7000  72                         72                     1           1         
+4        cuLaunchKernelEx        1                          1                      1           1         
+5        cudaGraphLaunch_v10000  1                          337                    337         337       
+5        cudaLaunchKernel_v7000  14                         14                     1           1         
+5        cuLaunchKernelEx        1                          1                      1           1         
+6        cudaGraphLaunch_v10000  1                          337                    337         337       
+6        cudaLaunchKernel_v7000  14                         14                     1           1         
+6        cuLaunchKernelEx        1                          1                      1           1         

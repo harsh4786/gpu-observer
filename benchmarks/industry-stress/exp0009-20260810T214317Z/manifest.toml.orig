@@ -1,0 +1,28 @@
+schema_version = 1
+experiment_id = "EXP-0009"
+created_utc = "2026-08-10T21:43:17Z"
+status = "running"
+title = "Qwen3-14B production CUDA Graph compatibility gate for AIPerf and Compute Sanitizer"
+hardware = "NVIDIA DGX Spark / GB10"
+gpu_architecture = "sm_121"
+host_architecture = "aarch64"
+host_os = "Ubuntu 24.04"
+kernel = "6.17.0-1029-nvidia"
+driver = "580.173.02"
+cuda = "13.2.1"
+model = "Qwen/Qwen3-14B"
+model_revision = "40c069824f4251a91eefaf281ebe4c544efd3e18"
+dtype = "BF16"
+vllm_image = "nvcr.io/nvidia/vllm:26.05-py3"
+sanitizer_image_id = "e4409f94c584"
+aiperf_version = "0.10.0"
+aiperf_commit = "bf70bd968f44b7d34026554e8dc629d39440d106"
+execution_mode = "cuda_graph_production_gate"
+max_model_len = 8192
+kv_cache_memory_bytes = 8589934592
+max_num_seqs = 32
+
+[artifact_policy]
+raw_logs_preserved = true
+checksums_required = true
+server_stopped_after_each_arm = true

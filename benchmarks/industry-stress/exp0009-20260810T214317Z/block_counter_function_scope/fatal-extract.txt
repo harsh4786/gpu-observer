@@ -1,0 +1,108 @@
+184-(APIServer pid=1) INFO:     Started server process [1]
+185-(APIServer pid=1) INFO:     Waiting for application startup.
+186-(APIServer pid=1) INFO:     Application startup complete.
+187-(APIServer pid=1) INFO:     127.0.0.1:52166 - "GET /health HTTP/1.1" 200 OK
+188-(APIServer pid=1) INFO:     127.0.0.1:39512 - "HEAD /metrics HTTP/1.1" 200 OK
+189-(APIServer pid=1) INFO:     127.0.0.1:39526 - "GET /metrics HTTP/1.1" 200 OK
+190-(APIServer pid=1) INFO:     127.0.0.1:39526 - "GET /metrics HTTP/1.1" 200 OK
+191-(APIServer pid=1) INFO:     127.0.0.1:39528 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+192-(APIServer pid=1) INFO:     127.0.0.1:39526 - "GET /metrics HTTP/1.1" 200 OK
+193-(EngineCore pid=293) ERROR 08-10 22:16:18 [dump_input.py:72] Dumping input data for V1 LLM engine (v0.20.1+7124b12a.dev) with config: model='Qwen/Qwen3-14B', speculative_config=None, tokenizer='Qwen/Qwen3-14B', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=8192, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=Qwen/Qwen3-14B, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '/root/.cache/vllm/torch_compile_cache/98d01b5eb3', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [2048], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 64, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': '/root/.cache/vllm/torch_compile_cache/98d01b5eb3/rank_0_0/backbone', 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native']), enable_flashinfer_autotune=True, moe_backend='auto'), 
+194-(EngineCore pid=293) ERROR 08-10 22:16:18 [dump_input.py:79] Dumping scheduler output for model execution: SchedulerOutput(scheduled_new_reqs=[], scheduled_cached_reqs=CachedRequestData(req_ids=['chatcmpl-bca8d203-7572-4adf-ad45-dfb054b0b7b0-9dae2119'],resumed_req_ids=set(),new_token_ids_lens=[],all_token_ids_lens={},new_block_ids=[None],num_computed_tokens=[136],num_output_tokens=[1]), num_scheduled_tokens={chatcmpl-bca8d203-7572-4adf-ad45-dfb054b0b7b0-9dae2119: 1}, total_num_scheduled_tokens=1, scheduled_spec_decode_tokens={}, scheduled_encoder_inputs={}, num_common_prefix_blocks=[9], finished_req_ids=[], free_encoder_mm_hashes=[], preempted_req_ids=[], has_structured_output_requests=false, pending_structured_output_tokens=false, num_invalid_spec_tokens=null, kv_connector_metadata=null, ec_connector_metadata=null, new_block_ids_to_zero=null)
+195-(EngineCore pid=293) ERROR 08-10 22:16:18 [dump_input.py:81] Dumping scheduler stats: SchedulerStats(num_running_reqs=1, num_waiting_reqs=0, num_skipped_waiting_reqs=0, step_counter=0, current_wave=0, kv_cache_usage=0.0027480916030534486, prefix_cache_stats=PrefixCacheStats(reset=False, requests=0, queries=0, hits=0, preempted_requests=0, preempted_queries=0, preempted_hits=0), connector_prefix_cache_stats=None, kv_cache_eviction_events=[], spec_decoding_stats=None, kv_connector_stats=None, waiting_lora_adapters={}, running_lora_adapters={}, cudagraph_stats=None, perf_stats=None)
+196:(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138] EngineCore encountered a fatal error.
+197-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138] Traceback (most recent call last):
+198-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1129, in run_engine_core
+199-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]     engine_core.run_busy_loop()
+200-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1170, in run_busy_loop
+201-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]     self._process_engine_step()
+202-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1209, in _process_engine_step
+203-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]     outputs, model_executed = self.step_fn()
+204-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]                               ^^^^^^^^^^^^^^
+205-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 521, in step_with_batch_queue
+206-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]     model_output = future.result()
+207-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]                    ^^^^^^^^^^^^^^^
+208-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]   File "/usr/lib/python3.12/concurrent/futures/_base.py", line 456, in result
+209-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]     return self.__get_result()
+210-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]            ^^^^^^^^^^^^^^^^^^^
+211-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]   File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+212-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]     raise self._exception
+213-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]   File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+214-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]     result = self.fn(*self.args, **self.kwargs)
+215-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+216-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu_model_runner.py", line 269, in get_output
+217-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138]     self.async_copy_ready_event.synchronize()
+218:(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138] torch.AcceleratorError: CUDA error: misaligned address
+219-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138] Search for `cudaErrorMisalignedAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+220-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138] CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+221-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138] For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+222-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138] Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+223-(EngineCore pid=293) ERROR 08-10 22:16:18 [core.py:1138] 
+224-(APIServer pid=1) ERROR 08-10 22:16:18 [async_llm.py:704] AsyncLLM output_handler failed.
+225-(APIServer pid=1) ERROR 08-10 22:16:18 [async_llm.py:704] Traceback (most recent call last):
+226-(APIServer pid=1) ERROR 08-10 22:16:18 [async_llm.py:704]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/async_llm.py", line 660, in output_handler
+227-(APIServer pid=1) ERROR 08-10 22:16:18 [async_llm.py:704]     outputs = await engine_core.get_output_async()
+228-(APIServer pid=1) ERROR 08-10 22:16:18 [async_llm.py:704]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+229-(APIServer pid=1) ERROR 08-10 22:16:18 [async_llm.py:704]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core_client.py", line 998, in get_output_async
+230-(APIServer pid=1) ERROR 08-10 22:16:18 [async_llm.py:704]     raise self._format_exception(outputs) from None
+--
+259-(EngineCore pid=293)     model_output = future.result()
+260-(EngineCore pid=293)                    ^^^^^^^^^^^^^^^
+261-(EngineCore pid=293)   File "/usr/lib/python3.12/concurrent/futures/_base.py", line 456, in result
+262-(EngineCore pid=293)     return self.__get_result()
+263-(EngineCore pid=293)            ^^^^^^^^^^^^^^^^^^^
+264-(EngineCore pid=293)   File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+265-(EngineCore pid=293)     raise self._exception
+266-(EngineCore pid=293)   File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+267-(EngineCore pid=293)     result = self.fn(*self.args, **self.kwargs)
+268-(EngineCore pid=293)              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+269-(EngineCore pid=293)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu_model_runner.py", line 269, in get_output
+270-(EngineCore pid=293)     self.async_copy_ready_event.synchronize()
+271:(EngineCore pid=293) torch.AcceleratorError: CUDA error: misaligned address
+272-(EngineCore pid=293) Search for `cudaErrorMisalignedAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+273-(EngineCore pid=293) CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+274-(EngineCore pid=293) For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+275-(EngineCore pid=293) Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+276-(EngineCore pid=293) 
+277-(EngineCore pid=293) 
+278-(EngineCore pid=293) During handling of the above exception, another exception occurred:
+279-(EngineCore pid=293) 
+280-(EngineCore pid=293) Traceback (most recent call last):
+281-(EngineCore pid=293)   File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+282-(EngineCore pid=293)     self.run()
+283-(EngineCore pid=293)   File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+--
+289-(EngineCore pid=293)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/uniproc_executor.py", line 137, in shutdown
+290-(EngineCore pid=293)     worker.shutdown()
+291-(EngineCore pid=293)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/worker_base.py", line 212, in shutdown
+292-(EngineCore pid=293)     self.worker.shutdown()
+293-(EngineCore pid=293)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu_worker.py", line 1021, in shutdown
+294-(EngineCore pid=293)     model_runner.shutdown()
+295-(EngineCore pid=293)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu_model_runner.py", line 5907, in shutdown
+296-(EngineCore pid=293)     self._cleanup_profiling_kv_cache()
+297-(EngineCore pid=293)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu_model_runner.py", line 5915, in _cleanup_profiling_kv_cache
+298-(EngineCore pid=293)     torch.accelerator.synchronize()
+299-(EngineCore pid=293)   File "/usr/local/lib/python3.12/dist-packages/torch/accelerator/__init__.py", line 270, in synchronize
+300-(EngineCore pid=293)     torch._C._accelerator_synchronizeDevice(device_index)
+301:(EngineCore pid=293) torch.AcceleratorError: CUDA error: misaligned address
+302-(EngineCore pid=293) Search for `cudaErrorMisalignedAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+303-(EngineCore pid=293) CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+304-(EngineCore pid=293) For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+305-(EngineCore pid=293) Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+306-(EngineCore pid=293) 
+307:[rank0]:[W810 22:16:18.306664738 CUDAGuardImpl.h:126] Warning: CUDA warning: misaligned address (function destroyEvent)
+308-[rank0]:[W810 22:16:18.306740610 CachingHostAllocator.cpp:26] Warning: Exception in pinned allocator free(), rethrowing (function free)
+309-terminate called after throwing an instance of 'c10::AcceleratorError'
+310:  what():  CUDA error: misaligned address
+311-Search for `cudaErrorMisalignedAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+312-CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+313-For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+314-Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+315-
+316-Exception raised from currentStreamCaptureStatusMayInitCtx at /opt/pytorch/pytorch/c10/cuda/CUDAGraphsC10Utils.h:73 (most recent call first):
+317-frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xdc (0xe428ec6155dc in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+318-frame #1: <unknown function> + 0x448a20 (0xe428eca48a20 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10_cuda.so)
+319-frame #2: <unknown function> + 0x80c77c (0xe428ece0c77c in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10_cuda.so)
+320-frame #3: <unknown function> + 0x1226ae0 (0xe428ee026ae0 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+321-frame #4: <unknown function> + 0x122754c (0xe428ee02754c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+322-frame #5: <unknown function> + 0x800ba4 (0xe428ec600ba4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)

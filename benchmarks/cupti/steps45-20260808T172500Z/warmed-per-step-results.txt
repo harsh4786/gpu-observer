@@ -1,0 +1,46 @@
+[warm eager clock]
+client_offset_ns=-1785907916133281728 session_origin_monotonic_ns=302775740661916 client_offset_pair_span_ns=352
+[warm eager per-step]
+step_id  phase    wall_ns   kernels  summed_kernel_ns  graph_node_kernels  first_kernel_delay_ns
+-------  -------  --------  -------  ----------------  ------------------  ---------------------
+4        prefill  12688582  382      11032318          0                   465929               
+5        decode   12038007  382      11315040          0                   175347               
+6        decode   12385047  382      11337024          0                   362508               
+step_id  overlap_safe_busy_ns
+-------  --------------------
+4        11020094            
+5        11315040            
+6        11337024            
+step_id  api                     calls
+-------  ----------------------  -----
+4        cudaLaunchKernel_v7000  269  
+4        cuLaunchKernelEx        85   
+4        cuLaunchKernel          28   
+5        cudaLaunchKernel_v7000  381  
+5        cuLaunchKernelEx        1    
+6        cudaLaunchKernel_v7000  381  
+6        cuLaunchKernelEx        1    
+[warm graphs clock]
+client_offset_ns=-1785907916133282048 session_origin_monotonic_ns=302904392169505 client_offset_pair_span_ns=496
+[warm graphs per-step]
+step_id  phase    wall_ns  kernels  summed_kernel_ns  graph_node_kernels  first_kernel_delay_ns
+-------  -------  -------  -------  ----------------  ------------------  ---------------------
+4        prefill  8392685  326      6804768           253                 426408               
+5        decode   8532508  352      7340960           337                 417787               
+6        decode   8440813  352      7382880           337                 368591               
+step_id  overlap_safe_busy_ns
+-------  --------------------
+4        6804480             
+5        7340960             
+6        7382880             
+step_id  api                     calls
+-------  ----------------------  -----
+4        cudaLaunchKernel_v7000  72   
+4        cudaGraphLaunch_v10000  29   
+4        cuLaunchKernelEx        1    
+5        cudaLaunchKernel_v7000  14   
+5        cudaGraphLaunch_v10000  1    
+5        cuLaunchKernelEx        1    
+6        cudaLaunchKernel_v7000  14   
+6        cudaGraphLaunch_v10000  1    
+6        cuLaunchKernelEx        1    

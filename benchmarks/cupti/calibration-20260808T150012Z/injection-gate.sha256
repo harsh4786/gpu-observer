@@ -1,0 +1,3 @@
+311e867fc32a6719c3f081679ccc1f06133f4bee99cf815f70920fdf6d83050d  cupti-agent/smoke/vector_add.cu
+c9dc4a673fe345df0f0999c7e16724bc1de0f7eb1e84b6dedea0f87cfd073dd4  cupti-agent/build/vector_add
+c140dbd953369cf0d780dd7655b68415ab358a43d357ad82689f26ab5eb8c7ae  cupti-agent/build/libcupti_trace_injection.so

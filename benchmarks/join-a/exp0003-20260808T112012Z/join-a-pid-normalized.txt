@@ -1,0 +1,7 @@
+step=1 begin_ns=280227099897812 end_ns=280227214942797 wall_us=115044.985 scheduled=39 prefill=39 decode=0 queue=0 active=1 kv_permyriad=6 launches=382 regular=297 extended=85 submission_span_us=113053.247
+  request=0x9c1c2816e56b4722 phase=1 tokens=39 sequence_id=0
+step=2 begin_ns=280227215150349 end_ns=280227368744883 wall_us=153594.534 scheduled=1 prefill=0 decode=1 queue=0 active=1 kv_permyriad=6 launches=382 regular=381 extended=1 submission_span_us=149720.434
+  request=0x9c1c2816e56b4722 phase=2 tokens=1 sequence_id=0
+step=3 begin_ns=280227368915874 end_ns=280227381684092 wall_us=12768.218 scheduled=1 prefill=0 decode=1 queue=0 active=1 kv_permyriad=6 launches=382 regular=381 extended=1 submission_span_us=6858.075
+  request=0x9c1c2816e56b4722 phase=2 tokens=1 sequence_id=0
+summary semantic_records=9 steps=3 request_slices=3 semantic_loss_markers=0 cuda_records=1146 assigned=1146 unassigned=0 cuda_loss_markers=0 sequence_gaps=0 pid_mismatches=0 launch_tids=1 gpu_duration=unavailable_without_cupti

@@ -1,0 +1,38 @@
+[workspace]
+members = [
+    "observer-core",
+    "collector",
+    "policy-engine",
+    "workload",
+    "host-probes/common",
+    "vllm-adapter/native",
+    "host-probes/loader",
+]
+exclude = ["host-probes/ebpf"]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+license = "Apache-2.0"
+rust-version = "1.85"
+version = "0.1.0"
+
+[workspace.dependencies]
+gpu-observer-core = { path = "observer-core" }
+gpu-observer-host-probe-common = { path = "host-probes/common" }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
+aya = { version = "0.14.0", default-features = false }
+libc = "0.2.175"
+tungstenite = "0.30.0"
+
+[profile.release]
+codegen-units = 1
+lto = "thin"
+opt-level = 3
+panic = "abort"
+
+[profile.bench]
+codegen-units = 1
+lto = "thin"
+opt-level = 3

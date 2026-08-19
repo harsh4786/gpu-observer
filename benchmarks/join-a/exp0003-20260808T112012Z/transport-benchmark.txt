@@ -1,0 +1,1 @@
+events=10000000 capacity=65536 elapsed_ms=164.834 events_per_second=60667188 ns_per_event=16.48

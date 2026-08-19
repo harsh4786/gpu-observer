@@ -1,0 +1,83 @@
+Script started on 2026-08-10 02:55:44-07:00 [COMMAND="env PATH=/usr/local/cuda/bin:/usr/bin:/bin make -C /home/harsh4786/bpftime/example/gpu/kernel_trace -j8" <not executed on terminal>]
+make: Entering directory '/home/harsh4786/bpftime/example/gpu/kernel_trace'
+  MKDIR    .output
+  MKDIR    .output/libbpf
+  MKDIR    bpftool
+  LIB      libbpf.a
+  BPFTOOL  bpftool/bootstrap/bpftool
+  MKDIR    /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs
+  INSTALL  bpf.h libbpf.h btf.h libbpf_common.h libbpf_legacy.h bpf_helpers.h bpf_helper_defs.h bpf_tracing.h bpf_endian.h bpf_core_read.h skel_internal.h libbpf_version.h usdt.bpf.h
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/bpf.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/btf.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/libbpf.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/libbpf_errno.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/netlink.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/nlattr.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/str_error.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/libbpf_probes.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/bpf_prog_linfo.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/btf_dump.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/hashmap.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/ringbuf.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/strset.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/linker.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/gen_loader.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/relo_core.o
+...                        libbfd: [ [31mOFF[m ]
+...               clang-bpf-co-re: [ [32mon[m  ]
+...                          llvm: [ [32mon[m  ]
+...                        libcap: [ [31mOFF[m ]
+  MKDIR    /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/include/bpf
+  MKDIR    /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/
+  MKDIR    /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/
+  INSTALL  /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/include/bpf/hashmap.h
+  INSTALL  /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/include/bpf/relo_core.h
+  INSTALL  /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/include/bpf/libbpf_internal.h
+  MKDIR    /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs
+  INSTALL  bpf.h libbpf.h btf.h libbpf_common.h libbpf_legacy.h bpf_helpers.h bpf_helper_defs.h bpf_tracing.h bpf_endian.h bpf_core_read.h skel_internal.h libbpf_version.h usdt.bpf.h
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/bpf.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/usdt.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/zip.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/elf.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/features.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/btf_iter.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/staticobjs/btf_relocate.o
+  INSTALL  /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/libbpf.pc
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/btf.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/libbpf.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/libbpf_errno.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/netlink.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/nlattr.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/str_error.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/libbpf_probes.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/bpf_prog_linfo.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/btf_dump.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/hashmap.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/ringbuf.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/strset.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/linker.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/gen_loader.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/relo_core.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/usdt.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/zip.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/elf.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/features.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/btf_iter.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/staticobjs/btf_relocate.o
+  AR       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/libbpf.a
+  INSTALL  /home/harsh4786/bpftime/example/gpu/kernel_trace/.output//libbpf/libbpf.a 
+  AR       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/libbpf/libbpf.a
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/main.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/json_writer.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/common.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/gen.o
+  CC       /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/btf.o
+  LINK     /home/harsh4786/bpftime/example/gpu/kernel_trace/.output/bpftool/bootstrap/bpftool
+  BPF      .output/kernel_trace.bpf.o
+clang: warning: -Xlinker --export-dynamic: 'linker' input unused [-Wunused-command-line-argument]
+  GEN-SKEL .output/kernel_trace.skel.h
+  CC       .output/kernel_trace.o
+  BINARY   kernel_trace
+make: Leaving directory '/home/harsh4786/bpftime/example/gpu/kernel_trace'
+
+Script done on 2026-08-10 02:55:47-07:00 [COMMAND_EXIT_CODE="0"]

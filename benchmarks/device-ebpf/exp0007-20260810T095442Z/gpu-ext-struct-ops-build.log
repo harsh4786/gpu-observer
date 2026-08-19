@@ -1,0 +1,10 @@
+make: Entering directory '/home/harsh4786/gpu_ext-v0.0.21/extension'
+Skipping sched_ext apps; set SCX_INCLUDE_DIR to a kernel tools/sched_ext include tree and ensure ../vmlinux/arm64/scx/vmlinux.h exists: sched_gpu_baseline sched_gpu_minimal sched_gpu_serving sched_gpu_xcoord sched_gpu_xcoord_noad sched_gpu_coord 
+clang -g -O2 -target bpf -D__TARGET_ARCH_arm64		      \
+	     -I.output -I../libbpf/include/uapi -I../vmlinux/arm64/ -I/usr/local/cuda/include -idirafter /usr/lib/llvm-18/lib/clang/18/include -idirafter /usr/local/include -idirafter /usr/include/aarch64-linux-gnu -idirafter /usr/include		      \
+	     -c struct_ops.bpf.c -o .output/struct_ops.tmp.bpf.o
+/home/harsh4786/gpu_ext-v0.0.21/extension/.output/bpftool/bootstrap/bpftool gen object .output/struct_ops.bpf.o .output/struct_ops.tmp.bpf.o
+/home/harsh4786/gpu_ext-v0.0.21/extension/.output/bpftool/bootstrap/bpftool gen skeleton .output/struct_ops.bpf.o > .output/struct_ops.skel.h
+cc -g -Wall -I.output -I../libbpf/include/uapi -I../vmlinux/arm64/ -I/usr/local/cuda/include -c struct_ops.c -o .output/struct_ops.o
+cc -g -Wall .output/struct_ops.o /home/harsh4786/gpu_ext-v0.0.21/extension/.output/libbpf.a   -lrt -ldl -lpthread -lm -lelf -lz -o struct_ops
+make: Leaving directory '/home/harsh4786/gpu_ext-v0.0.21/extension'

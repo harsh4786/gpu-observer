@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "session_id": "f8f4abe7-dac5-46b1-a1f1-b5fe55c1b266",
+      "payloads": [
+        {
+          "messages": [
+            {
+              "role": "user",
+              "content": " their houses The rascal people thirsting after prey Join with the traitor and they jointly swear To spoil the city and your royal court BUCKINGHAM Then linger not my lord away take horse KING HENRY Come Margaret God our hope will succour us QUEEN MARGARET Aside My hope is gone now Suffolk is deceased KING HENRY Farewell my lord Trust not the Kentish rebels BUCKINGHAM Trust nobody for fear you be betrayed SAYE The trust I have is in mine innocence And therefore am I bold and resolute Exeunt SCENE V London The Tower Enter Lord Scales upon the Tower walking Then enter two or three Citizens below SCALES How now Is Jack Cade slain 1 CITIZEN No my lord nor likely to be slain for they have won the Bridge killing all those that withstand them The Lord Mayor craves aid of your honour from the Tower to defend the city from the rebels SCALES Such aid as I can spare you shall command But I am troubled here with them myself The rebels have assayed to win the Tower But get you to Smithfield and gather head And thither I will send you Matthew Gough Fight for your king your country and your lives And so farewell for I must hence again Exeunt SCENE VI London Cannon Street Enter Jack Cade and the rest and strikes his staff on London Stone CADE Now is Mortimer lord of this city And here sitting upon London Stone I charge and command that of the citys cost the Pissing Conduit run nothing but claret wine this first year of our reign And now henceforward it shall be treason for any that calls me other than Lord Mortimer Enter a Soldier running SOLDIER Jack Cade Jack Cade CADE Knock him down there They kill him DICK If this fellow be wise hell never call ye Jack Cade more I think he hath a very fair warning My lord theres an army gathered"
+            }
+          ],
+          "model": "Qwen/Qwen3-14B",
+          "stream": true,
+          "max_completion_tokens": 71,
+          "temperature": 0,
+          "ignore_eos": true,
+          "stream_options": {
+            "include_usage": true
+          }
+        }
+      ]
+    }
+  ]
+}

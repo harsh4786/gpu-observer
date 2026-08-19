@@ -1,0 +1,11 @@
+{
+  "metric": "arm_b_vs_arm_a",
+  "ttft_avg_pct": 7.275258472300972,
+  "ttft_p99_pct": 62.698389622335114,
+  "itl_avg_pct": 7.320540982466084,
+  "itl_p99_pct": 10.236520820371542,
+  "latency_avg_pct": 7.319419988760312,
+  "latency_p99_pct": 10.023553792079243,
+  "output_throughput_pct": -6.605027994627499,
+  "duration_pct": 7.072145162426446
+}

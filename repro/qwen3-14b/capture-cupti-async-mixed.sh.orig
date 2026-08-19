@@ -1,0 +1,172 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+source "$script_dir/env.sh"
+cd "$GO_ROOT"
+
+experiment_root="$GO_ROOT/benchmarks/mixed-prefill/exp0012-20260811T143000Z"
+workload_dir="$experiment_root/controlled-workload"
+attempt_id=$(date -u +%Y%m%dT%H%M%SZ)
+attempt_dir="$experiment_root/cupti/async-mixed-$attempt_id"
+semantic_dir="$attempt_dir/semantic-shm"
+container="gpu-observer-cupti-async-$attempt_id"
+session="Q14A${attempt_id}"
+mkdir -p "$semantic_dir" "$attempt_dir/responses"
+
+semantic_job=""
+request_jobs=()
+cleanup() {
+    if [[ -n "$semantic_job" ]] && kill -0 "$semantic_job" 2>/dev/null; then
+        kill "$semantic_job" 2>/dev/null || true
+    fi
+    for job in "${request_jobs[@]}"; do
+        kill "$job" 2>/dev/null || true
+    done
+    docker stop --time 30 "$container" >/dev/null 2>&1 || true
+    docker rm -f "$container" >/dev/null 2>&1 || true
+}
+trap cleanup EXIT INT TERM
+
+clock_pair() {
+    python3 -c 'import time; m0=time.monotonic_ns(); r=time.time_ns(); m1=time.monotonic_ns(); print(f"monotonic_ns={(m0+m1)//2} realtime_ns={r} uncertainty_ns={m1-m0}")'
+}
+
+echo "[1/8] Start production-async Qwen3-14B under paused Nsight/CUPTI"
+docker run -d \
+    --name "$container" \
+    --gpus all \
+    --ipc=host \
+    --network=host \
+    --ulimit memlock=-1 \
+    --security-opt label=disable \
+    -e VLLM_NVTX_SCOPES_FOR_PROFILING=1 \
+    -e GPU_OBSERVER_SEMANTIC_LIB=/observer/libgpu_observer_vllm_bridge.so \
+    -e GPU_OBSERVER_SEMANTIC_SHM=/observer-shm/semantic.ring \
+    -e GPU_OBSERVER_SEMANTIC_CAPACITY=65536 \
+    -e GPU_OBSERVER_MAX_SLICES=1024 \
+    -v "$GO_NSYS_ROOT:$GO_NSYS_ROOT:ro" \
+    -v "$GO_HF_CACHE:/root/.cache/huggingface" \
+    -v "$GO_SEMANTIC_LIB:/observer/libgpu_observer_vllm_bridge.so:ro" \
+    -v "$GO_SEMANTIC_CORE:/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py:ro" \
+    -v "$GO_SEMANTIC_PY:/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/gpu_observer_semantic.py:ro" \
+    -v "$semantic_dir:/observer-shm" \
+    -v "$attempt_dir:/results" \
+    --entrypoint "$GO_NSYS_BIN" \
+    "$GO_IMAGE" \
+    profile \
+    --start-later=true \
+    --session-new="$session" \
+    --trace=cuda,nvtx \
+    --sample=none \
+    --cpuctxsw=none \
+    --cuda-graph-trace=node \
+    --cuda-flush-interval=1000 \
+    --export=sqlite \
+    --force-overwrite=true \
+    --output=/results/nsys-qwen14-async-mixed \
+    vllm serve "$GO_MODEL" \
+    --revision "$GO_MODEL_REVISION" \
+    --port "$GO_PORT" \
+    --dtype bfloat16 \
+    --no-enable-prefix-caching \
+    --max-model-len 8192 \
+    --kv-cache-memory-bytes 8G \
+    --max-num-seqs 32 >"$attempt_dir/container-id.txt"
+
+echo "[2/8] Wait for model load while collection is paused"
+for _ in $(seq 1 300); do
+    if curl -fsS -o /dev/null "http://127.0.0.1:$GO_PORT/health"; then
+        break
+    fi
+    if ! docker ps --format '{{.Names}}' | rg -qx "$container"; then
+        docker logs "$container" >&2 || true
+        exit 1
+    fi
+    sleep 2
+done
+curl -fsS -o /dev/null "http://127.0.0.1:$GO_PORT/health"
+docker exec "$container" chmod 0666 /observer-shm/semantic.ring
+docker inspect "$container" >"$attempt_dir/container-inspect.json"
+
+echo "[3/8] Warm graph shapes and drain warmup semantic events"
+head -n 1 "$workload_dir/interactive-payloads-corrected.jsonl" | curl -fsS \
+    -H 'Content-Type: application/json' --data-binary @- \
+    "http://127.0.0.1:$GO_PORT/v1/chat/completions" \
+    -o "$attempt_dir/warmup-response.json"
+"$GO_SEMANTIC_CAPTURE" "$semantic_dir/semantic.ring" \
+    "$attempt_dir/warmup-semantic.bin" 1 >"$attempt_dir/warmup-semantic.log" 2>&1
+
+echo "[4/8] Start semantic and CUPTI collection"
+"$GO_SEMANTIC_CAPTURE" "$semantic_dir/semantic.ring" \
+    "$attempt_dir/semantic.bin" 15 >"$attempt_dir/semantic-capture.log" 2>&1 &
+semantic_job=$!
+sleep 0.2
+docker exec "$container" "$GO_NSYS_BIN" start \
+    --session="$session" >"$attempt_dir/nsys-start.log" 2>&1
+clock_pair >"$attempt_dir/client-clock-before.txt"
+
+echo "[5/8] Launch eight short decodes, then inject one 1k-token prompt"
+for index in $(seq 1 8); do
+    sed -n "${index}p" "$workload_dir/interactive-payloads-corrected.jsonl" |
+        jq '.max_completion_tokens = 16' |
+        curl -fsS -N \
+            -H 'Content-Type: application/json' \
+            -H "X-Request-Id: exp0012-cupti-short-$index" \
+            --data-binary @- \
+            "http://127.0.0.1:$GO_PORT/v1/chat/completions" \
+            >"$attempt_dir/responses/short-$index.sse" 2>"$attempt_dir/responses/short-$index.stderr" &
+    request_jobs+=("$!")
+done
+sleep 0.5
+sed -n '1p' "$workload_dir/background-long-payloads.jsonl" |
+    curl -fsS -N \
+        -H 'Content-Type: application/json' \
+        -H 'X-Request-Id: exp0012-cupti-long-1' \
+        --data-binary @- \
+        "http://127.0.0.1:$GO_PORT/v1/chat/completions" \
+        >"$attempt_dir/responses/long-1.sse" 2>"$attempt_dir/responses/long-1.stderr" &
+request_jobs+=("$!")
+request_status=0
+for job in "${request_jobs[@]}"; do
+    wait "$job" || request_status=1
+done
+request_jobs=()
+clock_pair >"$attempt_dir/client-clock-after.txt"
+printf '%s\n' "$request_status" >"$attempt_dir/request-exit-status.txt"
+
+echo "[6/8] Stop CUPTI immediately and finish semantic capture"
+docker exec "$container" "$GO_NSYS_BIN" stop \
+    --session="$session" >"$attempt_dir/nsys-stop.log" 2>&1
+wait "$semantic_job"
+semantic_job=""
+docker logs "$container" >"$attempt_dir/server.log" 2>&1 || true
+
+echo "[7/8] Validate raw evidence"
+report="$attempt_dir/nsys-qwen14-async-mixed.nsys-rep"
+database="$attempt_dir/nsys-qwen14-async-mixed.sqlite"
+test -s "$report"
+test -s "$database"
+test -s "$attempt_dir/semantic.bin"
+"$GO_ROOT/target/release/semantic_step_stats" "$attempt_dir/semantic.bin" \
+    >"$attempt_dir/semantic-step-stats.tsv"
+{
+    printf 'kernel_records='
+    sqlite3 "$database" 'SELECT COUNT(*) FROM CUPTI_ACTIVITY_KIND_KERNEL;'
+    printf 'runtime_records='
+    sqlite3 "$database" 'SELECT COUNT(*) FROM CUPTI_ACTIVITY_KIND_RUNTIME;'
+    printf 'nvtx_records='
+    sqlite3 "$database" 'SELECT COUNT(*) FROM NVTX_EVENTS;'
+    printf 'streams='
+    sqlite3 "$database" 'SELECT COUNT(DISTINCT streamId) FROM CUPTI_ACTIVITY_KIND_KERNEL;'
+    printf 'summed_kernel_ms='
+    sqlite3 "$database" 'SELECT printf("%.6f", SUM(end-start)/1000000.0) FROM CUPTI_ACTIVITY_KIND_KERNEL;'
+    printf 'kernels_without_runtime_correlation='
+    sqlite3 "$database" 'SELECT COUNT(*) FROM CUPTI_ACTIVITY_KIND_KERNEL k LEFT JOIN CUPTI_ACTIVITY_KIND_RUNTIME r USING(correlationId) WHERE r.correlationId IS NULL;'
+} | tee "$attempt_dir/cupti-integrity.txt"
+
+echo "[8/8] Stop server and publish attempt path"
+docker stop --time 30 "$container" >/dev/null
+docker rm -f "$container" >/dev/null
+trap - EXIT INT TERM
+printf 'attempt=%s\n' "$attempt_dir" | tee "$experiment_root/cupti/latest-async-mixed.txt"

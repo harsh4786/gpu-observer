@@ -1,0 +1,196 @@
+step=6 packing_generation=6 scheduled=8 decode=8 requests=8 graph_exec=0x55cff6a0 replay=1 nodes=40 reordered_positions=0
+  request=0x4234ad9ef8620b35 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x55d895b3d16d071a phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[6,7) blocks=40 expected=40
+  request=0x0f5fce0cc06410c6 phase=2 rows=[7,8) blocks=40 expected=40
+step=7 packing_generation=7 scheduled=8 decode=8 requests=8 graph_exec=0x55cff6a0 replay=2 nodes=40 reordered_positions=0
+  request=0x4234ad9ef8620b35 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x55d895b3d16d071a phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[6,7) blocks=40 expected=40
+  request=0x0f5fce0cc06410c6 phase=2 rows=[7,8) blocks=40 expected=40
+step=8 packing_generation=8 scheduled=8 decode=8 requests=8 graph_exec=0x55cff6a0 replay=3 nodes=40 reordered_positions=0
+  request=0x4234ad9ef8620b35 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x55d895b3d16d071a phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[6,7) blocks=40 expected=40
+  request=0x0f5fce0cc06410c6 phase=2 rows=[7,8) blocks=40 expected=40
+step=9 packing_generation=9 scheduled=8 decode=8 requests=8 graph_exec=0x55cff6a0 replay=4 nodes=40 reordered_positions=0
+  request=0x4234ad9ef8620b35 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x55d895b3d16d071a phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[6,7) blocks=40 expected=40
+  request=0x0f5fce0cc06410c6 phase=2 rows=[7,8) blocks=40 expected=40
+step=10 packing_generation=10 scheduled=8 decode=8 requests=8 graph_exec=0x55cff6a0 replay=5 nodes=40 reordered_positions=0
+  request=0x4234ad9ef8620b35 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x55d895b3d16d071a phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[6,7) blocks=40 expected=40
+  request=0x0f5fce0cc06410c6 phase=2 rows=[7,8) blocks=40 expected=40
+step=11 packing_generation=11 scheduled=7 decode=7 requests=7 graph_exec=0x55cff6a0 replay=6 nodes=40 reordered_positions=7
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x55d895b3d16d071a phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[6,7) blocks=40 expected=40
+step=12 packing_generation=12 scheduled=7 decode=7 requests=7 graph_exec=0x55cff6a0 replay=7 nodes=40 reordered_positions=7
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x55d895b3d16d071a phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[6,7) blocks=40 expected=40
+step=13 packing_generation=13 scheduled=7 decode=7 requests=7 graph_exec=0x55cff6a0 replay=8 nodes=40 reordered_positions=7
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x55d895b3d16d071a phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[6,7) blocks=40 expected=40
+step=14 packing_generation=14 scheduled=7 decode=7 requests=7 graph_exec=0x55cff6a0 replay=9 nodes=40 reordered_positions=7
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x55d895b3d16d071a phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[6,7) blocks=40 expected=40
+step=15 packing_generation=15 scheduled=7 decode=7 requests=7 graph_exec=0x55cff6a0 replay=10 nodes=40 reordered_positions=7
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x55d895b3d16d071a phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[6,7) blocks=40 expected=40
+step=16 packing_generation=16 scheduled=6 decode=6 requests=6 graph_exec=0x55cff6a0 replay=11 nodes=40 reordered_positions=6
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+step=17 packing_generation=17 scheduled=6 decode=6 requests=6 graph_exec=0x55cff6a0 replay=12 nodes=40 reordered_positions=6
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+step=18 packing_generation=18 scheduled=6 decode=6 requests=6 graph_exec=0x55cff6a0 replay=13 nodes=40 reordered_positions=6
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+step=19 packing_generation=19 scheduled=6 decode=6 requests=6 graph_exec=0x55cff6a0 replay=14 nodes=40 reordered_positions=6
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0x31bfc630c9e5a45f phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[5,6) blocks=40 expected=40
+step=20 packing_generation=20 scheduled=5 decode=5 requests=5 graph_exec=0x55cff6a0 replay=15 nodes=40 reordered_positions=4
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+step=21 packing_generation=21 scheduled=5 decode=5 requests=5 graph_exec=0x55cff6a0 replay=16 nodes=40 reordered_positions=4
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+step=22 packing_generation=22 scheduled=5 decode=5 requests=5 graph_exec=0x55cff6a0 replay=17 nodes=40 reordered_positions=4
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+step=23 packing_generation=23 scheduled=5 decode=5 requests=5 graph_exec=0x55cff6a0 replay=18 nodes=40 reordered_positions=4
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[2,3) blocks=40 expected=40
+  request=0x025b506b73f71307 phase=2 rows=[3,4) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[4,5) blocks=40 expected=40
+step=24 packing_generation=24 scheduled=4 decode=4 requests=4 graph_exec=0x60baf780 replay=1 nodes=40 reordered_positions=4
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[2,3) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[3,4) blocks=40 expected=40
+step=25 packing_generation=25 scheduled=4 decode=4 requests=4 graph_exec=0x60baf780 replay=2 nodes=40 reordered_positions=4
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[2,3) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[3,4) blocks=40 expected=40
+step=26 packing_generation=26 scheduled=4 decode=4 requests=4 graph_exec=0x60baf780 replay=3 nodes=40 reordered_positions=4
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[2,3) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[3,4) blocks=40 expected=40
+step=27 packing_generation=27 scheduled=4 decode=4 requests=4 graph_exec=0x60baf780 replay=4 nodes=40 reordered_positions=4
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[2,3) blocks=40 expected=40
+  request=0xc74da24c0be00a2e phase=2 rows=[3,4) blocks=40 expected=40
+step=28 packing_generation=28 scheduled=3 decode=3 requests=3 graph_exec=0x60baf780 replay=5 nodes=40 reordered_positions=2
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[2,3) blocks=40 expected=40
+step=29 packing_generation=29 scheduled=3 decode=3 requests=3 graph_exec=0x60baf780 replay=6 nodes=40 reordered_positions=2
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[2,3) blocks=40 expected=40
+step=30 packing_generation=30 scheduled=3 decode=3 requests=3 graph_exec=0x60baf780 replay=7 nodes=40 reordered_positions=2
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[2,3) blocks=40 expected=40
+step=31 packing_generation=31 scheduled=3 decode=3 requests=3 graph_exec=0x60baf780 replay=8 nodes=40 reordered_positions=2
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+  request=0xc9999bee717da2a7 phase=2 rows=[2,3) blocks=40 expected=40
+step=32 packing_generation=32 scheduled=2 decode=2 requests=2 graph_exec=0x55ead5e0 replay=1 nodes=40 reordered_positions=2
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+step=33 packing_generation=33 scheduled=2 decode=2 requests=2 graph_exec=0x55ead5e0 replay=2 nodes=40 reordered_positions=2
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+step=34 packing_generation=34 scheduled=2 decode=2 requests=2 graph_exec=0x55ead5e0 replay=3 nodes=40 reordered_positions=2
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+step=35 packing_generation=35 scheduled=2 decode=2 requests=2 graph_exec=0x55ead5e0 replay=4 nodes=40 reordered_positions=2
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+  request=0x6035f49009f565a2 phase=2 rows=[1,2) blocks=40 expected=40
+step=36 packing_generation=36 scheduled=1 decode=1 requests=1 graph_exec=0x55cd0090 replay=2 nodes=40 reordered_positions=0
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+step=37 packing_generation=37 scheduled=1 decode=1 requests=1 graph_exec=0x55cd0090 replay=3 nodes=40 reordered_positions=0
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+step=38 packing_generation=38 scheduled=1 decode=1 requests=1 graph_exec=0x55cd0090 replay=4 nodes=40 reordered_positions=0
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+step=39 packing_generation=39 scheduled=1 decode=1 requests=1 graph_exec=0x55cd0090 replay=5 nodes=40 reordered_positions=0
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+step=40 packing_generation=40 scheduled=1 decode=1 requests=1 graph_exec=0x55cd0090 replay=6 nodes=40 reordered_positions=0
+  request=0x0f5fce0cc06410c6 phase=2 rows=[0,1) blocks=40 expected=40
+summary status=PASS semantic_records=466 semantic_loss=0 packed_steps=38 max_steps_in_flight=2 scheduler_order_mismatch_steps=25 ordinary_launches=1400 ordinary_launches_in_suffix=0 graph_nodes=1440 graph_replays=36 ignored_replays=1 eligible_decode_steps=35 selected_replays=35 expected_nodes_per_replay=40 distinct_graph_execs=4 selected_reordered_steps=25 device_headers=1 device_retained=130752 device_skipped_prefix=123192 selected_device_events=7560 device_drops=0 device_sequence_errors=0 padding_blocks=1160 request_count_mismatches=0 assignment=packed_window event_partition=single_stream_ordered_count device_window=explicit_tail semantic_clock=CLOCK_MONOTONIC graph_clock=CLOCK_MONOTONIC device_clock=raw_globaltimer_order_only ownership=authoritative_packed_layout

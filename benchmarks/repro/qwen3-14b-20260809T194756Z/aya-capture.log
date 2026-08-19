@@ -1,0 +1,10 @@
+attached pid=395452 symbols=cuLaunchKernel,cuLaunchKernelEx ring=8MiB duration=25s
+ts=397442487565658 cpu=15 pid=395452 tid=395452 seq=0 api=cuLaunchKernel fn=0x39783370 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+ts=397442487647369 cpu=15 pid=395452 tid=395452 seq=1 api=cuLaunchKernel fn=0x5117a6a0 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+ts=397442487667737 cpu=15 pid=395452 tid=395452 seq=2 api=cuLaunchKernel fn=0x3ea42ed0 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+ts=397442487681433 cpu=15 pid=395452 tid=395452 seq=3 api=cuLaunchKernel fn=0x54631260 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+ts=397442487699785 cpu=15 pid=395452 tid=395452 seq=4 api=cuLaunchKernel fn=0x5467ba80 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+ts=397442487711705 cpu=15 pid=395452 tid=395452 seq=5 api=cuLaunchKernel fn=0x3977c710 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+ts=397442487775961 cpu=15 pid=395452 tid=395452 seq=6 api=cuLaunchKernelEx fn=0x4c5640a0 stream=0x0 grid=(2,1,1) block=(128,1,1) smem=0 flags=0x5
+ts=397442487803529 cpu=15 pid=395452 tid=395452 seq=7 api=cuLaunchKernel fn=0x5468c970 stream=0x0 grid=(1,1,1) block=(128,1,1) smem=0 flags=0x1
+summary events=1076 regular=1034 extended=42 malformed=0 loss_markers=0

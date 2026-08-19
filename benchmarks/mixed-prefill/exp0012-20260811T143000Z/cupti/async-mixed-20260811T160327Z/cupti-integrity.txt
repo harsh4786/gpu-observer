@@ -1,0 +1,6 @@
+kernel_records=11429
+runtime_records=3006
+nvtx_records=395
+streams=1
+summed_kernel_ms=2854.259325
+kernels_without_runtime_correlation=0

@@ -1,0 +1,2395 @@
+Timeslice,Metric,Unit,Stat,Value
+0,Benchmark Duration,sec,avg,15.52
+0,E2E Output Token Throughput,tokens/sec/user,avg,8.26
+0,E2E Output Token Throughput,tokens/sec/user,min,8.25
+0,E2E Output Token Throughput,tokens/sec/user,max,8.31
+0,E2E Output Token Throughput,tokens/sec/user,sum,66.04
+0,E2E Output Token Throughput,tokens/sec/user,p1,8.25
+0,E2E Output Token Throughput,tokens/sec/user,p5,8.25
+0,E2E Output Token Throughput,tokens/sec/user,p10,8.25
+0,E2E Output Token Throughput,tokens/sec/user,p25,8.25
+0,E2E Output Token Throughput,tokens/sec/user,p50,8.25
+0,E2E Output Token Throughput,tokens/sec/user,p75,8.25
+0,E2E Output Token Throughput,tokens/sec/user,p90,8.27
+0,E2E Output Token Throughput,tokens/sec/user,p95,8.29
+0,E2E Output Token Throughput,tokens/sec/user,p99,8.31
+0,E2E Output Token Throughput,tokens/sec/user,std,0.02
+0,HTTP Blocked,ms,avg,0.00
+0,HTTP Blocked,ms,min,0.00
+0,HTTP Blocked,ms,max,0.00
+0,HTTP Blocked,ms,sum,0.00
+0,HTTP Blocked,ms,p1,0.00
+0,HTTP Blocked,ms,p5,0.00
+0,HTTP Blocked,ms,p10,0.00
+0,HTTP Blocked,ms,p25,0.00
+0,HTTP Blocked,ms,p50,0.00
+0,HTTP Blocked,ms,p75,0.00
+0,HTTP Blocked,ms,p90,0.00
+0,HTTP Blocked,ms,p95,0.00
+0,HTTP Blocked,ms,p99,0.00
+0,HTTP Blocked,ms,std,0.00
+0,HTTP Chunks Received,count,avg,128.00
+0,HTTP Chunks Received,count,min,128.00
+0,HTTP Chunks Received,count,max,128.00
+0,HTTP Chunks Received,count,sum,1024.00
+0,HTTP Chunks Received,count,p1,128.00
+0,HTTP Chunks Received,count,p5,128.00
+0,HTTP Chunks Received,count,p10,128.00
+0,HTTP Chunks Received,count,p25,128.00
+0,HTTP Chunks Received,count,p50,128.00
+0,HTTP Chunks Received,count,p75,128.00
+0,HTTP Chunks Received,count,p90,128.00
+0,HTTP Chunks Received,count,p95,128.00
+0,HTTP Chunks Received,count,p99,128.00
+0,HTTP Chunks Received,count,std,0.00
+0,HTTP Chunks Sent,count,avg,1.00
+0,HTTP Chunks Sent,count,min,1.00
+0,HTTP Chunks Sent,count,max,1.00
+0,HTTP Chunks Sent,count,sum,8.00
+0,HTTP Chunks Sent,count,p1,1.00
+0,HTTP Chunks Sent,count,p5,1.00
+0,HTTP Chunks Sent,count,p10,1.00
+0,HTTP Chunks Sent,count,p25,1.00
+0,HTTP Chunks Sent,count,p50,1.00
+0,HTTP Chunks Sent,count,p75,1.00
+0,HTTP Chunks Sent,count,p90,1.00
+0,HTTP Chunks Sent,count,p95,1.00
+0,HTTP Chunks Sent,count,p99,1.00
+0,HTTP Chunks Sent,count,std,0.00
+0,HTTP Connecting,ms,avg,0.00
+0,HTTP Connecting,ms,min,0.00
+0,HTTP Connecting,ms,max,0.00
+0,HTTP Connecting,ms,sum,0.00
+0,HTTP Connecting,ms,p1,0.00
+0,HTTP Connecting,ms,p5,0.00
+0,HTTP Connecting,ms,p10,0.00
+0,HTTP Connecting,ms,p25,0.00
+0,HTTP Connecting,ms,p50,0.00
+0,HTTP Connecting,ms,p75,0.00
+0,HTTP Connecting,ms,p90,0.00
+0,HTTP Connecting,ms,p95,0.00
+0,HTTP Connecting,ms,p99,0.00
+0,HTTP Connecting,ms,std,0.00
+0,HTTP Connection Overhead,ms,avg,0.00
+0,HTTP Connection Overhead,ms,min,0.00
+0,HTTP Connection Overhead,ms,max,0.00
+0,HTTP Connection Overhead,ms,sum,0.00
+0,HTTP Connection Overhead,ms,p1,0.00
+0,HTTP Connection Overhead,ms,p5,0.00
+0,HTTP Connection Overhead,ms,p10,0.00
+0,HTTP Connection Overhead,ms,p25,0.00
+0,HTTP Connection Overhead,ms,p50,0.00
+0,HTTP Connection Overhead,ms,p75,0.00
+0,HTTP Connection Overhead,ms,p90,0.00
+0,HTTP Connection Overhead,ms,p95,0.00
+0,HTTP Connection Overhead,ms,p99,0.00
+0,HTTP Connection Overhead,ms,std,0.00
+0,HTTP Connection Reused,ratio,avg,1.00
+0,HTTP Connection Reused,ratio,min,1.00
+0,HTTP Connection Reused,ratio,max,1.00
+0,HTTP Connection Reused,ratio,sum,8.00
+0,HTTP Connection Reused,ratio,p1,1.00
+0,HTTP Connection Reused,ratio,p5,1.00
+0,HTTP Connection Reused,ratio,p10,1.00
+0,HTTP Connection Reused,ratio,p25,1.00
+0,HTTP Connection Reused,ratio,p50,1.00
+0,HTTP Connection Reused,ratio,p75,1.00
+0,HTTP Connection Reused,ratio,p90,1.00
+0,HTTP Connection Reused,ratio,p95,1.00
+0,HTTP Connection Reused,ratio,p99,1.00
+0,HTTP Connection Reused,ratio,std,0.00
+0,HTTP Data Received,KB,avg,31.16
+0,HTTP Data Received,KB,min,31.05
+0,HTTP Data Received,KB,max,31.23
+0,HTTP Data Received,KB,sum,249.28
+0,HTTP Data Received,KB,p1,31.05
+0,HTTP Data Received,KB,p5,31.08
+0,HTTP Data Received,KB,p10,31.11
+0,HTTP Data Received,KB,p25,31.15
+0,HTTP Data Received,KB,p50,31.17
+0,HTTP Data Received,KB,p75,31.19
+0,HTTP Data Received,KB,p90,31.21
+0,HTTP Data Received,KB,p95,31.22
+0,HTTP Data Received,KB,p99,31.22
+0,HTTP Data Received,KB,std,0.05
+0,HTTP Data Sent,KB,avg,0.28
+0,HTTP Data Sent,KB,min,0.17
+0,HTTP Data Sent,KB,max,0.43
+0,HTTP Data Sent,KB,sum,2.25
+0,HTTP Data Sent,KB,p1,0.17
+0,HTTP Data Sent,KB,p5,0.17
+0,HTTP Data Sent,KB,p10,0.18
+0,HTTP Data Sent,KB,p25,0.19
+0,HTTP Data Sent,KB,p50,0.27
+0,HTTP Data Sent,KB,p75,0.37
+0,HTTP Data Sent,KB,p90,0.39
+0,HTTP Data Sent,KB,p95,0.41
+0,HTTP Data Sent,KB,p99,0.42
+0,HTTP Data Sent,KB,std,0.10
+0,HTTP DNS Lookup,ms,avg,0.00
+0,HTTP DNS Lookup,ms,min,0.00
+0,HTTP DNS Lookup,ms,max,0.00
+0,HTTP DNS Lookup,ms,sum,0.00
+0,HTTP DNS Lookup,ms,p1,0.00
+0,HTTP DNS Lookup,ms,p5,0.00
+0,HTTP DNS Lookup,ms,p10,0.00
+0,HTTP DNS Lookup,ms,p25,0.00
+0,HTTP DNS Lookup,ms,p50,0.00
+0,HTTP DNS Lookup,ms,p75,0.00
+0,HTTP DNS Lookup,ms,p90,0.00
+0,HTTP DNS Lookup,ms,p95,0.00
+0,HTTP DNS Lookup,ms,p99,0.00
+0,HTTP DNS Lookup,ms,std,0.00
+0,HTTP Duration (excl. conn),ms,avg,15505.40
+0,HTTP Duration (excl. conn),ms,min,15402.19
+0,HTTP Duration (excl. conn),ms,max,15520.35
+0,HTTP Duration (excl. conn),ms,sum,124043.21
+0,HTTP Duration (excl. conn),ms,p1,15410.43
+0,HTTP Duration (excl. conn),ms,p5,15443.42
+0,HTTP Duration (excl. conn),ms,p10,15484.65
+0,HTTP Duration (excl. conn),ms,p25,15520.00
+0,HTTP Duration (excl. conn),ms,p50,15520.07
+0,HTTP Duration (excl. conn),ms,p75,15520.26
+0,HTTP Duration (excl. conn),ms,p90,15520.31
+0,HTTP Duration (excl. conn),ms,p95,15520.33
+0,HTTP Duration (excl. conn),ms,p99,15520.35
+0,HTTP Duration (excl. conn),ms,std,39.01
+0,HTTP Receiving,ms,avg,15213.37
+0,HTTP Receiving,ms,min,15209.08
+0,HTTP Receiving,ms,max,15242.98
+0,HTTP Receiving,ms,sum,121706.95
+0,HTTP Receiving,ms,p1,15209.08
+0,HTTP Receiving,ms,p5,15209.09
+0,HTTP Receiving,ms,p10,15209.11
+0,HTTP Receiving,ms,p25,15209.13
+0,HTTP Receiving,ms,p50,15209.15
+0,HTTP Receiving,ms,p75,15209.17
+0,HTTP Receiving,ms,p90,15219.32
+0,HTTP Receiving,ms,p95,15231.15
+0,HTTP Receiving,ms,p99,15240.61
+0,HTTP Receiving,ms,std,11.19
+0,HTTP Sending,ms,avg,0.16
+0,HTTP Sending,ms,min,0.12
+0,HTTP Sending,ms,max,0.19
+0,HTTP Sending,ms,sum,1.29
+0,HTTP Sending,ms,p1,0.12
+0,HTTP Sending,ms,p5,0.12
+0,HTTP Sending,ms,p10,0.12
+0,HTTP Sending,ms,p25,0.13
+0,HTTP Sending,ms,p50,0.18
+0,HTTP Sending,ms,p75,0.19
+0,HTTP Sending,ms,p90,0.19
+0,HTTP Sending,ms,p95,0.19
+0,HTTP Sending,ms,p99,0.19
+0,HTTP Sending,ms,std,0.03
+0,HTTP Total Time,ms,avg,15505.40
+0,HTTP Total Time,ms,min,15402.19
+0,HTTP Total Time,ms,max,15520.35
+0,HTTP Total Time,ms,sum,124043.21
+0,HTTP Total Time,ms,p1,15410.43
+0,HTTP Total Time,ms,p5,15443.42
+0,HTTP Total Time,ms,p10,15484.65
+0,HTTP Total Time,ms,p25,15520.00
+0,HTTP Total Time,ms,p50,15520.07
+0,HTTP Total Time,ms,p75,15520.26
+0,HTTP Total Time,ms,p90,15520.31
+0,HTTP Total Time,ms,p95,15520.33
+0,HTTP Total Time,ms,p99,15520.35
+0,HTTP Total Time,ms,std,39.01
+0,HTTP Waiting (TTFB),ms,avg,291.87
+0,HTTP Waiting (TTFB),ms,min,159.09
+0,HTTP Waiting (TTFB),ms,max,311.04
+0,HTTP Waiting (TTFB),ms,sum,2334.97
+0,HTTP Waiting (TTFB),ms,p1,169.70
+0,HTTP Waiting (TTFB),ms,p5,212.14
+0,HTTP Waiting (TTFB),ms,p10,265.20
+0,HTTP Waiting (TTFB),ms,p25,310.69
+0,HTTP Waiting (TTFB),ms,p50,310.80
+0,HTTP Waiting (TTFB),ms,p75,310.92
+0,HTTP Waiting (TTFB),ms,p90,311.00
+0,HTTP Waiting (TTFB),ms,p95,311.02
+0,HTTP Waiting (TTFB),ms,p99,311.04
+0,HTTP Waiting (TTFB),ms,std,50.19
+0,Inter Chunk Latency,ms,avg,119.79
+0,Inter Chunk Latency,ms,min,116.47
+0,Inter Chunk Latency,ms,max,152.25
+0,Inter Chunk Latency,ms,sum,121706.93
+0,Inter Chunk Latency,ms,p1,117.39
+0,Inter Chunk Latency,ms,p5,117.94
+0,Inter Chunk Latency,ms,p10,118.34
+0,Inter Chunk Latency,ms,p25,118.83
+0,Inter Chunk Latency,ms,p50,119.64
+0,Inter Chunk Latency,ms,p75,120.37
+0,Inter Chunk Latency,ms,p90,121.57
+0,Inter Chunk Latency,ms,p95,122.19
+0,Inter Chunk Latency,ms,p99,124.34
+0,Inter Chunk Latency,ms,std,1.67
+0,Inter Token Latency,ms,avg,119.79
+0,Inter Token Latency,ms,min,119.76
+0,Inter Token Latency,ms,max,120.02
+0,Inter Token Latency,ms,sum,958.32
+0,Inter Token Latency,ms,p1,119.76
+0,Inter Token Latency,ms,p5,119.76
+0,Inter Token Latency,ms,p10,119.76
+0,Inter Token Latency,ms,p25,119.76
+0,Inter Token Latency,ms,p50,119.76
+0,Inter Token Latency,ms,p75,119.76
+0,Inter Token Latency,ms,p90,119.84
+0,Inter Token Latency,ms,p95,119.93
+0,Inter Token Latency,ms,p99,120.00
+0,Inter Token Latency,ms,std,0.09
+0,Output Sequence Length,tokens,avg,128.00
+0,Output Sequence Length,tokens,min,128.00
+0,Output Sequence Length,tokens,max,128.00
+0,Output Sequence Length,tokens,sum,1024.00
+0,Output Sequence Length,tokens,p1,128.00
+0,Output Sequence Length,tokens,p5,128.00
+0,Output Sequence Length,tokens,p10,128.00
+0,Output Sequence Length,tokens,p25,128.00
+0,Output Sequence Length,tokens,p50,128.00
+0,Output Sequence Length,tokens,p75,128.00
+0,Output Sequence Length,tokens,p90,128.00
+0,Output Sequence Length,tokens,p95,128.00
+0,Output Sequence Length,tokens,p99,128.00
+0,Output Sequence Length,tokens,std,0.00
+0,Output Token Count,tokens,avg,128.00
+0,Output Token Count,tokens,min,128.00
+0,Output Token Count,tokens,max,128.00
+0,Output Token Count,tokens,sum,1024.00
+0,Output Token Count,tokens,p1,128.00
+0,Output Token Count,tokens,p5,128.00
+0,Output Token Count,tokens,p10,128.00
+0,Output Token Count,tokens,p25,128.00
+0,Output Token Count,tokens,p50,128.00
+0,Output Token Count,tokens,p75,128.00
+0,Output Token Count,tokens,p90,128.00
+0,Output Token Count,tokens,p95,128.00
+0,Output Token Count,tokens,p99,128.00
+0,Output Token Count,tokens,std,0.00
+0,Output Token Throughput,tokens/sec,avg,65.98
+0,Output Token Throughput Per User,tokens/sec/user,avg,8.35
+0,Output Token Throughput Per User,tokens/sec/user,min,8.33
+0,Output Token Throughput Per User,tokens/sec/user,max,8.35
+0,Output Token Throughput Per User,tokens/sec/user,sum,66.78
+0,Output Token Throughput Per User,tokens/sec/user,p1,8.33
+0,Output Token Throughput Per User,tokens/sec/user,p5,8.34
+0,Output Token Throughput Per User,tokens/sec/user,p10,8.34
+0,Output Token Throughput Per User,tokens/sec/user,p25,8.35
+0,Output Token Throughput Per User,tokens/sec/user,p50,8.35
+0,Output Token Throughput Per User,tokens/sec/user,p75,8.35
+0,Output Token Throughput Per User,tokens/sec/user,p90,8.35
+0,Output Token Throughput Per User,tokens/sec/user,p95,8.35
+0,Output Token Throughput Per User,tokens/sec/user,p99,8.35
+0,Output Token Throughput Per User,tokens/sec/user,std,0.01
+0,Request Count,requests,avg,8.00
+0,Request Latency,ms,avg,15505.47
+0,Request Latency,ms,min,15402.25
+0,Request Latency,ms,max,15520.41
+0,Request Latency,ms,sum,124043.77
+0,Request Latency,ms,p1,15410.50
+0,Request Latency,ms,p5,15443.49
+0,Request Latency,ms,p10,15484.72
+0,Request Latency,ms,p25,15520.08
+0,Request Latency,ms,p50,15520.13
+0,Request Latency,ms,p75,15520.33
+0,Request Latency,ms,p90,15520.39
+0,Request Latency,ms,p95,15520.40
+0,Request Latency,ms,p99,15520.41
+0,Request Latency,ms,std,39.01
+0,Request Throughput,requests/sec,avg,0.52
+0,Time to First Output Token,ms,avg,292.10
+0,Time to First Output Token,ms,min,159.27
+0,Time to First Output Token,ms,max,311.24
+0,Time to First Output Token,ms,sum,2336.84
+0,Time to First Output Token,ms,p1,169.89
+0,Time to First Output Token,ms,p5,212.36
+0,Time to First Output Token,ms,p10,265.44
+0,Time to First Output Token,ms,p25,310.95
+0,Time to First Output Token,ms,p50,311.02
+0,Time to First Output Token,ms,p75,311.17
+0,Time to First Output Token,ms,p90,311.23
+0,Time to First Output Token,ms,p95,311.24
+0,Time to First Output Token,ms,p99,311.24
+0,Time to First Output Token,ms,std,50.21
+0,Time to First Token,ms,avg,292.10
+0,Time to First Token,ms,min,159.27
+0,Time to First Token,ms,max,311.24
+0,Time to First Token,ms,sum,2336.84
+0,Time to First Token,ms,p1,169.89
+0,Time to First Token,ms,p5,212.36
+0,Time to First Token,ms,p10,265.44
+0,Time to First Token,ms,p25,310.95
+0,Time to First Token,ms,p50,311.02
+0,Time to First Token,ms,p75,311.17
+0,Time to First Token,ms,p90,311.23
+0,Time to First Token,ms,p95,311.24
+0,Time to First Token,ms,p99,311.24
+0,Time to First Token,ms,std,50.21
+0,Time to Second Token,ms,avg,124.99
+0,Time to Second Token,ms,min,121.05
+0,Time to Second Token,ms,max,152.25
+0,Time to Second Token,ms,sum,999.94
+0,Time to Second Token,ms,p1,121.06
+0,Time to Second Token,ms,p5,121.06
+0,Time to Second Token,ms,p10,121.06
+0,Time to Second Token,ms,p25,121.08
+0,Time to Second Token,ms,p50,121.09
+0,Time to Second Token,ms,p75,121.13
+0,Time to Second Token,ms,p90,130.52
+0,Time to Second Token,ms,p95,141.39
+0,Time to Second Token,ms,p99,150.08
+0,Time to Second Token,ms,std,10.30
+0,Total Output Sequence Length,tokens,avg,1024.00
+0,Total Output Tokens,tokens,avg,1024.00
+1,Benchmark Duration,sec,avg,31.38
+1,E2E Output Token Throughput,tokens/sec/user,avg,8.19
+1,E2E Output Token Throughput,tokens/sec/user,min,8.18
+1,E2E Output Token Throughput,tokens/sec/user,max,8.26
+1,E2E Output Token Throughput,tokens/sec/user,sum,131.08
+1,E2E Output Token Throughput,tokens/sec/user,p1,8.18
+1,E2E Output Token Throughput,tokens/sec/user,p5,8.18
+1,E2E Output Token Throughput,tokens/sec/user,p10,8.18
+1,E2E Output Token Throughput,tokens/sec/user,p25,8.18
+1,E2E Output Token Throughput,tokens/sec/user,p50,8.19
+1,E2E Output Token Throughput,tokens/sec/user,p75,8.19
+1,E2E Output Token Throughput,tokens/sec/user,p90,8.19
+1,E2E Output Token Throughput,tokens/sec/user,p95,8.21
+1,E2E Output Token Throughput,tokens/sec/user,p99,8.25
+1,E2E Output Token Throughput,tokens/sec/user,std,0.02
+1,HTTP Blocked,ms,avg,0.00
+1,HTTP Blocked,ms,min,0.00
+1,HTTP Blocked,ms,max,0.00
+1,HTTP Blocked,ms,sum,0.00
+1,HTTP Blocked,ms,p1,0.00
+1,HTTP Blocked,ms,p5,0.00
+1,HTTP Blocked,ms,p10,0.00
+1,HTTP Blocked,ms,p25,0.00
+1,HTTP Blocked,ms,p50,0.00
+1,HTTP Blocked,ms,p75,0.00
+1,HTTP Blocked,ms,p90,0.00
+1,HTTP Blocked,ms,p95,0.00
+1,HTTP Blocked,ms,p99,0.00
+1,HTTP Blocked,ms,std,0.00
+1,HTTP Chunks Received,count,avg,128.00
+1,HTTP Chunks Received,count,min,128.00
+1,HTTP Chunks Received,count,max,128.00
+1,HTTP Chunks Received,count,sum,2048.00
+1,HTTP Chunks Received,count,p1,128.00
+1,HTTP Chunks Received,count,p5,128.00
+1,HTTP Chunks Received,count,p10,128.00
+1,HTTP Chunks Received,count,p25,128.00
+1,HTTP Chunks Received,count,p50,128.00
+1,HTTP Chunks Received,count,p75,128.00
+1,HTTP Chunks Received,count,p90,128.00
+1,HTTP Chunks Received,count,p95,128.00
+1,HTTP Chunks Received,count,p99,128.00
+1,HTTP Chunks Received,count,std,0.00
+1,HTTP Chunks Sent,count,avg,1.00
+1,HTTP Chunks Sent,count,min,1.00
+1,HTTP Chunks Sent,count,max,1.00
+1,HTTP Chunks Sent,count,sum,16.00
+1,HTTP Chunks Sent,count,p1,1.00
+1,HTTP Chunks Sent,count,p5,1.00
+1,HTTP Chunks Sent,count,p10,1.00
+1,HTTP Chunks Sent,count,p25,1.00
+1,HTTP Chunks Sent,count,p50,1.00
+1,HTTP Chunks Sent,count,p75,1.00
+1,HTTP Chunks Sent,count,p90,1.00
+1,HTTP Chunks Sent,count,p95,1.00
+1,HTTP Chunks Sent,count,p99,1.00
+1,HTTP Chunks Sent,count,std,0.00
+1,HTTP Connecting,ms,avg,0.00
+1,HTTP Connecting,ms,min,0.00
+1,HTTP Connecting,ms,max,0.00
+1,HTTP Connecting,ms,sum,0.00
+1,HTTP Connecting,ms,p1,0.00
+1,HTTP Connecting,ms,p5,0.00
+1,HTTP Connecting,ms,p10,0.00
+1,HTTP Connecting,ms,p25,0.00
+1,HTTP Connecting,ms,p50,0.00
+1,HTTP Connecting,ms,p75,0.00
+1,HTTP Connecting,ms,p90,0.00
+1,HTTP Connecting,ms,p95,0.00
+1,HTTP Connecting,ms,p99,0.00
+1,HTTP Connecting,ms,std,0.00
+1,HTTP Connection Overhead,ms,avg,0.00
+1,HTTP Connection Overhead,ms,min,0.00
+1,HTTP Connection Overhead,ms,max,0.00
+1,HTTP Connection Overhead,ms,sum,0.00
+1,HTTP Connection Overhead,ms,p1,0.00
+1,HTTP Connection Overhead,ms,p5,0.00
+1,HTTP Connection Overhead,ms,p10,0.00
+1,HTTP Connection Overhead,ms,p25,0.00
+1,HTTP Connection Overhead,ms,p50,0.00
+1,HTTP Connection Overhead,ms,p75,0.00
+1,HTTP Connection Overhead,ms,p90,0.00
+1,HTTP Connection Overhead,ms,p95,0.00
+1,HTTP Connection Overhead,ms,p99,0.00
+1,HTTP Connection Overhead,ms,std,0.00
+1,HTTP Connection Reused,ratio,avg,1.00
+1,HTTP Connection Reused,ratio,min,1.00
+1,HTTP Connection Reused,ratio,max,1.00
+1,HTTP Connection Reused,ratio,sum,16.00
+1,HTTP Connection Reused,ratio,p1,1.00
+1,HTTP Connection Reused,ratio,p5,1.00
+1,HTTP Connection Reused,ratio,p10,1.00
+1,HTTP Connection Reused,ratio,p25,1.00
+1,HTTP Connection Reused,ratio,p50,1.00
+1,HTTP Connection Reused,ratio,p75,1.00
+1,HTTP Connection Reused,ratio,p90,1.00
+1,HTTP Connection Reused,ratio,p95,1.00
+1,HTTP Connection Reused,ratio,p99,1.00
+1,HTTP Connection Reused,ratio,std,0.00
+1,HTTP Data Received,KB,avg,31.14
+1,HTTP Data Received,KB,min,31.05
+1,HTTP Data Received,KB,max,31.23
+1,HTTP Data Received,KB,sum,498.29
+1,HTTP Data Received,KB,p1,31.06
+1,HTTP Data Received,KB,p5,31.08
+1,HTTP Data Received,KB,p10,31.10
+1,HTTP Data Received,KB,p25,31.13
+1,HTTP Data Received,KB,p50,31.14
+1,HTTP Data Received,KB,p75,31.17
+1,HTTP Data Received,KB,p90,31.19
+1,HTTP Data Received,KB,p95,31.20
+1,HTTP Data Received,KB,p99,31.22
+1,HTTP Data Received,KB,std,0.04
+1,HTTP Data Sent,KB,avg,0.23
+1,HTTP Data Sent,KB,min,0.16
+1,HTTP Data Sent,KB,max,0.43
+1,HTTP Data Sent,KB,sum,3.69
+1,HTTP Data Sent,KB,p1,0.16
+1,HTTP Data Sent,KB,p5,0.16
+1,HTTP Data Sent,KB,p10,0.17
+1,HTTP Data Sent,KB,p25,0.17
+1,HTTP Data Sent,KB,p50,0.19
+1,HTTP Data Sent,KB,p75,0.24
+1,HTTP Data Sent,KB,p90,0.37
+1,HTTP Data Sent,KB,p95,0.39
+1,HTTP Data Sent,KB,p99,0.42
+1,HTTP Data Sent,KB,std,0.09
+1,HTTP DNS Lookup,ms,avg,0.00
+1,HTTP DNS Lookup,ms,min,0.00
+1,HTTP DNS Lookup,ms,max,0.00
+1,HTTP DNS Lookup,ms,sum,0.00
+1,HTTP DNS Lookup,ms,p1,0.00
+1,HTTP DNS Lookup,ms,p5,0.00
+1,HTTP DNS Lookup,ms,p10,0.00
+1,HTTP DNS Lookup,ms,p25,0.00
+1,HTTP DNS Lookup,ms,p50,0.00
+1,HTTP DNS Lookup,ms,p75,0.00
+1,HTTP DNS Lookup,ms,p90,0.00
+1,HTTP DNS Lookup,ms,p95,0.00
+1,HTTP DNS Lookup,ms,p99,0.00
+1,HTTP DNS Lookup,ms,std,0.00
+1,HTTP Duration (excl. conn),ms,avg,15624.00
+1,HTTP Duration (excl. conn),ms,min,15498.87
+1,HTTP Duration (excl. conn),ms,max,15638.96
+1,HTTP Duration (excl. conn),ms,sum,249983.97
+1,HTTP Duration (excl. conn),ms,p1,15517.78
+1,HTTP Duration (excl. conn),ms,p5,15593.41
+1,HTTP Duration (excl. conn),ms,p10,15624.93
+1,HTTP Duration (excl. conn),ms,p25,15624.95
+1,HTTP Duration (excl. conn),ms,p50,15631.78
+1,HTTP Duration (excl. conn),ms,p75,15638.79
+1,HTTP Duration (excl. conn),ms,p90,15638.83
+1,HTTP Duration (excl. conn),ms,p95,15638.87
+1,HTTP Duration (excl. conn),ms,p99,15638.95
+1,HTTP Duration (excl. conn),ms,std,32.99
+1,HTTP Receiving,ms,avg,15234.17
+1,HTTP Receiving,ms,min,15226.93
+1,HTTP Receiving,ms,max,15267.47
+1,HTTP Receiving,ms,sum,243746.70
+1,HTTP Receiving,ms,p1,15226.93
+1,HTTP Receiving,ms,p5,15226.95
+1,HTTP Receiving,ms,p10,15226.98
+1,HTTP Receiving,ms,p25,15227.07
+1,HTTP Receiving,ms,p50,15234.09
+1,HTTP Receiving,ms,p75,15234.17
+1,HTTP Receiving,ms,p90,15242.61
+1,HTTP Receiving,ms,p95,15255.10
+1,HTTP Receiving,ms,p99,15265.00
+1,HTTP Receiving,ms,std,10.45
+1,HTTP Sending,ms,avg,0.24
+1,HTTP Sending,ms,min,0.17
+1,HTTP Sending,ms,max,0.36
+1,HTTP Sending,ms,sum,3.77
+1,HTTP Sending,ms,p1,0.17
+1,HTTP Sending,ms,p5,0.17
+1,HTTP Sending,ms,p10,0.17
+1,HTTP Sending,ms,p25,0.18
+1,HTTP Sending,ms,p50,0.23
+1,HTTP Sending,ms,p75,0.29
+1,HTTP Sending,ms,p90,0.32
+1,HTTP Sending,ms,p95,0.33
+1,HTTP Sending,ms,p99,0.36
+1,HTTP Sending,ms,std,0.06
+1,HTTP Total Time,ms,avg,15624.00
+1,HTTP Total Time,ms,min,15498.87
+1,HTTP Total Time,ms,max,15638.96
+1,HTTP Total Time,ms,sum,249983.97
+1,HTTP Total Time,ms,p1,15517.78
+1,HTTP Total Time,ms,p5,15593.41
+1,HTTP Total Time,ms,p10,15624.93
+1,HTTP Total Time,ms,p25,15624.95
+1,HTTP Total Time,ms,p50,15631.78
+1,HTTP Total Time,ms,p75,15638.79
+1,HTTP Total Time,ms,p90,15638.83
+1,HTTP Total Time,ms,p95,15638.87
+1,HTTP Total Time,ms,p99,15638.95
+1,HTTP Total Time,ms,std,32.99
+1,HTTP Waiting (TTFB),ms,avg,389.59
+1,HTTP Waiting (TTFB),ms,min,247.61
+1,HTTP Waiting (TTFB),ms,max,404.55
+1,HTTP Waiting (TTFB),ms,sum,6233.50
+1,HTTP Waiting (TTFB),ms,p1,266.06
+1,HTTP Waiting (TTFB),ms,p5,339.86
+1,HTTP Waiting (TTFB),ms,p10,384.14
+1,HTTP Waiting (TTFB),ms,p25,397.70
+1,HTTP Waiting (TTFB),ms,p50,397.89
+1,HTTP Waiting (TTFB),ms,p75,404.36
+1,HTTP Waiting (TTFB),ms,p90,404.45
+1,HTTP Waiting (TTFB),ms,p95,404.49
+1,HTTP Waiting (TTFB),ms,p99,404.54
+1,HTTP Waiting (TTFB),ms,std,37.52
+1,Inter Chunk Latency,ms,avg,119.95
+1,Inter Chunk Latency,ms,min,116.17
+1,Inter Chunk Latency,ms,max,155.71
+1,Inter Chunk Latency,ms,sum,243746.63
+1,Inter Chunk Latency,ms,p1,117.78
+1,Inter Chunk Latency,ms,p5,118.39
+1,Inter Chunk Latency,ms,p10,118.61
+1,Inter Chunk Latency,ms,p25,119.11
+1,Inter Chunk Latency,ms,p50,119.68
+1,Inter Chunk Latency,ms,p75,120.39
+1,Inter Chunk Latency,ms,p90,121.89
+1,Inter Chunk Latency,ms,p95,122.72
+1,Inter Chunk Latency,ms,p99,124.04
+1,Inter Chunk Latency,ms,std,1.56
+1,Inter Token Latency,ms,avg,119.95
+1,Inter Token Latency,ms,min,119.90
+1,Inter Token Latency,ms,max,120.22
+1,Inter Token Latency,ms,sum,1919.26
+1,Inter Token Latency,ms,p1,119.90
+1,Inter Token Latency,ms,p5,119.90
+1,Inter Token Latency,ms,p10,119.90
+1,Inter Token Latency,ms,p25,119.90
+1,Inter Token Latency,ms,p50,119.95
+1,Inter Token Latency,ms,p75,119.95
+1,Inter Token Latency,ms,p90,120.02
+1,Inter Token Latency,ms,p95,120.12
+1,Inter Token Latency,ms,p99,120.20
+1,Inter Token Latency,ms,std,0.08
+1,Output Sequence Length,tokens,avg,128.00
+1,Output Sequence Length,tokens,min,128.00
+1,Output Sequence Length,tokens,max,128.00
+1,Output Sequence Length,tokens,sum,2048.00
+1,Output Sequence Length,tokens,p1,128.00
+1,Output Sequence Length,tokens,p5,128.00
+1,Output Sequence Length,tokens,p10,128.00
+1,Output Sequence Length,tokens,p25,128.00
+1,Output Sequence Length,tokens,p50,128.00
+1,Output Sequence Length,tokens,p75,128.00
+1,Output Sequence Length,tokens,p90,128.00
+1,Output Sequence Length,tokens,p95,128.00
+1,Output Sequence Length,tokens,p99,128.00
+1,Output Sequence Length,tokens,std,0.00
+1,Output Token Count,tokens,avg,128.00
+1,Output Token Count,tokens,min,128.00
+1,Output Token Count,tokens,max,128.00
+1,Output Token Count,tokens,sum,2048.00
+1,Output Token Count,tokens,p1,128.00
+1,Output Token Count,tokens,p5,128.00
+1,Output Token Count,tokens,p10,128.00
+1,Output Token Count,tokens,p25,128.00
+1,Output Token Count,tokens,p50,128.00
+1,Output Token Count,tokens,p75,128.00
+1,Output Token Count,tokens,p90,128.00
+1,Output Token Count,tokens,p95,128.00
+1,Output Token Count,tokens,p99,128.00
+1,Output Token Count,tokens,std,0.00
+1,Output Token Throughput,tokens/sec,avg,65.26
+1,Output Token Throughput Per User,tokens/sec/user,avg,8.34
+1,Output Token Throughput Per User,tokens/sec/user,min,8.32
+1,Output Token Throughput Per User,tokens/sec/user,max,8.34
+1,Output Token Throughput Per User,tokens/sec/user,sum,133.38
+1,Output Token Throughput Per User,tokens/sec/user,p1,8.32
+1,Output Token Throughput Per User,tokens/sec/user,p5,8.33
+1,Output Token Throughput Per User,tokens/sec/user,p10,8.33
+1,Output Token Throughput Per User,tokens/sec/user,p25,8.34
+1,Output Token Throughput Per User,tokens/sec/user,p50,8.34
+1,Output Token Throughput Per User,tokens/sec/user,p75,8.34
+1,Output Token Throughput Per User,tokens/sec/user,p90,8.34
+1,Output Token Throughput Per User,tokens/sec/user,p95,8.34
+1,Output Token Throughput Per User,tokens/sec/user,p99,8.34
+1,Output Token Throughput Per User,tokens/sec/user,std,0.01
+1,Request Count,requests,avg,16.00
+1,Request Latency,ms,avg,15624.10
+1,Request Latency,ms,min,15499.04
+1,Request Latency,ms,max,15639.06
+1,Request Latency,ms,sum,249985.60
+1,Request Latency,ms,p1,15517.93
+1,Request Latency,ms,p5,15593.51
+1,Request Latency,ms,p10,15625.01
+1,Request Latency,ms,p25,15625.07
+1,Request Latency,ms,p50,15631.87
+1,Request Latency,ms,p75,15638.89
+1,Request Latency,ms,p90,15638.93
+1,Request Latency,ms,p95,15638.97
+1,Request Latency,ms,p99,15639.04
+1,Request Latency,ms,std,32.97
+1,Request Throughput,requests/sec,avg,0.51
+1,Time to First Output Token,ms,avg,389.94
+1,Time to First Output Token,ms,min,248.04
+1,Time to First Output Token,ms,max,404.96
+1,Time to First Output Token,ms,sum,6238.96
+1,Time to First Output Token,ms,p1,266.50
+1,Time to First Output Token,ms,p5,340.32
+1,Time to First Output Token,ms,p10,384.50
+1,Time to First Output Token,ms,p25,397.97
+1,Time to First Output Token,ms,p50,398.16
+1,Time to First Output Token,ms,p75,404.75
+1,Time to First Output Token,ms,p90,404.80
+1,Time to First Output Token,ms,p95,404.84
+1,Time to First Output Token,ms,p99,404.94
+1,Time to First Output Token,ms,std,37.49
+1,Time to First Token,ms,avg,389.94
+1,Time to First Token,ms,min,248.04
+1,Time to First Token,ms,max,404.96
+1,Time to First Token,ms,sum,6238.96
+1,Time to First Token,ms,p1,266.50
+1,Time to First Token,ms,p5,340.32
+1,Time to First Token,ms,p10,384.50
+1,Time to First Token,ms,p25,397.97
+1,Time to First Token,ms,p50,398.16
+1,Time to First Token,ms,p75,404.75
+1,Time to First Token,ms,p90,404.80
+1,Time to First Token,ms,p95,404.84
+1,Time to First Token,ms,p99,404.94
+1,Time to First Token,ms,std,37.49
+1,Time to Second Token,ms,avg,122.73
+1,Time to Second Token,ms,min,119.30
+1,Time to Second Token,ms,max,135.02
+1,Time to Second Token,ms,sum,1963.64
+1,Time to Second Token,ms,p1,119.36
+1,Time to Second Token,ms,p5,119.58
+1,Time to Second Token,ms,p10,119.69
+1,Time to Second Token,ms,p25,119.71
+1,Time to Second Token,ms,p50,122.09
+1,Time to Second Token,ms,p75,124.47
+1,Time to Second Token,ms,p90,124.54
+1,Time to Second Token,ms,p95,127.18
+1,Time to Second Token,ms,p99,133.45
+1,Time to Second Token,ms,std,3.93
+1,Total Output Sequence Length,tokens,avg,2048.00
+1,Total Output Tokens,tokens,avg,2048.00
+2,Benchmark Duration,sec,avg,31.50
+2,E2E Output Token Throughput,tokens/sec/user,avg,8.19
+2,E2E Output Token Throughput,tokens/sec/user,min,8.19
+2,E2E Output Token Throughput,tokens/sec/user,max,8.20
+2,E2E Output Token Throughput,tokens/sec/user,sum,131.06
+2,E2E Output Token Throughput,tokens/sec/user,p1,8.19
+2,E2E Output Token Throughput,tokens/sec/user,p5,8.19
+2,E2E Output Token Throughput,tokens/sec/user,p10,8.19
+2,E2E Output Token Throughput,tokens/sec/user,p25,8.19
+2,E2E Output Token Throughput,tokens/sec/user,p50,8.19
+2,E2E Output Token Throughput,tokens/sec/user,p75,8.20
+2,E2E Output Token Throughput,tokens/sec/user,p90,8.20
+2,E2E Output Token Throughput,tokens/sec/user,p95,8.20
+2,E2E Output Token Throughput,tokens/sec/user,p99,8.20
+2,E2E Output Token Throughput,tokens/sec/user,std,0.01
+2,HTTP Blocked,ms,avg,0.00
+2,HTTP Blocked,ms,min,0.00
+2,HTTP Blocked,ms,max,0.00
+2,HTTP Blocked,ms,sum,0.00
+2,HTTP Blocked,ms,p1,0.00
+2,HTTP Blocked,ms,p5,0.00
+2,HTTP Blocked,ms,p10,0.00
+2,HTTP Blocked,ms,p25,0.00
+2,HTTP Blocked,ms,p50,0.00
+2,HTTP Blocked,ms,p75,0.00
+2,HTTP Blocked,ms,p90,0.00
+2,HTTP Blocked,ms,p95,0.00
+2,HTTP Blocked,ms,p99,0.00
+2,HTTP Blocked,ms,std,0.00
+2,HTTP Chunks Received,count,avg,128.00
+2,HTTP Chunks Received,count,min,128.00
+2,HTTP Chunks Received,count,max,128.00
+2,HTTP Chunks Received,count,sum,2048.00
+2,HTTP Chunks Received,count,p1,128.00
+2,HTTP Chunks Received,count,p5,128.00
+2,HTTP Chunks Received,count,p10,128.00
+2,HTTP Chunks Received,count,p25,128.00
+2,HTTP Chunks Received,count,p50,128.00
+2,HTTP Chunks Received,count,p75,128.00
+2,HTTP Chunks Received,count,p90,128.00
+2,HTTP Chunks Received,count,p95,128.00
+2,HTTP Chunks Received,count,p99,128.00
+2,HTTP Chunks Received,count,std,0.00
+2,HTTP Chunks Sent,count,avg,1.00
+2,HTTP Chunks Sent,count,min,1.00
+2,HTTP Chunks Sent,count,max,1.00
+2,HTTP Chunks Sent,count,sum,16.00
+2,HTTP Chunks Sent,count,p1,1.00
+2,HTTP Chunks Sent,count,p5,1.00
+2,HTTP Chunks Sent,count,p10,1.00
+2,HTTP Chunks Sent,count,p25,1.00
+2,HTTP Chunks Sent,count,p50,1.00
+2,HTTP Chunks Sent,count,p75,1.00
+2,HTTP Chunks Sent,count,p90,1.00
+2,HTTP Chunks Sent,count,p95,1.00
+2,HTTP Chunks Sent,count,p99,1.00
+2,HTTP Chunks Sent,count,std,0.00
+2,HTTP Connecting,ms,avg,0.00
+2,HTTP Connecting,ms,min,0.00
+2,HTTP Connecting,ms,max,0.00
+2,HTTP Connecting,ms,sum,0.00
+2,HTTP Connecting,ms,p1,0.00
+2,HTTP Connecting,ms,p5,0.00
+2,HTTP Connecting,ms,p10,0.00
+2,HTTP Connecting,ms,p25,0.00
+2,HTTP Connecting,ms,p50,0.00
+2,HTTP Connecting,ms,p75,0.00
+2,HTTP Connecting,ms,p90,0.00
+2,HTTP Connecting,ms,p95,0.00
+2,HTTP Connecting,ms,p99,0.00
+2,HTTP Connecting,ms,std,0.00
+2,HTTP Connection Overhead,ms,avg,0.00
+2,HTTP Connection Overhead,ms,min,0.00
+2,HTTP Connection Overhead,ms,max,0.00
+2,HTTP Connection Overhead,ms,sum,0.00
+2,HTTP Connection Overhead,ms,p1,0.00
+2,HTTP Connection Overhead,ms,p5,0.00
+2,HTTP Connection Overhead,ms,p10,0.00
+2,HTTP Connection Overhead,ms,p25,0.00
+2,HTTP Connection Overhead,ms,p50,0.00
+2,HTTP Connection Overhead,ms,p75,0.00
+2,HTTP Connection Overhead,ms,p90,0.00
+2,HTTP Connection Overhead,ms,p95,0.00
+2,HTTP Connection Overhead,ms,p99,0.00
+2,HTTP Connection Overhead,ms,std,0.00
+2,HTTP Connection Reused,ratio,avg,1.00
+2,HTTP Connection Reused,ratio,min,1.00
+2,HTTP Connection Reused,ratio,max,1.00
+2,HTTP Connection Reused,ratio,sum,16.00
+2,HTTP Connection Reused,ratio,p1,1.00
+2,HTTP Connection Reused,ratio,p5,1.00
+2,HTTP Connection Reused,ratio,p10,1.00
+2,HTTP Connection Reused,ratio,p25,1.00
+2,HTTP Connection Reused,ratio,p50,1.00
+2,HTTP Connection Reused,ratio,p75,1.00
+2,HTTP Connection Reused,ratio,p90,1.00
+2,HTTP Connection Reused,ratio,p95,1.00
+2,HTTP Connection Reused,ratio,p99,1.00
+2,HTTP Connection Reused,ratio,std,0.00
+2,HTTP Data Received,KB,avg,31.14
+2,HTTP Data Received,KB,min,31.05
+2,HTTP Data Received,KB,max,31.23
+2,HTTP Data Received,KB,sum,498.30
+2,HTTP Data Received,KB,p1,31.05
+2,HTTP Data Received,KB,p5,31.05
+2,HTTP Data Received,KB,p10,31.07
+2,HTTP Data Received,KB,p25,31.13
+2,HTTP Data Received,KB,p50,31.15
+2,HTTP Data Received,KB,p75,31.18
+2,HTTP Data Received,KB,p90,31.19
+2,HTTP Data Received,KB,p95,31.20
+2,HTTP Data Received,KB,p99,31.22
+2,HTTP Data Received,KB,std,0.05
+2,HTTP Data Sent,KB,avg,0.24
+2,HTTP Data Sent,KB,min,0.16
+2,HTTP Data Sent,KB,max,0.43
+2,HTTP Data Sent,KB,sum,3.88
+2,HTTP Data Sent,KB,p1,0.16
+2,HTTP Data Sent,KB,p5,0.17
+2,HTTP Data Sent,KB,p10,0.17
+2,HTTP Data Sent,KB,p25,0.18
+2,HTTP Data Sent,KB,p50,0.19
+2,HTTP Data Sent,KB,p75,0.34
+2,HTTP Data Sent,KB,p90,0.37
+2,HTTP Data Sent,KB,p95,0.39
+2,HTTP Data Sent,KB,p99,0.42
+2,HTTP Data Sent,KB,std,0.09
+2,HTTP DNS Lookup,ms,avg,0.00
+2,HTTP DNS Lookup,ms,min,0.00
+2,HTTP DNS Lookup,ms,max,0.00
+2,HTTP DNS Lookup,ms,sum,0.00
+2,HTTP DNS Lookup,ms,p1,0.00
+2,HTTP DNS Lookup,ms,p5,0.00
+2,HTTP DNS Lookup,ms,p10,0.00
+2,HTTP DNS Lookup,ms,p25,0.00
+2,HTTP DNS Lookup,ms,p50,0.00
+2,HTTP DNS Lookup,ms,p75,0.00
+2,HTTP DNS Lookup,ms,p90,0.00
+2,HTTP DNS Lookup,ms,p95,0.00
+2,HTTP DNS Lookup,ms,p99,0.00
+2,HTTP DNS Lookup,ms,std,0.00
+2,HTTP Duration (excl. conn),ms,avg,15625.95
+2,HTTP Duration (excl. conn),ms,min,15611.94
+2,HTTP Duration (excl. conn),ms,max,15636.07
+2,HTTP Duration (excl. conn),ms,sum,250015.25
+2,HTTP Duration (excl. conn),ms,p1,15612.66
+2,HTTP Duration (excl. conn),ms,p5,15615.53
+2,HTTP Duration (excl. conn),ms,p10,15616.78
+2,HTTP Duration (excl. conn),ms,p25,15616.96
+2,HTTP Duration (excl. conn),ms,p50,15626.10
+2,HTTP Duration (excl. conn),ms,p75,15635.55
+2,HTTP Duration (excl. conn),ms,p90,15635.77
+2,HTTP Duration (excl. conn),ms,p95,15635.86
+2,HTTP Duration (excl. conn),ms,p99,15636.02
+2,HTTP Duration (excl. conn),ms,std,9.71
+2,HTTP Receiving,ms,avg,15232.74
+2,HTTP Receiving,ms,min,15223.98
+2,HTTP Receiving,ms,max,15276.87
+2,HTTP Receiving,ms,sum,243723.82
+2,HTTP Receiving,ms,p1,15223.99
+2,HTTP Receiving,ms,p5,15223.99
+2,HTTP Receiving,ms,p10,15224.01
+2,HTTP Receiving,ms,p25,15224.05
+2,HTTP Receiving,ms,p50,15233.02
+2,HTTP Receiving,ms,p75,15233.10
+2,HTTP Receiving,ms,p90,15240.08
+2,HTTP Receiving,ms,p95,15254.39
+2,HTTP Receiving,ms,p99,15272.38
+2,HTTP Receiving,ms,std,12.93
+2,HTTP Sending,ms,avg,0.27
+2,HTTP Sending,ms,min,0.18
+2,HTTP Sending,ms,max,0.34
+2,HTTP Sending,ms,sum,4.28
+2,HTTP Sending,ms,p1,0.18
+2,HTTP Sending,ms,p5,0.20
+2,HTTP Sending,ms,p10,0.22
+2,HTTP Sending,ms,p25,0.25
+2,HTTP Sending,ms,p50,0.27
+2,HTTP Sending,ms,p75,0.29
+2,HTTP Sending,ms,p90,0.32
+2,HTTP Sending,ms,p95,0.33
+2,HTTP Sending,ms,p99,0.34
+2,HTTP Sending,ms,std,0.04
+2,HTTP Total Time,ms,avg,15625.95
+2,HTTP Total Time,ms,min,15611.94
+2,HTTP Total Time,ms,max,15636.07
+2,HTTP Total Time,ms,sum,250015.25
+2,HTTP Total Time,ms,p1,15612.66
+2,HTTP Total Time,ms,p5,15615.53
+2,HTTP Total Time,ms,p10,15616.78
+2,HTTP Total Time,ms,p25,15616.96
+2,HTTP Total Time,ms,p50,15626.10
+2,HTTP Total Time,ms,p75,15635.55
+2,HTTP Total Time,ms,p90,15635.77
+2,HTTP Total Time,ms,p95,15635.86
+2,HTTP Total Time,ms,p99,15636.02
+2,HTTP Total Time,ms,std,9.71
+2,HTTP Waiting (TTFB),ms,avg,392.95
+2,HTTP Waiting (TTFB),ms,min,357.87
+2,HTTP Waiting (TTFB),ms,max,411.80
+2,HTTP Waiting (TTFB),ms,sum,6287.15
+2,HTTP Waiting (TTFB),ms,p1,358.90
+2,HTTP Waiting (TTFB),ms,p5,363.01
+2,HTTP Waiting (TTFB),ms,p10,374.03
+2,HTTP Waiting (TTFB),ms,p25,383.54
+2,HTTP Waiting (TTFB),ms,p50,383.76
+2,HTTP Waiting (TTFB),ms,p75,411.27
+2,HTTP Waiting (TTFB),ms,p90,411.46
+2,HTTP Waiting (TTFB),ms,p95,411.57
+2,HTTP Waiting (TTFB),ms,p99,411.76
+2,HTTP Waiting (TTFB),ms,std,17.69
+2,Inter Chunk Latency,ms,avg,119.94
+2,Inter Chunk Latency,ms,min,116.64
+2,Inter Chunk Latency,ms,max,176.35
+2,Inter Chunk Latency,ms,sum,243723.75
+2,Inter Chunk Latency,ms,p1,117.52
+2,Inter Chunk Latency,ms,p5,118.52
+2,Inter Chunk Latency,ms,p10,118.66
+2,Inter Chunk Latency,ms,p25,119.14
+2,Inter Chunk Latency,ms,p50,119.63
+2,Inter Chunk Latency,ms,p75,120.40
+2,Inter Chunk Latency,ms,p90,121.78
+2,Inter Chunk Latency,ms,p95,122.55
+2,Inter Chunk Latency,ms,p99,123.58
+2,Inter Chunk Latency,ms,std,1.82
+2,Inter Token Latency,ms,avg,119.94
+2,Inter Token Latency,ms,min,119.87
+2,Inter Token Latency,ms,max,120.29
+2,Inter Token Latency,ms,sum,1919.08
+2,Inter Token Latency,ms,p1,119.87
+2,Inter Token Latency,ms,p5,119.87
+2,Inter Token Latency,ms,p10,119.87
+2,Inter Token Latency,ms,p25,119.87
+2,Inter Token Latency,ms,p50,119.94
+2,Inter Token Latency,ms,p75,119.95
+2,Inter Token Latency,ms,p90,120.00
+2,Inter Token Latency,ms,p95,120.11
+2,Inter Token Latency,ms,p99,120.25
+2,Inter Token Latency,ms,std,0.10
+2,Output Sequence Length,tokens,avg,128.00
+2,Output Sequence Length,tokens,min,128.00
+2,Output Sequence Length,tokens,max,128.00
+2,Output Sequence Length,tokens,sum,2048.00
+2,Output Sequence Length,tokens,p1,128.00
+2,Output Sequence Length,tokens,p5,128.00
+2,Output Sequence Length,tokens,p10,128.00
+2,Output Sequence Length,tokens,p25,128.00
+2,Output Sequence Length,tokens,p50,128.00
+2,Output Sequence Length,tokens,p75,128.00
+2,Output Sequence Length,tokens,p90,128.00
+2,Output Sequence Length,tokens,p95,128.00
+2,Output Sequence Length,tokens,p99,128.00
+2,Output Sequence Length,tokens,std,0.00
+2,Output Token Count,tokens,avg,128.00
+2,Output Token Count,tokens,min,128.00
+2,Output Token Count,tokens,max,128.00
+2,Output Token Count,tokens,sum,2048.00
+2,Output Token Count,tokens,p1,128.00
+2,Output Token Count,tokens,p5,128.00
+2,Output Token Count,tokens,p10,128.00
+2,Output Token Count,tokens,p25,128.00
+2,Output Token Count,tokens,p50,128.00
+2,Output Token Count,tokens,p75,128.00
+2,Output Token Count,tokens,p90,128.00
+2,Output Token Count,tokens,p95,128.00
+2,Output Token Count,tokens,p99,128.00
+2,Output Token Count,tokens,std,0.00
+2,Output Token Throughput,tokens/sec,avg,65.02
+2,Output Token Throughput Per User,tokens/sec/user,avg,8.34
+2,Output Token Throughput Per User,tokens/sec/user,min,8.31
+2,Output Token Throughput Per User,tokens/sec/user,max,8.34
+2,Output Token Throughput Per User,tokens/sec/user,sum,133.40
+2,Output Token Throughput Per User,tokens/sec/user,p1,8.32
+2,Output Token Throughput Per User,tokens/sec/user,p5,8.33
+2,Output Token Throughput Per User,tokens/sec/user,p10,8.33
+2,Output Token Throughput Per User,tokens/sec/user,p25,8.34
+2,Output Token Throughput Per User,tokens/sec/user,p50,8.34
+2,Output Token Throughput Per User,tokens/sec/user,p75,8.34
+2,Output Token Throughput Per User,tokens/sec/user,p90,8.34
+2,Output Token Throughput Per User,tokens/sec/user,p95,8.34
+2,Output Token Throughput Per User,tokens/sec/user,p99,8.34
+2,Output Token Throughput Per User,tokens/sec/user,std,0.01
+2,Request Count,requests,avg,16.00
+2,Request Latency,ms,avg,15626.07
+2,Request Latency,ms,min,15612.07
+2,Request Latency,ms,max,15636.18
+2,Request Latency,ms,sum,250017.12
+2,Request Latency,ms,p1,15612.79
+2,Request Latency,ms,p5,15615.65
+2,Request Latency,ms,p10,15616.90
+2,Request Latency,ms,p25,15617.08
+2,Request Latency,ms,p50,15626.24
+2,Request Latency,ms,p75,15635.66
+2,Request Latency,ms,p90,15635.88
+2,Request Latency,ms,p95,15635.96
+2,Request Latency,ms,p99,15636.14
+2,Request Latency,ms,std,9.71
+2,Request Throughput,requests/sec,avg,0.51
+2,Time to First Output Token,ms,avg,393.34
+2,Time to First Output Token,ms,min,358.39
+2,Time to First Output Token,ms,max,412.19
+2,Time to First Output Token,ms,sum,6293.38
+2,Time to First Output Token,ms,p1,359.40
+2,Time to First Output Token,ms,p5,363.48
+2,Time to First Output Token,ms,p10,374.44
+2,Time to First Output Token,ms,p25,383.93
+2,Time to First Output Token,ms,p50,384.12
+2,Time to First Output Token,ms,p75,411.57
+2,Time to First Output Token,ms,p90,411.86
+2,Time to First Output Token,ms,p95,411.96
+2,Time to First Output Token,ms,p99,412.14
+2,Time to First Output Token,ms,std,17.67
+2,Time to First Token,ms,avg,393.34
+2,Time to First Token,ms,min,358.39
+2,Time to First Token,ms,max,412.19
+2,Time to First Token,ms,sum,6293.38
+2,Time to First Token,ms,p1,359.40
+2,Time to First Token,ms,p5,363.48
+2,Time to First Token,ms,p10,374.44
+2,Time to First Token,ms,p25,383.93
+2,Time to First Token,ms,p50,384.12
+2,Time to First Token,ms,p75,411.57
+2,Time to First Token,ms,p90,411.86
+2,Time to First Token,ms,p95,411.96
+2,Time to First Token,ms,p99,412.14
+2,Time to First Token,ms,std,17.67
+2,Time to Second Token,ms,avg,119.73
+2,Time to Second Token,ms,min,117.32
+2,Time to Second Token,ms,max,120.64
+2,Time to Second Token,ms,sum,1915.76
+2,Time to Second Token,ms,p1,117.35
+2,Time to Second Token,ms,p5,117.45
+2,Time to Second Token,ms,p10,118.57
+2,Time to Second Token,ms,p25,119.72
+2,Time to Second Token,ms,p50,119.83
+2,Time to Second Token,ms,p75,120.36
+2,Time to Second Token,ms,p90,120.37
+2,Time to Second Token,ms,p95,120.44
+2,Time to Second Token,ms,p99,120.60
+2,Time to Second Token,ms,std,0.93
+2,Total Output Sequence Length,tokens,avg,2048.00
+2,Total Output Tokens,tokens,avg,2048.00
+3,Benchmark Duration,sec,avg,31.54
+3,E2E Output Token Throughput,tokens/sec/user,avg,8.18
+3,E2E Output Token Throughput,tokens/sec/user,min,8.18
+3,E2E Output Token Throughput,tokens/sec/user,max,8.18
+3,E2E Output Token Throughput,tokens/sec/user,sum,130.88
+3,E2E Output Token Throughput,tokens/sec/user,p1,8.18
+3,E2E Output Token Throughput,tokens/sec/user,p5,8.18
+3,E2E Output Token Throughput,tokens/sec/user,p10,8.18
+3,E2E Output Token Throughput,tokens/sec/user,p25,8.18
+3,E2E Output Token Throughput,tokens/sec/user,p50,8.18
+3,E2E Output Token Throughput,tokens/sec/user,p75,8.18
+3,E2E Output Token Throughput,tokens/sec/user,p90,8.18
+3,E2E Output Token Throughput,tokens/sec/user,p95,8.18
+3,E2E Output Token Throughput,tokens/sec/user,p99,8.18
+3,E2E Output Token Throughput,tokens/sec/user,std,0.00
+3,HTTP Blocked,ms,avg,0.00
+3,HTTP Blocked,ms,min,0.00
+3,HTTP Blocked,ms,max,0.00
+3,HTTP Blocked,ms,sum,0.00
+3,HTTP Blocked,ms,p1,0.00
+3,HTTP Blocked,ms,p5,0.00
+3,HTTP Blocked,ms,p10,0.00
+3,HTTP Blocked,ms,p25,0.00
+3,HTTP Blocked,ms,p50,0.00
+3,HTTP Blocked,ms,p75,0.00
+3,HTTP Blocked,ms,p90,0.00
+3,HTTP Blocked,ms,p95,0.00
+3,HTTP Blocked,ms,p99,0.00
+3,HTTP Blocked,ms,std,0.00
+3,HTTP Chunks Received,count,avg,128.00
+3,HTTP Chunks Received,count,min,128.00
+3,HTTP Chunks Received,count,max,128.00
+3,HTTP Chunks Received,count,sum,2048.00
+3,HTTP Chunks Received,count,p1,128.00
+3,HTTP Chunks Received,count,p5,128.00
+3,HTTP Chunks Received,count,p10,128.00
+3,HTTP Chunks Received,count,p25,128.00
+3,HTTP Chunks Received,count,p50,128.00
+3,HTTP Chunks Received,count,p75,128.00
+3,HTTP Chunks Received,count,p90,128.00
+3,HTTP Chunks Received,count,p95,128.00
+3,HTTP Chunks Received,count,p99,128.00
+3,HTTP Chunks Received,count,std,0.00
+3,HTTP Chunks Sent,count,avg,1.00
+3,HTTP Chunks Sent,count,min,1.00
+3,HTTP Chunks Sent,count,max,1.00
+3,HTTP Chunks Sent,count,sum,16.00
+3,HTTP Chunks Sent,count,p1,1.00
+3,HTTP Chunks Sent,count,p5,1.00
+3,HTTP Chunks Sent,count,p10,1.00
+3,HTTP Chunks Sent,count,p25,1.00
+3,HTTP Chunks Sent,count,p50,1.00
+3,HTTP Chunks Sent,count,p75,1.00
+3,HTTP Chunks Sent,count,p90,1.00
+3,HTTP Chunks Sent,count,p95,1.00
+3,HTTP Chunks Sent,count,p99,1.00
+3,HTTP Chunks Sent,count,std,0.00
+3,HTTP Connecting,ms,avg,0.00
+3,HTTP Connecting,ms,min,0.00
+3,HTTP Connecting,ms,max,0.00
+3,HTTP Connecting,ms,sum,0.00
+3,HTTP Connecting,ms,p1,0.00
+3,HTTP Connecting,ms,p5,0.00
+3,HTTP Connecting,ms,p10,0.00
+3,HTTP Connecting,ms,p25,0.00
+3,HTTP Connecting,ms,p50,0.00
+3,HTTP Connecting,ms,p75,0.00
+3,HTTP Connecting,ms,p90,0.00
+3,HTTP Connecting,ms,p95,0.00
+3,HTTP Connecting,ms,p99,0.00
+3,HTTP Connecting,ms,std,0.00
+3,HTTP Connection Overhead,ms,avg,0.00
+3,HTTP Connection Overhead,ms,min,0.00
+3,HTTP Connection Overhead,ms,max,0.00
+3,HTTP Connection Overhead,ms,sum,0.00
+3,HTTP Connection Overhead,ms,p1,0.00
+3,HTTP Connection Overhead,ms,p5,0.00
+3,HTTP Connection Overhead,ms,p10,0.00
+3,HTTP Connection Overhead,ms,p25,0.00
+3,HTTP Connection Overhead,ms,p50,0.00
+3,HTTP Connection Overhead,ms,p75,0.00
+3,HTTP Connection Overhead,ms,p90,0.00
+3,HTTP Connection Overhead,ms,p95,0.00
+3,HTTP Connection Overhead,ms,p99,0.00
+3,HTTP Connection Overhead,ms,std,0.00
+3,HTTP Connection Reused,ratio,avg,1.00
+3,HTTP Connection Reused,ratio,min,1.00
+3,HTTP Connection Reused,ratio,max,1.00
+3,HTTP Connection Reused,ratio,sum,16.00
+3,HTTP Connection Reused,ratio,p1,1.00
+3,HTTP Connection Reused,ratio,p5,1.00
+3,HTTP Connection Reused,ratio,p10,1.00
+3,HTTP Connection Reused,ratio,p25,1.00
+3,HTTP Connection Reused,ratio,p50,1.00
+3,HTTP Connection Reused,ratio,p75,1.00
+3,HTTP Connection Reused,ratio,p90,1.00
+3,HTTP Connection Reused,ratio,p95,1.00
+3,HTTP Connection Reused,ratio,p99,1.00
+3,HTTP Connection Reused,ratio,std,0.00
+3,HTTP Data Received,KB,avg,31.15
+3,HTTP Data Received,KB,min,31.05
+3,HTTP Data Received,KB,max,31.20
+3,HTTP Data Received,KB,sum,498.47
+3,HTTP Data Received,KB,p1,31.06
+3,HTTP Data Received,KB,p5,31.08
+3,HTTP Data Received,KB,p10,31.11
+3,HTTP Data Received,KB,p25,31.14
+3,HTTP Data Received,KB,p50,31.16
+3,HTTP Data Received,KB,p75,31.19
+3,HTTP Data Received,KB,p90,31.19
+3,HTTP Data Received,KB,p95,31.20
+3,HTTP Data Received,KB,p99,31.20
+3,HTTP Data Received,KB,std,0.04
+3,HTTP Data Sent,KB,avg,0.27
+3,HTTP Data Sent,KB,min,0.16
+3,HTTP Data Sent,KB,max,0.43
+3,HTTP Data Sent,KB,sum,4.32
+3,HTTP Data Sent,KB,p1,0.16
+3,HTTP Data Sent,KB,p5,0.17
+3,HTTP Data Sent,KB,p10,0.17
+3,HTTP Data Sent,KB,p25,0.18
+3,HTTP Data Sent,KB,p50,0.21
+3,HTTP Data Sent,KB,p75,0.37
+3,HTTP Data Sent,KB,p90,0.40
+3,HTTP Data Sent,KB,p95,0.43
+3,HTTP Data Sent,KB,p99,0.43
+3,HTTP Data Sent,KB,std,0.10
+3,HTTP DNS Lookup,ms,avg,0.00
+3,HTTP DNS Lookup,ms,min,0.00
+3,HTTP DNS Lookup,ms,max,0.00
+3,HTTP DNS Lookup,ms,sum,0.00
+3,HTTP DNS Lookup,ms,p1,0.00
+3,HTTP DNS Lookup,ms,p5,0.00
+3,HTTP DNS Lookup,ms,p10,0.00
+3,HTTP DNS Lookup,ms,p25,0.00
+3,HTTP DNS Lookup,ms,p50,0.00
+3,HTTP DNS Lookup,ms,p75,0.00
+3,HTTP DNS Lookup,ms,p90,0.00
+3,HTTP DNS Lookup,ms,p95,0.00
+3,HTTP DNS Lookup,ms,p99,0.00
+3,HTTP DNS Lookup,ms,std,0.00
+3,HTTP Duration (excl. conn),ms,avg,15647.76
+3,HTTP Duration (excl. conn),ms,min,15646.08
+3,HTTP Duration (excl. conn),ms,max,15649.61
+3,HTTP Duration (excl. conn),ms,sum,250364.18
+3,HTTP Duration (excl. conn),ms,p1,15646.09
+3,HTTP Duration (excl. conn),ms,p5,15646.09
+3,HTTP Duration (excl. conn),ms,p10,15646.21
+3,HTTP Duration (excl. conn),ms,p25,15646.41
+3,HTTP Duration (excl. conn),ms,p50,15648.08
+3,HTTP Duration (excl. conn),ms,p75,15649.05
+3,HTTP Duration (excl. conn),ms,p90,15649.15
+3,HTTP Duration (excl. conn),ms,p95,15649.31
+3,HTTP Duration (excl. conn),ms,p99,15649.55
+3,HTTP Duration (excl. conn),ms,std,1.34
+3,HTTP Receiving,ms,avg,15241.81
+3,HTTP Receiving,ms,min,15232.03
+3,HTTP Receiving,ms,max,15285.00
+3,HTTP Receiving,ms,sum,243868.90
+3,HTTP Receiving,ms,p1,15232.05
+3,HTTP Receiving,ms,p5,15232.11
+3,HTTP Receiving,ms,p10,15232.15
+3,HTTP Receiving,ms,p25,15232.18
+3,HTTP Receiving,ms,p50,15240.49
+3,HTTP Receiving,ms,p75,15240.59
+3,HTTP Receiving,ms,p90,15257.72
+3,HTTP Receiving,ms,p95,15277.34
+3,HTTP Receiving,ms,p99,15283.47
+3,HTTP Receiving,ms,std,15.03
+3,HTTP Sending,ms,avg,0.29
+3,HTTP Sending,ms,min,0.19
+3,HTTP Sending,ms,max,0.37
+3,HTTP Sending,ms,sum,4.69
+3,HTTP Sending,ms,p1,0.19
+3,HTTP Sending,ms,p5,0.19
+3,HTTP Sending,ms,p10,0.22
+3,HTTP Sending,ms,p25,0.25
+3,HTTP Sending,ms,p50,0.29
+3,HTTP Sending,ms,p75,0.35
+3,HTTP Sending,ms,p90,0.36
+3,HTTP Sending,ms,p95,0.37
+3,HTTP Sending,ms,p99,0.37
+3,HTTP Sending,ms,std,0.06
+3,HTTP Total Time,ms,avg,15647.76
+3,HTTP Total Time,ms,min,15646.08
+3,HTTP Total Time,ms,max,15649.61
+3,HTTP Total Time,ms,sum,250364.18
+3,HTTP Total Time,ms,p1,15646.09
+3,HTTP Total Time,ms,p5,15646.09
+3,HTTP Total Time,ms,p10,15646.21
+3,HTTP Total Time,ms,p25,15646.41
+3,HTTP Total Time,ms,p50,15648.08
+3,HTTP Total Time,ms,p75,15649.05
+3,HTTP Total Time,ms,p90,15649.15
+3,HTTP Total Time,ms,p95,15649.31
+3,HTTP Total Time,ms,p99,15649.55
+3,HTTP Total Time,ms,std,1.34
+3,HTTP Waiting (TTFB),ms,avg,405.66
+3,HTTP Waiting (TTFB),ms,min,362.10
+3,HTTP Waiting (TTFB),ms,max,414.02
+3,HTTP Waiting (TTFB),ms,sum,6490.59
+3,HTTP Waiting (TTFB),ms,p1,363.95
+3,HTTP Waiting (TTFB),ms,p5,371.37
+3,HTTP Waiting (TTFB),ms,p10,391.22
+3,HTTP Waiting (TTFB),ms,p25,408.03
+3,HTTP Waiting (TTFB),ms,p50,408.38
+3,HTTP Waiting (TTFB),ms,p75,413.80
+3,HTTP Waiting (TTFB),ms,p90,413.95
+3,HTTP Waiting (TTFB),ms,p95,413.97
+3,HTTP Waiting (TTFB),ms,p99,414.01
+3,HTTP Waiting (TTFB),ms,std,14.54
+3,Inter Chunk Latency,ms,avg,120.01
+3,Inter Chunk Latency,ms,min,117.49
+3,Inter Chunk Latency,ms,max,177.25
+3,Inter Chunk Latency,ms,sum,243868.77
+3,Inter Chunk Latency,ms,p1,118.16
+3,Inter Chunk Latency,ms,p5,118.73
+3,Inter Chunk Latency,ms,p10,118.91
+3,Inter Chunk Latency,ms,p25,119.29
+3,Inter Chunk Latency,ms,p50,119.71
+3,Inter Chunk Latency,ms,p75,120.34
+3,Inter Chunk Latency,ms,p90,121.48
+3,Inter Chunk Latency,ms,p95,122.25
+3,Inter Chunk Latency,ms,p99,123.67
+3,Inter Chunk Latency,ms,std,1.87
+3,Inter Token Latency,ms,avg,120.01
+3,Inter Token Latency,ms,min,119.94
+3,Inter Token Latency,ms,max,120.35
+3,Inter Token Latency,ms,sum,1920.23
+3,Inter Token Latency,ms,p1,119.94
+3,Inter Token Latency,ms,p5,119.94
+3,Inter Token Latency,ms,p10,119.94
+3,Inter Token Latency,ms,p25,119.94
+3,Inter Token Latency,ms,p50,120.00
+3,Inter Token Latency,ms,p75,120.00
+3,Inter Token Latency,ms,p90,120.14
+3,Inter Token Latency,ms,p95,120.29
+3,Inter Token Latency,ms,p99,120.34
+3,Inter Token Latency,ms,std,0.12
+3,Output Sequence Length,tokens,avg,128.00
+3,Output Sequence Length,tokens,min,128.00
+3,Output Sequence Length,tokens,max,128.00
+3,Output Sequence Length,tokens,sum,2048.00
+3,Output Sequence Length,tokens,p1,128.00
+3,Output Sequence Length,tokens,p5,128.00
+3,Output Sequence Length,tokens,p10,128.00
+3,Output Sequence Length,tokens,p25,128.00
+3,Output Sequence Length,tokens,p50,128.00
+3,Output Sequence Length,tokens,p75,128.00
+3,Output Sequence Length,tokens,p90,128.00
+3,Output Sequence Length,tokens,p95,128.00
+3,Output Sequence Length,tokens,p99,128.00
+3,Output Sequence Length,tokens,std,0.00
+3,Output Token Count,tokens,avg,128.00
+3,Output Token Count,tokens,min,128.00
+3,Output Token Count,tokens,max,128.00
+3,Output Token Count,tokens,sum,2048.00
+3,Output Token Count,tokens,p1,128.00
+3,Output Token Count,tokens,p5,128.00
+3,Output Token Count,tokens,p10,128.00
+3,Output Token Count,tokens,p25,128.00
+3,Output Token Count,tokens,p50,128.00
+3,Output Token Count,tokens,p75,128.00
+3,Output Token Count,tokens,p90,128.00
+3,Output Token Count,tokens,p95,128.00
+3,Output Token Count,tokens,p99,128.00
+3,Output Token Count,tokens,std,0.00
+3,Output Token Throughput,tokens/sec,avg,64.93
+3,Output Token Throughput Per User,tokens/sec/user,avg,8.33
+3,Output Token Throughput Per User,tokens/sec/user,min,8.31
+3,Output Token Throughput Per User,tokens/sec/user,max,8.34
+3,Output Token Throughput Per User,tokens/sec/user,sum,133.32
+3,Output Token Throughput Per User,tokens/sec/user,p1,8.31
+3,Output Token Throughput Per User,tokens/sec/user,p5,8.31
+3,Output Token Throughput Per User,tokens/sec/user,p10,8.32
+3,Output Token Throughput Per User,tokens/sec/user,p25,8.33
+3,Output Token Throughput Per User,tokens/sec/user,p50,8.33
+3,Output Token Throughput Per User,tokens/sec/user,p75,8.34
+3,Output Token Throughput Per User,tokens/sec/user,p90,8.34
+3,Output Token Throughput Per User,tokens/sec/user,p95,8.34
+3,Output Token Throughput Per User,tokens/sec/user,p99,8.34
+3,Output Token Throughput Per User,tokens/sec/user,std,0.01
+3,Request Count,requests,avg,16.00
+3,Request Latency,ms,avg,15647.88
+3,Request Latency,ms,min,15646.20
+3,Request Latency,ms,max,15649.79
+3,Request Latency,ms,sum,250366.13
+3,Request Latency,ms,p1,15646.20
+3,Request Latency,ms,p5,15646.22
+3,Request Latency,ms,p10,15646.36
+3,Request Latency,ms,p25,15646.56
+3,Request Latency,ms,p50,15648.18
+3,Request Latency,ms,p75,15649.15
+3,Request Latency,ms,p90,15649.24
+3,Request Latency,ms,p95,15649.43
+3,Request Latency,ms,p99,15649.72
+3,Request Latency,ms,std,1.33
+3,Request Throughput,requests/sec,avg,0.51
+3,Time to First Output Token,ms,avg,406.09
+3,Time to First Output Token,ms,min,362.58
+3,Time to First Output Token,ms,max,414.43
+3,Time to First Output Token,ms,sum,6497.36
+3,Time to First Output Token,ms,p1,364.45
+3,Time to First Output Token,ms,p5,371.90
+3,Time to First Output Token,ms,p10,391.67
+3,Time to First Output Token,ms,p25,408.47
+3,Time to First Output Token,ms,p50,408.69
+3,Time to First Output Token,ms,p75,414.29
+3,Time to First Output Token,ms,p90,414.40
+3,Time to First Output Token,ms,p95,414.41
+3,Time to First Output Token,ms,p99,414.43
+3,Time to First Output Token,ms,std,14.52
+3,Time to First Token,ms,avg,406.09
+3,Time to First Token,ms,min,362.58
+3,Time to First Token,ms,max,414.43
+3,Time to First Token,ms,sum,6497.36
+3,Time to First Token,ms,p1,364.45
+3,Time to First Token,ms,p5,371.90
+3,Time to First Token,ms,p10,391.67
+3,Time to First Token,ms,p25,408.47
+3,Time to First Token,ms,p50,408.69
+3,Time to First Token,ms,p75,414.29
+3,Time to First Token,ms,p90,414.40
+3,Time to First Token,ms,p95,414.41
+3,Time to First Token,ms,p99,414.43
+3,Time to First Token,ms,std,14.52
+3,Time to Second Token,ms,avg,120.86
+3,Time to Second Token,ms,min,117.49
+3,Time to Second Token,ms,max,121.56
+3,Time to Second Token,ms,sum,1933.70
+3,Time to Second Token,ms,p1,118.01
+3,Time to Second Token,ms,p5,120.09
+3,Time to Second Token,ms,p10,120.96
+3,Time to Second Token,ms,p25,120.98
+3,Time to Second Token,ms,p50,121.08
+3,Time to Second Token,ms,p75,121.10
+3,Time to Second Token,ms,p90,121.11
+3,Time to Second Token,ms,p95,121.23
+3,Time to Second Token,ms,p99,121.50
+3,Time to Second Token,ms,std,0.88
+3,Total Output Sequence Length,tokens,avg,2048.00
+3,Total Output Tokens,tokens,avg,2048.00
+4,Benchmark Duration,sec,avg,31.51
+4,E2E Output Token Throughput,tokens/sec/user,avg,8.19
+4,E2E Output Token Throughput,tokens/sec/user,min,8.18
+4,E2E Output Token Throughput,tokens/sec/user,max,8.20
+4,E2E Output Token Throughput,tokens/sec/user,sum,131.01
+4,E2E Output Token Throughput,tokens/sec/user,p1,8.18
+4,E2E Output Token Throughput,tokens/sec/user,p5,8.18
+4,E2E Output Token Throughput,tokens/sec/user,p10,8.18
+4,E2E Output Token Throughput,tokens/sec/user,p25,8.18
+4,E2E Output Token Throughput,tokens/sec/user,p50,8.19
+4,E2E Output Token Throughput,tokens/sec/user,p75,8.19
+4,E2E Output Token Throughput,tokens/sec/user,p90,8.19
+4,E2E Output Token Throughput,tokens/sec/user,p95,8.20
+4,E2E Output Token Throughput,tokens/sec/user,p99,8.20
+4,E2E Output Token Throughput,tokens/sec/user,std,0.01
+4,HTTP Blocked,ms,avg,0.00
+4,HTTP Blocked,ms,min,0.00
+4,HTTP Blocked,ms,max,0.00
+4,HTTP Blocked,ms,sum,0.00
+4,HTTP Blocked,ms,p1,0.00
+4,HTTP Blocked,ms,p5,0.00
+4,HTTP Blocked,ms,p10,0.00
+4,HTTP Blocked,ms,p25,0.00
+4,HTTP Blocked,ms,p50,0.00
+4,HTTP Blocked,ms,p75,0.00
+4,HTTP Blocked,ms,p90,0.00
+4,HTTP Blocked,ms,p95,0.00
+4,HTTP Blocked,ms,p99,0.00
+4,HTTP Blocked,ms,std,0.00
+4,HTTP Chunks Received,count,avg,128.00
+4,HTTP Chunks Received,count,min,128.00
+4,HTTP Chunks Received,count,max,128.00
+4,HTTP Chunks Received,count,sum,2048.00
+4,HTTP Chunks Received,count,p1,128.00
+4,HTTP Chunks Received,count,p5,128.00
+4,HTTP Chunks Received,count,p10,128.00
+4,HTTP Chunks Received,count,p25,128.00
+4,HTTP Chunks Received,count,p50,128.00
+4,HTTP Chunks Received,count,p75,128.00
+4,HTTP Chunks Received,count,p90,128.00
+4,HTTP Chunks Received,count,p95,128.00
+4,HTTP Chunks Received,count,p99,128.00
+4,HTTP Chunks Received,count,std,0.00
+4,HTTP Chunks Sent,count,avg,1.00
+4,HTTP Chunks Sent,count,min,1.00
+4,HTTP Chunks Sent,count,max,1.00
+4,HTTP Chunks Sent,count,sum,16.00
+4,HTTP Chunks Sent,count,p1,1.00
+4,HTTP Chunks Sent,count,p5,1.00
+4,HTTP Chunks Sent,count,p10,1.00
+4,HTTP Chunks Sent,count,p25,1.00
+4,HTTP Chunks Sent,count,p50,1.00
+4,HTTP Chunks Sent,count,p75,1.00
+4,HTTP Chunks Sent,count,p90,1.00
+4,HTTP Chunks Sent,count,p95,1.00
+4,HTTP Chunks Sent,count,p99,1.00
+4,HTTP Chunks Sent,count,std,0.00
+4,HTTP Connecting,ms,avg,0.00
+4,HTTP Connecting,ms,min,0.00
+4,HTTP Connecting,ms,max,0.00
+4,HTTP Connecting,ms,sum,0.00
+4,HTTP Connecting,ms,p1,0.00
+4,HTTP Connecting,ms,p5,0.00
+4,HTTP Connecting,ms,p10,0.00
+4,HTTP Connecting,ms,p25,0.00
+4,HTTP Connecting,ms,p50,0.00
+4,HTTP Connecting,ms,p75,0.00
+4,HTTP Connecting,ms,p90,0.00
+4,HTTP Connecting,ms,p95,0.00
+4,HTTP Connecting,ms,p99,0.00
+4,HTTP Connecting,ms,std,0.00
+4,HTTP Connection Overhead,ms,avg,0.00
+4,HTTP Connection Overhead,ms,min,0.00
+4,HTTP Connection Overhead,ms,max,0.00
+4,HTTP Connection Overhead,ms,sum,0.00
+4,HTTP Connection Overhead,ms,p1,0.00
+4,HTTP Connection Overhead,ms,p5,0.00
+4,HTTP Connection Overhead,ms,p10,0.00
+4,HTTP Connection Overhead,ms,p25,0.00
+4,HTTP Connection Overhead,ms,p50,0.00
+4,HTTP Connection Overhead,ms,p75,0.00
+4,HTTP Connection Overhead,ms,p90,0.00
+4,HTTP Connection Overhead,ms,p95,0.00
+4,HTTP Connection Overhead,ms,p99,0.00
+4,HTTP Connection Overhead,ms,std,0.00
+4,HTTP Connection Reused,ratio,avg,1.00
+4,HTTP Connection Reused,ratio,min,1.00
+4,HTTP Connection Reused,ratio,max,1.00
+4,HTTP Connection Reused,ratio,sum,16.00
+4,HTTP Connection Reused,ratio,p1,1.00
+4,HTTP Connection Reused,ratio,p5,1.00
+4,HTTP Connection Reused,ratio,p10,1.00
+4,HTTP Connection Reused,ratio,p25,1.00
+4,HTTP Connection Reused,ratio,p50,1.00
+4,HTTP Connection Reused,ratio,p75,1.00
+4,HTTP Connection Reused,ratio,p90,1.00
+4,HTTP Connection Reused,ratio,p95,1.00
+4,HTTP Connection Reused,ratio,p99,1.00
+4,HTTP Connection Reused,ratio,std,0.00
+4,HTTP Data Received,KB,avg,31.14
+4,HTTP Data Received,KB,min,31.05
+4,HTTP Data Received,KB,max,31.23
+4,HTTP Data Received,KB,sum,498.29
+4,HTTP Data Received,KB,p1,31.06
+4,HTTP Data Received,KB,p5,31.08
+4,HTTP Data Received,KB,p10,31.10
+4,HTTP Data Received,KB,p25,31.13
+4,HTTP Data Received,KB,p50,31.14
+4,HTTP Data Received,KB,p75,31.17
+4,HTTP Data Received,KB,p90,31.19
+4,HTTP Data Received,KB,p95,31.20
+4,HTTP Data Received,KB,p99,31.22
+4,HTTP Data Received,KB,std,0.04
+4,HTTP Data Sent,KB,avg,0.23
+4,HTTP Data Sent,KB,min,0.16
+4,HTTP Data Sent,KB,max,0.43
+4,HTTP Data Sent,KB,sum,3.69
+4,HTTP Data Sent,KB,p1,0.16
+4,HTTP Data Sent,KB,p5,0.16
+4,HTTP Data Sent,KB,p10,0.17
+4,HTTP Data Sent,KB,p25,0.17
+4,HTTP Data Sent,KB,p50,0.19
+4,HTTP Data Sent,KB,p75,0.24
+4,HTTP Data Sent,KB,p90,0.37
+4,HTTP Data Sent,KB,p95,0.39
+4,HTTP Data Sent,KB,p99,0.42
+4,HTTP Data Sent,KB,std,0.09
+4,HTTP DNS Lookup,ms,avg,0.00
+4,HTTP DNS Lookup,ms,min,0.00
+4,HTTP DNS Lookup,ms,max,0.00
+4,HTTP DNS Lookup,ms,sum,0.00
+4,HTTP DNS Lookup,ms,p1,0.00
+4,HTTP DNS Lookup,ms,p5,0.00
+4,HTTP DNS Lookup,ms,p10,0.00
+4,HTTP DNS Lookup,ms,p25,0.00
+4,HTTP DNS Lookup,ms,p50,0.00
+4,HTTP DNS Lookup,ms,p75,0.00
+4,HTTP DNS Lookup,ms,p90,0.00
+4,HTTP DNS Lookup,ms,p95,0.00
+4,HTTP DNS Lookup,ms,p99,0.00
+4,HTTP DNS Lookup,ms,std,0.00
+4,HTTP Duration (excl. conn),ms,avg,15632.26
+4,HTTP Duration (excl. conn),ms,min,15618.23
+4,HTTP Duration (excl. conn),ms,max,15645.62
+4,HTTP Duration (excl. conn),ms,sum,250116.20
+4,HTTP Duration (excl. conn),ms,p1,15618.41
+4,HTTP Duration (excl. conn),ms,p5,15619.14
+4,HTTP Duration (excl. conn),ms,p10,15619.47
+4,HTTP Duration (excl. conn),ms,p25,15619.65
+4,HTTP Duration (excl. conn),ms,p50,15632.36
+4,HTTP Duration (excl. conn),ms,p75,15645.00
+4,HTTP Duration (excl. conn),ms,p90,15645.10
+4,HTTP Duration (excl. conn),ms,p95,15645.25
+4,HTTP Duration (excl. conn),ms,p99,15645.55
+4,HTTP Duration (excl. conn),ms,std,12.79
+4,HTTP Receiving,ms,avg,15237.49
+4,HTTP Receiving,ms,min,15233.05
+4,HTTP Receiving,ms,max,15272.81
+4,HTTP Receiving,ms,sum,243799.86
+4,HTTP Receiving,ms,p1,15233.07
+4,HTTP Receiving,ms,p5,15233.14
+4,HTTP Receiving,ms,p10,15233.22
+4,HTTP Receiving,ms,p25,15233.29
+4,HTTP Receiving,ms,p50,15234.74
+4,HTTP Receiving,ms,p75,15234.82
+4,HTTP Receiving,ms,p90,15242.76
+4,HTTP Receiving,ms,p95,15256.15
+4,HTTP Receiving,ms,p99,15269.48
+4,HTTP Receiving,ms,std,9.98
+4,HTTP Sending,ms,avg,0.27
+4,HTTP Sending,ms,min,0.16
+4,HTTP Sending,ms,max,0.41
+4,HTTP Sending,ms,sum,4.32
+4,HTTP Sending,ms,p1,0.16
+4,HTTP Sending,ms,p5,0.17
+4,HTTP Sending,ms,p10,0.19
+4,HTTP Sending,ms,p25,0.24
+4,HTTP Sending,ms,p50,0.26
+4,HTTP Sending,ms,p75,0.29
+4,HTTP Sending,ms,p90,0.36
+4,HTTP Sending,ms,p95,0.39
+4,HTTP Sending,ms,p99,0.41
+4,HTTP Sending,ms,std,0.06
+4,HTTP Total Time,ms,avg,15632.26
+4,HTTP Total Time,ms,min,15618.23
+4,HTTP Total Time,ms,max,15645.62
+4,HTTP Total Time,ms,sum,250116.20
+4,HTTP Total Time,ms,p1,15618.41
+4,HTTP Total Time,ms,p5,15619.14
+4,HTTP Total Time,ms,p10,15619.47
+4,HTTP Total Time,ms,p25,15619.65
+4,HTTP Total Time,ms,p50,15632.36
+4,HTTP Total Time,ms,p75,15645.00
+4,HTTP Total Time,ms,p90,15645.10
+4,HTTP Total Time,ms,p95,15645.25
+4,HTTP Total Time,ms,p99,15645.55
+4,HTTP Total Time,ms,std,12.79
+4,HTTP Waiting (TTFB),ms,avg,394.50
+4,HTTP Waiting (TTFB),ms,min,367.22
+4,HTTP Waiting (TTFB),ms,max,410.23
+4,HTTP Waiting (TTFB),ms,sum,6312.02
+4,HTTP Waiting (TTFB),ms,p1,368.01
+4,HTTP Waiting (TTFB),ms,p5,371.19
+4,HTTP Waiting (TTFB),ms,p10,379.14
+4,HTTP Waiting (TTFB),ms,p25,385.94
+4,HTTP Waiting (TTFB),ms,p50,386.48
+4,HTTP Waiting (TTFB),ms,p75,409.81
+4,HTTP Waiting (TTFB),ms,p90,410.07
+4,HTTP Waiting (TTFB),ms,p95,410.16
+4,HTTP Waiting (TTFB),ms,p99,410.22
+4,HTTP Waiting (TTFB),ms,std,14.54
+4,Inter Chunk Latency,ms,avg,119.98
+4,Inter Chunk Latency,ms,min,116.89
+4,Inter Chunk Latency,ms,max,157.33
+4,Inter Chunk Latency,ms,sum,243799.88
+4,Inter Chunk Latency,ms,p1,118.34
+4,Inter Chunk Latency,ms,p5,118.66
+4,Inter Chunk Latency,ms,p10,118.90
+4,Inter Chunk Latency,ms,p25,119.27
+4,Inter Chunk Latency,ms,p50,119.70
+4,Inter Chunk Latency,ms,p75,120.25
+4,Inter Chunk Latency,ms,p90,121.55
+4,Inter Chunk Latency,ms,p95,122.60
+4,Inter Chunk Latency,ms,p99,123.67
+4,Inter Chunk Latency,ms,std,1.48
+4,Inter Token Latency,ms,avg,119.98
+4,Inter Token Latency,ms,min,119.95
+4,Inter Token Latency,ms,max,120.26
+4,Inter Token Latency,ms,sum,1919.68
+4,Inter Token Latency,ms,p1,119.95
+4,Inter Token Latency,ms,p5,119.95
+4,Inter Token Latency,ms,p10,119.95
+4,Inter Token Latency,ms,p25,119.95
+4,Inter Token Latency,ms,p50,119.96
+4,Inter Token Latency,ms,p75,119.96
+4,Inter Token Latency,ms,p90,120.02
+4,Inter Token Latency,ms,p95,120.13
+4,Inter Token Latency,ms,p99,120.23
+4,Inter Token Latency,ms,std,0.08
+4,Output Sequence Length,tokens,avg,128.00
+4,Output Sequence Length,tokens,min,128.00
+4,Output Sequence Length,tokens,max,128.00
+4,Output Sequence Length,tokens,sum,2048.00
+4,Output Sequence Length,tokens,p1,128.00
+4,Output Sequence Length,tokens,p5,128.00
+4,Output Sequence Length,tokens,p10,128.00
+4,Output Sequence Length,tokens,p25,128.00
+4,Output Sequence Length,tokens,p50,128.00
+4,Output Sequence Length,tokens,p75,128.00
+4,Output Sequence Length,tokens,p90,128.00
+4,Output Sequence Length,tokens,p95,128.00
+4,Output Sequence Length,tokens,p99,128.00
+4,Output Sequence Length,tokens,std,0.00
+4,Output Token Count,tokens,avg,128.00
+4,Output Token Count,tokens,min,128.00
+4,Output Token Count,tokens,max,128.00
+4,Output Token Count,tokens,sum,2048.00
+4,Output Token Count,tokens,p1,128.00
+4,Output Token Count,tokens,p5,128.00
+4,Output Token Count,tokens,p10,128.00
+4,Output Token Count,tokens,p25,128.00
+4,Output Token Count,tokens,p50,128.00
+4,Output Token Count,tokens,p75,128.00
+4,Output Token Count,tokens,p90,128.00
+4,Output Token Count,tokens,p95,128.00
+4,Output Token Count,tokens,p99,128.00
+4,Output Token Count,tokens,std,0.00
+4,Output Token Throughput,tokens/sec,avg,65.00
+4,Output Token Throughput Per User,tokens/sec/user,avg,8.33
+4,Output Token Throughput Per User,tokens/sec/user,min,8.32
+4,Output Token Throughput Per User,tokens/sec/user,max,8.34
+4,Output Token Throughput Per User,tokens/sec/user,sum,133.36
+4,Output Token Throughput Per User,tokens/sec/user,p1,8.32
+4,Output Token Throughput Per User,tokens/sec/user,p5,8.32
+4,Output Token Throughput Per User,tokens/sec/user,p10,8.33
+4,Output Token Throughput Per User,tokens/sec/user,p25,8.34
+4,Output Token Throughput Per User,tokens/sec/user,p50,8.34
+4,Output Token Throughput Per User,tokens/sec/user,p75,8.34
+4,Output Token Throughput Per User,tokens/sec/user,p90,8.34
+4,Output Token Throughput Per User,tokens/sec/user,p95,8.34
+4,Output Token Throughput Per User,tokens/sec/user,p99,8.34
+4,Output Token Throughput Per User,tokens/sec/user,std,0.01
+4,Request Count,requests,avg,16.00
+4,Request Latency,ms,avg,15632.38
+4,Request Latency,ms,min,15618.38
+4,Request Latency,ms,max,15645.74
+4,Request Latency,ms,sum,250118.06
+4,Request Latency,ms,p1,15618.56
+4,Request Latency,ms,p5,15619.27
+4,Request Latency,ms,p10,15619.59
+4,Request Latency,ms,p25,15619.77
+4,Request Latency,ms,p50,15632.48
+4,Request Latency,ms,p75,15645.11
+4,Request Latency,ms,p90,15645.20
+4,Request Latency,ms,p95,15645.35
+4,Request Latency,ms,p99,15645.67
+4,Request Latency,ms,std,12.78
+4,Request Throughput,requests/sec,avg,0.51
+4,Time to First Output Token,ms,avg,394.89
+4,Time to First Output Token,ms,min,367.78
+4,Time to First Output Token,ms,max,410.50
+4,Time to First Output Token,ms,sum,6318.18
+4,Time to First Output Token,ms,p1,368.56
+4,Time to First Output Token,ms,p5,371.65
+4,Time to First Output Token,ms,p10,379.55
+4,Time to First Output Token,ms,p25,386.32
+4,Time to First Output Token,ms,p50,386.85
+4,Time to First Output Token,ms,p75,410.19
+4,Time to First Output Token,ms,p90,410.38
+4,Time to First Output Token,ms,p95,410.44
+4,Time to First Output Token,ms,p99,410.48
+4,Time to First Output Token,ms,std,14.50
+4,Time to First Token,ms,avg,394.89
+4,Time to First Token,ms,min,367.78
+4,Time to First Token,ms,max,410.50
+4,Time to First Token,ms,sum,6318.18
+4,Time to First Token,ms,p1,368.56
+4,Time to First Token,ms,p5,371.65
+4,Time to First Token,ms,p10,379.55
+4,Time to First Token,ms,p25,386.32
+4,Time to First Token,ms,p50,386.85
+4,Time to First Token,ms,p75,410.19
+4,Time to First Token,ms,p90,410.38
+4,Time to First Token,ms,p95,410.44
+4,Time to First Token,ms,p99,410.48
+4,Time to First Token,ms,std,14.50
+4,Time to Second Token,ms,avg,120.43
+4,Time to Second Token,ms,min,118.05
+4,Time to Second Token,ms,max,122.26
+4,Time to Second Token,ms,sum,1926.91
+4,Time to Second Token,ms,p1,118.28
+4,Time to Second Token,ms,p5,119.21
+4,Time to Second Token,ms,p10,119.63
+4,Time to Second Token,ms,p25,119.68
+4,Time to Second Token,ms,p50,120.59
+4,Time to Second Token,ms,p75,121.22
+4,Time to Second Token,ms,p90,121.26
+4,Time to Second Token,ms,p95,121.53
+4,Time to Second Token,ms,p99,122.11
+4,Time to Second Token,ms,std,1.01
+4,Total Output Sequence Length,tokens,avg,2048.00
+4,Total Output Tokens,tokens,avg,2048.00
+5,Benchmark Duration,sec,avg,31.53
+5,E2E Output Token Throughput,tokens/sec/user,avg,8.18
+5,E2E Output Token Throughput,tokens/sec/user,min,8.18
+5,E2E Output Token Throughput,tokens/sec/user,max,8.19
+5,E2E Output Token Throughput,tokens/sec/user,sum,130.90
+5,E2E Output Token Throughput,tokens/sec/user,p1,8.18
+5,E2E Output Token Throughput,tokens/sec/user,p5,8.18
+5,E2E Output Token Throughput,tokens/sec/user,p10,8.18
+5,E2E Output Token Throughput,tokens/sec/user,p25,8.18
+5,E2E Output Token Throughput,tokens/sec/user,p50,8.18
+5,E2E Output Token Throughput,tokens/sec/user,p75,8.19
+5,E2E Output Token Throughput,tokens/sec/user,p90,8.19
+5,E2E Output Token Throughput,tokens/sec/user,p95,8.19
+5,E2E Output Token Throughput,tokens/sec/user,p99,8.19
+5,E2E Output Token Throughput,tokens/sec/user,std,0.01
+5,HTTP Blocked,ms,avg,0.00
+5,HTTP Blocked,ms,min,0.00
+5,HTTP Blocked,ms,max,0.00
+5,HTTP Blocked,ms,sum,0.00
+5,HTTP Blocked,ms,p1,0.00
+5,HTTP Blocked,ms,p5,0.00
+5,HTTP Blocked,ms,p10,0.00
+5,HTTP Blocked,ms,p25,0.00
+5,HTTP Blocked,ms,p50,0.00
+5,HTTP Blocked,ms,p75,0.00
+5,HTTP Blocked,ms,p90,0.00
+5,HTTP Blocked,ms,p95,0.00
+5,HTTP Blocked,ms,p99,0.00
+5,HTTP Blocked,ms,std,0.00
+5,HTTP Chunks Received,count,avg,128.00
+5,HTTP Chunks Received,count,min,128.00
+5,HTTP Chunks Received,count,max,128.00
+5,HTTP Chunks Received,count,sum,2048.00
+5,HTTP Chunks Received,count,p1,128.00
+5,HTTP Chunks Received,count,p5,128.00
+5,HTTP Chunks Received,count,p10,128.00
+5,HTTP Chunks Received,count,p25,128.00
+5,HTTP Chunks Received,count,p50,128.00
+5,HTTP Chunks Received,count,p75,128.00
+5,HTTP Chunks Received,count,p90,128.00
+5,HTTP Chunks Received,count,p95,128.00
+5,HTTP Chunks Received,count,p99,128.00
+5,HTTP Chunks Received,count,std,0.00
+5,HTTP Chunks Sent,count,avg,1.00
+5,HTTP Chunks Sent,count,min,1.00
+5,HTTP Chunks Sent,count,max,1.00
+5,HTTP Chunks Sent,count,sum,16.00
+5,HTTP Chunks Sent,count,p1,1.00
+5,HTTP Chunks Sent,count,p5,1.00
+5,HTTP Chunks Sent,count,p10,1.00
+5,HTTP Chunks Sent,count,p25,1.00
+5,HTTP Chunks Sent,count,p50,1.00
+5,HTTP Chunks Sent,count,p75,1.00
+5,HTTP Chunks Sent,count,p90,1.00
+5,HTTP Chunks Sent,count,p95,1.00
+5,HTTP Chunks Sent,count,p99,1.00
+5,HTTP Chunks Sent,count,std,0.00
+5,HTTP Connecting,ms,avg,0.00
+5,HTTP Connecting,ms,min,0.00
+5,HTTP Connecting,ms,max,0.00
+5,HTTP Connecting,ms,sum,0.00
+5,HTTP Connecting,ms,p1,0.00
+5,HTTP Connecting,ms,p5,0.00
+5,HTTP Connecting,ms,p10,0.00
+5,HTTP Connecting,ms,p25,0.00
+5,HTTP Connecting,ms,p50,0.00
+5,HTTP Connecting,ms,p75,0.00
+5,HTTP Connecting,ms,p90,0.00
+5,HTTP Connecting,ms,p95,0.00
+5,HTTP Connecting,ms,p99,0.00
+5,HTTP Connecting,ms,std,0.00
+5,HTTP Connection Overhead,ms,avg,0.00
+5,HTTP Connection Overhead,ms,min,0.00
+5,HTTP Connection Overhead,ms,max,0.00
+5,HTTP Connection Overhead,ms,sum,0.00
+5,HTTP Connection Overhead,ms,p1,0.00
+5,HTTP Connection Overhead,ms,p5,0.00
+5,HTTP Connection Overhead,ms,p10,0.00
+5,HTTP Connection Overhead,ms,p25,0.00
+5,HTTP Connection Overhead,ms,p50,0.00
+5,HTTP Connection Overhead,ms,p75,0.00
+5,HTTP Connection Overhead,ms,p90,0.00
+5,HTTP Connection Overhead,ms,p95,0.00
+5,HTTP Connection Overhead,ms,p99,0.00
+5,HTTP Connection Overhead,ms,std,0.00
+5,HTTP Connection Reused,ratio,avg,1.00
+5,HTTP Connection Reused,ratio,min,1.00
+5,HTTP Connection Reused,ratio,max,1.00
+5,HTTP Connection Reused,ratio,sum,16.00
+5,HTTP Connection Reused,ratio,p1,1.00
+5,HTTP Connection Reused,ratio,p5,1.00
+5,HTTP Connection Reused,ratio,p10,1.00
+5,HTTP Connection Reused,ratio,p25,1.00
+5,HTTP Connection Reused,ratio,p50,1.00
+5,HTTP Connection Reused,ratio,p75,1.00
+5,HTTP Connection Reused,ratio,p90,1.00
+5,HTTP Connection Reused,ratio,p95,1.00
+5,HTTP Connection Reused,ratio,p99,1.00
+5,HTTP Connection Reused,ratio,std,0.00
+5,HTTP Data Received,KB,avg,31.14
+5,HTTP Data Received,KB,min,31.05
+5,HTTP Data Received,KB,max,31.23
+5,HTTP Data Received,KB,sum,498.30
+5,HTTP Data Received,KB,p1,31.05
+5,HTTP Data Received,KB,p5,31.05
+5,HTTP Data Received,KB,p10,31.07
+5,HTTP Data Received,KB,p25,31.13
+5,HTTP Data Received,KB,p50,31.15
+5,HTTP Data Received,KB,p75,31.18
+5,HTTP Data Received,KB,p90,31.19
+5,HTTP Data Received,KB,p95,31.20
+5,HTTP Data Received,KB,p99,31.22
+5,HTTP Data Received,KB,std,0.05
+5,HTTP Data Sent,KB,avg,0.24
+5,HTTP Data Sent,KB,min,0.16
+5,HTTP Data Sent,KB,max,0.43
+5,HTTP Data Sent,KB,sum,3.88
+5,HTTP Data Sent,KB,p1,0.16
+5,HTTP Data Sent,KB,p5,0.17
+5,HTTP Data Sent,KB,p10,0.17
+5,HTTP Data Sent,KB,p25,0.18
+5,HTTP Data Sent,KB,p50,0.19
+5,HTTP Data Sent,KB,p75,0.34
+5,HTTP Data Sent,KB,p90,0.37
+5,HTTP Data Sent,KB,p95,0.39
+5,HTTP Data Sent,KB,p99,0.42
+5,HTTP Data Sent,KB,std,0.09
+5,HTTP DNS Lookup,ms,avg,0.00
+5,HTTP DNS Lookup,ms,min,0.00
+5,HTTP DNS Lookup,ms,max,0.00
+5,HTTP DNS Lookup,ms,sum,0.00
+5,HTTP DNS Lookup,ms,p1,0.00
+5,HTTP DNS Lookup,ms,p5,0.00
+5,HTTP DNS Lookup,ms,p10,0.00
+5,HTTP DNS Lookup,ms,p25,0.00
+5,HTTP DNS Lookup,ms,p50,0.00
+5,HTTP DNS Lookup,ms,p75,0.00
+5,HTTP DNS Lookup,ms,p90,0.00
+5,HTTP DNS Lookup,ms,p95,0.00
+5,HTTP DNS Lookup,ms,p99,0.00
+5,HTTP DNS Lookup,ms,std,0.00
+5,HTTP Duration (excl. conn),ms,avg,15645.08
+5,HTTP Duration (excl. conn),ms,min,15629.03
+5,HTTP Duration (excl. conn),ms,max,15657.36
+5,HTTP Duration (excl. conn),ms,sum,250321.28
+5,HTTP Duration (excl. conn),ms,p1,15629.73
+5,HTTP Duration (excl. conn),ms,p5,15632.53
+5,HTTP Duration (excl. conn),ms,p10,15633.70
+5,HTTP Duration (excl. conn),ms,p25,15633.79
+5,HTTP Duration (excl. conn),ms,p50,15644.58
+5,HTTP Duration (excl. conn),ms,p75,15657.15
+5,HTTP Duration (excl. conn),ms,p90,15657.27
+5,HTTP Duration (excl. conn),ms,p95,15657.30
+5,HTTP Duration (excl. conn),ms,p99,15657.35
+5,HTTP Duration (excl. conn),ms,std,11.90
+5,HTTP Receiving,ms,avg,15252.81
+5,HTTP Receiving,ms,min,15245.75
+5,HTTP Receiving,ms,max,15297.25
+5,HTTP Receiving,ms,sum,244044.88
+5,HTTP Receiving,ms,p1,15245.76
+5,HTTP Receiving,ms,p5,15245.79
+5,HTTP Receiving,ms,p10,15245.82
+5,HTTP Receiving,ms,p25,15245.90
+5,HTTP Receiving,ms,p50,15251.71
+5,HTTP Receiving,ms,p75,15251.74
+5,HTTP Receiving,ms,p90,15257.94
+5,HTTP Receiving,ms,p95,15272.38
+5,HTTP Receiving,ms,p99,15292.27
+5,HTTP Receiving,ms,std,12.36
+5,HTTP Sending,ms,avg,0.31
+5,HTTP Sending,ms,min,0.23
+5,HTTP Sending,ms,max,0.45
+5,HTTP Sending,ms,sum,4.97
+5,HTTP Sending,ms,p1,0.23
+5,HTTP Sending,ms,p5,0.25
+5,HTTP Sending,ms,p10,0.26
+5,HTTP Sending,ms,p25,0.27
+5,HTTP Sending,ms,p50,0.29
+5,HTTP Sending,ms,p75,0.36
+5,HTTP Sending,ms,p90,0.38
+5,HTTP Sending,ms,p95,0.40
+5,HTTP Sending,ms,p99,0.44
+5,HTTP Sending,ms,std,0.06
+5,HTTP Total Time,ms,avg,15645.08
+5,HTTP Total Time,ms,min,15629.03
+5,HTTP Total Time,ms,max,15657.36
+5,HTTP Total Time,ms,sum,250321.28
+5,HTTP Total Time,ms,p1,15629.73
+5,HTTP Total Time,ms,p5,15632.53
+5,HTTP Total Time,ms,p10,15633.70
+5,HTTP Total Time,ms,p25,15633.79
+5,HTTP Total Time,ms,p50,15644.58
+5,HTTP Total Time,ms,p75,15657.15
+5,HTTP Total Time,ms,p90,15657.27
+5,HTTP Total Time,ms,p95,15657.30
+5,HTTP Total Time,ms,p99,15657.35
+5,HTTP Total Time,ms,std,11.90
+5,HTTP Waiting (TTFB),ms,avg,391.96
+5,HTTP Waiting (TTFB),ms,min,357.49
+5,HTTP Waiting (TTFB),ms,max,411.19
+5,HTTP Waiting (TTFB),ms,sum,6271.43
+5,HTTP Waiting (TTFB),ms,p1,358.55
+5,HTTP Waiting (TTFB),ms,p5,362.80
+5,HTTP Waiting (TTFB),ms,p10,373.04
+5,HTTP Waiting (TTFB),ms,p25,381.61
+5,HTTP Waiting (TTFB),ms,p50,382.06
+5,HTTP Waiting (TTFB),ms,p75,410.88
+5,HTTP Waiting (TTFB),ms,p90,411.18
+5,HTTP Waiting (TTFB),ms,p95,411.19
+5,HTTP Waiting (TTFB),ms,p99,411.19
+5,HTTP Waiting (TTFB),ms,std,18.02
+5,Inter Chunk Latency,ms,avg,120.10
+5,Inter Chunk Latency,ms,min,117.04
+5,Inter Chunk Latency,ms,max,175.21
+5,Inter Chunk Latency,ms,sum,244044.88
+5,Inter Chunk Latency,ms,p1,118.24
+5,Inter Chunk Latency,ms,p5,118.73
+5,Inter Chunk Latency,ms,p10,118.98
+5,Inter Chunk Latency,ms,p25,119.30
+5,Inter Chunk Latency,ms,p50,119.77
+5,Inter Chunk Latency,ms,p75,120.47
+5,Inter Chunk Latency,ms,p90,122.01
+5,Inter Chunk Latency,ms,p95,122.54
+5,Inter Chunk Latency,ms,p99,123.71
+5,Inter Chunk Latency,ms,std,1.78
+5,Inter Token Latency,ms,avg,120.10
+5,Inter Token Latency,ms,min,120.05
+5,Inter Token Latency,ms,max,120.45
+5,Inter Token Latency,ms,sum,1921.61
+5,Inter Token Latency,ms,p1,120.05
+5,Inter Token Latency,ms,p5,120.05
+5,Inter Token Latency,ms,p10,120.05
+5,Inter Token Latency,ms,p25,120.05
+5,Inter Token Latency,ms,p50,120.09
+5,Inter Token Latency,ms,p75,120.09
+5,Inter Token Latency,ms,p90,120.14
+5,Inter Token Latency,ms,p95,120.25
+5,Inter Token Latency,ms,p99,120.41
+5,Inter Token Latency,ms,std,0.10
+5,Output Sequence Length,tokens,avg,128.00
+5,Output Sequence Length,tokens,min,128.00
+5,Output Sequence Length,tokens,max,128.00
+5,Output Sequence Length,tokens,sum,2048.00
+5,Output Sequence Length,tokens,p1,128.00
+5,Output Sequence Length,tokens,p5,128.00
+5,Output Sequence Length,tokens,p10,128.00
+5,Output Sequence Length,tokens,p25,128.00
+5,Output Sequence Length,tokens,p50,128.00
+5,Output Sequence Length,tokens,p75,128.00
+5,Output Sequence Length,tokens,p90,128.00
+5,Output Sequence Length,tokens,p95,128.00
+5,Output Sequence Length,tokens,p99,128.00
+5,Output Sequence Length,tokens,std,0.00
+5,Output Token Count,tokens,avg,128.00
+5,Output Token Count,tokens,min,128.00
+5,Output Token Count,tokens,max,128.00
+5,Output Token Count,tokens,sum,2048.00
+5,Output Token Count,tokens,p1,128.00
+5,Output Token Count,tokens,p5,128.00
+5,Output Token Count,tokens,p10,128.00
+5,Output Token Count,tokens,p25,128.00
+5,Output Token Count,tokens,p50,128.00
+5,Output Token Count,tokens,p75,128.00
+5,Output Token Count,tokens,p90,128.00
+5,Output Token Count,tokens,p95,128.00
+5,Output Token Count,tokens,p99,128.00
+5,Output Token Count,tokens,std,0.00
+5,Output Token Throughput,tokens/sec,avg,64.95
+5,Output Token Throughput Per User,tokens/sec/user,avg,8.33
+5,Output Token Throughput Per User,tokens/sec/user,min,8.30
+5,Output Token Throughput Per User,tokens/sec/user,max,8.33
+5,Output Token Throughput Per User,tokens/sec/user,sum,133.22
+5,Output Token Throughput Per User,tokens/sec/user,p1,8.30
+5,Output Token Throughput Per User,tokens/sec/user,p5,8.32
+5,Output Token Throughput Per User,tokens/sec/user,p10,8.32
+5,Output Token Throughput Per User,tokens/sec/user,p25,8.33
+5,Output Token Throughput Per User,tokens/sec/user,p50,8.33
+5,Output Token Throughput Per User,tokens/sec/user,p75,8.33
+5,Output Token Throughput Per User,tokens/sec/user,p90,8.33
+5,Output Token Throughput Per User,tokens/sec/user,p95,8.33
+5,Output Token Throughput Per User,tokens/sec/user,p99,8.33
+5,Output Token Throughput Per User,tokens/sec/user,std,0.01
+5,Request Count,requests,avg,16.00
+5,Request Latency,ms,avg,15645.20
+5,Request Latency,ms,min,15629.15
+5,Request Latency,ms,max,15657.47
+5,Request Latency,ms,sum,250323.24
+5,Request Latency,ms,p1,15629.85
+5,Request Latency,ms,p5,15632.65
+5,Request Latency,ms,p10,15633.83
+5,Request Latency,ms,p25,15633.92
+5,Request Latency,ms,p50,15644.71
+5,Request Latency,ms,p75,15657.29
+5,Request Latency,ms,p90,15657.38
+5,Request Latency,ms,p95,15657.41
+5,Request Latency,ms,p99,15657.46
+5,Request Latency,ms,std,11.89
+5,Request Throughput,requests/sec,avg,0.51
+5,Time to First Output Token,ms,avg,392.40
+5,Time to First Output Token,ms,min,357.96
+5,Time to First Output Token,ms,max,411.61
+5,Time to First Output Token,ms,sum,6278.35
+5,Time to First Output Token,ms,p1,359.03
+5,Time to First Output Token,ms,p5,363.29
+5,Time to First Output Token,ms,p10,373.56
+5,Time to First Output Token,ms,p25,382.16
+5,Time to First Output Token,ms,p50,382.44
+5,Time to First Output Token,ms,p75,411.29
+5,Time to First Output Token,ms,p90,411.55
+5,Time to First Output Token,ms,p95,411.57
+5,Time to First Output Token,ms,p99,411.60
+5,Time to First Output Token,ms,std,17.99
+5,Time to First Token,ms,avg,392.40
+5,Time to First Token,ms,min,357.96
+5,Time to First Token,ms,max,411.61
+5,Time to First Token,ms,sum,6278.35
+5,Time to First Token,ms,p1,359.03
+5,Time to First Token,ms,p5,363.29
+5,Time to First Token,ms,p10,373.56
+5,Time to First Token,ms,p25,382.16
+5,Time to First Token,ms,p50,382.44
+5,Time to First Token,ms,p75,411.29
+5,Time to First Token,ms,p90,411.55
+5,Time to First Token,ms,p95,411.57
+5,Time to First Token,ms,p99,411.60
+5,Time to First Token,ms,std,17.99
+5,Time to Second Token,ms,avg,121.60
+5,Time to Second Token,ms,min,117.80
+5,Time to Second Token,ms,max,123.78
+5,Time to Second Token,ms,sum,1945.63
+5,Time to Second Token,ms,p1,117.84
+5,Time to Second Token,ms,p5,118.01
+5,Time to Second Token,ms,p10,119.37
+5,Time to Second Token,ms,p25,120.66
+5,Time to Second Token,ms,p50,120.93
+5,Time to Second Token,ms,p75,123.43
+5,Time to Second Token,ms,p90,123.60
+5,Time to Second Token,ms,p95,123.73
+5,Time to Second Token,ms,p99,123.77
+5,Time to Second Token,ms,std,1.90
+5,Total Output Sequence Length,tokens,avg,2048.00
+5,Total Output Tokens,tokens,avg,2048.00
+6,Benchmark Duration,sec,avg,31.33
+6,E2E Output Token Throughput,tokens/sec/user,avg,8.22
+6,E2E Output Token Throughput,tokens/sec/user,min,8.17
+6,E2E Output Token Throughput,tokens/sec/user,max,8.30
+6,E2E Output Token Throughput,tokens/sec/user,sum,98.59
+6,E2E Output Token Throughput,tokens/sec/user,p1,8.17
+6,E2E Output Token Throughput,tokens/sec/user,p5,8.17
+6,E2E Output Token Throughput,tokens/sec/user,p10,8.18
+6,E2E Output Token Throughput,tokens/sec/user,p25,8.18
+6,E2E Output Token Throughput,tokens/sec/user,p50,8.18
+6,E2E Output Token Throughput,tokens/sec/user,p75,8.30
+6,E2E Output Token Throughput,tokens/sec/user,p90,8.30
+6,E2E Output Token Throughput,tokens/sec/user,p95,8.30
+6,E2E Output Token Throughput,tokens/sec/user,p99,8.30
+6,E2E Output Token Throughput,tokens/sec/user,std,0.06
+6,HTTP Blocked,ms,avg,0.00
+6,HTTP Blocked,ms,min,0.00
+6,HTTP Blocked,ms,max,0.00
+6,HTTP Blocked,ms,sum,0.00
+6,HTTP Blocked,ms,p1,0.00
+6,HTTP Blocked,ms,p5,0.00
+6,HTTP Blocked,ms,p10,0.00
+6,HTTP Blocked,ms,p25,0.00
+6,HTTP Blocked,ms,p50,0.00
+6,HTTP Blocked,ms,p75,0.00
+6,HTTP Blocked,ms,p90,0.00
+6,HTTP Blocked,ms,p95,0.00
+6,HTTP Blocked,ms,p99,0.00
+6,HTTP Blocked,ms,std,0.00
+6,HTTP Chunks Received,count,avg,128.00
+6,HTTP Chunks Received,count,min,128.00
+6,HTTP Chunks Received,count,max,128.00
+6,HTTP Chunks Received,count,sum,1536.00
+6,HTTP Chunks Received,count,p1,128.00
+6,HTTP Chunks Received,count,p5,128.00
+6,HTTP Chunks Received,count,p10,128.00
+6,HTTP Chunks Received,count,p25,128.00
+6,HTTP Chunks Received,count,p50,128.00
+6,HTTP Chunks Received,count,p75,128.00
+6,HTTP Chunks Received,count,p90,128.00
+6,HTTP Chunks Received,count,p95,128.00
+6,HTTP Chunks Received,count,p99,128.00
+6,HTTP Chunks Received,count,std,0.00
+6,HTTP Chunks Sent,count,avg,1.00
+6,HTTP Chunks Sent,count,min,1.00
+6,HTTP Chunks Sent,count,max,1.00
+6,HTTP Chunks Sent,count,sum,12.00
+6,HTTP Chunks Sent,count,p1,1.00
+6,HTTP Chunks Sent,count,p5,1.00
+6,HTTP Chunks Sent,count,p10,1.00
+6,HTTP Chunks Sent,count,p25,1.00
+6,HTTP Chunks Sent,count,p50,1.00
+6,HTTP Chunks Sent,count,p75,1.00
+6,HTTP Chunks Sent,count,p90,1.00
+6,HTTP Chunks Sent,count,p95,1.00
+6,HTTP Chunks Sent,count,p99,1.00
+6,HTTP Chunks Sent,count,std,0.00
+6,HTTP Connecting,ms,avg,0.00
+6,HTTP Connecting,ms,min,0.00
+6,HTTP Connecting,ms,max,0.00
+6,HTTP Connecting,ms,sum,0.00
+6,HTTP Connecting,ms,p1,0.00
+6,HTTP Connecting,ms,p5,0.00
+6,HTTP Connecting,ms,p10,0.00
+6,HTTP Connecting,ms,p25,0.00
+6,HTTP Connecting,ms,p50,0.00
+6,HTTP Connecting,ms,p75,0.00
+6,HTTP Connecting,ms,p90,0.00
+6,HTTP Connecting,ms,p95,0.00
+6,HTTP Connecting,ms,p99,0.00
+6,HTTP Connecting,ms,std,0.00
+6,HTTP Connection Overhead,ms,avg,0.00
+6,HTTP Connection Overhead,ms,min,0.00
+6,HTTP Connection Overhead,ms,max,0.00
+6,HTTP Connection Overhead,ms,sum,0.00
+6,HTTP Connection Overhead,ms,p1,0.00
+6,HTTP Connection Overhead,ms,p5,0.00
+6,HTTP Connection Overhead,ms,p10,0.00
+6,HTTP Connection Overhead,ms,p25,0.00
+6,HTTP Connection Overhead,ms,p50,0.00
+6,HTTP Connection Overhead,ms,p75,0.00
+6,HTTP Connection Overhead,ms,p90,0.00
+6,HTTP Connection Overhead,ms,p95,0.00
+6,HTTP Connection Overhead,ms,p99,0.00
+6,HTTP Connection Overhead,ms,std,0.00
+6,HTTP Connection Reused,ratio,avg,1.00
+6,HTTP Connection Reused,ratio,min,1.00
+6,HTTP Connection Reused,ratio,max,1.00
+6,HTTP Connection Reused,ratio,sum,12.00
+6,HTTP Connection Reused,ratio,p1,1.00
+6,HTTP Connection Reused,ratio,p5,1.00
+6,HTTP Connection Reused,ratio,p10,1.00
+6,HTTP Connection Reused,ratio,p25,1.00
+6,HTTP Connection Reused,ratio,p50,1.00
+6,HTTP Connection Reused,ratio,p75,1.00
+6,HTTP Connection Reused,ratio,p90,1.00
+6,HTTP Connection Reused,ratio,p95,1.00
+6,HTTP Connection Reused,ratio,p99,1.00
+6,HTTP Connection Reused,ratio,std,0.00
+6,HTTP Data Received,KB,avg,31.15
+6,HTTP Data Received,KB,min,31.05
+6,HTTP Data Received,KB,max,31.20
+6,HTTP Data Received,KB,sum,373.76
+6,HTTP Data Received,KB,p1,31.05
+6,HTTP Data Received,KB,p5,31.07
+6,HTTP Data Received,KB,p10,31.10
+6,HTTP Data Received,KB,p25,31.13
+6,HTTP Data Received,KB,p50,31.15
+6,HTTP Data Received,KB,p75,31.18
+6,HTTP Data Received,KB,p90,31.19
+6,HTTP Data Received,KB,p95,31.19
+6,HTTP Data Received,KB,p99,31.20
+6,HTTP Data Received,KB,std,0.04
+6,HTTP Data Sent,KB,avg,0.25
+6,HTTP Data Sent,KB,min,0.16
+6,HTTP Data Sent,KB,max,0.43
+6,HTTP Data Sent,KB,sum,2.97
+6,HTTP Data Sent,KB,p1,0.16
+6,HTTP Data Sent,KB,p5,0.17
+6,HTTP Data Sent,KB,p10,0.17
+6,HTTP Data Sent,KB,p25,0.18
+6,HTTP Data Sent,KB,p50,0.20
+6,HTTP Data Sent,KB,p75,0.34
+6,HTTP Data Sent,KB,p90,0.37
+6,HTTP Data Sent,KB,p95,0.40
+6,HTTP Data Sent,KB,p99,0.42
+6,HTTP Data Sent,KB,std,0.09
+6,HTTP DNS Lookup,ms,avg,0.00
+6,HTTP DNS Lookup,ms,min,0.00
+6,HTTP DNS Lookup,ms,max,0.00
+6,HTTP DNS Lookup,ms,sum,0.00
+6,HTTP DNS Lookup,ms,p1,0.00
+6,HTTP DNS Lookup,ms,p5,0.00
+6,HTTP DNS Lookup,ms,p10,0.00
+6,HTTP DNS Lookup,ms,p25,0.00
+6,HTTP DNS Lookup,ms,p50,0.00
+6,HTTP DNS Lookup,ms,p75,0.00
+6,HTTP DNS Lookup,ms,p90,0.00
+6,HTTP DNS Lookup,ms,p95,0.00
+6,HTTP DNS Lookup,ms,p99,0.00
+6,HTTP DNS Lookup,ms,std,0.00
+6,HTTP Duration (excl. conn),ms,avg,15580.74
+6,HTTP Duration (excl. conn),ms,min,15425.80
+6,HTTP Duration (excl. conn),ms,max,15662.14
+6,HTTP Duration (excl. conn),ms,sum,186968.93
+6,HTTP Duration (excl. conn),ms,p1,15425.82
+6,HTTP Duration (excl. conn),ms,p5,15425.89
+6,HTTP Duration (excl. conn),ms,p10,15425.97
+6,HTTP Duration (excl. conn),ms,p25,15430.27
+6,HTTP Duration (excl. conn),ms,p50,15656.62
+6,HTTP Duration (excl. conn),ms,p75,15656.79
+6,HTTP Duration (excl. conn),ms,p90,15657.17
+6,HTTP Duration (excl. conn),ms,p95,15659.43
+6,HTTP Duration (excl. conn),ms,p99,15661.60
+6,HTTP Duration (excl. conn),ms,std,108.47
+6,HTTP Receiving,ms,avg,15189.14
+6,HTTP Receiving,ms,min,15052.08
+6,HTTP Receiving,ms,max,15286.43
+6,HTTP Receiving,ms,sum,182269.69
+6,HTTP Receiving,ms,p1,15052.09
+6,HTTP Receiving,ms,p5,15052.09
+6,HTTP Receiving,ms,p10,15052.09
+6,HTTP Receiving,ms,p25,15066.11
+6,HTTP Receiving,ms,p50,15250.88
+6,HTTP Receiving,ms,p75,15250.90
+6,HTTP Receiving,ms,p90,15250.92
+6,HTTP Receiving,ms,p95,15266.90
+6,HTTP Receiving,ms,p99,15282.52
+6,HTTP Receiving,ms,std,94.21
+6,HTTP Sending,ms,avg,0.29
+6,HTTP Sending,ms,min,0.24
+6,HTTP Sending,ms,max,0.37
+6,HTTP Sending,ms,sum,3.52
+6,HTTP Sending,ms,p1,0.25
+6,HTTP Sending,ms,p5,0.25
+6,HTTP Sending,ms,p10,0.26
+6,HTTP Sending,ms,p25,0.28
+6,HTTP Sending,ms,p50,0.29
+6,HTTP Sending,ms,p75,0.30
+6,HTTP Sending,ms,p90,0.33
+6,HTTP Sending,ms,p95,0.35
+6,HTTP Sending,ms,p99,0.36
+6,HTTP Sending,ms,std,0.03
+6,HTTP Total Time,ms,avg,15580.74
+6,HTTP Total Time,ms,min,15425.80
+6,HTTP Total Time,ms,max,15662.14
+6,HTTP Total Time,ms,sum,186968.93
+6,HTTP Total Time,ms,p1,15425.82
+6,HTTP Total Time,ms,p5,15425.89
+6,HTTP Total Time,ms,p10,15425.97
+6,HTTP Total Time,ms,p25,15430.27
+6,HTTP Total Time,ms,p50,15656.62
+6,HTTP Total Time,ms,p75,15656.79
+6,HTTP Total Time,ms,p90,15657.17
+6,HTTP Total Time,ms,p95,15659.43
+6,HTTP Total Time,ms,p99,15661.60
+6,HTTP Total Time,ms,std,108.47
+6,HTTP Waiting (TTFB),ms,avg,391.31
+6,HTTP Waiting (TTFB),ms,min,360.57
+6,HTTP Waiting (TTFB),ms,max,406.09
+6,HTTP Waiting (TTFB),ms,sum,4695.72
+6,HTTP Waiting (TTFB),ms,p1,361.99
+6,HTTP Waiting (TTFB),ms,p5,367.64
+6,HTTP Waiting (TTFB),ms,p10,373.43
+6,HTTP Waiting (TTFB),ms,p25,373.64
+6,HTTP Waiting (TTFB),ms,p50,405.42
+6,HTTP Waiting (TTFB),ms,p75,405.55
+6,HTTP Waiting (TTFB),ms,p90,405.60
+6,HTTP Waiting (TTFB),ms,p95,405.83
+6,HTTP Waiting (TTFB),ms,p99,406.04
+6,HTTP Waiting (TTFB),ms,std,17.26
+6,Inter Chunk Latency,ms,avg,119.60
+6,Inter Chunk Latency,ms,min,115.09
+6,Inter Chunk Latency,ms,max,157.06
+6,Inter Chunk Latency,ms,sum,182269.64
+6,Inter Chunk Latency,ms,p1,116.86
+6,Inter Chunk Latency,ms,p5,117.43
+6,Inter Chunk Latency,ms,p10,117.75
+6,Inter Chunk Latency,ms,p25,118.63
+6,Inter Chunk Latency,ms,p50,119.49
+6,Inter Chunk Latency,ms,p75,120.21
+6,Inter Chunk Latency,ms,p90,121.56
+6,Inter Chunk Latency,ms,p95,122.35
+6,Inter Chunk Latency,ms,p99,123.51
+6,Inter Chunk Latency,ms,std,1.74
+6,Inter Token Latency,ms,avg,119.60
+6,Inter Token Latency,ms,min,118.52
+6,Inter Token Latency,ms,max,120.37
+6,Inter Token Latency,ms,sum,1435.19
+6,Inter Token Latency,ms,p1,118.52
+6,Inter Token Latency,ms,p5,118.52
+6,Inter Token Latency,ms,p10,118.52
+6,Inter Token Latency,ms,p25,118.63
+6,Inter Token Latency,ms,p50,120.09
+6,Inter Token Latency,ms,p75,120.09
+6,Inter Token Latency,ms,p90,120.09
+6,Inter Token Latency,ms,p95,120.21
+6,Inter Token Latency,ms,p99,120.33
+6,Inter Token Latency,ms,std,0.74
+6,Output Sequence Length,tokens,avg,128.00
+6,Output Sequence Length,tokens,min,128.00
+6,Output Sequence Length,tokens,max,128.00
+6,Output Sequence Length,tokens,sum,1536.00
+6,Output Sequence Length,tokens,p1,128.00
+6,Output Sequence Length,tokens,p5,128.00
+6,Output Sequence Length,tokens,p10,128.00
+6,Output Sequence Length,tokens,p25,128.00
+6,Output Sequence Length,tokens,p50,128.00
+6,Output Sequence Length,tokens,p75,128.00
+6,Output Sequence Length,tokens,p90,128.00
+6,Output Sequence Length,tokens,p95,128.00
+6,Output Sequence Length,tokens,p99,128.00
+6,Output Sequence Length,tokens,std,0.00
+6,Output Token Count,tokens,avg,128.00
+6,Output Token Count,tokens,min,128.00
+6,Output Token Count,tokens,max,128.00
+6,Output Token Count,tokens,sum,1536.00
+6,Output Token Count,tokens,p1,128.00
+6,Output Token Count,tokens,p5,128.00
+6,Output Token Count,tokens,p10,128.00
+6,Output Token Count,tokens,p25,128.00
+6,Output Token Count,tokens,p50,128.00
+6,Output Token Count,tokens,p75,128.00
+6,Output Token Count,tokens,p90,128.00
+6,Output Token Count,tokens,p95,128.00
+6,Output Token Count,tokens,p99,128.00
+6,Output Token Count,tokens,std,0.00
+6,Output Token Throughput,tokens/sec,avg,49.02
+6,Output Token Throughput Per User,tokens/sec/user,avg,8.36
+6,Output Token Throughput Per User,tokens/sec/user,min,8.31
+6,Output Token Throughput Per User,tokens/sec/user,max,8.44
+6,Output Token Throughput Per User,tokens/sec/user,sum,100.34
+6,Output Token Throughput Per User,tokens/sec/user,p1,8.31
+6,Output Token Throughput Per User,tokens/sec/user,p5,8.32
+6,Output Token Throughput Per User,tokens/sec/user,p10,8.33
+6,Output Token Throughput Per User,tokens/sec/user,p25,8.33
+6,Output Token Throughput Per User,tokens/sec/user,p50,8.33
+6,Output Token Throughput Per User,tokens/sec/user,p75,8.43
+6,Output Token Throughput Per User,tokens/sec/user,p90,8.44
+6,Output Token Throughput Per User,tokens/sec/user,p95,8.44
+6,Output Token Throughput Per User,tokens/sec/user,p99,8.44
+6,Output Token Throughput Per User,tokens/sec/user,std,0.05
+6,Request Count,requests,avg,12.00
+6,Request Latency,ms,avg,15580.87
+6,Request Latency,ms,min,15425.92
+6,Request Latency,ms,max,15662.26
+6,Request Latency,ms,sum,186970.40
+6,Request Latency,ms,p1,15425.93
+6,Request Latency,ms,p5,15426.00
+6,Request Latency,ms,p10,15426.08
+6,Request Latency,ms,p25,15430.41
+6,Request Latency,ms,p50,15656.74
+6,Request Latency,ms,p75,15656.92
+6,Request Latency,ms,p90,15657.29
+6,Request Latency,ms,p95,15659.55
+6,Request Latency,ms,p99,15661.72
+6,Request Latency,ms,std,108.47
+6,Request Throughput,requests/sec,avg,0.38
+6,Time to First Output Token,ms,avg,391.73
+6,Time to First Output Token,ms,min,361.07
+6,Time to First Output Token,ms,max,406.45
+6,Time to First Output Token,ms,sum,4700.76
+6,Time to First Output Token,ms,p1,362.48
+6,Time to First Output Token,ms,p5,368.09
+6,Time to First Output Token,ms,p10,373.86
+6,Time to First Output Token,ms,p25,374.05
+6,Time to First Output Token,ms,p50,405.82
+6,Time to First Output Token,ms,p75,405.96
+6,Time to First Output Token,ms,p90,406.02
+6,Time to First Output Token,ms,p95,406.21
+6,Time to First Output Token,ms,p99,406.41
+6,Time to First Output Token,ms,std,17.23
+6,Time to First Token,ms,avg,391.73
+6,Time to First Token,ms,min,361.07
+6,Time to First Token,ms,max,406.45
+6,Time to First Token,ms,sum,4700.76
+6,Time to First Token,ms,p1,362.48
+6,Time to First Token,ms,p5,368.09
+6,Time to First Token,ms,p10,373.86
+6,Time to First Token,ms,p25,374.05
+6,Time to First Token,ms,p50,405.82
+6,Time to First Token,ms,p75,405.96
+6,Time to First Token,ms,p90,406.02
+6,Time to First Token,ms,p95,406.21
+6,Time to First Token,ms,p99,406.41
+6,Time to First Token,ms,std,17.23
+6,Time to Second Token,ms,avg,120.70
+6,Time to Second Token,ms,min,118.24
+6,Time to Second Token,ms,max,122.08
+6,Time to Second Token,ms,sum,1448.35
+6,Time to Second Token,ms,p1,118.24
+6,Time to Second Token,ms,p5,118.25
+6,Time to Second Token,ms,p10,118.26
+6,Time to Second Token,ms,p25,119.24
+6,Time to Second Token,ms,p50,121.94
+6,Time to Second Token,ms,p75,122.01
+6,Time to Second Token,ms,p90,122.06
+6,Time to Second Token,ms,p95,122.07
+6,Time to Second Token,ms,p99,122.08
+6,Time to Second Token,ms,std,1.63
+6,Total Output Sequence Length,tokens,avg,1536.00
+6,Total Output Tokens,tokens,avg,1536.00

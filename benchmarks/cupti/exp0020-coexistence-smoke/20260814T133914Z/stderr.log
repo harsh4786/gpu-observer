@@ -1,0 +1,3 @@
+docker: Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: error mounting "/home/harsh4786/gpu-observer/device-probes/compute-sanitizer/build/vector_add_cuda132" to rootfs at "/observer/vector_add": create mountpoint for /observer/vector_add mount: make mountpoint "/observer/vector_add": read-only file system
+
+Run 'docker run --help' for more information

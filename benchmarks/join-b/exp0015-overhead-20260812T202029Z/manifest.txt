@@ -1,0 +1,10 @@
+experiment=EXP-0015
+started_utc=2026-08-12T20:20:29Z
+question=What is the incremental client-visible cost of scheduler semantics, authoritative packed-row semantics, and selected SASS block events?
+repetitions=3
+ordering=counterordered
+arm_clean=no_observer_patch
+arm_scheduler=engine_step_and_scheduler_slices
+arm_packed=scheduler_plus_authoritative_packed_rows
+arm_sass=packed_plus_selected_cache_kernel_block_events
+3d420dcb2330da0cf53ed8e45fd3ddce276475a2750c179e2d15ba698c12fdcd  /home/harsh4786/gpu-observer/benchmarks/run-join-b-overhead-rung.sh

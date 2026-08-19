@@ -1,0 +1,5 @@
+[required symbol lookup in live kernel]
+uvm_bpf_call_pmm_chunk_activate ABSENT
+uvm_bpf_call_pmm_chunk_used ABSENT
+uvm_bpf_call_pmm_eviction_prepare ABSENT
+[gpu_ext modified module definitions]

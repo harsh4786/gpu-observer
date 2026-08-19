@@ -1,0 +1,13 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "ArrayList seats = new ArrayList();\n\nSeatExtended extends the class of Seat which is:\n\npublic class Seat {\n\n @XmlElement(name = \"Row\", required = true, nillable = true)\n protected String row;\n @XmlElement(name = \"Column\", required = true, nillable = true)\n protected String column;"
+    }
+  ],
+  "model": "Qwen/Qwen3-14B",
+  "stream": false,
+  "max_completion_tokens": 1,
+  "temperature": 0,
+  "ignore_eos": true
+}

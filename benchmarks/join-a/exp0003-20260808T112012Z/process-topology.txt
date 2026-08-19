@@ -1,0 +1,4 @@
+engine_pid=273358
+container_pid=300
+libcuda_mapped=/usr/local/cuda-13.2/compat/lib.real/libcuda.so.595.58.03
+libcuda_attach=/proc/273358/root/usr/local/cuda-13.2/compat/lib.real/libcuda.so.595.58.03

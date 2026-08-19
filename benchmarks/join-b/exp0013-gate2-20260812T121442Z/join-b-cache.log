@@ -1,0 +1,164 @@
+step=2 scheduled=25 prefill=25 decode=0 slices=1 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=1 tokens=25 block_range=[0,25) events=1000 expected=1000
+step=3 scheduled=270 prefill=269 decode=1 slices=8 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=1 tokens=70 block_range=[1,71) events=2800 expected=2800
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=1 tokens=58 block_range=[71,129) events=2320 expected=2320
+  predicted_request=0x7eb2f6ea4b40c669 phase=1 tokens=18 block_range=[129,147) events=720 expected=720
+  predicted_request=0xfbf69e49d36920b8 phase=1 tokens=70 block_range=[147,217) events=2800 expected=2800
+  predicted_request=0x6df9c06e3a128fd8 phase=1 tokens=13 block_range=[217,230) events=520 expected=520
+  predicted_request=0xbb10425602fadab7 phase=1 tokens=24 block_range=[230,254) events=960 expected=960
+  predicted_request=0x5535a8c0f6c3b25a phase=1 tokens=16 block_range=[254,270) events=640 expected=640
+step=4 scheduled=8 prefill=0 decode=8 slices=8 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+step=5 scheduled=1039 prefill=1031 decode=8 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=1 tokens=1031 block_range=[8,1039) events=41240 expected=41240
+step=6 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=7 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=8 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=9 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=10 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=11 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=12 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=13 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=14 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=15 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=16 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=17 scheduled=9 prefill=0 decode=9 slices=9 target_launches=40
+  predicted_request=0x400c77a90df54363 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[8,9) events=40 expected=40
+step=18 scheduled=8 prefill=0 decode=8 slices=8 target_launches=40
+  predicted_request=0xd27b3f1b3a904fa4 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+  predicted_request=0xa6fe4e9d5b7e7c33 phase=2 tokens=1 block_range=[1,2) events=40 expected=40
+  predicted_request=0x7eb2f6ea4b40c669 phase=2 tokens=1 block_range=[2,3) events=40 expected=40
+  predicted_request=0xfbf69e49d36920b8 phase=2 tokens=1 block_range=[3,4) events=40 expected=40
+  predicted_request=0x6df9c06e3a128fd8 phase=2 tokens=1 block_range=[4,5) events=40 expected=40
+  predicted_request=0xbb10425602fadab7 phase=2 tokens=1 block_range=[5,6) events=40 expected=40
+  predicted_request=0x5535a8c0f6c3b25a phase=2 tokens=1 block_range=[6,7) events=40 expected=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[7,8) events=40 expected=40
+step=19 scheduled=1 prefill=0 decode=1 slices=1 target_launches=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+step=20 scheduled=1 prefill=0 decode=1 slices=1 target_launches=40
+  predicted_request=0xbb94ac377e9782c2 phase=2 tokens=1 block_range=[0,1) events=40 expected=40
+summary semantic_records=182 semantic_loss=0 steps=19 launches=760 assigned_launches=760 measured_launches=760 device_headers=1 device_retained=58400 measured_events=58400 device_write_attempts=58400 device_drops=0 device_sequence_errors=0 duplicate_launch_ids=0 orphan_events=0 zero_launch_events=0 incomplete_launches=0 duplicate_blocks=0 geometry_mismatches=0 token_grid_mismatches=0 kind_mismatches=0 kernel_slot_mismatches=0 unmapped_blocks=0 request_count_mismatches=0 distinct_sms=48 device_raw_first=629153202472288 device_raw_last=629156097272544 event_sequence_first=0 event_sequence_last=58399 device_clock=raw_globaltimer_not_normalized ownership=predicted_not_oracle_validated

@@ -1,0 +1,48 @@
+[eager clock]
+session_origin_monotonic_ns=302118972691746 offset_from_client_before_ns=-1785907916133281904
+[eager per-step kernel activity]
+step_id  phase    kernels  summed_kernel_ns  graph_node_kernels  streams  first_kernel_after_step_begin_ns
+-------  -------  -------  ----------------  ------------------  -------  --------------------------------
+1        prefill  382      11083421          0                   1        576336                          
+2        decode   382      11341280          0                   1        540850                          
+3        decode   382      11796672          0                   1        196860                          
+step_id  overlap_safe_busy_ns
+-------  --------------------
+1        11064861            
+2        11341280            
+3        11796672            
+[eager launch APIs per step]
+step_id  api                     calls
+-------  ----------------------  -----
+1        cudaLaunchKernel_v7000  269  
+1        cuLaunchKernelEx        85   
+1        cuLaunchKernel          28   
+2        cudaLaunchKernel_v7000  381  
+2        cuLaunchKernelEx        1    
+3        cudaLaunchKernel_v7000  381  
+3        cuLaunchKernelEx        1    
+[graphs clock]
+session_origin_monotonic_ns=302358573176014 offset_from_client_before_ns=-1785907916133282080
+[graphs per-step kernel activity]
+step_id  phase    kernels  summed_kernel_ns  graph_node_kernels  streams  first_kernel_after_step_begin_ns
+-------  -------  -------  ----------------  ------------------  -------  --------------------------------
+1        prefill  326      6817080           253                 1        548920                          
+2        decode   352      7419584           337                 1        308900                          
+3        decode   352      7387680           337                 1        249947                          
+step_id  overlap_safe_busy_ns
+-------  --------------------
+1        6816184             
+2        7419584             
+3        7387680             
+[graphs launch APIs per step]
+step_id  api                     calls
+-------  ----------------------  -----
+1        cudaLaunchKernel_v7000  72   
+1        cudaGraphLaunch_v10000  29   
+1        cuLaunchKernelEx        1    
+2        cudaLaunchKernel_v7000  14   
+2        cudaGraphLaunch_v10000  1    
+2        cuLaunchKernelEx        1    
+3        cudaLaunchKernel_v7000  14   
+3        cudaGraphLaunch_v10000  1    
+3        cuLaunchKernelEx        1    

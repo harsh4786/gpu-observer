@@ -1,0 +1,57 @@
+Processing [benchmarks/cupti/steps45-20260808T172500Z/warm-graphs/nsys-warm-graphs.sqlite] with [/opt/nvidia/nsight-systems/2025.3.2/host-linux-armv8/reports/cuda_gpu_kern_sum.py]... 
+
+ ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):
+
++----------+-----------------+-----------+-----------+-----------+----------+----------+-------------+------------------------------------------------------------------------------------------------------+
+| Time (%) | Total Time (ns) | Instances | Avg (ns)  | Med (ns)  | Min (ns) | Max (ns) | StdDev (ns) |                                                 Name                                                 |
++----------+-----------------+-----------+-----------+-----------+----------+----------+-------------+------------------------------------------------------------------------------------------------------+
+|     46.3 |         9959072 |       224 |   44460.1 |   41008.0 |     9888 |    71712 |     15356.3 | std::enable_if<!T7, void>::type internal::gemvx::kernel<int, int, __nv_bfloat16, __nv_bfloat16, __n… |
+|     26.4 |         5673920 |         3 | 1891306.7 | 1895104.0 |  1873472 |  1905344 |     16271.8 | std::enable_if<!T7, void>::type internal::gemvx::kernel<int, int, __nv_bfloat16, __nv_bfloat16, __n… |
+|      7.8 |         1685600 |        28 |   60200.0 |   60208.0 |    56704 |    62624 |      1519.1 | void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_128x128_64x3_tn_align8>(T1::Par… |
+|      7.3 |         1568896 |        56 |   28016.0 |   28000.0 |    20576 |    35360 |      4929.2 | nvjet_sm121_tst_mma_64x32x64_8_32x16x64_tmaAB_alignCD4_bz_TNNN                                       |
+|      5.3 |         1150240 |        28 |   41080.0 |   41024.0 |    39296 |    42624 |       915.9 | nvjet_sm121_tst_mma_96x64x64_4_16x64x64_tmaAB_alignCD4_bz_TNNN                                       |
+|      1.4 |          291744 |        56 |    5209.7 |    5248.0 |     4960 |     5856 |       217.9 | void flash::flash_fwd_splitkv_kernel<Flash_fwd_kernel_traits<(int)128, (int)64, (int)128, (int)4, (… |
+|      1.1 |          242240 |        56 |    4325.7 |    4320.0 |     4256 |     5056 |       114.7 | void flash::flash_fwd_splitkv_combine_kernel<Flash_fwd_kernel_traits<(int)128, (int)64, (int)128, (… |
+|      0.9 |          200064 |        84 |    2381.7 |    1568.0 |     1536 |     4832 |      1201.1 | void vllm::reshape_and_cache_flash_kernel<__nv_bfloat16, __nv_bfloat16, (vllm::Fp8KVCacheDataType)0… |
+|      0.8 |          178400 |        28 |    6371.4 |    6432.0 |     5664 |     6560 |       224.8 | void flash::flash_fwd_splitkv_kernel<Flash_fwd_kernel_traits<(int)128, (int)64, (int)128, (int)4, (… |
+|      0.5 |          115296 |        84 |    1372.6 |    1248.0 |     1184 |     1760 |       202.4 | triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_2                                                   |
+|      0.5 |          105856 |        84 |    1260.2 |    1120.0 |     1088 |     1632 |       184.7 | triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_0                                                   |
+|      0.5 |           99200 |        81 |    1224.7 |    1088.0 |     1024 |     1792 |       224.8 | triton_poi_fused_4                                                                                   |
+|      0.4 |           77536 |        81 |     957.2 |     928.0 |      896 |     1024 |        46.4 | triton_red_fused_3                                                                                   |
+|      0.3 |           75232 |        84 |     895.6 |     800.0 |      768 |     1792 |       172.6 | triton_poi_fused_mul_silu_slice_1                                                                    |
+|      0.1 |           16160 |         3 |    5386.7 |    5248.0 |     5216 |     5696 |       268.4 | void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::ArgMaxOps<… |
+|      0.1 |           12128 |         3 |    4042.7 |    3264.0 |     3232 |     5632 |      1376.5 | void at::native::index_elementwise_kernel<(int)128, (int)4, void at::native::gpu_index_kernel<void … |
+|      0.1 |           12064 |         9 |    1340.4 |    1344.0 |     1184 |     1504 |       106.7 | void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIterator… |
+|      0.1 |           11872 |         3 |    3957.3 |    2592.0 |     1536 |     7744 |      3321.6 | void at::native::index_elementwise_kernel<(int)128, (int)4, void at::native::gpu_index_kernel<void … |
+|      0.1 |           11008 |         3 |    3669.3 |    1984.0 |     1952 |     7072 |      2946.8 | triton_per_fused__to_copy_embedding_rms_norm_0                                                       |
+|      0.0 |            7232 |         3 |    2410.7 |    2400.0 |     2400 |     2432 |        18.5 | void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIterator… |
+|      0.0 |            5440 |         3 |    1813.3 |    1760.0 |     1728 |     1952 |       121.2 | _compute_slot_mapping_kernel                                                                         |
+|      0.0 |            5120 |         3 |    1706.7 |    1440.0 |     1440 |     2240 |       461.9 | triton_poi_fused_2                                                                                   |
+|      0.0 |            4256 |         3 |    1418.7 |    1248.0 |      992 |     2016 |       532.9 | void at::native::vectorized_elementwise_kernel<(int)2, at::native::CUDAFunctor_add<long>, std::arra… |
+|      0.0 |            3776 |         3 |    1258.7 |    1344.0 |     1088 |     1344 |       147.8 | void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<int>, std::array… |
+|      0.0 |            3424 |         3 |    1141.3 |    1152.0 |     1120 |     1152 |        18.5 | void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIterator… |
+|      0.0 |            3136 |         3 |    1045.3 |     960.0 |      960 |     1216 |       147.8 | triton_red_fused_1                                                                                   |
+|      0.0 |            2976 |         3 |     992.0 |     992.0 |      992 |      992 |         0.0 | void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctorOnSelf_add<int>, std::array<cha… |
+|      0.0 |            2880 |         3 |     960.0 |     864.0 |      832 |     1184 |       194.6 | void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<int>, std::array<cha… |
+|      0.0 |            2304 |         3 |     768.0 |     768.0 |      768 |      768 |         0.0 | void at::native::unrolled_elementwise_kernel<at::native::FillFunctor<int>, std::array<char *, (unsi… |
+|      0.0 |            1536 |         2 |     768.0 |     768.0 |      768 |      768 |         0.0 | void at::native::unrolled_elementwise_kernel<at::native::FillFunctor<long>, std::array<char *, (uns… |
++----------+-----------------+-----------+-----------+-----------+----------+----------+-------------+------------------------------------------------------------------------------------------------------+
+
+Processing [benchmarks/cupti/steps45-20260808T172500Z/warm-graphs/nsys-warm-graphs.sqlite] with [/opt/nvidia/nsight-systems/2025.3.2/host-linux-armv8/reports/cuda_api_sum.py]... 
+
+ ** CUDA API Summary (cuda_api_sum):
+
++----------+-----------------+-----------+-----------+-----------+----------+----------+-------------+------------------------------+
+| Time (%) | Total Time (ns) | Num Calls | Avg (ns)  | Med (ns)  | Min (ns) | Max (ns) | StdDev (ns) |             Name             |
++----------+-----------------+-----------+-----------+-----------+----------+----------+-------------+------------------------------+
+|     89.1 |        17880464 |         3 | 5960154.7 | 7077584.0 |  3628448 |  7174432 |   2019897.7 | cudaEventSynchronize         |
+|      6.9 |         1387376 |        31 |   44754.1 |   25744.0 |    13136 |   316192 |     66050.3 | cudaGraphLaunch_v10000       |
+|      2.6 |          517920 |       100 |    5179.2 |    3856.0 |     2592 |    24544 |      3913.7 | cudaLaunchKernel             |
+|      1.1 |          214576 |        33 |    6502.3 |    3488.0 |     2480 |    24128 |      5810.4 | cudaMemcpyAsync              |
+|      0.1 |           24912 |         3 |    8304.0 |    8848.0 |     6000 |    10064 |      2085.9 | cudaMemsetAsync              |
+|      0.1 |           13696 |         3 |    4565.3 |    3296.0 |     2656 |     7744 |      2771.3 | cudaEventRecord              |
+|      0.1 |           13280 |        27 |     491.9 |     176.0 |      144 |     2864 |       794.8 | cudaStreamIsCapturing_v10000 |
+|      0.1 |           12272 |         3 |    4090.7 |    4352.0 |     3168 |     4752 |       823.7 | cuLaunchKernelEx             |
+|      0.0 |            9040 |       100 |      90.4 |      48.0 |       16 |      464 |        96.3 | cuKernelGetName              |
++----------+-----------------+-----------+-----------+-----------+----------+----------+-------------+------------------------------+
+

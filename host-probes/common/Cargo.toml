@@ -1,0 +1,16 @@
+[package]
+name = "gpu-observer-host-probe-common"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[features]
+default = []
+user = ["dep:aya"]
+
+[dependencies]
+aya = { workspace = true, optional = true }

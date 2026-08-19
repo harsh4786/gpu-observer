@@ -1,0 +1,41 @@
+--- vllm-adapter/upstream/ngc-26.05/vllm/v1/engine/core.py	2026-05-07 20:44:44.000000000 -0700
++++ vllm-adapter/overlay/vllm/v1/engine/core.py	2026-08-08 04:04:23.776645914 -0700
+@@ -65,6 +65,7 @@
+     UtilityResult,
+ )
+ from vllm.v1.engine.tensor_ipc import TensorIpcReceiver
++from vllm.v1.engine.gpu_observer_semantic import semantic_emitter
+ from vllm.v1.engine.utils import (
+     EngineHandshakeMetadata,
+     EngineZmqAddresses,
+@@ -411,15 +412,21 @@
+         if not self.scheduler.has_requests():
+             return {}, False
+         scheduler_output = self.scheduler.schedule()
+-        future = self.model_executor.execute_model(scheduler_output, non_block=True)
+-        grammar_output = self.scheduler.get_grammar_bitmask(scheduler_output)
+-        with (
+-            self.log_error_detail(scheduler_output),
+-            self.log_iteration_details(scheduler_output),
+-        ):
+-            model_output = future.result()
+-            if model_output is None:
+-                model_output = self.model_executor.sample_tokens(grammar_output)
++        semantic_step_id = semantic_emitter.begin(scheduler_output, self.scheduler)
++        semantic_status = 1
++        try:
++            future = self.model_executor.execute_model(scheduler_output, non_block=True)
++            grammar_output = self.scheduler.get_grammar_bitmask(scheduler_output)
++            with (
++                self.log_error_detail(scheduler_output),
++                self.log_iteration_details(scheduler_output),
++            ):
++                model_output = future.result()
++                if model_output is None:
++                    model_output = self.model_executor.sample_tokens(grammar_output)
++            semantic_status = 0
++        finally:
++            semantic_emitter.end(semantic_step_id, semantic_status)
+ 
+         # Before processing the model output, process any aborts that happened
+         # during the model execution.

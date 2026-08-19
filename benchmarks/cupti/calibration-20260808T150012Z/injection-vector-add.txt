@@ -1,0 +1,219 @@
+Calling CUPTI API: cuptiSubscribe_v2(&globals.subscriberHandle, (CUpti_CallbackFunc)pTraceCallback, pUserData, &subscriberParams)
+Calling CUPTI API: cuptiEnableCallback(1, globals.subscriberHandle, CUPTI_CB_DOMAIN_RUNTIME_API, CUPTI_RUNTIME_TRACE_CBID_cudaDeviceReset_v3020)
+Calling CUPTI API: cuptiEnableCallback(1, globals.subscriberHandle, CUPTI_CB_DOMAIN_STATE, CUPTI_CBID_STATE_FATAL_ERROR)
+Calling CUPTI API: cuptiActivityRegisterCallbacks_v2(globals.subscriberHandle, BufferRequested_v2, BufferCompleted_v2)
+Activity buffer size = 8388608 bytes.
+Calling CUPTI API: cuptiEnableCallback(1, injectionGlobals.subscriberHandle, CUPTI_CB_DOMAIN_DRIVER_API, CUPTI_DRIVER_TRACE_CBID_cuProfilerStart)
+Calling CUPTI API: cuptiEnableCallback(1, injectionGlobals.subscriberHandle, CUPTI_CB_DOMAIN_DRIVER_API, CUPTI_DRIVER_TRACE_CBID_cuProfilerStop)
+Calling CUPTI API: cuptiEnableCallback(1, injectionGlobals.subscriberHandle, CUPTI_CB_DOMAIN_RUNTIME_API, CUPTI_RUNTIME_TRACE_CBID_cudaDeviceReset_v3020)
+Enabling CUPTI_ACTIVITY_KIND_MEMCPY.
+Enabling CUPTI_ACTIVITY_KIND_MEMSET.
+Enabling CUPTI_ACTIVITY_KIND_DRIVER.
+Enabling CUPTI_ACTIVITY_KIND_RUNTIME.
+Enabling CUPTI_ACTIVITY_KIND_CONCURRENT_KERNEL.
+Enabling CUPTI_ACTIVITY_KIND_NAME.
+Enabling CUPTI_ACTIVITY_KIND_MARKER.
+Enabling CUPTI_ACTIVITY_KIND_MARKER_DATA.
+Enabling CUPTI_ACTIVITY_KIND_OVERHEAD.
+Enabling CUPTI_ACTIVITY_KIND_MEMCPY2.
+Enabling CUPTI_ACTIVITY_KIND_MEMORY2.
+vector_add_ok launches=3
+Calling CUPTI API: cuptiEnableCallback(0, injectionGlobals.subscriberHandle, CUPTI_CB_DOMAIN_RUNTIME_API, CUPTI_RUNTIME_TRACE_CBID_cudaDeviceReset_v3020)
+Disabling CUPTI_ACTIVITY_KIND_MEMCPY.
+Disabling CUPTI_ACTIVITY_KIND_MEMSET.
+Disabling CUPTI_ACTIVITY_KIND_DRIVER.
+Disabling CUPTI_ACTIVITY_KIND_RUNTIME.
+Disabling CUPTI_ACTIVITY_KIND_CONCURRENT_KERNEL.
+Disabling CUPTI_ACTIVITY_KIND_NAME.
+Disabling CUPTI_ACTIVITY_KIND_MARKER.
+Disabling CUPTI_ACTIVITY_KIND_MARKER_DATA.
+Disabling CUPTI_ACTIVITY_KIND_OVERHEAD.
+Disabling CUPTI_ACTIVITY_KIND_MEMCPY2.
+Disabling CUPTI_ACTIVITY_KIND_MEMORY2.
+Calling CUPTI API: cuptiActivityFlushAll(1)
+DRIVER [ 1786209769719484376, 1786209769722139345 ] duration 2654969, "cuModuleGetLoadingMode", cbid 673, processId 1, threadId 320448704, correlationId 1
+OVERHEAD ACTIVITY_BUFFER_REQUEST [ 1786209769719485384, 1786209769722136865 ] duration 2651481, THREAD, id 320448704, correlation id 1
+DRIVER [ 1786209769722170385, 1786209769722170561 ] duration 176, "cuDeviceGetCount", cbid 4, processId 1, threadId 320448704, correlationId 2
+DRIVER [ 1786209769722171329, 1786209769722488403 ] duration 317074, "cuDeviceGet", cbid 3, processId 1, threadId 320448704, correlationId 3
+DRIVER [ 1786209769722492195, 1786209769722503011 ] duration 10816, "cuDeviceGetName", cbid 5, processId 1, threadId 320448704, correlationId 4
+DRIVER [ 1786209769722503827, 1786209769722510483 ] duration 6656, "cuDeviceTotalMem_v2", cbid 259, processId 1, threadId 320448704, correlationId 5
+DRIVER [ 1786209769722510691, 1786209769722511427 ] duration 736, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 6
+DRIVER [ 1786209769722511507, 1786209769722511683 ] duration 176, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 7
+DRIVER [ 1786209769722511763, 1786209769722512131 ] duration 368, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 8
+DRIVER [ 1786209769722512211, 1786209769722512387 ] duration 176, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 9
+DRIVER [ 1786209769722512467, 1786209769722512739 ] duration 272, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 10
+DRIVER [ 1786209769722512803, 1786209769722512867 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 11
+DRIVER [ 1786209769722512947, 1786209769722513139 ] duration 192, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 12
+DRIVER [ 1786209769722513219, 1786209769722513395 ] duration 176, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 13
+DRIVER [ 1786209769722513475, 1786209769722513523 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 14
+DRIVER [ 1786209769722513603, 1786209769722513651 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 15
+DRIVER [ 1786209769722513731, 1786209769722513779 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 16
+DRIVER [ 1786209769722513875, 1786209769722513923 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 17
+DRIVER [ 1786209769722513987, 1786209769722514051 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 18
+DRIVER [ 1786209769722514131, 1786209769722514179 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 19
+DRIVER [ 1786209769722514259, 1786209769722514307 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 20
+DRIVER [ 1786209769722514387, 1786209769722514435 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 21
+DRIVER [ 1786209769722514515, 1786209769722514579 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 22
+DRIVER [ 1786209769722514659, 1786209769722514867 ] duration 208, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 23
+DRIVER [ 1786209769722514947, 1786209769722515011 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 24
+DRIVER [ 1786209769722515091, 1786209769722515155 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 25
+DRIVER [ 1786209769722515235, 1786209769722515299 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 26
+DRIVER [ 1786209769722515363, 1786209769722515427 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 27
+DRIVER [ 1786209769722515491, 1786209769722515539 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 28
+DRIVER [ 1786209769722515619, 1786209769722515667 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 29
+DRIVER [ 1786209769722515731, 1786209769722515795 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 30
+DRIVER [ 1786209769722515875, 1786209769722515939 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 31
+DRIVER [ 1786209769722516003, 1786209769722516067 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 32
+DRIVER [ 1786209769722516131, 1786209769722516195 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 33
+DRIVER [ 1786209769722516291, 1786209769722516339 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 34
+DRIVER [ 1786209769722516419, 1786209769722516467 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 35
+DRIVER [ 1786209769722516547, 1786209769722516595 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 36
+DRIVER [ 1786209769722516691, 1786209769722516739 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 37
+DRIVER [ 1786209769722516803, 1786209769722516867 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 38
+DRIVER [ 1786209769722516931, 1786209769722516995 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 39
+DRIVER [ 1786209769722517059, 1786209769722517123 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 40
+DRIVER [ 1786209769722517203, 1786209769722517251 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 41
+DRIVER [ 1786209769722517331, 1786209769722517379 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 42
+DRIVER [ 1786209769722517475, 1786209769722517523 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 43
+DRIVER [ 1786209769722517603, 1786209769722517651 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 44
+DRIVER [ 1786209769722517731, 1786209769722517779 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 45
+DRIVER [ 1786209769722517859, 1786209769722517907 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 46
+DRIVER [ 1786209769722517987, 1786209769722518035 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 47
+DRIVER [ 1786209769722518115, 1786209769722518163 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 48
+DRIVER [ 1786209769722518243, 1786209769722518291 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 49
+DRIVER [ 1786209769722518355, 1786209769722518419 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 50
+DRIVER [ 1786209769722518499, 1786209769722518547 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 51
+DRIVER [ 1786209769722518627, 1786209769722518675 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 52
+DRIVER [ 1786209769722518771, 1786209769722518819 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 53
+DRIVER [ 1786209769722518899, 1786209769722518963 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 54
+DRIVER [ 1786209769722519027, 1786209769722519091 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 55
+DRIVER [ 1786209769722519171, 1786209769722519219 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 56
+DRIVER [ 1786209769722519299, 1786209769722519363 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 57
+DRIVER [ 1786209769722519427, 1786209769722519475 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 58
+DRIVER [ 1786209769722519555, 1786209769722519603 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 59
+DRIVER [ 1786209769722519683, 1786209769722519875 ] duration 192, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 60
+DRIVER [ 1786209769722519939, 1786209769722520003 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 61
+DRIVER [ 1786209769722520067, 1786209769722520131 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 62
+DRIVER [ 1786209769722520195, 1786209769722520259 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 63
+DRIVER [ 1786209769722520339, 1786209769722520515 ] duration 176, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 64
+DRIVER [ 1786209769722520579, 1786209769722520643 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 65
+DRIVER [ 1786209769722520723, 1786209769722520771 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 66
+DRIVER [ 1786209769722520851, 1786209769722520915 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 67
+DRIVER [ 1786209769722520995, 1786209769722521043 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 68
+DRIVER [ 1786209769722521123, 1786209769722521171 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 69
+DRIVER [ 1786209769722521235, 1786209769722521299 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 70
+DRIVER [ 1786209769722521363, 1786209769722521603 ] duration 240, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 71
+DRIVER [ 1786209769722521667, 1786209769722521731 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 72
+DRIVER [ 1786209769722521811, 1786209769722521859 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 73
+DRIVER [ 1786209769722521923, 1786209769722522115 ] duration 192, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 74
+DRIVER [ 1786209769722522195, 1786209769722522387 ] duration 192, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 75
+DRIVER [ 1786209769722522467, 1786209769722522515 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 76
+DRIVER [ 1786209769722522595, 1786209769722522643 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 77
+DRIVER [ 1786209769722522723, 1786209769722522771 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 78
+DRIVER [ 1786209769722522851, 1786209769722522899 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 79
+DRIVER [ 1786209769722522947, 1786209769722522995 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 80
+DRIVER [ 1786209769722523059, 1786209769722523123 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 81
+DRIVER [ 1786209769722523187, 1786209769722523251 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 82
+DRIVER [ 1786209769722523315, 1786209769722523363 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 83
+DRIVER [ 1786209769722523443, 1786209769722523507 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 84
+DRIVER [ 1786209769722523587, 1786209769722523747 ] duration 160, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 85
+DRIVER [ 1786209769722523843, 1786209769722523891 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 86
+DRIVER [ 1786209769722523971, 1786209769722524035 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 87
+DRIVER [ 1786209769722524115, 1786209769722524163 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 88
+DRIVER [ 1786209769722524243, 1786209769722524611 ] duration 368, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 89
+DRIVER [ 1786209769722524691, 1786209769722524755 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 90
+DRIVER [ 1786209769722524835, 1786209769722525043 ] duration 208, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 91
+DRIVER [ 1786209769722525123, 1786209769722525171 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 92
+DRIVER [ 1786209769722525251, 1786209769722525299 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 93
+DRIVER [ 1786209769722526179, 1786209769722526403 ] duration 224, "cuDeviceGetUuid", cbid 482, processId 1, threadId 320448704, correlationId 94
+DRIVER [ 1786209769722526483, 1786209769722526531 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 95
+DRIVER [ 1786209769722526611, 1786209769722526659 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 96
+DRIVER [ 1786209769722526723, 1786209769722526787 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 97
+DRIVER [ 1786209769722526867, 1786209769722527011 ] duration 144, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 98
+DRIVER [ 1786209769722527075, 1786209769722559907 ] duration 32832, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 99
+DRIVER [ 1786209769722559987, 1786209769722560051 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 100
+DRIVER [ 1786209769722560131, 1786209769722560179 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 101
+DRIVER [ 1786209769722560339, 1786209769722560563 ] duration 224, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 102
+DRIVER [ 1786209769722560643, 1786209769722560707 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 103
+DRIVER [ 1786209769722560771, 1786209769722560819 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 104
+DRIVER [ 1786209769722560899, 1786209769722560947 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 105
+DRIVER [ 1786209769722561027, 1786209769722561075 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 106
+DRIVER [ 1786209769722561139, 1786209769722561331 ] duration 192, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 107
+DRIVER [ 1786209769722561395, 1786209769722561459 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 108
+DRIVER [ 1786209769722561539, 1786209769722561715 ] duration 176, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 109
+DRIVER [ 1786209769722561795, 1786209769722561859 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 110
+DRIVER [ 1786209769722561923, 1786209769722562131 ] duration 208, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 111
+DRIVER [ 1786209769722562211, 1786209769722562275 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 112
+DRIVER [ 1786209769722562339, 1786209769722562387 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 113
+DRIVER [ 1786209769722562451, 1786209769722562515 ] duration 64, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 114
+DRIVER [ 1786209769722562579, 1786209769722562627 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 115
+DRIVER [ 1786209769722562707, 1786209769722562755 ] duration 48, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 116
+DRIVER [ 1786209769722562819, 1786209769722563139 ] duration 320, "cuDeviceGetAttribute", cbid 9, processId 1, threadId 320448704, correlationId 117
+OVERHEAD CUPTI_INSTRUMENTATION [ 1786209769937628628, 1786209769937655941 ] duration 27313, THREAD, id 320448704, correlation id 118
+OVERHEAD CUPTI_INSTRUMENTATION [ 1786209769937728661, 1786209769937743125 ] duration 14464, THREAD, id 320448704, correlation id 118
+OVERHEAD CUPTI_RESOURCE [ 1786209769937743285, 1786209769937750133 ] duration 6848, THREAD, id 320448704, correlation id 118
+OVERHEAD CUPTI_RESOURCE [ 1786209769937759621, 1786209769939051418 ] duration 1291797, THREAD, id 320448704, correlation id 118
+OVERHEAD CUPTI_RESOURCE [ 1786209769939052378, 1786209769940338206 ] duration 1285828, THREAD, id 320448704, correlation id 118
+OVERHEAD CUPTI_RESOURCE [ 1786209769940338702, 1786209769941588563 ] duration 1249861, THREAD, id 320448704, correlation id 118
+MEMORY2 [ 1786209769941778819 ] memoryOperationType ALLOCATION, memoryKind DEVICE, size 16384, address 13671333888, pc 0,
+  deviceId 0, contextId 1, streamId 0, processId 1, correlationId 118, isAsync 0,
+  memoryPool INVALID, memoryPoolAddress 0,  memoryPoolThreshold 0
+  source (null)
+
+RUNTIME [ 1786209769723181317, 1786209769941783331 ] duration 218602014, "cudaMalloc_v3020", cbid 20, processId 1, threadId 320448704, correlationId 118
+MEMORY2 [ 1786209769941785267 ] memoryOperationType ALLOCATION, memoryKind DEVICE, size 16384, address 13671350272, pc 0,
+  deviceId 0, contextId 1, streamId 0, processId 1, correlationId 119, isAsync 0,
+  memoryPool INVALID, memoryPoolAddress 0,  memoryPoolThreshold 0
+  source (null)
+
+RUNTIME [ 1786209769941783699, 1786209769941785443 ] duration 1744, "cudaMalloc_v3020", cbid 20, processId 1, threadId 320448704, correlationId 119
+MEMORY2 [ 1786209769941787587 ] memoryOperationType ALLOCATION, memoryKind DEVICE, size 16384, address 13671366656, pc 0,
+  deviceId 0, contextId 1, streamId 0, processId 1, correlationId 120, isAsync 0,
+  memoryPool INVALID, memoryPoolAddress 0,  memoryPoolThreshold 0
+  source (null)
+
+RUNTIME [ 1786209769941785523, 1786209769941787811 ] duration 2288, "cudaMalloc_v3020", cbid 20, processId 1, threadId 320448704, correlationId 120
+MEMSET [ 1786209769941855907, 1786209769941858691 ] duration 2784, value 0, size 16384, correlationId 121
+	deviceId 0, contextId 1, streamId 7, graphId 0, graphNodeId 0, channelId 0, channelType COMPUTE
+RUNTIME [ 1786209769941823731, 1786209769941851156 ] duration 27425, "cudaMemset_v3020", cbid 49, processId 1, threadId 320448704, correlationId 121
+MEMSET [ 1786209769941861443, 1786209769941862275 ] duration 832, value 0, size 16384, correlationId 122
+	deviceId 0, contextId 1, streamId 7, graphId 0, graphNodeId 0, channelId 0, channelType COMPUTE
+RUNTIME [ 1786209769941851236, 1786209769941854948 ] duration 3712, "cudaMemset_v3020", cbid 49, processId 1, threadId 320448704, correlationId 122
+DRIVER [ 1786209769941859364, 1786209769942349573 ] duration 490209, "cuLibraryLoadData", cbid 678, processId 1, threadId 320448704, correlationId 123
+DRIVER [ 1786209769942351253, 1786209769942351461 ] duration 208, "cuLibraryGetKernel", cbid 681, processId 1, threadId 320448704, correlationId 124
+DRIVER [ 1786209769942355093, 1786209769942806071 ] duration 450978, "cuKernelGetName", cbid 719, processId 1, threadId 320448704, correlationId 125
+OVERHEAD LAZY_FUNCTION_LOADING [ 1786209769942879383, 1786209769942896199 ] duration 16816, THREAD, id 320448704, correlation id 126
+CONCURRENT_KERNEL [ 1786209769942912551, 1786209769942913895 ] duration 1344, "_Z10vector_addPKfS0_Pfi", correlationId 126, cacheConfigRequested 0, cacheConfigExecuted 0
+	grid [ 16, 1, 1 ], block [ 256, 1, 1 ], cluster [ 0, 0, 0 ], sharedMemory (static 0, dynamic 0)
+	deviceId 0, contextId 1, streamId 7, graphId 0, graphNodeId 0, channelId 0, channelType COMPUTE, priority 0
+RUNTIME [ 1786209769942808087, 1786209769942914839 ] duration 106752, "cudaLaunchKernel_v7000", cbid 211, processId 1, threadId 320448704, correlationId 126
+DRIVER [ 1786209769942916439, 1786209769942916551 ] duration 112, "cuKernelGetName", cbid 719, processId 1, threadId 320448704, correlationId 127
+CONCURRENT_KERNEL [ 1786209769942921287, 1786209769942922215 ] duration 928, "_Z10vector_addPKfS0_Pfi", correlationId 128, cacheConfigRequested 0, cacheConfigExecuted 0
+	grid [ 16, 1, 1 ], block [ 256, 1, 1 ], cluster [ 0, 0, 0 ], sharedMemory (static 0, dynamic 0)
+	deviceId 0, contextId 1, streamId 7, graphId 0, graphNodeId 0, channelId 0, channelType COMPUTE, priority 0
+RUNTIME [ 1786209769942916631, 1786209769942919687 ] duration 3056, "cudaLaunchKernel_v7000", cbid 211, processId 1, threadId 320448704, correlationId 128
+DRIVER [ 1786209769942919831, 1786209769942919911 ] duration 80, "cuKernelGetName", cbid 719, processId 1, threadId 320448704, correlationId 129
+CONCURRENT_KERNEL [ 1786209769942924871, 1786209769942925767 ] duration 896, "_Z10vector_addPKfS0_Pfi", correlationId 130, cacheConfigRequested 0, cacheConfigExecuted 0
+	grid [ 16, 1, 1 ], block [ 256, 1, 1 ], cluster [ 0, 0, 0 ], sharedMemory (static 0, dynamic 0)
+	deviceId 0, contextId 1, streamId 7, graphId 0, graphNodeId 0, channelId 0, channelType COMPUTE, priority 0
+RUNTIME [ 1786209769942919975, 1786209769942922791 ] duration 2816, "cudaLaunchKernel_v7000", cbid 211, processId 1, threadId 320448704, correlationId 130
+RUNTIME [ 1786209769942923367, 1786209769942923639 ] duration 272, "cudaGetLastError_v3020", cbid 10, processId 1, threadId 320448704, correlationId 131
+RUNTIME [ 1786209769942924183, 1786209769942927719 ] duration 3536, "cudaDeviceSynchronize_v3020", cbid 165, processId 1, threadId 320448704, correlationId 132
+MEMORY2 [ 1786209769942934743 ] memoryOperationType RELEASE, memoryKind DEVICE, size 16384, address 13671366656, pc 0,
+  deviceId 0, contextId 1, streamId 0, processId 1, correlationId 133, isAsync 0,
+  memoryPool INVALID, memoryPoolAddress 0,  memoryPoolThreshold 0
+  source (null)
+
+RUNTIME [ 1786209769942931255, 1786209769942937831 ] duration 6576, "cudaFree_v3020", cbid 22, processId 1, threadId 320448704, correlationId 133
+MEMORY2 [ 1786209769942938327 ] memoryOperationType RELEASE, memoryKind DEVICE, size 16384, address 13671350272, pc 0,
+  deviceId 0, contextId 1, streamId 0, processId 1, correlationId 134, isAsync 0,
+  memoryPool INVALID, memoryPoolAddress 0,  memoryPoolThreshold 0
+  source (null)
+
+RUNTIME [ 1786209769942937911, 1786209769942939159 ] duration 1248, "cudaFree_v3020", cbid 22, processId 1, threadId 320448704, correlationId 134
+MEMORY2 [ 1786209769942939703 ] memoryOperationType RELEASE, memoryKind DEVICE, size 16384, address 13671333888, pc 0,
+  deviceId 0, contextId 1, streamId 0, processId 1, correlationId 135, isAsync 0,
+  memoryPool INVALID, memoryPoolAddress 0,  memoryPoolThreshold 0
+  source (null)
+
+RUNTIME [ 1786209769942939239, 1786209769943111384 ] duration 172145, "cudaFree_v3020", cbid 22, processId 1, threadId 320448704, correlationId 135

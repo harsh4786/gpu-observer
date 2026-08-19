@@ -1,0 +1,2 @@
+(APIServer pid=1) INFO 08-12 22:23:53 [vllm.py:840] Asynchronous scheduling is enabled.
+(EngineCore pid=298) INFO 08-12 22:26:53 [vllm.py:840] Asynchronous scheduling is enabled.

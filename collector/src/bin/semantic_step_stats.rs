@@ -1,0 +1,149 @@
+use std::{
+    env,
+    error::Error,
+    fs::File,
+    io::{BufReader, Read},
+    path::PathBuf,
+};
+
+use gpu_observer_core::{
+    SemanticRecordFlags, SemanticRecordKind, SemanticWireRecord, SEMANTIC_RECORD_BYTES,
+};
+
+const MAX_INPUT_BYTES: u64 = 256 * 1024 * 1024;
+
+#[derive(Default)]
+struct Durations {
+    values_ns: Vec<u64>,
+}
+
+impl Durations {
+    fn push(&mut self, value: u64) -> Result<(), Box<dyn Error>> {
+        self.values_ns.try_reserve(1)?;
+        self.values_ns.push(value);
+        Ok(())
+    }
+
+    fn print(&mut self, class: &str) {
+        if self.values_ns.is_empty() {
+            println!("{class}\t0\tNA\tNA\tNA\tNA\tNA\tNA");
+            return;
+        }
+        self.values_ns.sort_unstable();
+        let count = self.values_ns.len();
+        let sum: u128 = self.values_ns.iter().map(|&value| value as u128).sum();
+        let percentile = |p: usize| -> f64 {
+            let index = ((count - 1) * p + 99) / 100;
+            self.values_ns[index] as f64 / 1_000_000.0
+        };
+        println!(
+            "{}\t{}\t{:.6}\t{:.6}\t{:.6}\t{:.6}\t{:.6}\t{:.6}",
+            class,
+            count,
+            sum as f64 / count as f64 / 1_000_000.0,
+            self.values_ns[0] as f64 / 1_000_000.0,
+            percentile(50),
+            percentile(95),
+            percentile(99),
+            self.values_ns[count - 1] as f64 / 1_000_000.0,
+        );
+    }
+}
+
+fn main() -> Result<(), Box<dyn Error>> {
+    let mut arguments = env::args_os();
+    let program = arguments.next().unwrap_or_default();
+    let input_path = PathBuf::from(
+        arguments
+            .next()
+            .ok_or_else(|| format!("usage: {} SEMANTIC.bin", PathBuf::from(&program).display()))?,
+    );
+    if arguments.next().is_some() {
+        return Err("expected exactly one semantic trace".into());
+    }
+
+    let file = File::open(&input_path)?;
+    let bytes = file.metadata()?.len();
+    if bytes == 0 || bytes > MAX_INPUT_BYTES || bytes % SEMANTIC_RECORD_BYTES as u64 != 0 {
+        return Err(format!("invalid semantic trace length: {bytes}").into());
+    }
+    let mut input = BufReader::with_capacity(1024 * 1024, file);
+    let mut raw = [0_u8; SEMANTIC_RECORD_BYTES];
+    let mut pending = Vec::<SemanticWireRecord>::new();
+    pending.try_reserve(8)?;
+    let mut max_inflight = 0_usize;
+    let mut previous_sequence = None;
+    let mut records = 0_u64;
+    let mut sequence_gaps = 0_u64;
+    let mut loss_markers = 0_u64;
+    let mut all = Durations::default();
+    let mut prefill = Durations::default();
+    let mut decode = Durations::default();
+    let mut mixed = Durations::default();
+
+    while input.read_exact(&mut raw).is_ok() {
+        let record = SemanticWireRecord::decode(&raw)
+            .map_err(|error| format!("invalid record {records}: {error:?}"))?;
+        records += 1;
+        if previous_sequence.is_some_and(|previous| record.sequence != previous + 1) {
+            sequence_gaps += 1;
+        }
+        previous_sequence = Some(record.sequence);
+        if record.flags & SemanticRecordFlags::DROPPED_BEFORE != 0 {
+            loss_markers += 1;
+        }
+        match record.kind {
+            SemanticRecordKind::ENGINE_STEP_BEGIN => {
+                if pending.iter().any(|begin| begin.step_id == record.step_id) {
+                    return Err(format!("duplicate step begin: {}", record.step_id).into());
+                }
+                pending.push(record);
+                max_inflight = max_inflight.max(pending.len());
+            }
+            SemanticRecordKind::STEP_REQUEST_SLICE
+            | SemanticRecordKind::PACKED_LAYOUT_BEGIN
+            | SemanticRecordKind::PACKED_REQUEST_SLICE
+            | SemanticRecordKind::PACKED_TOKEN_ROW
+            | SemanticRecordKind::ACCEPTED_OUTPUT_TOKEN => {}
+            SemanticRecordKind::ENGINE_STEP_END => {
+                let position = pending
+                    .iter()
+                    .position(|begin| begin.step_id == record.step_id)
+                    .ok_or_else(|| format!("step end without begin: {}", record.step_id))?;
+                let begin = pending.swap_remove(position);
+                if record.timestamp_ns < begin.timestamp_ns {
+                    return Err(format!("negative engine-step interval: {}", record.step_id).into());
+                }
+                let duration = record.timestamp_ns - begin.timestamp_ns;
+                all.push(duration)?;
+                match (begin.prefill_tokens != 0, begin.decode_tokens != 0) {
+                    (true, true) => mixed.push(duration)?,
+                    (true, false) => prefill.push(duration)?,
+                    (false, true) => decode.push(duration)?,
+                    (false, false) => {}
+                }
+            }
+            _ => unreachable!(),
+        }
+    }
+    if !pending.is_empty() {
+        return Err(format!(
+            "trace ends with {} unterminated engine step(s)",
+            pending.len()
+        )
+        .into());
+    }
+
+    println!(
+        "# records={records} sequence_gaps={sequence_gaps} loss_markers={loss_markers} max_inflight={max_inflight}"
+    );
+    println!("class\tsteps\tmean_ms\tmin_ms\tp50_ms\tp95_ms\tp99_ms\tmax_ms");
+    all.print("all");
+    prefill.print("prefill_only");
+    decode.print("decode_only");
+    mixed.print("mixed");
+    if sequence_gaps != 0 || loss_markers != 0 {
+        return Err("semantic trace quality check failed".into());
+    }
+    Ok(())
+}

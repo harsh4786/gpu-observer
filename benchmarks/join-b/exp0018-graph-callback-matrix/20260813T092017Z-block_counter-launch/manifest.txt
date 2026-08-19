@@ -1,0 +1,14 @@
+experiment=EXP-0018
+started_utc=2026-08-13T09:20:17Z
+mode=block_counter
+callback_data_scope=launch
+target=reshape_and_cache_flash_kernel
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+execution=async_FULL_AND_PIECEWISE_CUDA_GRAPHS
+warmup_output_tokens=1
+measured_output_tokens=8
+event_capacity=1
+5b9ae33add328f792e66d337232ba9a6dfe994ec95b1faf9325fb3f00450565b  /home/harsh4786/gpu-observer/device-probes/compute-sanitizer/build-graph-fix/libgpu_observer_sanitizer.so
+691578ba8ea24a726da2b99e2e5e8f3930640db0bd9e494302d80a462a18c5b4  /home/harsh4786/gpu-observer/device-probes/compute-sanitizer/build-graph-fix/gpu_observer_sanitizer_patches.cubin
+894a9eab9526b3db4b0029029465305a96cc737e7131aefa3413de7e19cc1cca  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-corrected.jsonl

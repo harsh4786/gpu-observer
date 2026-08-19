@@ -1,0 +1,1 @@
+attempt=/home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/cupti/async-mixed-20260811T160327Z
