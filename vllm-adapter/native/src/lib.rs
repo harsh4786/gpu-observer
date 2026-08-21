@@ -8,8 +8,8 @@ use std::ptr;
 use std::sync::atomic::Ordering;
 
 use gpu_observer_core::{
-    SemanticRecordFlags, SemanticRingHeader, SemanticWireRecord, SEMANTIC_RECORD_BYTES,
-    SEMANTIC_RING_HEADER_BYTES,
+    SemanticRecordFlags, SemanticRecordKind, SemanticRingHeader, SemanticWireRecord,
+    SEMANTIC_RECORD_BYTES, SEMANTIC_RING_HEADER_BYTES,
 };
 
 const MIN_CAPACITY: u32 = 64;
@@ -419,6 +419,104 @@ impl SemanticBridge {
         EMIT_PUBLISHED
     }
 
+    #[allow(clippy::too_many_arguments)]
+    fn emit_lifecycle(
+        &mut self,
+        timestamp_ns: u64,
+        request_id: u64,
+        peer_request_id: u64,
+        token_position: u32,
+        token_id: u32,
+        queue_depth: u32,
+        kind: u8,
+        status: u8,
+    ) -> i32 {
+        if request_id == 0
+            || !matches!(
+                kind,
+                SemanticRecordKind::FRONTEND_REQUEST_RECEIVED
+                    | SemanticRecordKind::ENGINE_REQUEST_ADMITTED
+                    | SemanticRecordKind::FRONTEND_REQUEST_COMPLETED
+            )
+        {
+            return EMIT_INVALID;
+        }
+        let Some((sequence, flags)) = self.reserve(1) else {
+            return EMIT_DROPPED;
+        };
+        unsafe {
+            self.write_at(
+                0,
+                SemanticWireRecord::lifecycle(
+                    timestamp_ns,
+                    sequence,
+                    request_id,
+                    peer_request_id,
+                    token_position,
+                    token_id,
+                    queue_depth,
+                    kind,
+                    status,
+                    self.pid,
+                    self.tid,
+                    flags,
+                ),
+            );
+        }
+        self.publish(1);
+        EMIT_PUBLISHED
+    }
+
+    unsafe fn emit_lifecycle_tokens(
+        &mut self,
+        timestamp_ns: u64,
+        tokens: *const OutputTokenInput,
+        token_count: u32,
+        kind: u8,
+    ) -> i32 {
+        if kind != SemanticRecordKind::FRONTEND_TOKEN_EMITTED
+            || token_count == 0
+            || tokens.is_null()
+        {
+            return EMIT_INVALID;
+        }
+        let inputs = unsafe { std::slice::from_raw_parts(tokens, token_count as usize) };
+        for (index, input) in inputs.iter().enumerate() {
+            if input.request_id == 0
+                || (index != 0 && input.output_position != inputs[index - 1].output_position + 1)
+            {
+                return EMIT_INVALID;
+            }
+        }
+        let required = u64::from(token_count);
+        let Some((sequence, flags)) = self.reserve(required) else {
+            return EMIT_DROPPED;
+        };
+        for (index, input) in inputs.iter().enumerate() {
+            unsafe {
+                self.write_at(
+                    index as u64,
+                    SemanticWireRecord::lifecycle(
+                        timestamp_ns,
+                        sequence.wrapping_add(index as u64),
+                        input.request_id,
+                        0,
+                        input.output_position,
+                        input.token_id,
+                        0,
+                        kind,
+                        0,
+                        self.pid,
+                        self.tid,
+                        if index == 0 { flags } else { 0 },
+                    ),
+                );
+            }
+        }
+        self.publish(required);
+        EMIT_PUBLISHED
+    }
+
     fn emit_step_end(&mut self, timestamp_ns: u64, step_id: u64, status: u8) -> i32 {
         let Some((sequence, flags)) = self.reserve(1) else {
             return EMIT_DROPPED;
@@ -663,6 +761,57 @@ pub unsafe extern "C" fn gpu_observer_emit_output_tokens(
         return EMIT_INVALID;
     };
     unsafe { bridge.emit_output_tokens(timestamp_ns, step_id, tokens, token_count) }
+}
+
+/// Publishes one fixed request-lifecycle boundary.
+///
+/// # Safety
+/// `bridge` must be a live pointer returned by `gpu_observer_bridge_open`.
+#[unsafe(no_mangle)]
+#[allow(clippy::too_many_arguments)]
+pub unsafe extern "C" fn gpu_observer_emit_lifecycle(
+    bridge: *mut SemanticBridge,
+    timestamp_ns: u64,
+    request_id: u64,
+    peer_request_id: u64,
+    token_position: u32,
+    token_id: u32,
+    queue_depth: u32,
+    kind: u8,
+    status: u8,
+) -> i32 {
+    let Some(bridge) = (unsafe { bridge.as_mut() }) else {
+        return EMIT_INVALID;
+    };
+    bridge.emit_lifecycle(
+        timestamp_ns,
+        request_id,
+        peer_request_id,
+        token_position,
+        token_id,
+        queue_depth,
+        kind,
+        status,
+    )
+}
+
+/// Publishes one all-or-nothing group of frontend-emitted model tokens.
+///
+/// # Safety
+/// `bridge` must be live. `tokens` must reference `token_count` initialized
+/// `OutputTokenInput` values for the duration of the call.
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn gpu_observer_emit_lifecycle_tokens(
+    bridge: *mut SemanticBridge,
+    timestamp_ns: u64,
+    tokens: *const OutputTokenInput,
+    token_count: u32,
+    kind: u8,
+) -> i32 {
+    let Some(bridge) = (unsafe { bridge.as_mut() }) else {
+        return EMIT_INVALID;
+    };
+    unsafe { bridge.emit_lifecycle_tokens(timestamp_ns, tokens, token_count, kind) }
 }
 
 /// Publishes the end of an engine step.

@@ -1,0 +1,38 @@
+experiment=EXP-0021b-full-step-cupti-runtime-driver
+started_utc=2026-08-20T14:11:07Z
+question=Can bounded all-kernel CUPTI activity close the complete per-engine-step GPU execution budget?
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+image=gpu-observer/vllm-sanitizer:cuda13.2
+execution_mode=FULL_AND_PIECEWISE_CUDA_GRAPHS
+async_scheduling=production_default
+prefix_caching=false
+target_kernel=all
+observer_semantic=vLLM_patched_CLOCK_MONOTONIC
+observer_gpu=CUPTI_CONCURRENT_KERNEL_actual_start_end
+observer_cuda_api=CUPTI_RUNTIME_and_DRIVER_activity_correlation_id
+clock_mapping=two_point_affine_CUPTI_to_CLOCK_MONOTONIC
+cupti_buffer_count=8
+cupti_buffer_bytes=1048576
+cupti_total_buffer_bytes=8388608
+cupti_api_record_capacity=65536
+device_internal_events=absent
+device_internal_reason=not_required_for_full_step_timing
+step_assignment_evidence=runtime_or_driver_correlation_plus_authoritative_packed_window
+request_count=8
+output_lengths=8 12 16 20 24 28 32 36
+ignore_eos=true
+semantic_abi_version=4
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:     130663165952  5796851712 88665190400     2842624 37380853760 124866314240
+Swap:    17179865088   164335616 17015529472
+NVIDIA GB10, 580.173.02, 35, 5.50 W
+image_id=sha256:e4409f94c58463513df2e5abca7855b906fcb78b87d1f7190af2b7968d3de4f4 image_digests=[]
+894a9eab9526b3db4b0029029465305a96cc737e7131aefa3413de7e19cc1cca  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-corrected.jsonl
+54ca2ac707e24427a658e05631b53f4641242e4f795464ace25e81429ccc5f28  /home/harsh4786/gpu-observer/target/release/libgpu_observer_vllm_bridge.so
+429003dbcc92dbb20fe39c8ce52de68891e3fa05b3addd1e8b4a14ef5b174d64  /home/harsh4786/gpu-observer/vllm-adapter/overlay/vllm/v1/engine/core.py
+9ff985a7e44243f48d2f64af6b2ffb2411757b283cb324adadc7fe695564d414  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_semantic.py
+7ffa991996380886d7ddcdb25c55af1c8c0b943bd574264bbb4c271e02aa8af6  /home/harsh4786/gpu-observer/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py
+a077b8647348beadef9f211223d9f030c1bd40f1b567aeb01d254eded4c57d67  /home/harsh4786/gpu-observer/cupti-agent/activity/build-cuda1321/libgpu_observer_cupti_activity.so
+03224a46f67bd9a3e8c0bf78c9e8f6d6d4d5289e693d5304b8a5ecf6988eada6  /home/harsh4786/gpu-observer/target/release/full_step_cupti

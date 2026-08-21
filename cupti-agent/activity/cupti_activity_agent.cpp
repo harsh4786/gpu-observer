@@ -22,7 +22,7 @@ constexpr size_t kBufferBytes = 1U << 20;
 constexpr size_t kBufferAlignment = 8;
 constexpr size_t kTargetBytes = 256;
 constexpr size_t kPathBytes = 1024;
-constexpr uint64_t kMaxRuntimeRecords = 65536;
+constexpr uint64_t kMaxApiRecords = 65536;
 // Live-streaming support: without this, CUPTI only calls complete_buffer when
 // an 8 MiB internal buffer fills or cuptiActivityFlushAll runs (today, only
 // on the 'F' control command or process exit) -- fine for a bounded capture,
@@ -52,8 +52,8 @@ struct State {
     std::atomic<uint64_t> target_records{};
     std::atomic<uint64_t> invalid_records{};
     std::atomic<uint64_t> dropped_records{};
-    std::atomic<uint64_t> runtime_records{};
-    std::atomic<uint64_t> runtime_drops{};
+    std::atomic<uint64_t> api_records{};
+    std::atomic<uint64_t> api_drops{};
     FILE* activities{};
     FILE* runtimes{};
     char control_path[kPathBytes]{};
@@ -66,6 +66,7 @@ struct State {
     CUptiResult register_result{CUPTI_ERROR_UNKNOWN};
     CUptiResult enable_result{CUPTI_ERROR_UNKNOWN};
     CUptiResult runtime_enable_result{CUPTI_ERROR_UNKNOWN};
+    CUptiResult driver_enable_result{CUPTI_ERROR_UNKNOWN};
     std::atomic<uint8_t> started{};
     std::atomic<uint8_t> stopped{};
     std::atomic<uint8_t> finalized{};
@@ -164,12 +165,12 @@ void write_kernel(const CUpti_ActivityKernel11& kernel)
     if (written < 0)
         g_state.dropped_records.fetch_add(1, std::memory_order_relaxed);
 }
-void write_runtime(const CUpti_ActivityAPI& api)
+void write_api(const CUpti_ActivityAPI& api)
 {
     const uint64_t index =
-        g_state.runtime_records.fetch_add(1, std::memory_order_relaxed);
-    if (index >= kMaxRuntimeRecords) {
-        g_state.runtime_drops.fetch_add(1, std::memory_order_relaxed);
+        g_state.api_records.fetch_add(1, std::memory_order_relaxed);
+    if (index >= kMaxApiRecords) {
+        g_state.api_drops.fetch_add(1, std::memory_order_relaxed);
         return;
     }
     flockfile(g_state.runtimes);
@@ -180,7 +181,7 @@ void write_runtime(const CUpti_ActivityAPI& api)
         unsigned(api.cbid), api.returnValue);
     funlockfile(g_state.runtimes);
     if (written < 0)
-        g_state.runtime_drops.fetch_add(1, std::memory_order_relaxed);
+        g_state.api_drops.fetch_add(1, std::memory_order_relaxed);
 }
 
 void CUPTIAPI complete_buffer(CUcontext, uint32_t, uint8_t* buffer,
@@ -197,8 +198,9 @@ void CUPTIAPI complete_buffer(CUcontext, uint32_t, uint8_t* buffer,
         if (record->kind == CUPTI_ACTIVITY_KIND_CONCURRENT_KERNEL ||
             record->kind == CUPTI_ACTIVITY_KIND_KERNEL) {
             write_kernel(*reinterpret_cast<const CUpti_ActivityKernel11*>(record));
-        } else if (record->kind == CUPTI_ACTIVITY_KIND_RUNTIME) {
-            write_runtime(*reinterpret_cast<const CUpti_ActivityAPI*>(record));
+        } else if (record->kind == CUPTI_ACTIVITY_KIND_RUNTIME ||
+                   record->kind == CUPTI_ACTIVITY_KIND_DRIVER) {
+            write_api(*reinterpret_cast<const CUpti_ActivityAPI*>(record));
         }
     }
     release_buffer(buffer);
@@ -228,11 +230,11 @@ void write_summary()
         output,
         "register_result\tenable_result\truntime_enable_result\tbuffers_requested\tbuffers_completed\t"
         "buffer_exhaustions\trecords_seen\ttarget_records\tinvalid_records\t"
-        "dropped_records\truntime_records\truntime_drops\n");
+        "dropped_records\tapi_records\tapi_drops\tdriver_enable_result\n");
     std::fprintf(
         output,
         "%d\t%d\t%d\t%" PRIu64 "\t%" PRIu64 "\t%" PRIu64 "\t%" PRIu64
-        "\t%" PRIu64 "\t%" PRIu64 "\t%" PRIu64 "\t%" PRIu64 "\t%" PRIu64 "\n",
+        "\t%" PRIu64 "\t%" PRIu64 "\t%" PRIu64 "\t%" PRIu64 "\t%" PRIu64 "\t%d\n",
         int(g_state.register_result), int(g_state.enable_result),
         int(g_state.runtime_enable_result),
         g_state.buffers_requested.load(std::memory_order_relaxed),
@@ -242,8 +244,9 @@ void write_summary()
         g_state.target_records.load(std::memory_order_relaxed),
         g_state.invalid_records.load(std::memory_order_relaxed),
         g_state.dropped_records.load(std::memory_order_relaxed),
-        g_state.runtime_records.load(std::memory_order_relaxed),
-        g_state.runtime_drops.load(std::memory_order_relaxed));
+        g_state.api_records.load(std::memory_order_relaxed),
+        g_state.api_drops.load(std::memory_order_relaxed),
+        int(g_state.driver_enable_result));
     std::fprintf(
         output,
         "clock\tcupti_ns\tmidpoint_ns\tuncertainty_ns\toffset_ns\n");
@@ -297,9 +300,9 @@ bool open_outputs()
         "block_z\tchannel_id\tchannel_type\tname\n");
     std::fprintf(
         g_state.runtimes,
-        "# format=GOCUPTI_RUNTIME01 observer=cupti-runtime-api "
+        "# format=GOCUPTI_API01 observer=cupti-runtime-and-driver-api "
         "activity_clock=CUPTI_TIMESTAMP_NS max_records=%" PRIu64 "\n",
-        kMaxRuntimeRecords);
+        kMaxApiRecords);
     std::fprintf(
         g_state.runtimes,
         "start_ns\tend_ns\tprocess\tthread\tcorrelation\tcbid\treturn_value\n");
@@ -325,6 +328,10 @@ int start_collection()
         if (g_state.enable_result == CUPTI_SUCCESS) {
             g_state.runtime_enable_result =
                 cuptiActivityEnable(CUPTI_ACTIVITY_KIND_RUNTIME);
+            if (g_state.runtime_enable_result == CUPTI_SUCCESS) {
+                g_state.driver_enable_result =
+                    cuptiActivityEnable(CUPTI_ACTIVITY_KIND_DRIVER);
+            }
         }
     }
     CUptiResult flush_period_result = CUPTI_ERROR_UNKNOWN;
@@ -332,16 +339,18 @@ int start_collection()
         flush_period_result = cuptiActivityFlushPeriod(kFlushPeriodMs);
     std::fprintf(
         stderr,
-        "gpu-observer-cupti: register=%s kernel=%s runtime=%s target=%s "
+        "gpu-observer-cupti: register=%s kernel=%s runtime=%s driver=%s target=%s "
         "bounded_buffer_bytes=%zu flush_period_ms=%u flush_period=%s\n",
         result_name(g_state.register_result), result_name(g_state.enable_result),
         result_name(g_state.runtime_enable_result),
+        result_name(g_state.driver_enable_result),
         g_state.target[0] == '\0' ? "<all>" : g_state.target,
         kBufferCount * kBufferBytes, kFlushPeriodMs,
         result_name(flush_period_result));
     return (g_state.register_result == CUPTI_SUCCESS &&
             g_state.enable_result == CUPTI_SUCCESS &&
-            g_state.runtime_enable_result == CUPTI_SUCCESS)
+            g_state.runtime_enable_result == CUPTI_SUCCESS &&
+            g_state.driver_enable_result == CUPTI_SUCCESS)
                ? 0
                : 1;
 }
@@ -355,6 +364,8 @@ int flush_collection()
         return 0;
     const CUptiResult runtime_disable =
         cuptiActivityDisable(CUPTI_ACTIVITY_KIND_RUNTIME);
+    const CUptiResult driver_disable =
+        cuptiActivityDisable(CUPTI_ACTIVITY_KIND_DRIVER);
     const CUptiResult kernel_disable =
         cuptiActivityDisable(CUPTI_ACTIVITY_KIND_CONCURRENT_KERNEL);
     const CUptiResult result =
@@ -366,7 +377,8 @@ int flush_collection()
     if (g_state.runtimes != nullptr)
         std::fflush(g_state.runtimes);
     write_summary();
-    return (runtime_disable == CUPTI_SUCCESS && kernel_disable == CUPTI_SUCCESS &&
+    return (runtime_disable == CUPTI_SUCCESS && driver_disable == CUPTI_SUCCESS &&
+            kernel_disable == CUPTI_SUCCESS &&
             result == CUPTI_SUCCESS)
                ? 0
                : 1;

@@ -62,6 +62,7 @@ struct CuptiQuality {
     dropped_records: u64,
     runtime_records: u64,
     runtime_drops: u64,
+    driver_enable_result: i32,
 }
 
 #[derive(Default)]
@@ -374,6 +375,7 @@ fn validate_inputs(
     if quality.register_result != 0
         || quality.enable_result != 0
         || quality.runtime_enable_result != 0
+        || quality.driver_enable_result != 0
         || quality.buffer_exhaustions != 0
         || quality.invalid_records != 0
         || quality.dropped_records != 0
@@ -564,7 +566,9 @@ fn load_runtimes(path: &Path) -> Result<Vec<RuntimeActivity>, Box<dyn Error>> {
         .enumerate()
     {
         let line = line?;
-        if line.starts_with("# format=GOCUPTI_RUNTIME01 ") {
+        if line.starts_with("# format=GOCUPTI_RUNTIME01 ")
+            || line.starts_with("# format=GOCUPTI_API01 ")
+        {
             format = true;
             continue;
         }
@@ -618,7 +622,7 @@ fn load_summary(path: &Path) -> Result<(CuptiQuality, ClockMap), Box<dyn Error>>
         .ok_or("CUPTI summary is truncated")?
         .split('\t')
         .collect();
-    if values.len() != 12 {
+    if values.len() != 12 && values.len() != 13 {
         return Err("CUPTI summary status row is malformed".into());
     }
     let quality = CuptiQuality {
@@ -634,6 +638,11 @@ fn load_summary(path: &Path) -> Result<(CuptiQuality, ClockMap), Box<dyn Error>>
         dropped_records: values[9].parse()?,
         runtime_records: values[10].parse()?,
         runtime_drops: values[11].parse()?,
+        driver_enable_result: if values.len() == 13 {
+            values[12].parse()?
+        } else {
+            0
+        },
     };
     let clock_line = |name: &str| -> Result<ClockPair, Box<dyn Error>> {
         let line = lines

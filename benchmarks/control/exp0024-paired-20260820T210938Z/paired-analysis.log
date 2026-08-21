@@ -1,0 +1,1 @@
+summary status=PASS pairs=5 criterion=ttft_ci_high_below_0_throughput_ci_low_at_least_minus_5_background_ci_high_at_most_25_action_invariants ttft_p99_ci_high_pct=-14.402626 throughput_ci_low_pct=1.411983 background_duration_ci_high_pct=0.243459 action_invariants=true

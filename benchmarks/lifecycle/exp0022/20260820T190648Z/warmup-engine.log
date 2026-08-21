@@ -1,0 +1,13 @@
+lifecycle ts=442133487058721 seq=0 kind=9 request=0x5219db85c80d724e peer=0x592816ab0583b338 position=0 token_id=0 queue=1 status=0 flags=0x0
+begin ts=442133487262831 seq=1 step=1 scheduled=94 prefill=94 decode=0 queue=0 active=1 slices=1 kv_permyriad=18 flags=0x0
+slice ts=442133487262831 seq=2 step=1 request=0x5219db85c80d724e phase=1 tokens=94
+packed_begin ts=442133487536430 seq=3 step=1 generation=1 tokens=94 slices=1 flags=0x0
+packed_slice ts=442133487536430 seq=4 step=1 generation=1 request=0x5219db85c80d724e index=0 rows=[0,94) tokens=94 phase=1
+begin ts=442133586222220 seq=5 step=2 scheduled=1 prefill=0 decode=1 queue=0 active=1 slices=1 kv_permyriad=18 flags=0x0
+slice ts=442133586222220 seq=6 step=2 request=0x5219db85c80d724e phase=2 tokens=1
+packed_begin ts=442133586400443 seq=7 step=2 generation=2 tokens=1 slices=1 flags=0x0
+packed_slice ts=442133586400443 seq=8 step=2 generation=2 request=0x5219db85c80d724e index=0 rows=[0,1) tokens=1 phase=2
+end ts=442133712558940 seq=9 step=1 status=0 flags=0x0
+accepted_token ts=442133712768955 seq=10 step=1 request=0x5219db85c80d724e output_position=0 token_id=151667 flags=0x0
+end ts=442133832658500 seq=11 step=2 status=0 flags=0x0
+summary records=13 begins=2 slices=2 packed_begins=2 packed_slices=2 packed_tokens=0 accepted_tokens=2 lifecycle=1 ends=2 producer_dropped=0

@@ -157,9 +157,7 @@ fn resolve_engine_pid(container: &str) -> Option<String> {
     }
 }
 
-fn event_json(
-    event: &gpu_observer_collector::join_b_trace::DeviceEvent,
-) -> serde_json::Value {
+fn event_json(event: &gpu_observer_collector::join_b_trace::DeviceEvent) -> serde_json::Value {
     json!({
         "kind": "kernel_block_event",
         "kernel": TARGET_KERNEL,

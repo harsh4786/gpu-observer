@@ -1,0 +1,1 @@
+summary status=PASS pairs=5 criterion=ci95_lower_bound_positive_for_ttft_p99_and_mixed_steps ttft_p99_ci_low_pct=34.768016 mixed_steps_ci_low_pct=343.120707

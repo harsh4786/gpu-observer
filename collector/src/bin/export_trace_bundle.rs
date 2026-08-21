@@ -894,7 +894,9 @@ fn load_runtimes(path: &Path) -> Result<Vec<RuntimeActivity>, Box<dyn Error>> {
         .enumerate()
     {
         let line = line?;
-        if line.starts_with("# format=GOCUPTI_RUNTIME01 ") {
+        if line.starts_with("# format=GOCUPTI_RUNTIME01 ")
+            || line.starts_with("# format=GOCUPTI_API01 ")
+        {
             format = true;
             continue;
         }

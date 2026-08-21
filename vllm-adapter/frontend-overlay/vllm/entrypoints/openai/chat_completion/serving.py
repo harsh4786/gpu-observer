@@ -38,6 +38,9 @@ from vllm.entrypoints.openai.chat_completion.protocol import (
 from vllm.entrypoints.openai.chat_completion.gpu_observer_query_capture import (
     emit_output_manifest,
     emit_query_manifest,
+    lifecycle_request_completed,
+    lifecycle_request_received,
+    lifecycle_tokens_emitted,
     set_live_focus,
 )
 from vllm.entrypoints.openai.chat_completion.stream_harmony import (
@@ -243,6 +246,16 @@ class OpenAIServingChat(OpenAIServing):
         for the API specification. This API mimics the OpenAI
         Chat Completion API.
         """
+        request_id = (
+            f"chatcmpl-{self._base_request_id(raw_request, request.request_id)}"
+        )
+        requested_tokens = (
+            request.max_completion_tokens
+            if request.max_completion_tokens is not None
+            else (request.max_tokens or 0)
+        )
+        lifecycle_request_hash = lifecycle_request_received(request_id, requested_tokens)
+
         # Streaming response
         tokenizer = self.renderer.tokenizer
         assert tokenizer is not None
@@ -258,10 +271,6 @@ class OpenAIServingChat(OpenAIServing):
             return result
 
         conversation, engine_inputs = result
-
-        request_id = (
-            f"chatcmpl-{self._base_request_id(raw_request, request.request_id)}"
-        )
 
         request_metadata = RequestResponseMetadata(request_id=request_id)
         if raw_request:
@@ -386,6 +395,7 @@ class OpenAIServingChat(OpenAIServing):
                 request,
                 result_generator,
                 request_id,
+                lifecycle_request_hash,
                 model_name,
                 conversation,
                 tokenizer,
@@ -554,6 +564,7 @@ class OpenAIServingChat(OpenAIServing):
         request: ChatCompletionRequest,
         result_generator: AsyncIterator[RequestOutput],
         request_id: str,
+        lifecycle_request_hash: int,
         model_name: str,
         conversation: list[ConversationMessage],
         tokenizer: TokenizerLike,
@@ -650,6 +661,7 @@ class OpenAIServingChat(OpenAIServing):
             logger.exception("Error in parser creation.")
             data = self.create_streaming_error_response(e)
             yield f"data: {data}\n\n"
+            lifecycle_request_completed(lifecycle_request_hash, 0, 1)
             yield "data: [DONE]\n\n"
             return
 
@@ -657,6 +669,7 @@ class OpenAIServingChat(OpenAIServing):
         include_usage, include_continuous_usage = should_include_usage(
             stream_options, self.enable_force_include_usage
         )
+        lifecycle_status = 0
 
         try:
             async for res in result_generator:
@@ -1233,6 +1246,12 @@ class OpenAIServingChat(OpenAIServing):
                         )
 
                     data = chunk.model_dump_json(exclude_unset=True)
+                    emitted_token_count = len(output.token_ids)
+                    lifecycle_tokens_emitted(
+                        lifecycle_request_hash,
+                        previous_num_tokens[i] - emitted_token_count,
+                        output.token_ids,
+                    )
                     yield f"data: {data}\n\n"
 
             # once the final token is handled, if stream_options.include_usage
@@ -1289,12 +1308,17 @@ class OpenAIServingChat(OpenAIServing):
                     )
 
         except GenerationError as e:
+            lifecycle_status = 1
             yield f"data: {self._convert_generation_error_to_streaming_response(e)}\n\n"
         except Exception as e:
+            lifecycle_status = 1
             logger.exception("Error in chat completion stream generator.")
             data = self.create_streaming_error_response(e)
             yield f"data: {data}\n\n"
         # Send the final done message after all response.n are finished
+        lifecycle_request_completed(
+            lifecycle_request_hash, sum(previous_num_tokens), lifecycle_status
+        )
         yield "data: [DONE]\n\n"
 
     async def chat_completion_full_generator(

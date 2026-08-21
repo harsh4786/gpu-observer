@@ -26,7 +26,9 @@ fn now_ns() -> u64 {
 }
 
 fn main() {
-    let path = env::args().nth(1).expect("usage: live_smoke_emit RING_PATH");
+    let path = env::args()
+        .nth(1)
+        .expect("usage: live_smoke_emit RING_PATH");
     let path_c = CString::new(path).unwrap();
     let bridge = unsafe { gpu_observer_bridge_open(path_c.as_ptr(), 1024) };
     assert!(!bridge.is_null(), "failed to create ring");

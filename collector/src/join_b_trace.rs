@@ -60,6 +60,7 @@ pub struct SemanticTrace {
     pub packed_slices: Vec<SemanticWireRecord>,
     pub packed_tokens: Vec<SemanticWireRecord>,
     pub output_tokens: Vec<SemanticWireRecord>,
+    pub admissions: Vec<SemanticWireRecord>,
     pub owners: Vec<OwnershipSlice>,
     pub records: u64,
     pub loss_markers: u64,
@@ -69,18 +70,18 @@ pub struct SemanticTrace {
     pub max_steps_in_flight: u64,
 }
 
-struct Launch {
-    launch_id: u64,
-    grid_id: u64,
-    host_timestamp_ns: u64,
-    context_slot: u32,
-    kernel_slot: u32,
-    stream: u64,
-    grid: [u32; 3],
-    block: [u32; 3],
-    expected_blocks: u64,
-    function: String,
-    step_index: Option<usize>,
+pub struct Launch {
+    pub launch_id: u64,
+    pub grid_id: u64,
+    pub host_timestamp_ns: u64,
+    pub context_slot: u32,
+    pub kernel_slot: u32,
+    pub stream: u64,
+    pub grid: [u32; 3],
+    pub block: [u32; 3],
+    pub expected_blocks: u64,
+    pub function: String,
+    pub step_index: Option<usize>,
 }
 
 #[derive(Clone, Copy)]
@@ -498,7 +499,7 @@ fn step_for_packed_timestamp(
     (timestamp_ns <= steps[step_index].end_timestamp_ns).then_some(step_index)
 }
 
-fn load_launches(path: &Path) -> Result<Vec<Launch>, Box<dyn Error>> {
+pub fn load_launches(path: &Path) -> Result<Vec<Launch>, Box<dyn Error>> {
     let file = File::open(path)?;
     let bytes = file.metadata()?.len();
     if bytes == 0 || bytes > MAX_LAUNCH_BYTES {
@@ -637,11 +638,13 @@ pub fn load_semantic(path: &Path) -> Result<SemanticTrace, Box<dyn Error>> {
     let mut packed_slices = Vec::new();
     let mut packed_tokens = Vec::new();
     let mut output_tokens = Vec::new();
+    let mut admissions = Vec::new();
     steps.try_reserve(record_count / 5 + 1)?;
     slices.try_reserve(record_count / 3 + 1)?;
     packed_slices.try_reserve(record_count / 3 + 1)?;
     packed_tokens.try_reserve(record_count / 3 + 1)?;
     output_tokens.try_reserve(record_count / 3 + 1)?;
+    admissions.try_reserve(record_count / 8 + 1)?;
     let mut wire_records = Vec::new();
     wire_records.try_reserve(record_count)?;
 
@@ -799,6 +802,16 @@ pub fn load_semantic(path: &Path) -> Result<SemanticTrace, Box<dyn Error>> {
                 output_tokens.push(record);
                 step.output_token_count += 1;
             }
+            SemanticRecordKind::ENGINE_REQUEST_ADMITTED => {
+                admissions.try_reserve(1)?;
+                admissions.push(record);
+            }
+            SemanticRecordKind::FRONTEND_REQUEST_RECEIVED
+            | SemanticRecordKind::FRONTEND_TOKEN_EMITTED
+            | SemanticRecordKind::FRONTEND_REQUEST_COMPLETED
+            | SemanticRecordKind::CLIENT_REQUEST_SENT
+            | SemanticRecordKind::CLIENT_TOKEN_RECEIVED
+            | SemanticRecordKind::CLIENT_REQUEST_COMPLETED => {}
             _ => unreachable!(),
         }
     }
@@ -928,6 +941,7 @@ pub fn load_semantic(path: &Path) -> Result<SemanticTrace, Box<dyn Error>> {
         packed_slices,
         packed_tokens,
         output_tokens,
+        admissions,
         owners,
         records,
         loss_markers,
@@ -947,6 +961,13 @@ fn semantic_record_order(kind: u8) -> u8 {
         SemanticRecordKind::PACKED_TOKEN_ROW => 4,
         SemanticRecordKind::ENGINE_STEP_END => 5,
         SemanticRecordKind::ACCEPTED_OUTPUT_TOKEN => 6,
+        SemanticRecordKind::ENGINE_REQUEST_ADMITTED => 7,
+        SemanticRecordKind::FRONTEND_REQUEST_RECEIVED
+        | SemanticRecordKind::FRONTEND_TOKEN_EMITTED
+        | SemanticRecordKind::FRONTEND_REQUEST_COMPLETED
+        | SemanticRecordKind::CLIENT_REQUEST_SENT
+        | SemanticRecordKind::CLIENT_TOKEN_RECEIVED
+        | SemanticRecordKind::CLIENT_REQUEST_COMPLETED => 8,
         _ => u8::MAX,
     }
 }

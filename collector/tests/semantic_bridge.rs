@@ -6,9 +6,10 @@ use gpu_observer_core::{RequestPhase, SemanticRecordKind};
 use gpu_observer_vllm_bridge::{
     gpu_observer_bridge_close, gpu_observer_bridge_focus_close, gpu_observer_bridge_focus_open,
     gpu_observer_bridge_focus_set, gpu_observer_bridge_get_focus, gpu_observer_bridge_open,
-    gpu_observer_bridge_set_focus, gpu_observer_emit_output_tokens, gpu_observer_emit_packed_layout,
-    gpu_observer_emit_packed_tokens, gpu_observer_emit_step_begin, gpu_observer_emit_step_end,
-    OutputTokenInput, PackedSliceInput, PackedTokenInput, SemanticSliceInput,
+    gpu_observer_bridge_set_focus, gpu_observer_emit_output_tokens,
+    gpu_observer_emit_packed_layout, gpu_observer_emit_packed_tokens, gpu_observer_emit_step_begin,
+    gpu_observer_emit_step_end, OutputTokenInput, PackedSliceInput, PackedTokenInput,
+    SemanticSliceInput,
 };
 
 #[test]
@@ -155,7 +156,10 @@ fn frontend_process_sets_live_focus_without_disturbing_the_ring() {
     // focus -- simulating a brand-new chat message arriving.
     let focus_handle = unsafe { gpu_observer_bridge_focus_open(path_string.as_ptr()) };
     assert!(!focus_handle.is_null());
-    assert_eq!(unsafe { gpu_observer_bridge_focus_set(focus_handle, 0xBEEF) }, 0);
+    assert_eq!(
+        unsafe { gpu_observer_bridge_focus_set(focus_handle, 0xBEEF) },
+        0
+    );
     unsafe {
         gpu_observer_bridge_focus_close(focus_handle);
     }

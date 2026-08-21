@@ -13,7 +13,8 @@ pub const SEMANTIC_RING_MAGIC: u32 = u32::from_le_bytes(*b"GPOR");
 pub const SEMANTIC_ABI_VERSION_V1: u16 = 1;
 pub const SEMANTIC_ABI_VERSION_V2: u16 = 2;
 pub const SEMANTIC_ABI_VERSION_V3: u16 = 3;
-pub const SEMANTIC_ABI_VERSION: u16 = 4;
+pub const SEMANTIC_ABI_VERSION_V4: u16 = 4;
+pub const SEMANTIC_ABI_VERSION: u16 = 5;
 pub const SEMANTIC_RECORD_BYTES: usize = 96;
 pub const SEMANTIC_RING_HEADER_BYTES: usize = 256;
 pub const CLOCK_MONOTONIC_ID: u16 = 1;
@@ -26,6 +27,13 @@ impl SemanticRecordKind {
     pub const ENGINE_STEP_END: u8 = 3;
     pub const PACKED_TOKEN_ROW: u8 = 6;
     pub const ACCEPTED_OUTPUT_TOKEN: u8 = 7;
+    pub const FRONTEND_REQUEST_RECEIVED: u8 = 8;
+    pub const ENGINE_REQUEST_ADMITTED: u8 = 9;
+    pub const FRONTEND_TOKEN_EMITTED: u8 = 10;
+    pub const FRONTEND_REQUEST_COMPLETED: u8 = 11;
+    pub const CLIENT_REQUEST_SENT: u8 = 12;
+    pub const CLIENT_TOKEN_RECEIVED: u8 = 13;
+    pub const CLIENT_REQUEST_COMPLETED: u8 = 14;
     pub const PACKED_LAYOUT_BEGIN: u8 = 4;
     pub const PACKED_REQUEST_SLICE: u8 = 5;
 
@@ -40,6 +48,13 @@ impl SemanticRecordKind {
                 | Self::ENGINE_STEP_END
                 | Self::PACKED_LAYOUT_BEGIN
                 | Self::PACKED_REQUEST_SLICE
+                | Self::FRONTEND_REQUEST_RECEIVED
+                | Self::ENGINE_REQUEST_ADMITTED
+                | Self::FRONTEND_TOKEN_EMITTED
+                | Self::FRONTEND_REQUEST_COMPLETED
+                | Self::CLIENT_REQUEST_SENT
+                | Self::CLIENT_TOKEN_RECEIVED
+                | Self::CLIENT_REQUEST_COMPLETED
         )
     }
 }
@@ -367,6 +382,50 @@ impl SemanticWireRecord {
             reserved1: 0,
         }
     }
+
+    #[allow(clippy::too_many_arguments)]
+    pub const fn lifecycle(
+        timestamp_ns: u64,
+        sequence: u64,
+        request_id: u64,
+        peer_request_id: u64,
+        token_position: u32,
+        token_id: u32,
+        queue_depth: u32,
+        kind: u8,
+        status: u8,
+        pid: u32,
+        tid: u32,
+        flags: u32,
+    ) -> Self {
+        Self {
+            timestamp_ns,
+            sequence,
+            step_id: 0,
+            request_id,
+            sequence_id: peer_request_id,
+            scheduled_tokens: token_id,
+            prefill_tokens: token_position,
+            decode_tokens: 0,
+            queue_depth,
+            active_requests: 0,
+            expected_slices: 0,
+            pid,
+            tid,
+            kv_cache_usage_permyriad: 0,
+            service_class_id: 0,
+            kind,
+            phase: 0,
+            status,
+            reserved0: 0,
+            flags,
+            magic: SEMANTIC_RECORD_MAGIC,
+            abi_version: SEMANTIC_ABI_VERSION,
+            record_size: SEMANTIC_RECORD_BYTES as u16,
+            reserved1: 0,
+        }
+    }
+
     pub fn decode(bytes: &[u8]) -> Result<Self, SemanticDecodeError> {
         if bytes.len() != SEMANTIC_RECORD_BYTES {
             return Err(SemanticDecodeError::Length);
@@ -381,6 +440,7 @@ impl SemanticWireRecord {
             return Err(SemanticDecodeError::Magic);
         }
         if self.abi_version != SEMANTIC_ABI_VERSION
+            && self.abi_version != SEMANTIC_ABI_VERSION_V4
             && self.abi_version != SEMANTIC_ABI_VERSION_V3
             && self.abi_version != SEMANTIC_ABI_VERSION_V2
             && self.abi_version != SEMANTIC_ABI_VERSION_V1
@@ -408,6 +468,20 @@ impl SemanticWireRecord {
             && matches!(
                 self.kind,
                 SemanticRecordKind::PACKED_TOKEN_ROW | SemanticRecordKind::ACCEPTED_OUTPUT_TOKEN
+            )
+        {
+            return Err(SemanticDecodeError::Version);
+        }
+        if self.abi_version < SEMANTIC_ABI_VERSION
+            && matches!(
+                self.kind,
+                SemanticRecordKind::FRONTEND_REQUEST_RECEIVED
+                    | SemanticRecordKind::ENGINE_REQUEST_ADMITTED
+                    | SemanticRecordKind::FRONTEND_TOKEN_EMITTED
+                    | SemanticRecordKind::FRONTEND_REQUEST_COMPLETED
+                    | SemanticRecordKind::CLIENT_REQUEST_SENT
+                    | SemanticRecordKind::CLIENT_TOKEN_RECEIVED
+                    | SemanticRecordKind::CLIENT_REQUEST_COMPLETED
             )
         {
             return Err(SemanticDecodeError::Version);
@@ -445,7 +519,16 @@ impl SemanticWireRecord {
             tid: self.tid,
             clock_id: CLOCK_MONOTONIC_ID,
             flags,
-            source: SourceKind::Vllm,
+            source: if matches!(
+                self.kind,
+                SemanticRecordKind::CLIENT_REQUEST_SENT
+                    | SemanticRecordKind::CLIENT_TOKEN_RECEIVED
+                    | SemanticRecordKind::CLIENT_REQUEST_COMPLETED
+            ) {
+                SourceKind::Workload
+            } else {
+                SourceKind::Vllm
+            },
         };
         match self.kind {
             SemanticRecordKind::ENGINE_STEP_BEGIN => Ok(EventRecord::engine_step_begin(
@@ -552,6 +635,45 @@ impl SemanticWireRecord {
                     },
                 ))
             }
+            SemanticRecordKind::FRONTEND_REQUEST_RECEIVED
+            | SemanticRecordKind::CLIENT_REQUEST_SENT => Ok(EventRecord::request_received(
+                context,
+                crate::event::RequestReceivedData {
+                    request_id: self.request_id,
+                    input_tokens: 0,
+                    requested_output_tokens: self.scheduled_tokens,
+                    service_class_id: 0,
+                    reserved: 0,
+                },
+            )),
+            SemanticRecordKind::ENGINE_REQUEST_ADMITTED => Ok(EventRecord::request_queued(
+                context,
+                crate::event::RequestQueuedData {
+                    request_id: self.request_id,
+                    queue_depth: self.queue_depth,
+                    reserved: 0,
+                },
+            )),
+            SemanticRecordKind::FRONTEND_TOKEN_EMITTED
+            | SemanticRecordKind::CLIENT_TOKEN_RECEIVED => Ok(EventRecord::token_emitted(
+                context,
+                crate::event::TokenEmittedData {
+                    request_id: self.request_id,
+                    token_index: self.prefill_tokens,
+                    reserved: 0,
+                },
+            )),
+            SemanticRecordKind::FRONTEND_REQUEST_COMPLETED
+            | SemanticRecordKind::CLIENT_REQUEST_COMPLETED => Ok(EventRecord::request_completed(
+                context,
+                crate::event::RequestCompletedData {
+                    request_id: self.request_id,
+                    input_tokens: 0,
+                    output_tokens: self.prefill_tokens,
+                    ttft_ns: 0,
+                    e2e_latency_ns: 0,
+                },
+            )),
             _ => Err(SemanticDecodeError::Kind),
         }
     }
@@ -778,5 +900,56 @@ mod tests {
         let mut old_output = output;
         old_output.abi_version = SEMANTIC_ABI_VERSION_V2;
         assert_eq!(old_output.validate(), Err(SemanticDecodeError::Version));
+    }
+
+    #[test]
+    fn lifecycle_records_are_v5_fixed_and_preserve_endpoint_identity() {
+        let record = SemanticWireRecord::lifecycle(
+            104,
+            11,
+            0x1234,
+            0xabcd,
+            7,
+            42_001,
+            3,
+            SemanticRecordKind::FRONTEND_TOKEN_EMITTED,
+            0,
+            44,
+            45,
+            0,
+        );
+        assert_eq!(size_of::<SemanticWireRecord>(), SEMANTIC_RECORD_BYTES);
+        assert!(record.validate().is_ok());
+        assert_eq!(record.sequence_id, 0xabcd);
+        assert_eq!(record.prefill_tokens, 7);
+        assert_eq!(record.scheduled_tokens, 42_001);
+
+        let event = record.to_event_record().unwrap();
+        let token = event.as_token_emitted().unwrap();
+        assert_eq!((token.request_id, token.token_index), (0x1234, 7));
+        assert_eq!(event.header.source, SourceKind::Vllm);
+
+        let mut old = record;
+        old.abi_version = SEMANTIC_ABI_VERSION_V4;
+        assert_eq!(old.validate(), Err(SemanticDecodeError::Version));
+
+        let client = SemanticWireRecord::lifecycle(
+            105,
+            12,
+            0x1234,
+            0,
+            7,
+            42_001,
+            0,
+            SemanticRecordKind::CLIENT_TOKEN_RECEIVED,
+            0,
+            46,
+            47,
+            0,
+        );
+        assert_eq!(
+            client.to_event_record().unwrap().header.source,
+            SourceKind::Workload
+        );
     }
 }

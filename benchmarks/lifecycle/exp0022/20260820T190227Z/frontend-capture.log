@@ -1,0 +1,13 @@
+lifecycle ts=441876494678480 seq=1 kind=8 request=0x7c66188350def377 peer=0x0000000000000000 position=0 token_id=12 queue=0 status=0 flags=0x0
+lifecycle ts=441876658337976 seq=2 kind=10 request=0x7c66188350def377 peer=0x0000000000000000 position=0 token_id=151667 queue=0 status=0 flags=0x0
+lifecycle ts=441876778362521 seq=3 kind=10 request=0x7c66188350def377 peer=0x0000000000000000 position=1 token_id=198 queue=0 status=0 flags=0x0
+lifecycle ts=441876898966214 seq=4 kind=10 request=0x7c66188350def377 peer=0x0000000000000000 position=2 token_id=32313 queue=0 status=0 flags=0x0
+lifecycle ts=441877018311259 seq=5 kind=10 request=0x7c66188350def377 peer=0x0000000000000000 position=3 token_id=11 queue=0 status=0 flags=0x0
+lifecycle ts=441877138722201 seq=6 kind=10 request=0x7c66188350def377 peer=0x0000000000000000 position=4 token_id=773 queue=0 status=0 flags=0x0
+lifecycle ts=441877258188542 seq=7 kind=10 request=0x7c66188350def377 peer=0x0000000000000000 position=5 token_id=358 queue=0 status=0 flags=0x0
+lifecycle ts=441877378061920 seq=8 kind=10 request=0x7c66188350def377 peer=0x0000000000000000 position=6 token_id=1184 queue=0 status=0 flags=0x0
+lifecycle ts=441877499087498 seq=9 kind=10 request=0x7c66188350def377 peer=0x0000000000000000 position=7 token_id=311 queue=0 status=0 flags=0x0
+lifecycle ts=441877618676430 seq=10 kind=10 request=0x7c66188350def377 peer=0x0000000000000000 position=8 token_id=7071 queue=0 status=0 flags=0x0
+lifecycle ts=441877743546126 seq=11 kind=10 request=0x7c66188350def377 peer=0x0000000000000000 position=9 token_id=700 queue=0 status=0 flags=0x0
+lifecycle ts=441877864116187 seq=12 kind=10 request=0x7c66188350def377 peer=0x0000000000000000 position=10 token_id=1246 queue=0 status=0 flags=0x0
+summary records=14 begins=0 slices=0 packed_begins=0 packed_slices=0 packed_tokens=0 accepted_tokens=0 lifecycle=14 ends=0 producer_dropped=0

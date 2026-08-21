@@ -58,10 +58,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let clients: Arc<Mutex<Vec<Client>>> = Arc::new(Mutex::new(Vec::new()));
     spawn_accept_loop(bind_addr, Arc::clone(&clients))?;
 
-    eprintln!(
-        "cupti_stream_server: tailing {}",
-        activities_path.display()
-    );
+    eprintln!("cupti_stream_server: tailing {}", activities_path.display());
 
     let mut offset: u64 = 0;
     let mut pending_partial = String::new();

@@ -807,11 +807,25 @@ bool maybe_arm(ContextEntry& context, Sanitizer_StreamHandle stream)
     initial.capacity = g_tool.capacity;
     initial.mode = static_cast<uint32_t>(g_tool.mode);
     initial.sample_mask = g_tool.sample_mask;
-    const bool success =
-        ok(sanitizerMemcpyHostToDeviceAsync(context.device_global, &initial,
-                                            sizeof(initial), stream),
-           "arm global state") &&
-        ok(sanitizerStreamSynchronize(stream), "arm stream synchronize");
+    auto* kernel_reset = static_cast<GoSanKernelState*>(
+        std::calloc(GO_SAN_MAX_FUNCTIONS, sizeof(GoSanKernelState)));
+    bool success = kernel_reset != nullptr;
+    if (success) {
+        for (uint32_t slot = 0; slot < GO_SAN_MAX_FUNCTIONS; ++slot) {
+            kernel_reset[slot].global = context.device_global;
+            kernel_reset[slot].kernel_slot = slot;
+        }
+        success =
+            ok(sanitizerMemcpyHostToDeviceAsync(context.device_global, &initial,
+                                                sizeof(initial), stream),
+               "arm global state") &&
+            ok(sanitizerMemcpyHostToDeviceAsync(
+                   context.device_kernels, kernel_reset,
+                   sizeof(GoSanKernelState) * GO_SAN_MAX_FUNCTIONS, stream),
+               "arm kernel states") &&
+            ok(sanitizerStreamSynchronize(stream), "arm stream synchronize");
+    }
+    std::free(kernel_reset);
     if (!success) {
         g_tool.capture_arm_failures.fetch_add(1, std::memory_order_relaxed);
         return false;

@@ -123,6 +123,18 @@ fn print_record(record: SemanticWireRecord) {
             record.status,
             record.flags,
         ),
-        _ => unreachable!(),
+        _ => println!(
+            "lifecycle ts={} seq={} kind={} request=0x{:016x} peer=0x{:016x} position={} token_id={} queue={} status={} flags=0x{:x}",
+            record.timestamp_ns,
+            record.sequence,
+            record.kind,
+            record.request_id,
+            record.sequence_id,
+            record.prefill_tokens,
+            record.scheduled_tokens,
+            record.queue_depth,
+            record.status,
+            record.flags,
+        ),
     }
 }

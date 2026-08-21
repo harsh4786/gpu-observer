@@ -1,0 +1,13 @@
+lifecycle ts=443551838471518 seq=0 kind=9 request=0x33cafd00f0e92e3d peer=0x7a5fc2294d34200b position=0 token_id=0 queue=1 status=0 flags=0x0
+begin ts=443551838658509 seq=1 step=1 scheduled=18 prefill=18 decode=0 queue=0 active=1 slices=1 kv_permyriad=6 flags=0x0
+slice ts=443551838658509 seq=2 step=1 request=0x33cafd00f0e92e3d phase=1 tokens=18
+packed_begin ts=443551838971436 seq=3 step=1 generation=1 tokens=18 slices=1 flags=0x0
+packed_slice ts=443551838971436 seq=4 step=1 generation=1 request=0x33cafd00f0e92e3d index=0 rows=[0,18) tokens=18 phase=1
+lifecycle ts=443551935089688 seq=5 kind=9 request=0x334b6d9125bc5e21 peer=0x048e40e40950ba55 position=0 token_id=0 queue=1 status=0 flags=0x0
+lifecycle ts=443551935156120 seq=6 kind=9 request=0xda868d679f42a05a peer=0x7d766e288ad39b3d position=0 token_id=0 queue=2 status=0 flags=0x0
+lifecycle ts=443551935174600 seq=7 kind=9 request=0xc877f43b83468739 peer=0x4a84c0854b98c818 position=0 token_id=0 queue=3 status=0 flags=0x0
+lifecycle ts=443551935192488 seq=8 kind=9 request=0x16ef826836d81e56 peer=0xd8b47b4c3f613474 position=0 token_id=0 queue=4 status=0 flags=0x0
+lifecycle ts=443551935208904 seq=9 kind=9 request=0x7f30b6eaabec6586 peer=0xfc232ab4b9c201b1 position=0 token_id=0 queue=5 status=0 flags=0x0
+lifecycle ts=443551935222264 seq=10 kind=9 request=0xd5fa86a8b86073f2 peer=0xc9f0f05991812090 position=0 token_id=0 queue=6 status=0 flags=0x0
+lifecycle ts=443551935238456 seq=11 kind=9 request=0x9797708357854470 peer=0x31ce245b7323d571 position=0 token_id=0 queue=7 status=0 flags=0x0
+summary records=33210 begins=1818 slices=13824 packed_begins=1818 packed_slices=13824 packed_tokens=0 accepted_tokens=0 lifecycle=108 ends=1818 producer_dropped=0

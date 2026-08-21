@@ -104,7 +104,14 @@ fn main() -> Result<(), Box<dyn Error>> {
             | SemanticRecordKind::PACKED_LAYOUT_BEGIN
             | SemanticRecordKind::PACKED_REQUEST_SLICE
             | SemanticRecordKind::PACKED_TOKEN_ROW
-            | SemanticRecordKind::ACCEPTED_OUTPUT_TOKEN => {}
+            | SemanticRecordKind::ACCEPTED_OUTPUT_TOKEN
+            | SemanticRecordKind::FRONTEND_REQUEST_RECEIVED
+            | SemanticRecordKind::ENGINE_REQUEST_ADMITTED
+            | SemanticRecordKind::FRONTEND_TOKEN_EMITTED
+            | SemanticRecordKind::FRONTEND_REQUEST_COMPLETED
+            | SemanticRecordKind::CLIENT_REQUEST_SENT
+            | SemanticRecordKind::CLIENT_TOKEN_RECEIVED
+            | SemanticRecordKind::CLIENT_REQUEST_COMPLETED => {}
             SemanticRecordKind::ENGINE_STEP_END => {
                 let position = pending
                     .iter()

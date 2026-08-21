@@ -45,6 +45,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut packed_slices = 0_u64;
     let mut packed_tokens = 0_u64;
     let mut accepted_tokens = 0_u64;
+    let mut lifecycle = 0_u64;
     let mut ends = 0_u64;
 
     loop {
@@ -61,7 +62,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 SemanticRecordKind::PACKED_TOKEN_ROW => packed_tokens += 1,
                 SemanticRecordKind::ACCEPTED_OUTPUT_TOKEN => accepted_tokens += 1,
                 SemanticRecordKind::ENGINE_STEP_END => ends += 1,
-                _ => unreachable!(),
+                _ => lifecycle += 1,
             }
             if records <= SAMPLE_LIMIT {
                 print_record(record);
@@ -79,7 +80,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     output.flush()?;
     output.get_ref().sync_all()?;
     println!(
-        "summary records={} begins={} slices={} packed_begins={} packed_slices={} packed_tokens={} accepted_tokens={} ends={} producer_dropped={}",
+        "summary records={} begins={} slices={} packed_begins={} packed_slices={} packed_tokens={} accepted_tokens={} lifecycle={} ends={} producer_dropped={}",
         records,
         begins,
         slices,
@@ -87,6 +88,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         packed_slices,
         packed_tokens,
         accepted_tokens,
+        lifecycle,
         ends,
         reader.dropped_records(),
     );
@@ -172,6 +174,18 @@ fn print_record(record: SemanticWireRecord) {
             record.status,
             record.flags,
         ),
-        _ => unreachable!(),
+        _ => println!(
+            "lifecycle ts={} seq={} kind={} request=0x{:016x} peer=0x{:016x} position={} token_id={} queue={} status={} flags=0x{:x}",
+            record.timestamp_ns,
+            record.sequence,
+            record.kind,
+            record.request_id,
+            record.sequence_id,
+            record.prefill_tokens,
+            record.scheduled_tokens,
+            record.queue_depth,
+            record.status,
+            record.flags,
+        ),
     }
 }

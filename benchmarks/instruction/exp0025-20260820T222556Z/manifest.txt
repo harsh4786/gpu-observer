@@ -1,0 +1,35 @@
+experiment=EXP-0025-bounded-instruction-attribution
+started_utc=2026-08-20T22:25:56Z
+question=Can bounded memory and barrier samples from one production BF16 cache kernel be attributed through launch ID and block row to authoritative request ownership and exact static SASS PCs?
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+image=gpu-observer/vllm-sanitizer:cuda13.2
+execution_mode=eager
+async_scheduling=false
+prefix_caching=false
+target_kernel=reshape_and_cache_flash_kernel
+event_capacity=1048576
+event_size_bytes=64
+event_buffer_bytes=67108864
+interactive_requests=8
+interactive_output_tokens=16
+injection_delay_seconds=0.5
+semantic_abi_version=5
+ownership=authoritative_packed_layout_required
+sampling_strategy=launch_pc_thread_block_hash
+sampling_rate=1_over_4096
+full_memory_stress_not_repeated=EXP0008_573785088_callbacks
+scope=diagnostic_only_not_continuous
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+NVIDIA GB10, 580.173.02, 41, 5.42 W
+image_id=sha256:e4409f94c58463513df2e5abca7855b906fcb78b87d1f7190af2b7968d3de4f4 image_digests=[]
+894a9eab9526b3db4b0029029465305a96cc737e7131aefa3413de7e19cc1cca  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-corrected.jsonl
+3b556e56d79d69540e95e30a02a84a4197e15efb1a121c732103bcef78ace440  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/background-long-payloads.jsonl
+82db94ea0f6d464067fae9bf435bf954f6e7f5939c045ce4cec56df7017913fd  /home/harsh4786/gpu-observer/target/release/libgpu_observer_vllm_bridge.so
+c9a13de84b99e40daebc530c87b73a06d816ae9d0d538e0eaa23f777c18ca607  /home/harsh4786/gpu-observer/vllm-adapter/overlay/vllm/v1/engine/core.py
+6cb5e250417afa1e2acf67ceb8aa148671b3866ef040b81c879ae93661dbbef1  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_semantic.py
+7ffa991996380886d7ddcdb25c55af1c8c0b943bd574264bbb4c271e02aa8af6  /home/harsh4786/gpu-observer/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py
+04c6b706bef3a630b42e8ad01b97e0db09bc391891048a029c3732e6d47e8604  /home/harsh4786/gpu-observer/device-probes/compute-sanitizer/build/libgpu_observer_sanitizer.so
+75b31a66bd70e805e74d5a557cd0ba1f67c295c4a79386fc99be4f5a7c2d0da5  /home/harsh4786/gpu-observer/device-probes/compute-sanitizer/build/gpu_observer_sanitizer_patches.cubin
+0615a537e5d97a6fdfbe23b18a9fc7db5652393796852ffc0794cc258d1819da  /home/harsh4786/gpu-observer/target/release/join_b_instruction_samples
+capture_armed_after_warmup=true

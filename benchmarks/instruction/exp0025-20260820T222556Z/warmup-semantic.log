@@ -1,0 +1,7 @@
+lifecycle ts=454061764711062 seq=0 kind=9 request=0x2b7d8bff93c5a8ad peer=0x320a710fe0ecf787 position=0 token_id=0 queue=1 status=0 flags=0x0
+begin ts=454061764907878 seq=1 step=1 scheduled=70 prefill=70 decode=0 queue=0 active=1 slices=1 kv_permyriad=15 flags=0x0
+slice ts=454061764907878 seq=2 step=1 request=0x2b7d8bff93c5a8ad phase=1 tokens=70
+packed_begin ts=454061765162503 seq=3 step=1 generation=1 tokens=70 slices=1 flags=0x0
+packed_slice ts=454061765162503 seq=4 step=1 generation=1 request=0x2b7d8bff93c5a8ad index=0 rows=[0,70) tokens=70 phase=1
+end ts=454062007477477 seq=5 step=1 status=0 flags=0x0
+summary records=6 begins=1 slices=1 packed_begins=1 packed_slices=1 packed_tokens=0 accepted_tokens=0 lifecycle=1 ends=1 producer_dropped=0

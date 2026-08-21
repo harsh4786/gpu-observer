@@ -13,3 +13,5 @@ workload/datasets/
 *.bin
 third_party/aiperf/
 benchmarks/mixed-prefill/*/preflight/aiperf/inputs.json
+*.abi3.so
+*.text-sections.txt

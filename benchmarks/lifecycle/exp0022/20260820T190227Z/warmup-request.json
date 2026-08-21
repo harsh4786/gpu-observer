@@ -1,0 +1,15 @@
+{
+  "model": "Qwen/Qwen3-14B",
+  "request_id": "go-agentic-debug-foreground",
+  "messages": [
+    {
+      "role": "user",
+      "content": "You are debugging an overloaded vLLM deployment on a DGX Spark. Interactive p99 latency doubled during a burst while aggregate token throughput stayed nearly flat. Long prompts and ongoing decode requests share the server. Explain how you would distinguish queueing delay, mixed prefill/decode interference, CUDA Graph replay effects, and slow GPU execution. Name the first controlled experiment you would run and the evidence that would falsify your hypothesis."
+    }
+  ],
+  "temperature": 0,
+  "seed": 7,
+  "max_completion_tokens": 2,
+  "stream": false,
+  "ignore_eos": true
+}

@@ -33,10 +33,12 @@ static __device__ __forceinline__ uint16_t go_memory_kind(uint16_t read_kind,
     return (flags & SANITIZER_MEMORY_DEVICE_FLAG_WRITE) ? write_kind : read_kind;
 }
 
-static __device__ __forceinline__ bool go_sample(const GoSanKernelState* state,
+static __device__ __forceinline__ bool go_sample(const GoSanCallbackState* callback,
                                                  uint64_t pc)
 {
-    uint64_t mix = pc ^ uint64_t(go_thread_linear()) ^
+    const GoSanKernelState* state = callback->kernel;
+    uint64_t mix = pc ^ (callback->launch_id * 0x9e3779b97f4a7c15ULL) ^
+                   uint64_t(go_thread_linear()) ^
                    (uint64_t(blockIdx.x) << 20) ^
                    (uint64_t(blockIdx.y) << 36) ^
                    (uint64_t(blockIdx.z) << 52);
@@ -127,7 +129,7 @@ go_memory_sampled_common(void* userdata,
     auto* callback = static_cast<GoSanCallbackState*>(userdata);
     auto* state = callback->kernel;
     atomicAdd(&state->callback_count, 1ULL);
-    if (go_sample(state, pc)) {
+    if (go_sample(callback, pc)) {
         go_emit(callback, pc, reinterpret_cast<uint64_t>(ptr), flags,
                 go_memory_kind(read_kind, write_kind, flags),
                 static_cast<uint16_t>(access_size));
@@ -187,7 +189,7 @@ SanitizerPatchResult go_barrier_sampled(void* userdata,
     auto* callback = static_cast<GoSanCallbackState*>(userdata);
     auto* state = callback->kernel;
     atomicAdd(&state->callback_count, 1ULL);
-    if (go_block_leader() && go_sample(state, pc)) {
+    if (go_block_leader() && go_sample(callback, pc)) {
         const uint32_t packed = (bar_index & 0xffffU) | (thread_count << 16);
         go_emit(callback, pc, 0, packed | flags, GO_SAN_EVENT_BARRIER, 0);
     }

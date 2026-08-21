@@ -25,6 +25,7 @@ _FOCUS_SUFFIX_RE = re.compile(r"-[0-9a-f]{8}$")
 
 _PREFILL = 1
 _DECODE = 2
+_ENGINE_REQUEST_ADMITTED = 9
 
 try:
     # Shared with gpu_observer_query_capture.py (frontend process) so both
@@ -89,6 +90,9 @@ class _OutputToken(ctypes.Structure):
 
 class _DisabledEmitter:
     __slots__ = ()
+
+    def admitted(self, request, scheduler) -> None:
+        return None
 
     def begin(self, scheduler_output, scheduler) -> int:
         return 0
@@ -240,6 +244,18 @@ class SemanticEmitter:
             ctypes.c_uint8,
         ]
         self._lib.gpu_observer_emit_step_end.restype = ctypes.c_int32
+        self._lib.gpu_observer_emit_lifecycle.argtypes = [
+            ctypes.c_void_p,
+            ctypes.c_uint64,
+            ctypes.c_uint64,
+            ctypes.c_uint64,
+            ctypes.c_uint32,
+            ctypes.c_uint32,
+            ctypes.c_uint32,
+            ctypes.c_uint8,
+            ctypes.c_uint8,
+        ]
+        self._lib.gpu_observer_emit_lifecycle.restype = ctypes.c_int32
         self._lib.gpu_observer_bridge_close.argtypes = [ctypes.c_void_p]
         self._lib.gpu_observer_bridge_close.restype = None
         self._lib.gpu_observer_bridge_get_focus.argtypes = [ctypes.c_void_p]
@@ -257,6 +273,12 @@ class SemanticEmitter:
     def _intern(self, request_id: str) -> int:
         existing = self._request_hashes.get(request_id)
         if existing is not None:
+            # Focus can be published after this request was first interned;
+            # admission telemetry can therefore precede the next step's
+            # shared-cursor refresh. Re-run the allocation-free alias check so
+            # an existing suffixed EngineCore ID can still bind to the
+            # frontend's unsuffixed ID.
+            self._resolve_focus_alias(request_id, existing)
             return existing
         hashed = _stable_request_id(request_id)
         owner = self._hash_owners.get(hashed)
@@ -285,6 +307,36 @@ class SemanticEmitter:
 
     def _live_focus_hash(self) -> int:
         return self._lib.gpu_observer_bridge_get_focus(self._bridge)
+
+    def admitted(self, request, scheduler) -> None:
+        if self._faulted:
+            return
+        try:
+            request_id = request.request_id
+            request_hash = self._intern(request_id)
+            base_request_id = _FOCUS_SUFFIX_RE.sub("", request_id)
+            base_request_hash = _stable_request_id(base_request_id)
+            _running, waiting = scheduler.get_request_counts()
+            result = self._lib.gpu_observer_emit_lifecycle(
+                self._bridge,
+                time.monotonic_ns(),
+                request_hash,
+                base_request_hash,
+                0,
+                0,
+                waiting,
+                _ENGINE_REQUEST_ADMITTED,
+                0,
+            )
+            if result < 0:
+                raise RuntimeError("native engine-admission emission rejected the request")
+        except Exception as error:
+            self._faulted = True
+            warnings.warn(
+                f"GPU observer semantic emitter disabled after admission failure: {error}",
+                RuntimeWarning,
+                stacklevel=1,
+            )
 
     def begin(self, scheduler_output, scheduler) -> int:
         if self._faulted:

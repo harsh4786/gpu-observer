@@ -350,6 +350,7 @@ class EngineCore:
             )
 
         self.scheduler.add_request(request)
+        semantic_emitter.admitted(request, self.scheduler)
 
     def abort_requests(self, request_ids: list[str]):
         """Abort requests from the scheduler."""

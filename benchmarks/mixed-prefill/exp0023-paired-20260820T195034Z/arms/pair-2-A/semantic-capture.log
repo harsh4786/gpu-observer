@@ -1,0 +1,13 @@
+lifecycle ts=445597464337660 seq=0 kind=9 request=0x8ddad80b7d7550bd peer=0xfa0866b14e7c069d position=0 token_id=0 queue=1 status=0 flags=0x0
+begin ts=445597464529372 seq=1 step=1 scheduled=70 prefill=70 decode=0 queue=0 active=1 slices=1 kv_permyriad=15 flags=0x0
+slice ts=445597464529372 seq=2 step=1 request=0x8ddad80b7d7550bd phase=1 tokens=70
+packed_begin ts=445597464786573 seq=3 step=1 generation=1 tokens=70 slices=1 flags=0x0
+packed_slice ts=445597464786573 seq=4 step=1 generation=1 request=0x8ddad80b7d7550bd index=0 rows=[0,70) tokens=70 phase=1
+lifecycle ts=445597553436553 seq=5 kind=9 request=0xa2b734f29f35a688 peer=0x6e17506b9a9412dc position=0 token_id=0 queue=1 status=0 flags=0x0
+lifecycle ts=445597553464969 seq=6 kind=9 request=0xd0ad4c46528cc26a peer=0x00e773f55c852a6d position=0 token_id=0 queue=2 status=0 flags=0x0
+lifecycle ts=445597553481689 seq=7 kind=9 request=0x86c059df855d7976 peer=0xdaddfa4cfa419f03 position=0 token_id=0 queue=3 status=0 flags=0x0
+lifecycle ts=445597553496825 seq=8 kind=9 request=0x3505d18198e48301 peer=0xffc8bf6853bf03db position=0 token_id=0 queue=4 status=0 flags=0x0
+lifecycle ts=445597553512425 seq=9 kind=9 request=0xbb6d0bf26ba6d088 peer=0x834245b2defba4f6 position=0 token_id=0 queue=5 status=0 flags=0x0
+lifecycle ts=445597553525545 seq=10 kind=9 request=0xe93a15bad14395e7 peer=0x11ad9fd59d037cd2 position=0 token_id=0 queue=6 status=0 flags=0x0
+lifecycle ts=445597553540073 seq=11 kind=9 request=0xb60b71c0e027a25f peer=0xb287c70df3500e70 position=0 token_id=0 queue=7 status=0 flags=0x0
+summary records=33204 begins=1816 slices=13824 packed_begins=1816 packed_slices=13824 packed_tokens=0 accepted_tokens=0 lifecycle=108 ends=1816 producer_dropped=0

@@ -1,0 +1,2 @@
+lifecycle ts=441873925930899 seq=0 kind=8 request=0x592816ab0583b338 peer=0x0000000000000000 position=0 token_id=2 queue=0 status=0 flags=0x0
+summary records=1 begins=0 slices=0 packed_begins=0 packed_slices=0 packed_tokens=0 accepted_tokens=0 lifecycle=1 ends=0 producer_dropped=0

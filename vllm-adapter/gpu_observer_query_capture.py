@@ -32,7 +32,20 @@ except ImportError:
 
 _SCHEMA = "GPU_OBSERVER_QUERY_01"
 _DEFAULT_MAX_BYTES = 48 * 1024
+_FRONTEND_REQUEST_RECEIVED = 8
+_FRONTEND_TOKEN_EMITTED = 10
+_FRONTEND_REQUEST_COMPLETED = 11
+
+
+class _OutputToken(ctypes.Structure):
+    _fields_ = [
+        ("request_id", ctypes.c_uint64),
+        ("output_position", ctypes.c_uint32),
+        ("token_id", ctypes.c_uint32),
+    ]
+
 _warned = False
+
 
 
 def _warn_once(message: str) -> None:
@@ -41,6 +54,167 @@ def _warn_once(message: str) -> None:
         return
     _warned = True
     warnings.warn(message, RuntimeWarning, stacklevel=1)
+
+
+class _FrontendLifecycleWriter:
+    """One frontend process owns one fixed-record SPSC ring.
+
+    Initialization may allocate and mmap. Steady-state emission only fills a
+    preallocated ctypes array and crosses the native bridge; it performs no
+    JSON or MessagePack serialization and never blocks serving.
+    """
+
+    __slots__ = ("_bridge", "_faulted", "_lib", "_max_tokens", "_tokens")
+
+    def __init__(self) -> None:
+        self._bridge: ctypes.c_void_p | None = None
+        self._faulted = False
+        self._lib: ctypes.CDLL | None = None
+        self._max_tokens = 0
+        self._tokens = None
+        library_path = os.environ.get("GPU_OBSERVER_SEMANTIC_LIB")
+        ring_path = os.environ.get("GPU_OBSERVER_FRONTEND_SHM")
+        if not library_path or not ring_path:
+            return
+        try:
+            capacity = int(os.environ.get("GPU_OBSERVER_FRONTEND_CAPACITY", "65536"))
+            max_tokens = int(os.environ.get("GPU_OBSERVER_MAX_FOCUSED_TOKENS", "4096"))
+            if max_tokens < 1 or max_tokens > 65_536:
+                raise ValueError("GPU_OBSERVER_MAX_FOCUSED_TOKENS must be in [1, 65536]")
+            lib = ctypes.CDLL(library_path)
+            lib.gpu_observer_bridge_open.argtypes = [ctypes.c_char_p, ctypes.c_uint32]
+            lib.gpu_observer_bridge_open.restype = ctypes.c_void_p
+            lib.gpu_observer_emit_lifecycle.argtypes = [
+                ctypes.c_void_p,
+                ctypes.c_uint64,
+                ctypes.c_uint64,
+                ctypes.c_uint64,
+                ctypes.c_uint32,
+                ctypes.c_uint32,
+                ctypes.c_uint32,
+                ctypes.c_uint8,
+                ctypes.c_uint8,
+            ]
+            lib.gpu_observer_emit_lifecycle.restype = ctypes.c_int32
+            lib.gpu_observer_emit_lifecycle_tokens.argtypes = [
+                ctypes.c_void_p,
+                ctypes.c_uint64,
+                ctypes.POINTER(_OutputToken),
+                ctypes.c_uint32,
+                ctypes.c_uint8,
+            ]
+            lib.gpu_observer_emit_lifecycle_tokens.restype = ctypes.c_int32
+            bridge = lib.gpu_observer_bridge_open(os.fsencode(ring_path), capacity)
+            if not bridge:
+                raise RuntimeError("unable to initialize frontend lifecycle ring")
+            self._lib = lib
+            self._bridge = bridge
+            self._max_tokens = max_tokens
+            self._tokens = (_OutputToken * max_tokens)()
+        except Exception as error:
+            self._faulted = True
+            _warn_once(f"GPU observer frontend lifecycle disabled: {error}")
+
+    @property
+    def enabled(self) -> bool:
+        return self._bridge is not None and not self._faulted
+
+    def _single(
+        self,
+        timestamp_ns: int,
+        request_hash: int,
+        token_position: int,
+        token_id: int,
+        kind: int,
+        status: int = 0,
+    ) -> None:
+        if not self.enabled:
+            return
+        result = self._lib.gpu_observer_emit_lifecycle(
+            self._bridge,
+            timestamp_ns,
+            request_hash,
+            0,
+            token_position,
+            token_id,
+            0,
+            kind,
+            status,
+        )
+        if result < 0:
+            raise RuntimeError("native frontend lifecycle emission rejected a record")
+
+    def request_received(self, request_id: str, requested_tokens: int) -> int:
+        request_hash = _stable_request_id(request_id)
+        try:
+            self._single(
+                time.monotonic_ns(),
+                request_hash,
+                0,
+                max(0, min(0xFFFFFFFF, int(requested_tokens))),
+                _FRONTEND_REQUEST_RECEIVED,
+            )
+        except Exception as error:
+            self._faulted = True
+            _warn_once(f"GPU observer frontend receive event disabled: {error}")
+        return request_hash
+
+    def tokens_emitted(self, request_hash: int, first_position: int, token_ids) -> None:
+        if not self.enabled or not token_ids:
+            return
+        try:
+            token_count = len(token_ids)
+            if token_count > self._max_tokens:
+                raise RuntimeError("frontend token group exceeds configured bound")
+            for index, token_id_raw in enumerate(token_ids):
+                token_id = int(token_id_raw)
+                if token_id < 0 or token_id > 0xFFFFFFFF:
+                    raise RuntimeError("frontend token ID is outside the wire range")
+                target = self._tokens[index]
+                target.request_id = request_hash
+                target.output_position = first_position + index
+                target.token_id = token_id
+            result = self._lib.gpu_observer_emit_lifecycle_tokens(
+                self._bridge,
+                time.monotonic_ns(),
+                self._tokens,
+                token_count,
+                _FRONTEND_TOKEN_EMITTED,
+            )
+            if result < 0:
+                raise RuntimeError("native frontend token emission rejected a group")
+        except Exception as error:
+            self._faulted = True
+            _warn_once(f"GPU observer frontend token events disabled: {error}")
+
+    def completed(self, request_hash: int, output_tokens: int, status: int = 0) -> None:
+        try:
+            self._single(
+                time.monotonic_ns(),
+                request_hash,
+                max(0, min(0xFFFFFFFF, int(output_tokens))),
+                0,
+                _FRONTEND_REQUEST_COMPLETED,
+                status,
+            )
+        except Exception as error:
+            self._faulted = True
+            _warn_once(f"GPU observer frontend completion event disabled: {error}")
+
+
+_frontend_lifecycle = _FrontendLifecycleWriter()
+
+
+def lifecycle_request_received(request_id: str, requested_tokens: int) -> int:
+    return _frontend_lifecycle.request_received(request_id, requested_tokens)
+
+
+def lifecycle_tokens_emitted(request_hash: int, first_position: int, token_ids) -> None:
+    _frontend_lifecycle.tokens_emitted(request_hash, first_position, token_ids)
+
+
+def lifecycle_request_completed(request_hash: int, output_tokens: int, status: int = 0) -> None:
+    _frontend_lifecycle.completed(request_hash, output_tokens, status)
 
 
 class _FocusWriter:

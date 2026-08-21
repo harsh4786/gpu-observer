@@ -1,0 +1,1 @@
+engine_pid=388 control=/tmp/gpu-observer-cupti-388.fifo

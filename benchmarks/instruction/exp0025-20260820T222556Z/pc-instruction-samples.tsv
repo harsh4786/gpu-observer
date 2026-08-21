@@ -1,0 +1,6 @@
+pc_offset	event_kind	event_name	samples	static_class	sass
+0x50	2	global_read	7143	load	LDG.E.64.CONSTANT R2, desc[UR8][R2.64] ;               /* 0x0000000802027981 */
+0x820	2	global_read	1785	load	LDG.E.128.CONSTANT R4, desc[UR8][R4.64] ;              /* 0x0000000804047981 */
+0x870	3	global_write	1785	store	STG.E.128 desc[UR8][R10.64], R4 ;                      /* 0x000000040a007986 */
+0x17a0	2	global_read	1825	load	LDG.E.128.CONSTANT R12, desc[UR8][R6.64] ;             /* 0x00000008060c7981 */
+0x17f0	3	global_write	1825	store	STG.E.128 desc[UR8][R8.64], R12 ;                      /* 0x0000000c08007986 */

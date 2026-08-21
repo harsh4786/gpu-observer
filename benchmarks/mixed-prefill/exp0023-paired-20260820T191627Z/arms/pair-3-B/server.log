@@ -1,0 +1,51 @@
+
+==========
+== vLLM ==
+==========
+
+NVIDIA Release 26.05 (build 313685831)
+vLLM Version 0.20.1+7124b12a
+Container image Copyright (c) 2026, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+Various files include modifications (c) NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+
+GOVERNING TERMS: The software and materials are governed by the NVIDIA Software License Agreement
+(found at https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/)
+and the Product-Specific Terms for NVIDIA AI Products
+(found at https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/).
+
+NOTE: CUDA Forward Compatibility mode ENABLED.
+  Using CUDA 13.2 driver version 595.58.03 with kernel driver version 580.173.02.
+  See https://docs.nvidia.com/deploy/cuda-compatibility/ for details.
+
+(APIServer pid=1) INFO 08-20 19:44:25 [utils.py:299] 
+(APIServer pid=1) INFO 08-20 19:44:25 [utils.py:299]        █     █     █▄   ▄█
+(APIServer pid=1) INFO 08-20 19:44:25 [utils.py:299]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.20.1+7124b12a.dev
+(APIServer pid=1) INFO 08-20 19:44:25 [utils.py:299]   █▄█▀ █     █     █     █  model   Qwen/Qwen3-14B
+(APIServer pid=1) INFO 08-20 19:44:25 [utils.py:299]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=1) INFO 08-20 19:44:25 [utils.py:299] 
+(APIServer pid=1) INFO 08-20 19:44:25 [utils.py:233] non-default args: {'model_tag': 'Qwen/Qwen3-14B', 'model': 'Qwen/Qwen3-14B', 'dtype': 'bfloat16', 'revision': '40c069824f4251a91eefaf281ebe4c544efd3e18', 'max_model_len': 4096, 'kv_cache_memory_bytes': 8589934592, 'enable_prefix_caching': False, 'max_num_seqs': 32}
+(APIServer pid=1) WARNING 08-20 19:44:25 [envs.py:1830] Unknown vLLM environment variable detected: VLLM_VERSION
+(APIServer pid=1) WARNING 08-20 19:44:25 [envs.py:1830] Unknown vLLM environment variable detected: VLLM_FLASH_ATTN_SRC_DIR
+(APIServer pid=1) Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+(APIServer pid=1) INFO 08-20 19:44:31 [nixl_utils.py:20] Setting UCX_RCACHE_MAX_UNRELEASED to '1024' to avoid a rare memory leak in UCX when using NIXL.
+(APIServer pid=1) WARNING 08-20 19:44:31 [nixl_utils.py:34] NIXL is not available
+(APIServer pid=1) WARNING 08-20 19:44:31 [nixl_utils.py:44] NIXL agent config is not available
+(APIServer pid=1) INFO 08-20 19:44:31 [model.py:555] Resolved architecture: Qwen3ForCausalLM
+(APIServer pid=1) INFO 08-20 19:44:31 [model.py:1680] Using max model len 4096
+(APIServer pid=1) INFO 08-20 19:44:31 [vllm.py:840] Asynchronous scheduling is enabled.
+(APIServer pid=1) INFO 08-20 19:44:31 [kernel.py:205] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'])
+(EngineCore pid=300) INFO 08-20 19:44:35 [core.py:110] Initializing a V1 LLM engine (v0.20.1+7124b12a.dev) with config: model='Qwen/Qwen3-14B', speculative_config=None, tokenizer='Qwen/Qwen3-14B', skip_tokenizer_init=False, tokenizer_mode=auto, revision=40c069824f4251a91eefaf281ebe4c544efd3e18, tokenizer_revision=40c069824f4251a91eefaf281ebe4c544efd3e18, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=Qwen/Qwen3-14B, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [2048], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 64, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native']), enable_flashinfer_autotune=True, moe_backend='auto')
+(EngineCore pid=300) WARNING 08-20 19:44:35 [nixl_utils.py:34] NIXL is not available
+(EngineCore pid=300) WARNING 08-20 19:44:35 [nixl_utils.py:44] NIXL agent config is not available
+(EngineCore pid=300) INFO 08-20 19:44:35 [parallel_state.py:1402] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.0.0.197:46623 backend=nccl
+(EngineCore pid=300) INFO 08-20 19:44:35 [parallel_state.py:1715] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=300) INFO 08-20 19:44:36 [gpu_model_runner.py:4791] Starting to load model Qwen/Qwen3-14B...
+(EngineCore pid=300) INFO 08-20 19:44:36 [cuda.py:368] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore pid=300) INFO 08-20 19:44:36 [flash_attn.py:646] Using FlashAttention version 2
+(EngineCore pid=300) INFO 08-20 19:44:38 [weight_utils.py:904] Filesystem type for checkpoints: EXT4. Checkpoint size: 27.51 GiB. Available RAM: 87.73 GiB.
+(EngineCore pid=300) INFO 08-20 19:44:38 [weight_utils.py:927] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+(EngineCore pid=300) Loading safetensors checkpoint shards:   0% Completed | 0/8 [00:00<?, ?it/s]
+(EngineCore pid=300) Loading safetensors checkpoint shards:  12% Completed | 1/8 [00:20<02:22, 20.29s/it]
+(EngineCore pid=300) Loading safetensors checkpoint shards:  25% Completed | 2/8 [00:36<01:46, 17.75s/it]
+(EngineCore pid=300) Loading safetensors checkpoint shards:  38% Completed | 3/8 [00:52<01:26, 17.26s/it]

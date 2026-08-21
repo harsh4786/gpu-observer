@@ -1,0 +1,38 @@
+experiment=EXP-0022-request-lifecycle
+started_utc=2026-08-20T19:02:27Z
+question=Can one request be causally bracketed from client send through frontend EngineCore GPU execution and client token receipt?
+measurement_scope=diagnostic_structural_trace_not_overhead_benchmark
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+image=gpu-observer/vllm-sanitizer:cuda13.2
+external_request_id=exp0022-request-1
+execution_mode=FULL_AND_PIECEWISE_CUDA_GRAPHS
+async_scheduling=production_default
+prefix_caching=false
+semantic_abi_version=5
+engine_ring_producers=1
+frontend_ring_producers=1
+client_record_capacity=8192
+cupti_buffer_count=8
+cupti_buffer_bytes=1048576
+cupti_activity_scope=concurrent_kernels_only
+frontend_receive_endpoint=chat_handler_entry_after_HTTP_decode
+frontend_emit_endpoint=immediately_before_async_generator_yield
+client_receive_endpoint=HTTP_chunk_read_completion
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:     130663165952  4197531648 88662114304     2834432 38983241728 126465634304
+Swap:    17179865088   164327424 17015537664
+NVIDIA GB10, 580.173.02, 35, 5.16 W
+image_id=sha256:e4409f94c58463513df2e5abca7855b906fcb78b87d1f7190af2b7968d3de4f4 image_digests=[]
+469a04547265e261f753189722d77f3425212a5fd0116f348ea36b93e510f6f9  /home/harsh4786/gpu-observer/benchmarks/lifecycle/exp0022/20260820T190227Z/request.json
+82db94ea0f6d464067fae9bf435bf954f6e7f5939c045ce4cec56df7017913fd  /home/harsh4786/gpu-observer/target/release/libgpu_observer_vllm_bridge.so
+c9a13de84b99e40daebc530c87b73a06d816ae9d0d538e0eaa23f777c18ca607  /home/harsh4786/gpu-observer/vllm-adapter/overlay/vllm/v1/engine/core.py
+cf503222e8b0b0e3a622858bede3fc7d057e447683975b72c87699fa3fedd3ac  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_semantic.py
+7ffa991996380886d7ddcdb25c55af1c8c0b943bd574264bbb4c271e02aa8af6  /home/harsh4786/gpu-observer/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py
+2ae977b86c959311ae2fa1caedb72f994027b33f28344b2432cacf252b7fc51b  /home/harsh4786/gpu-observer/vllm-adapter/frontend-overlay/vllm/entrypoints/openai/chat_completion/serving.py
+751e7fa22143b0536af3baee5aa15d370a000cdc5318918077a8deb7d0b83aa2  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_query_capture.py
+1f1aa6971e2717711b620c09c27973846a60b6558c27da85fe4d4fdad3df9a79  /home/harsh4786/gpu-observer/cupti-agent/activity/build-cuda1321/libgpu_observer_cupti_activity.so
+8b0b167daaf38ad8771f82cb698ba7381fc8ec1b36edfcce7391343fff0c6149  /home/harsh4786/gpu-observer/target/release/full_step_cupti
+68d3ec35991ab902de007818a278f0c9e814430a5d6f29da2b4915b852e7b943  /home/harsh4786/gpu-observer/target/release/lifecycle_client
+909ded35f4371e79948e11a3c1e3d0ea0b000efe9b5c8f70aacbd890a901677d  /home/harsh4786/gpu-observer/target/release/request_lifecycle

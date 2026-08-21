@@ -1,0 +1,10 @@
+boundary	timestamp_ns	delta_from_previous_ns	observer	endpoint
+client_send_begin	442136048463203	0	rust_client	before socket write
+frontend_handler_entry	442136049059151	595948	vllm_frontend	create_chat_completion entry after HTTP decode
+engine_scheduler_admission	442136054966138	5906987	engine_core	after Scheduler.add_request
+first_scheduler_selection	442136055112681	146543	engine_core	engine_step_begin
+first_gpu_kernel_start	442136056054311	941630	cupti	actual kernel start
+first_token_step_gpu_end	442136199357880	143303569	cupti	actual final kernel end
+engine_accepts_first_token	442136201027213	1669333	engine_core	Scheduler.update_from_output returned token
+frontend_yields_first_token	442136203347519	2320306	vllm_frontend	immediately before SSE generator yield
+client_receives_first_token	442136203668061	320542	rust_client	HTTP chunk read completion

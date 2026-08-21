@@ -1,0 +1,13 @@
+lifecycle ts=452061126108300 seq=0 kind=9 request=0xec4295c1f6aa7ee7 peer=0xfdf9dbaf3f9d3844 position=0 token_id=0 queue=1 status=0 flags=0x0
+lifecycle ts=452061126172556 seq=1 kind=9 request=0x97440c4d42662fc9 peer=0x7a3333a14fdda3ba position=0 token_id=0 queue=2 status=0 flags=0x0
+lifecycle ts=452061126185772 seq=2 kind=9 request=0xbb8772d499723631 peer=0x11da4143b2c2c492 position=0 token_id=0 queue=3 status=0 flags=0x0
+lifecycle ts=452061126197148 seq=3 kind=9 request=0x14329882c460f826 peer=0x1f3894a6c4bf2254 position=0 token_id=0 queue=4 status=0 flags=0x0
+lifecycle ts=452061126208444 seq=4 kind=9 request=0x611fe0767ddbf0a1 peer=0x5b748ce5a10673be position=0 token_id=0 queue=5 status=0 flags=0x0
+lifecycle ts=452061126220252 seq=5 kind=9 request=0x62f466ab32c0d7a3 peer=0xf47a66bbf28bd1fa position=0 token_id=0 queue=6 status=0 flags=0x0
+lifecycle ts=452061126230652 seq=6 kind=9 request=0x70069bd11650b244 peer=0x69db10b433bea91b position=0 token_id=0 queue=7 status=0 flags=0x0
+lifecycle ts=452061126241612 seq=7 kind=9 request=0xd1f4d609bcc51071 peer=0xca63802851a949a6 position=0 token_id=0 queue=8 status=0 flags=0x0
+begin ts=452061126559116 seq=8 step=1 scheduled=294 prefill=294 decode=0 queue=0 active=8 slices=8 kv_permyriad=67 flags=0x0
+slice ts=452061126559116 seq=9 step=1 request=0xec4295c1f6aa7ee7 phase=1 tokens=25
+slice ts=452061126559116 seq=10 step=1 request=0x97440c4d42662fc9 phase=1 tokens=70
+slice ts=452061126559116 seq=11 step=1 request=0xbb8772d499723631 phase=1 tokens=58
+summary records=35047 begins=1816 slices=14723 packed_begins=1816 packed_slices=14723 packed_tokens=0 accepted_tokens=0 lifecycle=153 ends=1816 producer_dropped=0

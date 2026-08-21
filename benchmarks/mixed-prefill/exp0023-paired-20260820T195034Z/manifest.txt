@@ -1,0 +1,41 @@
+experiment=EXP-0023-paired-mixed-prefill-pathology
+started_utc=2026-08-20T19:50:34Z
+question=Does frozen long-prefill interference reproducibly degrade interactive tail latency beyond fresh-server variation?
+design=paired_fresh_server_randomized_arm_order
+pair_count=5
+randomization_seed=20260820
+frozen_arm_order=B A A B B A A B B A
+arm_A=interactive_only
+arm_B=interactive_plus_45_fixed_long_prefills
+performance_instrumentation=semantic_only
+mechanism_instrumentation=separate_EXP0012_EXP0021_EXP0022_CUPTI_runs
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+image=nvcr.io/nvidia/vllm:26.05-py3
+execution_mode=FULL_AND_PIECEWISE_CUDA_GRAPHS
+async_scheduling=production_default
+prefix_caching=false
+warmup_requests=8
+measured_interactive_requests=100
+interactive_concurrency=8
+interactive_output_tokens=128
+background_requests=45
+background_arrival_period_seconds=4
+background_first_arrival_after_profile_start_seconds=0.5
+background_output_tokens=16
+thermal_abort_celsius=85
+primary_metrics=paired_p99_TTFT_p99_ITL_output_throughput
+confidence_interval=two_sided_paired_t_95_percent_run_level
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:     130663165952  4273373184 86726586368     3485696 40843583488 126389792768
+Swap:    17179865088   163934208 17015930880
+NVIDIA GB10, 580.173.02, 39, 5.43 W
+image_id=sha256:c5c116c732f24a640650e1e6e399112ef7c2b1e80c5fd7c13808b10a579646e6 image_digests=["nvcr.io/nvidia/vllm@sha256:654e563e727be1968487d453de0733fb074cb59adf424c779d0f9e7cfcb2b6b6"]
+0.10.0
+894a9eab9526b3db4b0029029465305a96cc737e7131aefa3413de7e19cc1cca  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-corrected.jsonl
+3b556e56d79d69540e95e30a02a84a4197e15efb1a121c732103bcef78ace440  /home/harsh4786/gpu-observer/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/background-long-payloads.jsonl
+82db94ea0f6d464067fae9bf435bf954f6e7f5939c045ce4cec56df7017913fd  /home/harsh4786/gpu-observer/target/release/libgpu_observer_vllm_bridge.so
+c9a13de84b99e40daebc530c87b73a06d816ae9d0d538e0eaa23f777c18ca607  /home/harsh4786/gpu-observer/vllm-adapter/overlay/vllm/v1/engine/core.py
+6cb5e250417afa1e2acf67ceb8aa148671b3866ef040b81c879ae93661dbbef1  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_semantic.py
+7ffa991996380886d7ddcdb25c55af1c8c0b943bd574264bbb4c271e02aa8af6  /home/harsh4786/gpu-observer/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py
