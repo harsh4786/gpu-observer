@@ -18,7 +18,10 @@ hero/ticker redesign) and has the design-skill tooling and the full context of
 rejecting cluttered/over-designed attempts before converging on the current
 restrained style. Reimplementing that context from scratch in a different
 agent risks regressing the same clutter mistakes already corrected once. Point
-Claude at this file plus `ui/` and let it continue from here.
+Claude at this file plus `ui/` and let it continue from here. For the design
+history specifically — every round of feedback, what was tried, what got
+rejected and why, and the reusable design principles extracted from it —
+see `docs/design-iterations.md`. Read that before touching `ui/`.
 
 Everything else — Rust/C++ (`collector/`, `cupti-agent/`,
 `device-probes/`, `host-probes/`, `vllm-adapter/`), experiment validation,
