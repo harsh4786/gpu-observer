@@ -36,7 +36,7 @@ export function layerStages(model) {
     { title: "input_layernorm", lines: [`RMSNorm · ${model.hiddenSize}`] },
     { title: "qkv_proj", lines: [`${model.hiddenSize} → 7168 · GQA ${model.numHeads}:${model.numKvHeads}`] },
     { title: "q_norm / k_norm", lines: [`RMSNorm · head_dim ${model.headDim}`] },
-    { title: "rotary_emb", lines: [`RoPE · θ=${model.ropeTheta.toLocaleString()}`] },
+    { title: "RoPE", lines: [`rotary embedding · θ=${model.ropeTheta.toLocaleString()}`] },
     { title: "reshape & cache", lines: ["KV cache write (gpu-observer anchor kernel)"] },
     {
       title: "attn",

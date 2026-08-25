@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=graph33";
-import { layerStages, QWEN3_14B } from "./kernel-graph.js?v=graph33";
+} from "./graph-primitives.js?v=graph34";
+import { layerStages, QWEN3_14B } from "./kernel-graph.js?v=graph34";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -230,7 +230,7 @@ function renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liv
 // right this instant. A big hero panel names the current stage; a small
 // history ticker underneath gives just enough of "what just happened" for
 // context, without requiring anyone to decode a diagram first.
-const HERO_WIDTH = 640;
+const HERO_WIDTH = 968;
 const LAYER_CHIP = 12;
 const LAYER_GAP = 3;
 const LAYER_COUNT = 40;
@@ -245,8 +245,8 @@ const ANATOMY_BAR_HEIGHT = 10;
 // derived, not hand-picked, so the 5-node bottom row spans the exact same
 // total width as the 6-node top row -- the row-transition edges (attn to
 // o_proj) land vertically aligned instead of a long diagonal.
-const DAG_NODE_W = 88;
-const DAG_NODE_H = 44;
+const DAG_NODE_W = 144;
+const DAG_NODE_H = 46;
 const DAG_NODE_GAP = 14;
 const DAG_ROW_GAP = 34;
 const DAG_TOP_COUNT = 6;
@@ -387,6 +387,7 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
       kind: entry ? "measured" : "illustrative",
       pulse: Boolean(stageState?.live),
       title: stage.title,
+      titleLimit: 16,
       tooltip: entry
         ? `${stage.title} — ${stage.lines?.[0] ?? ""} · ${truncate(entry.name, 48)} · grid[${entry.grid.join(",")}]`
         : `${stage.title} — ${stage.lines?.[0] ?? ""} · no real launch observed yet this session`,

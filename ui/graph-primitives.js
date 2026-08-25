@@ -54,7 +54,7 @@ export function addHeading(svg, x, title, subtitle) {
 export function addNode(svg, options) {
   const {
     x, y, width = 176, height = 58, color = "#60756d", kind = "measured",
-    title, lines = [], badge, focus = false, pulse = false, onActivate, tooltip,
+    title, titleLimit = 26, lines = [], badge, focus = false, pulse = false, onActivate, tooltip,
   } = options;
   const group = svgElement("g", {
     class: `graph-node ${kind}${focus ? " focus" : ""}${pulse ? " live-active" : ""}${onActivate ? " interactive" : ""}`,
@@ -85,7 +85,7 @@ export function addNode(svg, options) {
     y: singleLine ? Math.round(height / 2) + 5 : 22,
     class: "graph-node-title",
   });
-  titleNode.textContent = truncate(title, 26);
+  titleNode.textContent = truncate(title, titleLimit);
   group.append(titleNode);
   lines.slice(0, 2).forEach((line, index) => {
     const lineNode = svgElement("text", { x: 13, y: 39 + index * 16, class: "graph-node-line" });
