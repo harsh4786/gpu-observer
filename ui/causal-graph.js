@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=graph38";
-import { layerStages, QWEN3_14B } from "./kernel-graph.js?v=graph38";
+} from "./graph-primitives.js?v=graph39";
+import { layerStages, QWEN3_14B } from "./kernel-graph.js?v=graph39";
 
 function shortId(value) {
   const text = String(value ?? "");

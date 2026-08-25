@@ -90,7 +90,6 @@ blockquote { margin: 18px 0 13px; padding-left: 15px; border-left: 2px solid var
 .graph-card { margin-bottom: 12px; padding: 28px; border-color: var(--line-strong); overflow: hidden; }
 .graph-card .section-title { margin-bottom: 18px; }
 .graph-title h2 { font-size: 21px; }
-.graph-title .eyebrow { font-size: 10px; }
 .graph-title { align-items: flex-start; }
 .graph-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; }
 .graph-legend { display: flex; flex-wrap: wrap; gap: 9px; color: var(--dim); font-size: 8px; letter-spacing: .05em; text-transform: uppercase; }
