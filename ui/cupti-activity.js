@@ -25,7 +25,7 @@
 //   reshape_and_cache -> attn -> o_proj -> post_attention_layernorm ->
 //   gate_up_proj -> SiluAndMul -> down_proj -> (next layer's input_layernorm)
 
-import { STAGE_TITLES } from "./kernel-graph.js?v=graph36";
+import { STAGE_TITLES } from "./kernel-graph.js?v=graph38";
 
 const [
   INPUT_LAYERNORM, QKV_PROJ, QK_NORM, ROTARY_EMB, RESHAPE_AND_CACHE,
@@ -215,6 +215,13 @@ export function getRollingBusy() {
 // is kept too, in case a future view wants per-stage detail again.
 export function getCuptiSnapshot() {
   const now = performance.now();
+  // The single most-recently-processed stage, same source state.
+  // currentLayerIndex already uses for the layer sweep below. Needed
+  // because CUPTI delivers in bursts (module header): a naive per-stage
+  // "updated within the last 250ms" test goes true for most/all 11 stages
+  // at once during a burst, so the whole DAG pulsed together instead of
+  // tracking the one stage that actually just ran.
+  const latest = state.recentSequence[state.recentSequence.length - 1] ?? null;
   return {
     connected: state.connected,
     rollingBusy: getRollingBusy(),
@@ -227,7 +234,7 @@ export function getCuptiSnapshot() {
       index,
       title: STAGE_TITLES[index],
       entry,
-      live: entry !== null && now - entry.updatedAt < RECENCY_LIVE_MS,
+      live: latest !== null && index === latest.stageIndex && now - latest.at < RECENCY_LIVE_MS,
     })),
     history: state.recentSequence.map(({ stageIndex, at }) => ({
       stageIndex,

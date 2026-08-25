@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph36";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph36";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter } from "./cupti-activity.js?v=graph36";
+import { renderCausalGraph } from "./causal-graph.js?v=graph38";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph38";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter } from "./cupti-activity.js?v=graph38";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -126,7 +126,6 @@ function selectStep(index) {
 
 function selectKernel(index) {
   state.kernelIndex = Math.max(0, Math.min(index, currentStep().kernels.length - 1));
-  renderKernels();
   renderKernelDetail();
   renderSass();
   renderGraph();
@@ -212,28 +211,6 @@ function renderStepControls() {
   select.onchange = () => selectStep(Number(select.value));
 }
 
-function renderSlices(containerId, slices, packed) {
-  const focus = state.trace.focus.requestHash;
-  const container = byId(containerId);
-  container.innerHTML = "";
-  if (!slices.length) {
-    container.innerHTML = `<div class="empty-state">No ${packed ? "packed layout" : "scheduler membership"} records.</div>`;
-    return;
-  }
-  slices.forEach((slice, index) => {
-    const item = document.createElement("div");
-    const isFocus = slice.requestId === focus;
-    item.className = `stack-item${isFocus ? " focus" : ""}`;
-    item.style.setProperty("--item-color", requestColor(slice.requestId));
-    item.innerHTML = packed
-      ? `<div class="line"><strong>${isFocus ? "focused query" : `request ${index}`}</strong><span>${escapeMarkup(slice.phase)}</span></div>
-         <small>${escapeMarkup(shortId(slice.requestId))} · rows [${slice.rowBegin}, ${slice.rowEnd}) · packed index ${slice.packedIndex}</small>`
-      : `<div class="line"><strong>${isFocus ? "focused query" : `request ${index}`}</strong><span>${slice.scheduledTokens} token${slice.scheduledTokens === 1 ? "" : "s"}</span></div>
-         <small>${escapeMarkup(shortId(slice.requestId))} · ${escapeMarkup(slice.phase)} · scheduler position ${index}</small>`;
-    container.append(item);
-  });
-}
-
 function renderStep() {
   renderStepControls();
   const step = currentStep();
@@ -242,62 +219,14 @@ function renderStep() {
     // step exists yet. Show that honestly instead of crashing on a null
     // step. The causal graph itself still renders (query/tokenizer lanes
     // form immediately -- see renderCausalGraph's null-step handling).
-    byId("scheduler-slices").innerHTML = '<div class="empty-state">Waiting for the scheduler to admit this request…</div>';
-    byId("packed-slices").innerHTML = '<div class="empty-state">Waiting for GPUModelRunner to pack this request…</div>';
-    byId("kernel-timeline").innerHTML = "";
-    byId("kernel-list").innerHTML = "";
     byId("kernel-detail").innerHTML = '<div class="empty-state">No engine step yet.</div>';
     byId("ownership-list").innerHTML = "";
     renderGraph();
     return;
   }
-  renderSlices("scheduler-slices", step.schedulerSlices, false);
-  renderSlices("packed-slices", step.packedSlices, true);
-  renderKernels();
   renderKernelDetail();
   renderSass();
   renderGraph();
-}
-
-function renderKernels() {
-  const kernels = currentStep().kernels;
-  const timeline = byId("kernel-timeline");
-  const list = byId("kernel-list");
-  timeline.innerHTML = "";
-  list.innerHTML = "";
-  if (!kernels.length) {
-    timeline.innerHTML = '<div class="empty-state">No CUPTI kernel was assigned to this step.</div>';
-    return;
-  }
-  if (state.kernelIndex >= kernels.length) state.kernelIndex = 0;
-  const min = Math.min(0, ...kernels.map((kernel) => kernel.startFromStepUs));
-  const max = Math.max(...kernels.map((kernel) => kernel.endFromStepUs));
-  const span = Math.max(1, max - min);
-  kernels.forEach((kernel, index) => {
-    const bar = document.createElement("button");
-    bar.type = "button";
-    bar.className = `kernel-bar${index === state.kernelIndex ? " selected" : ""}`;
-    bar.style.left = `${((kernel.startFromStepUs - min) / span) * 100}%`;
-    bar.style.width = `${Math.max(.35, (kernel.durationUs / span) * 100)}%`;
-    bar.title = `${kernel.name}\n${kernel.durationUs.toFixed(3)} µs`;
-    bar.addEventListener("click", () => selectKernel(index));
-    timeline.append(bar);
-
-    const chip = document.createElement("button");
-    chip.type = "button";
-    chip.className = `kernel-chip${index === state.kernelIndex ? " selected" : ""}`;
-    chip.textContent = `K${index} ${kernel.name} · ${kernel.durationUs.toFixed(2)} µs`;
-    chip.title = kernel.name;
-    chip.addEventListener("click", () => selectKernel(index));
-    list.append(chip);
-  });
-  const start = document.createElement("span");
-  start.className = "timeline-label start";
-  start.textContent = `${min.toFixed(1)} µs`;
-  const end = document.createElement("span");
-  end.className = "timeline-label end";
-  end.textContent = `${max.toFixed(1)} µs from step start`;
-  timeline.append(start, end);
 }
 
 function renderKernelDetail() {
