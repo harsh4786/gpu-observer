@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph34";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph34";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter } from "./cupti-activity.js?v=graph34";
+import { renderCausalGraph } from "./causal-graph.js?v=graph35";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph35";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter } from "./cupti-activity.js?v=graph35";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -13,6 +13,7 @@ const state = {
   liveMode: false,
   liveStepIds: new Map(), // step-id string -> index into trace.steps, for O(1) patch application
   liveFocusHash: null, // which request's hash this chat turn is about; see resolveLiveFocus()
+  liveFocusPromptTokens: null, // real prompt token count, captured off this turn's first request_slice patch -- see resolveLiveFocus()
   pendingFocusReset: false,
   liveStepActive: false,
   ws: null,
@@ -113,6 +114,7 @@ function renderGraph() {
     onKernelSelect: selectKernel,
     liveActive,
     cuptiSnapshot: liveActive ? getCuptiSnapshot() : null,
+    promptTokenCount: state.liveFocusPromptTokens,
   });
 }
 
@@ -535,11 +537,19 @@ function computeSchedulerOrderMismatches(step) {
   step.schedulerOrderMismatches = mismatches;
 }
 
-function resolveLiveFocus(requestHash) {
+// promptTokenCount comes from this turn's first request_slice patch's
+// `tokens` field -- scheduler_output.num_scheduled_tokens for a freshly
+// admitted request, straight off the Python scheduler with no extra
+// instrumentation (see gpu_observer_semantic.py's _begin()). For the common
+// case (prompt fits in one prefill step) that IS the real tokenized prompt
+// length; with chunked prefill splitting a long prompt across steps this
+// would only capture the first chunk, not re-verified live here.
+function resolveLiveFocus(requestHash, promptTokenCount) {
   if (!state.pendingFocusReset) return;
   state.pendingFocusReset = false;
   state.liveFocusHash = requestHash;
   state.trace.focus.requestHash = requestHash;
+  state.liveFocusPromptTokens = promptTokenCount;
 }
 
 function refreshLiveHeader() {
@@ -575,7 +585,7 @@ function applyPatch(patch) {
     }
     case "request_slice": {
       const step = getOrCreateLiveStep(patch.step);
-      resolveLiveFocus(patch.request);
+      resolveLiveFocus(patch.request, patch.tokens);
       step.schedulerSlices.push({
         requestId: patch.request,
         phase: phaseFromRaw(patch.phase),
@@ -764,6 +774,7 @@ async function sendChatMessage(text) {
   ensureLiveTrace();
   state.pendingFocusReset = true;
   state.liveFocusHash = null;
+  state.liveFocusPromptTokens = null;
   state.trace.focus.requestHash = null;
   state.trace.query.request.messages = [{ role: "user", content: text }];
   chatConfirmedCount = 0;

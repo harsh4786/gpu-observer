@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=graph34";
-import { layerStages, QWEN3_14B } from "./kernel-graph.js?v=graph34";
+} from "./graph-primitives.js?v=graph35";
+import { layerStages, QWEN3_14B } from "./kernel-graph.js?v=graph35";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -65,7 +65,7 @@ function deepFunction(trace, kernel) {
  *   renderLiveGraph's hero/ticker section for why this replaced an earlier
  *   node-link diagram of Qwen3's 11 per-layer kernels).
  */
-export function renderCausalGraph({ svg, trace, step, kernelIndex, onKernelSelect, liveActive = false, cuptiSnapshot = null }) {
+export function renderCausalGraph({ svg, trace, step, kernelIndex, onKernelSelect, liveActive = false, cuptiSnapshot = null, promptTokenCount = null }) {
   if (!svg || !trace) return;
   svg.replaceChildren();
 
@@ -81,7 +81,7 @@ export function renderCausalGraph({ svg, trace, step, kernelIndex, onKernelSelec
   if (step?.kernels?.length) {
     renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liveActive, scheduler });
   } else {
-    renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, scheduler });
+    renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, scheduler, promptTokenCount });
   }
 }
 
@@ -287,7 +287,7 @@ function connectDagStage(svg, from, to, options) {
   svg.insertBefore(path, svg.querySelector(".graph-node"));
 }
 
-function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, scheduler }) {
+function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, scheduler, promptTokenCount }) {
   const packed = step?.packedSlices ?? [];
   const graphWidth = 18 + HERO_WIDTH + 24;
   const heroX = 18;
@@ -314,9 +314,17 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
     lines: [truncate(naturalQuery(trace.query), 40)],
     onActivate: () => scrollToCard("query-text"),
   });
+  // promptTokenCount: the real tokenized prompt length, captured off this
+  // turn's first request_slice patch (see resolveLiveFocus in trace.js) --
+  // not trace.query.tokens.length, which is always empty in live mode
+  // (nothing tokenizes client-side; there's no offline TraceBundle here).
+  // Falls back to trace.query.tokens.length for offline fixtures, and shows
+  // "unknown" styling before that first patch lands for this turn.
   const tokenNode = addNode(svg, {
     x: 242, y: stripY, width: 130, height: stripH,
-    color: "#64c7e8", kind: "measured", title: `${trace.query.tokens.length} tokens`,
+    color: promptTokenCount != null ? "#64c7e8" : "#60756d",
+    kind: promptTokenCount != null ? "measured" : "unknown",
+    title: promptTokenCount != null ? `${promptTokenCount} tokens` : `${trace.query.tokens.length} tokens`,
     onActivate: () => scrollToCard("prompt-tokens"),
   });
   addEdge(svg, queryNode, tokenNode, { color: "#72e3b1", marker: "arrow-measured", width: 1.2 });
