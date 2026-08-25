@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph24";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph24";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter } from "./cupti-activity.js?v=graph24";
+import { renderCausalGraph } from "./causal-graph.js?v=graph33";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph33";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter } from "./cupti-activity.js?v=graph33";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -18,6 +18,7 @@ const state = {
   ws: null,
   wsReconnectTimer: null,
   chatBusy: false,
+  activeAbort: null, // AbortController for the in-flight chat request, if any -- see the Stop button
 };
 const byId = (id) => document.getElementById(id);
 const COLORS = ["#72e3b1", "#64c7e8", "#ffc66d", "#b89cff", "#ff8b7a", "#77a7ff"];
@@ -723,11 +724,12 @@ function updateChatConfirmedBadge() {
 // achievable even offline -- see the plan). Errors here must never surface
 // in the visible chat: the shadow request is a bonus telemetry source, not
 // a required part of the primary flow.
-async function sendShadowRequest(text) {
+async function sendShadowRequest(text, signal) {
   try {
     const response = await fetch(`${SHADOW_VLLM_BASE}/v1/chat/completions`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      signal,
       body: JSON.stringify({
         model: MODEL_NAME,
         messages: [{ role: "user", content: text }],
@@ -751,6 +753,14 @@ async function sendChatMessage(text) {
   if (state.chatBusy || !text.trim()) return;
   state.chatBusy = true;
   byId("chat-send").disabled = true;
+  byId("chat-stop").disabled = false;
+  // Aborting this controller closes both fetches; vLLM detects the client
+  // disconnect on a streaming request and cancels the in-flight generation
+  // server-side too -- this actually stops the decode loop, not just the
+  // UI, which is the point (fast iteration on UI changes without waiting
+  // out a full generation every time).
+  const controller = new AbortController();
+  state.activeAbort = controller;
   ensureLiveTrace();
   state.pendingFocusReset = true;
   state.liveFocusHash = null;
@@ -764,12 +774,13 @@ async function sendChatMessage(text) {
   byId("chat-waiting").textContent = "Request sent — waiting for the scheduler to admit it…";
   render();
 
-  sendShadowRequest(text); // fire-and-forget: generates GPU telemetry on the shadow container, never shown
+  sendShadowRequest(text, controller.signal); // fire-and-forget: generates GPU telemetry on the shadow container, never shown
 
   try {
     const response = await fetch(`${VLLM_BASE}/v1/chat/completions`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
       body: JSON.stringify({
         model: MODEL_NAME,
         messages: [{ role: "user", content: text }],
@@ -811,12 +822,33 @@ async function sendChatMessage(text) {
       ? byId("chat-waiting").textContent
       : "Response complete.";
   } catch (error) {
-    byId("chat-waiting").textContent = `Live request failed: ${error.message}`;
+    byId("chat-waiting").textContent = error.name === "AbortError"
+      ? "Stopped — generation cancelled server-side."
+      : `Live request failed: ${error.message}`;
   } finally {
     state.chatBusy = false;
+    state.activeAbort = null;
     byId("chat-send").disabled = false;
+    byId("chat-stop").disabled = true;
   }
 }
+
+byId("chat-stop").addEventListener("click", () => {
+  state.activeAbort?.abort();
+});
+
+// Escape as the keyboard shortcut, not Ctrl+C: browsers reserve Ctrl+C for
+// copy and won't let a page reliably intercept it without breaking that
+// convention (and stealing it while text is selected would be actively
+// hostile). Escape is the standard web pattern for "cancel the in-flight
+// thing" and works globally, not just while the chat input is focused --
+// useful for fast UI-iteration loops where you want to kill a generation
+// without clicking back into the form first.
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && state.activeAbort) {
+    state.activeAbort.abort();
+  }
+});
 
 byId("chat-form").addEventListener("submit", (event) => {
   event.preventDefault();

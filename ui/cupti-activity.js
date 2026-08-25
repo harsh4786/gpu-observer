@@ -25,7 +25,7 @@
 //   reshape_and_cache -> attn -> o_proj -> post_attention_layernorm ->
 //   gate_up_proj -> SiluAndMul -> down_proj -> (next layer's input_layernorm)
 
-import { STAGE_TITLES } from "./kernel-graph.js?v=graph24";
+import { STAGE_TITLES } from "./kernel-graph.js?v=graph33";
 
 const [
   INPUT_LAYERNORM, QKV_PROJ, QK_NORM, ROTARY_EMB, RESHAPE_AND_CACHE,
@@ -57,7 +57,47 @@ const state = {
   // far this step" is a real, measured count, not a guess.
   currentLayerIndex: -1,
   layerLog: new Array(40).fill(null),
+  // Rolling window of real launches -- {startNs, endNs}, both CUPTI's own
+  // device clock. Deliberately NOT bucketed per engine step:
+  // cuptiActivityFlushPeriod delivers activity in periodic bursts (confirmed
+  // live -- most ~120ms step windows get zero events, then every 6-7 steps
+  // several thousand arrive at once), so "launches that arrived during step
+  // N's WS window" massively misattributes -- most steps read 0%, the step
+  // that catches a burst reads 700%+.
+  //
+  // The window boundary is also computed on CUPTI's own clock (via
+  // latestEndNs below), NOT client arrival time (performance.now()) -- an
+  // earlier version used arrival time for the window and device time for
+  // durations, which still produced >100% readings (114-116%, confirmed
+  // live): because delivery is bursty and delayed, the set of events
+  // arriving in any fixed *client-time* window can correspond to device
+  // activity spanning a *different*, sometimes longer, real span. Defining
+  // the window in the interval data's own clock makes the merged union
+  // mathematically bounded by the window length -- it cannot exceed 100%.
+  recentLaunches: [],
+  latestEndNs: 0,
+  firstStartNs: null, // set once, on the very first real launch -- caps windowNs early in a session
 };
+
+const ROLLING_WINDOW_NS = 3_000_000_000; // 3s, on CUPTI's device clock
+
+function mergedBusyNs(intervals) {
+  if (!intervals.length) return 0;
+  const sorted = [...intervals].sort((a, b) => a[0] - b[0]);
+  let busy = 0;
+  let [curStart, curEnd] = sorted[0];
+  for (let i = 1; i < sorted.length; i += 1) {
+    const [start, end] = sorted[i];
+    if (start <= curEnd) {
+      curEnd = Math.max(curEnd, end);
+    } else {
+      busy += curEnd - curStart;
+      [curStart, curEnd] = [start, end];
+    }
+  }
+  busy += curEnd - curStart;
+  return busy;
+}
 
 function isGemmFamily(name) {
   return name.includes("gemvx") || name.includes("cutlass") || name.includes("nvjet");
@@ -97,6 +137,18 @@ function classify(event) {
 }
 
 function handleEvent(event) {
+  // Real GPU-busy accounting counts every launch, classified or not --
+  // sampling/housekeeping kernels are still real GPU time, and excluding
+  // them would understate busy time. Kept separate from the 11-stage
+  // classifier below, which only cares about named pipeline stages.
+  const startNs = Number(event.startNs);
+  const endNs = Number(event.endNs);
+  if (Number.isFinite(startNs) && Number.isFinite(endNs) && endNs > startNs) {
+    state.recentLaunches.push({ startNs, endNs });
+    if (endNs > state.latestEndNs) state.latestEndNs = endNs;
+    if (state.firstStartNs === null) state.firstStartNs = startNs;
+  }
+
   const stageIndex = classify(event);
   if (stageIndex === null) return;
   state.lastRecognizedStage = stageIndex;
@@ -134,6 +186,26 @@ export function resetCuptiStepCounter() {
   state.reshapeAndCacheCountThisStep = 0;
   state.currentLayerIndex = -1;
   state.layerLog = new Array(40).fill(null);
+  // recentLaunches is deliberately NOT reset here -- it's a rolling window,
+  // pruned by age (see getRollingBusy), independent of step boundaries.
+}
+
+// Real GPU-busy time over the last ROLLING_WINDOW_NS, entirely on CUPTI's
+// own device clock (see the state comment for why arrival time can't be
+// used for the window boundary). Prunes the rolling buffer as a side
+// effect. Because both the window and the intervals live on one clock, the
+// merged union is mathematically bounded by the window length -- fraction
+// can never exceed 1 by construction, not just by an empirical cap.
+export function getRollingBusy() {
+  if (state.latestEndNs === 0) return { busyNs: 0, windowNs: 0, launchCount: 0 };
+  const cutoff = Math.max(state.latestEndNs - ROLLING_WINDOW_NS, state.firstStartNs);
+  state.recentLaunches = state.recentLaunches.filter((l) => l.endNs >= cutoff);
+  const windowNs = state.latestEndNs - cutoff; // < ROLLING_WINDOW_NS early in a session, then pinned to it
+  return {
+    busyNs: mergedBusyNs(state.recentLaunches.map((l) => [Math.max(l.startNs, cutoff), l.endNs])),
+    windowNs,
+    launchCount: state.recentLaunches.length,
+  };
 }
 
 // Snapshot consumed by causal-graph.js's "now executing" hero + history
@@ -145,6 +217,7 @@ export function getCuptiSnapshot() {
   const now = performance.now();
   return {
     connected: state.connected,
+    rollingBusy: getRollingBusy(),
     layerCount: Math.min(state.reshapeAndCacheCountThisStep, 40),
     layerIndex: state.currentLayerIndex,
     layerLog: state.layerLog.map((entry) => entry

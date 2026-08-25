@@ -43,13 +43,26 @@ p { color: var(--muted); }
   border: 1px solid var(--line); border-radius: 17px; background: rgba(12,24,22,.9);
 }
 .chat-card, .output-card { border: 1px solid var(--line); border-radius: 17px; background: rgba(12,24,22,.9); margin-bottom: 12px; padding: 18px; }
-.output-connector { display: flex; justify-content: center; margin: -4px 0 8px; color: var(--dim); font-size: 10px; font-family: ui-monospace, monospace; letter-spacing: .04em; }
-.output-connector.active { color: var(--mint); animation: graph-pulse-glow 1.3s ease-in-out infinite; }
+/* Bigger, unambiguous arrow (a real filled triangle, not a text glyph) so
+   "the output card is downstream of the graph" reads at a glance. Idle:
+   thin dim shaft, static head -- quiet per this project's idle-recedes
+   convention. Active: the shaft reuses the exact traveling-dash technique
+   the graph's own live edges use (.graph-edge.flowing / graph-dash-flow),
+   so the connector visually speaks the same language as the graph it's
+   attached to, not a one-off animation invented just for this element. */
+.output-connector { display: flex; flex-direction: column; align-items: center; gap: 3px; margin: -2px 0 6px; color: var(--dim); font-size: 9px; font-family: ui-monospace, monospace; letter-spacing: .06em; text-transform: uppercase; }
+.connector-arrow { overflow: visible; }
+.connector-shaft { stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; transition: stroke .3s ease; }
+.connector-head { fill: currentColor; transition: fill .3s ease; }
+.output-connector.active { color: var(--mint); }
+.output-connector.active .connector-shaft { stroke-dasharray: 6 6; animation: graph-dash-flow .5s linear infinite; }
+.output-connector.active .connector-head { --node-color: var(--mint); animation: graph-pulse-glow 1s ease-in-out infinite; }
 .chat-form { display: flex; gap: 8px; margin-top: 10px; }
 .chat-form input { flex: 1; padding: 11px 13px; color: var(--text); border: 1px solid var(--line-strong); border-radius: 10px; background: var(--panel-2); font-size: 13px; }
 .chat-form input:focus { outline: none; border-color: var(--mint); }
 .chat-form button { padding: 11px 18px; color: var(--bg); border: 0; border-radius: 10px; background: var(--mint); font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; cursor: pointer; }
 .chat-form button:disabled { background: var(--dim); cursor: not-allowed; }
+.chat-stop:not(:disabled) { background: var(--red); }
 .chat-reply { min-height: 24px; margin-top: 12px; padding: 12px; color: var(--text); border: 1px solid var(--line); border-radius: 10px; background: #07100f; font-size: 13px; line-height: 1.6; white-space: pre-wrap; }
 .chat-reply:empty { display: none; }
 .chat-status-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin-top: 8px; }

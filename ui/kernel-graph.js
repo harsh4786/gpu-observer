@@ -31,13 +31,13 @@ export const QWEN3_14B = {
 // two labels because prefill and decode dispatch genuinely different kernels
 // for the same math (FlashAttention varlen vs. paged/flash-decoding) -- see
 // this session's engine-step walkthrough.
-function layerStages(model) {
+export function layerStages(model) {
   return [
     { title: "input_layernorm", lines: [`RMSNorm · ${model.hiddenSize}`] },
     { title: "qkv_proj", lines: [`${model.hiddenSize} → 7168 · GQA ${model.numHeads}:${model.numKvHeads}`] },
     { title: "q_norm / k_norm", lines: [`RMSNorm · head_dim ${model.headDim}`] },
     { title: "rotary_emb", lines: [`RoPE · θ=${model.ropeTheta.toLocaleString()}`] },
-    { title: "reshape_and_cache", lines: ["KV cache write (gpu-observer anchor kernel)"] },
+    { title: "reshape & cache", lines: ["KV cache write (gpu-observer anchor kernel)"] },
     {
       title: "attn",
       phaseLines: {

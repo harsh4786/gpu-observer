@@ -8,8 +8,9 @@ import {
   addStageChip,
   scrollToCard,
   requestColor,
-} from "./graph-primitives.js?v=graph24";
-import { STAGE_ABBREVIATIONS } from "./kernel-graph.js?v=graph24";
+  addProgressBar,
+} from "./graph-primitives.js?v=graph33";
+import { layerStages, QWEN3_14B } from "./kernel-graph.js?v=graph33";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -230,21 +231,70 @@ function renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liv
 // history ticker underneath gives just enough of "what just happened" for
 // context, without requiring anyone to decode a diagram first.
 const HERO_WIDTH = 640;
-const HERO_HEIGHT = 118;
-const TICKER_CHIP = 30;
-const TICKER_GAP = 6;
 const LAYER_CHIP = 12;
 const LAYER_GAP = 3;
 const LAYER_COUNT = 40;
+const ANATOMY_BAR_HEIGHT = 10;
+
+// Kernel DAG: one node per real kernel-stage type within a single layer (11
+// nodes -- the smallest unit where every edge is a genuine measured
+// dependency, not per-launch which would be 440+ nodes, not per-layer which
+// would hide the operation structure). Two rows, snake-connected (6 top
+// left-to-right, 5 bottom right-to-left) so consecutive stages stay close
+// together instead of wrapping across the whole width. DAG_BOTTOM_GAP is
+// derived, not hand-picked, so the 5-node bottom row spans the exact same
+// total width as the 6-node top row -- the row-transition edges (attn to
+// o_proj) land vertically aligned instead of a long diagonal.
+const DAG_NODE_W = 88;
+const DAG_NODE_H = 44;
+const DAG_NODE_GAP = 14;
+const DAG_ROW_GAP = 34;
+const DAG_TOP_COUNT = 6;
+const DAG_BOTTOM_COUNT = 5;
+const DAG_TOP_WIDTH = DAG_TOP_COUNT * DAG_NODE_W + (DAG_TOP_COUNT - 1) * DAG_NODE_GAP;
+const DAG_BOTTOM_GAP = (DAG_TOP_WIDTH - DAG_BOTTOM_COUNT * DAG_NODE_W) / (DAG_BOTTOM_COUNT - 1);
+const DAG_HEIGHT = DAG_NODE_H * 2 + DAG_ROW_GAP;
+
+function dagNodePosition(index, originX, originY) {
+  if (index < DAG_TOP_COUNT) {
+    return { x: originX + index * (DAG_NODE_W + DAG_NODE_GAP), y: originY };
+  }
+  const bottomIndex = index - DAG_TOP_COUNT;
+  const slotFromLeft = (DAG_BOTTOM_COUNT - 1) - bottomIndex; // o_proj (first bottom stage) sits rightmost, under attn
+  return { x: originX + slotFromLeft * (DAG_NODE_W + DAG_BOTTOM_GAP), y: originY + DAG_NODE_H + DAG_ROW_GAP };
+}
+
+// Most stage-to-stage edges are a normal left-to-right hop within one row;
+// the one row transition (attn -> o_proj) is actually a vertical hop
+// (attn is top-row-rightmost, o_proj is bottom-row-rightmost, directly
+// below it) -- addEdge's left-to-right bezier convention would draw that as
+// a long unnecessary diagonal, so detect the vertical case and draw a
+// straight vertical bezier instead.
+function connectDagStage(svg, from, to, options) {
+  const verticalTransition = Math.abs(from.cx - to.cx) < DAG_NODE_W && to.top >= from.bottom - 4;
+  if (!verticalTransition) {
+    addEdge(svg, from, to, options);
+    return;
+  }
+  const bendY = (from.bottom + to.top) / 2;
+  const path = svgElement("path", {
+    d: `M ${from.cx} ${from.bottom} C ${from.cx} ${bendY}, ${to.cx} ${bendY}, ${to.cx} ${to.top}`,
+    class: `graph-edge ${options.kind ?? "measured"}${options.flowing ? " flowing" : ""}`,
+    stroke: options.color ?? "#72e3b1",
+    "stroke-width": Math.max(1.2, options.width ?? 1.4),
+    "marker-end": `url(#${options.marker ?? "arrow-measured"})`,
+  });
+  svg.insertBefore(path, svg.querySelector(".graph-node"));
+}
 
 function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, scheduler }) {
   const packed = step?.packedSlices ?? [];
   const graphWidth = 18 + HERO_WIDTH + 24;
   const heroX = 18;
   const heroY = 76;
-  const tickerY = heroY + HERO_HEIGHT + 20;
-  const layerY = tickerY + TICKER_CHIP + 28;
-  const graphHeight = layerY + LAYER_CHIP + 44;
+  const layerY = heroY + DAG_HEIGHT + 40;
+  const anatomyY = layerY + LAYER_CHIP + 30;
+  const graphHeight = anatomyY + ANATOMY_BAR_HEIGHT + 44;
   svg.setAttribute("viewBox", `0 0 ${graphWidth} ${graphHeight}`);
   svg.setAttribute("height", graphHeight);
 
@@ -305,71 +355,80 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
     return;
   }
 
-  // ---- The main event: what is the GPU doing RIGHT NOW ------------------
-  const snapshot = cuptiSnapshot ?? { connected: false, layerCount: 0, history: [] };
-  const current = snapshot.history[snapshot.history.length - 1] ?? null;
-  const heroMeasured = Boolean(current?.entry);
+  // ---- The main event: what is the GPU doing, as a real DAG -------------
+  // One node per kernel-stage type within a single layer (11 nodes) -- the
+  // smallest unit where every edge is a genuine measured dependency. This
+  // replaces the old single "now executing" hero panel + scrolling ticker,
+  // which both existed purely to answer "which of the 11 stages is active
+  // right now" one at a time in text; the DAG answers that spatially, for
+  // all 11 at once. The distinction that motivated this redesign: a
+  // transformer forward pass is always a DAG (strictly forward, no cycles)
+  // -- what repeats per token is an OUTER LOOP re-running this same DAG
+  // shape, not a cycle inside it. That's encoded directly below: 10 solid
+  // forward edges are the real DAG, and exactly one dashed violet loop-back
+  // edge (down_proj -> input_layernorm, "×40 layers") represents the
+  // repetition -- never drawn as just another forward edge.
+  const snapshot = cuptiSnapshot ?? { connected: false, layerCount: 0, history: [], stages: [] };
+  const dagStages = layerStages(QWEN3_14B);
+  const dagOriginX = heroX + 34; // extra left margin so the loop-back arc has room to bulge without clipping
+  const dagLabel = svgElement("text", { x: heroX, y: heroY - 8, class: "graph-footnote" });
+  dagLabel.textContent = snapshot.connected
+    ? "kernel execution · one transformer layer"
+    : "connecting to CUPTI…";
+  svg.append(dagLabel);
 
-  const heroGroup = svgElement("g", {
-    class: `graph-node ${heroMeasured ? "measured" : "illustrative"}${current?.live ? " live-active" : ""}`,
-    transform: `translate(${heroX} ${heroY})`,
+  const dagAnchors = dagStages.map((stage, index) => {
+    const pos = dagNodePosition(index, dagOriginX, heroY);
+    const stageState = snapshot.stages?.[index] ?? null;
+    const entry = stageState?.entry ?? null;
+    return addNode(svg, {
+      x: pos.x, y: pos.y, width: DAG_NODE_W, height: DAG_NODE_H,
+      color: entry ? "#72e3b1" : "#64c7e8",
+      kind: entry ? "measured" : "illustrative",
+      pulse: Boolean(stageState?.live),
+      title: stage.title,
+      tooltip: entry
+        ? `${stage.title} — ${stage.lines?.[0] ?? ""} · ${truncate(entry.name, 48)} · grid[${entry.grid.join(",")}]`
+        : `${stage.title} — ${stage.lines?.[0] ?? ""} · no real launch observed yet this session`,
+      onActivate: () => scrollToCard("kernel-activity-feed"),
+    });
   });
-  heroGroup.style.setProperty("--node-color", heroMeasured ? "#72e3b1" : "#64c7e8");
-  heroGroup.append(svgElement("rect", { width: HERO_WIDTH, height: HERO_HEIGHT, rx: 16 }));
 
-  const heroLabel = svgElement("text", { x: 24, y: 30, class: "graph-hero-label" });
-  heroLabel.textContent = "NOW EXECUTING";
-  heroGroup.append(heroLabel);
-
-  const heroTitle = svgElement("text", { x: 24, y: 68, class: "graph-hero-title" });
-  heroTitle.textContent = current ? current.title : (snapshot.connected ? "waiting for the next launch…" : "connecting to CUPTI…");
-  heroGroup.append(heroTitle);
-
-  const heroDetail = svgElement("text", { x: 24, y: 96, class: "graph-hero-detail" });
-  heroDetail.textContent = current?.entry
-    ? `${truncate(current.entry.name, 52)} · grid[${current.entry.grid.join(",")}]`
-    : "no real launch observed yet this session";
-  heroGroup.append(heroDetail);
-
-  const heroBadge = svgElement("text", { x: HERO_WIDTH - 20, y: 30, class: "graph-hero-badge", "text-anchor": "end" });
-  heroBadge.textContent = snapshot.connected ? `layer ${snapshot.layerCount}/40` : "disconnected";
-  heroGroup.append(heroBadge);
-
-  heroGroup.setAttribute("role", "button");
-  heroGroup.setAttribute("tabindex", "0");
-  heroGroup.classList.add("interactive");
-  const goToFeed = () => scrollToCard("kernel-activity-feed");
-  heroGroup.addEventListener("click", goToFeed);
-  heroGroup.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") { event.preventDefault(); goToFeed(); }
-  });
-  svg.append(heroGroup);
-
-  // ---- History ticker: the last several distinct stages, oldest to newest,
-  // for just enough "what just happened" context without a diagram to read.
-  const tickerLabel = svgElement("text", { x: heroX, y: tickerY - 8, class: "graph-footnote" });
-  tickerLabel.textContent = "recent";
-  svg.append(tickerLabel);
-
-  if (!snapshot.history.length) {
-    const empty = svgElement("text", { x: heroX, y: tickerY + 20, class: "graph-node-line" });
-    empty.textContent = "waiting for the first real kernel launch…";
-    svg.append(empty);
-  } else {
-    snapshot.history.forEach((entry, index) => {
-      const chipX = heroX + index * (TICKER_CHIP + TICKER_GAP);
-      const isCurrent = index === snapshot.history.length - 1;
-      addStageChip(svg, {
-        x: chipX, y: tickerY, size: TICKER_CHIP,
-        color: entry.entry ? "#72e3b1" : "#64c7e8",
-        kind: entry.entry ? "measured" : "illustrative",
-        active: isCurrent && entry.live,
-        label: STAGE_ABBREVIATIONS[entry.stageIndex],
-        title: entry.title,
-        onActivate: () => scrollToCard("kernel-activity-feed"),
-      });
+  for (let i = 0; i < dagAnchors.length - 1; i += 1) {
+    const toState = snapshot.stages?.[i + 1] ?? null;
+    const bothMeasured = Boolean(snapshot.stages?.[i]?.entry) && Boolean(toState?.entry);
+    connectDagStage(svg, dagAnchors[i], dagAnchors[i + 1], {
+      color: "#72e3b1", marker: "arrow-measured", width: 1.4,
+      kind: bothMeasured ? "measured" : "illustrative",
+      flowing: liveActive && Boolean(toState?.live),
     });
   }
+
+  // Loop-back edge: down_proj (last stage) -> input_layernorm (first stage),
+  // drawn as a deliberate arc bulging left of both nodes rather than a
+  // straight line -- the standard way flowcharts distinguish "repeat" from
+  // a normal step, and the concrete visual answer to "is this a DAG or a
+  // cycle" (it's a DAG; this one edge is explicitly the repetition, styled
+  // differently on purpose).
+  const loopFrom = dagAnchors[dagAnchors.length - 1];
+  const loopTo = dagAnchors[0];
+  const loopBendX = dagOriginX - 30;
+  const loopMidY = (loopFrom.cy + loopTo.cy) / 2;
+  const loopPath = svgElement("path", {
+    d: `M ${loopFrom.left} ${loopFrom.cy} C ${loopBendX} ${loopFrom.cy}, ${loopBendX} ${loopTo.cy}, ${loopTo.left} ${loopTo.cy}`,
+    class: "graph-edge matched dag-loop-edge",
+    stroke: "#b89cff",
+    "stroke-width": 1.6,
+    "stroke-dasharray": "7 6",
+    "marker-end": "url(#arrow-matched)",
+  });
+  svg.insertBefore(loopPath, svg.querySelector(".graph-node"));
+  const loopLabel = svgElement("text", {
+    x: loopBendX, y: loopMidY, class: "graph-edge-label matched", "text-anchor": "middle",
+    transform: `rotate(-90 ${loopBendX} ${loopMidY})`,
+  });
+  loopLabel.textContent = "×40 layers";
+  svg.append(loopLabel);
 
   // ---- Layer sweep: 40 real layer positions, this step ------------------
   // One cell per transformer layer. Lit (mint) once that layer's first real
@@ -379,7 +438,7 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
   // this resets every step): derived directly from cuptiSnapshot.layerLog,
   // never a paced/synthetic sweep.
   const layerLabel = svgElement("text", { x: heroX, y: layerY - 8, class: "graph-footnote" });
-  layerLabel.textContent = "layer sweep · this step";
+  layerLabel.textContent = "same 11 stages, repeated once per layer below · layer sweep this step";
   svg.append(layerLabel);
 
   const layerSweep = svgElement("g", { class: "layer-sweep" });
@@ -398,6 +457,48 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
         : `layer ${index}: not reached yet this step`,
     });
   });
+
+  // ---- Latency anatomy: real GPU-busy time over a rolling window --------
+  // Deliberately NOT per-engine-step: CUPTI activity is delivered in
+  // periodic bursts (cuptiActivityFlushPeriod), confirmed live -- most
+  // ~120ms step windows receive zero events, then every 6-7 steps several
+  // thousand arrive at once. Attributing that burst to whichever single
+  // step happened to be in flight produced impossible numbers (700%+ on
+  // burst steps, 0% on every other step) in initial testing.
+  //
+  // The window and the busy-time union are BOTH computed on CUPTI's own
+  // device clock (see cupti-activity.js's getRollingBusy) -- an earlier
+  // version measured the window in client arrival time instead, which
+  // still overshot 100% (114-116%, confirmed live): bursty/delayed delivery
+  // means the set of events arriving in a fixed *client-time* window can
+  // correspond to device activity spanning a different, longer real span.
+  // With one consistent clock for both, the merged union is mathematically
+  // bounded by the window length -- this cannot exceed 100%, not just
+  // empirically but by construction.
+  const anatomyLabel = svgElement("text", { x: heroX, y: anatomyY - 8, class: "graph-footnote" });
+  anatomyLabel.textContent = "latency anatomy · rolling GPU-busy window";
+  svg.append(anatomyLabel);
+
+  const anatomyWidth = LAYER_COUNT * (LAYER_CHIP + LAYER_GAP) - LAYER_GAP;
+  const rolling = snapshot.rollingBusy ?? { busyNs: 0, windowNs: 0, launchCount: 0 };
+  if (rolling.launchCount > 0) {
+    const busyMs = rolling.busyNs / 1e6;
+    const windowMs = rolling.windowNs / 1e6;
+    const fraction = windowMs > 0 ? Math.min(1, busyMs / windowMs) : 0;
+    addProgressBar(svg, {
+      x: heroX, y: anatomyY, width: anatomyWidth, height: ANATOMY_BAR_HEIGHT,
+      fraction, color: "#72e3b1",
+    });
+    const anatomyText = svgElement("text", {
+      x: heroX, y: anatomyY + ANATOMY_BAR_HEIGHT + 16, class: "graph-node-line",
+    });
+    anatomyText.textContent = `${busyMs.toFixed(1)} ms GPU-busy of the last ${(windowMs / 1000).toFixed(1)}s of device activity (${Math.round(fraction * 100)}%) · ${rolling.launchCount} launches, CUPTI delivers in bursts so this is a rolling window on its own clock, not a single step`;
+    svg.append(anatomyText);
+  } else {
+    const anatomyEmpty = svgElement("text", { x: heroX, y: anatomyY + 10, class: "graph-node-line" });
+    anatomyEmpty.textContent = "waiting for the first real launch…";
+    svg.append(anatomyEmpty);
+  }
 
   const note = svgElement("text", { x: 18, y: graphHeight - 14, class: "graph-footnote" });
   note.textContent = snapshot.connected

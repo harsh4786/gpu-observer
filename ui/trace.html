@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>GPU Observer — Query to SASS</title>
-  <link rel="stylesheet" href="./trace.css?v=graph24">
+  <link rel="stylesheet" href="./trace.css?v=graph33">
 </head>
 <body>
   <main class="app">
@@ -31,6 +31,7 @@
       <form id="chat-form" class="chat-form">
         <input id="chat-input" type="text" placeholder="Type a message…" autocomplete="off">
         <button type="submit" id="chat-send">Send</button>
+        <button type="button" id="chat-stop" class="chat-stop" disabled>Stop</button>
       </form>
     </section>
 
@@ -57,7 +58,13 @@
       <p class="graph-help">Choose an engine step, click a node to jump to its evidence, or click the GPU node to cycle kernels. Crossing request-colored edges expose vLLM row reordering.</p>
     </section>
 
-    <div id="output-connector" class="output-connector" aria-hidden="true"><span>↓ decoded output</span></div>
+    <div id="output-connector" class="output-connector" aria-hidden="true">
+      <svg class="connector-arrow" viewBox="0 0 24 52" width="24" height="52">
+        <line x1="12" y1="2" x2="12" y2="38" class="connector-shaft"/>
+        <path d="M2 32 L12 47 L22 32 Z" class="connector-head"/>
+      </svg>
+      <span>decoded output</span>
+    </div>
 
     <section class="output-card" aria-label="Decoded model output, streaming downstream of the graph above as the network decodes">
       <div class="section-title">
@@ -163,6 +170,6 @@
       Sealed traces are rendered offline. Raw ring, CUPTI, and sanitizer artifacts remain the source of truth.
     </footer>
   </main>
-  <script type="module" src="./trace.js?v=graph24"></script>
+  <script type="module" src="./trace.js?v=graph33"></script>
 </body>
 </html>
