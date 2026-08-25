@@ -19,7 +19,7 @@
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; min-height: 100vh; background: radial-gradient(circle at 73% -20%, rgba(100,199,232,.12), transparent 38rem), var(--bg); }
 button, select, input { font: inherit; }
-.app { width: min(1540px, calc(100% - 36px)); margin: auto; padding: 34px 0 48px; }
+.app { width: min(1680px, calc(100% - 36px)); margin: auto; padding: 34px 0 48px; }
 .topbar { display: flex; justify-content: space-between; gap: 24px; align-items: center; margin-bottom: 26px; }
 h1 { margin: 7px 0; font-size: clamp(30px, 3.6vw, 46px); font-weight: 800; letter-spacing: -.045em; }
 h2 { margin: 3px 0 0; font-size: 15px; letter-spacing: -.02em; }
@@ -79,9 +79,18 @@ blockquote { margin: 18px 0 13px; padding-left: 15px; border-left: 2px solid var
 .answer-card > p { min-height: 72px; margin: 18px 0 13px; font-size: 13px; line-height: 1.6; }
 .text-button { padding: 0; color: var(--cyan); border: 0; background: none; cursor: pointer; font-size: 10px; }
 .rendered-prompt { max-height: 260px; overflow: auto; white-space: pre-wrap; margin: 12px 0 0; padding: 12px; color: #c3d3cd; border: 1px solid var(--line); border-radius: 10px; background: #07100f; font: 10px/1.55 ui-monospace, monospace; }
-.token-card, .evidence-card { margin-bottom: 12px; padding: 18px; }
+.token-card { margin-bottom: 12px; padding: 18px; }
 .section-title { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 13px; }
-.graph-card { margin-bottom: 12px; padding: 18px; overflow: hidden; }
+/* Compact by design -- a footnote-tier legend, not a competing section. Kept
+   short (one line per badge, see renderEvidence()/emptyLiveTrace() in
+   trace.js) on purpose: this used to run 2-3 sentences per column and read
+   as a second wall of text right above the real footer, pulling attention
+   away from the graph above, which is this page's actual point. */
+.evidence-card { margin-bottom: 12px; padding: 11px 16px; }
+.graph-card { margin-bottom: 12px; padding: 28px; border-color: var(--line-strong); overflow: hidden; }
+.graph-card .section-title { margin-bottom: 18px; }
+.graph-title h2 { font-size: 21px; }
+.graph-title .eyebrow { font-size: 10px; }
 .graph-title { align-items: flex-start; }
 .graph-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; }
 .graph-legend { display: flex; flex-wrap: wrap; gap: 9px; color: var(--dim); font-size: 8px; letter-spacing: .05em; text-transform: uppercase; }
@@ -106,8 +115,8 @@ blockquote { margin: 18px 0 13px; padding-left: 15px; border-left: 2px solid var
 .graph-node.focus rect { stroke-width: 2.5; filter: drop-shadow(0 0 5px var(--node-color)); }
 .graph-node.interactive { cursor: pointer; }
 .graph-node.interactive:hover rect, .graph-node.interactive:focus rect { fill: #17302a; stroke-width: 2.5; outline: none; }
-.graph-node-title { fill: var(--text); font: 800 12.5px ui-monospace, monospace; }
-.graph-node-line { fill: var(--muted); font: 10.5px ui-monospace, monospace; }
+.graph-node-title { fill: var(--text); font: 800 13.5px ui-monospace, monospace; }
+.graph-node-line { fill: var(--muted); font: 11px ui-monospace, monospace; }
 .graph-node-badge { fill: var(--node-color); font: 800 9px ui-monospace, monospace; letter-spacing: .04em; }
 /* "Now executing" hero panel (causal-graph.js renderLiveGraph) -- the
    node-link diagram it replaced tested as unreadable; this answers one
@@ -233,10 +242,10 @@ select { margin-left: 7px; padding: 8px 10px; color: var(--text); border: 1px so
 .sass-row .offset { color: var(--cyan); }
 .sass-row .samples { color: var(--violet); text-align: right; }
 .empty-state { padding: 22px; color: var(--muted); border: 1px dashed var(--line-strong); border-radius: 9px; text-align: center; font-size: 10px; line-height: 1.6; }
-.evidence-card { display: grid; grid-template-columns: 190px 1fr; gap: 20px; align-items: start; }
+.evidence-card { display: grid; grid-template-columns: 150px 1fr; gap: 16px; align-items: center; }
 .evidence-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(170px,1fr)); gap: 8px; }
-.evidence-column { padding: 11px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel-2); }
-.evidence-column ul { padding-left: 15px; margin: 9px 0 0; color: var(--muted); font-size: 8px; line-height: 1.55; }
+.evidence-column { display: flex; align-items: baseline; gap: 8px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel-2); }
+.evidence-column ul { list-style: none; padding: 0; margin: 0; color: var(--muted); font-size: 8px; line-height: 1.4; }
 footer { padding: 8px; color: var(--dim); text-align: center; font-size: 8px; }
 @media (max-width: 1100px) {
   .causal-flow { grid-template-columns: 1fr; }

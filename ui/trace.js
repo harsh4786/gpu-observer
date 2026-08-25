@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph35";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph35";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter } from "./cupti-activity.js?v=graph35";
+import { renderCausalGraph } from "./causal-graph.js?v=graph36";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph36";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter } from "./cupti-activity.js?v=graph36";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -380,7 +380,7 @@ function renderEvidence() {
   }
   if (state.liveMode) {
     columns.push(["illustrative", "Illustrative", [
-      "Kernel-graph sweep across a real step's wall-clock span, not per-kernel measured GPU timing (CUPTI resolution is deferred).",
+      "Kernel sweep spans the step's wall-clock, not per-kernel CUPTI timing.",
     ]]);
   }
   columns.push(["unknown", "Unavailable", evidence.unavailable ?? []]);
@@ -461,20 +461,11 @@ function emptyLiveTrace() {
     outputManifest: null,
     focus: { externalRequestId: null, internalRequestId: null, requestHash: null },
     evidence: {
-      measured: [
-        "Engine-step scheduling: token counts, queue depth, active requests (CLOCK_MONOTONIC wall time).",
-        "Scheduler and authoritative packed-row slices, emitted unconditionally for every request.",
-      ],
-      reconstructed: [
-        "Scheduler-to-packed-row reordering, compared client-side by request-hash position.",
-      ],
+      measured: ["Engine-step scheduling and packed-row slices, every request."],
+      reconstructed: ["Scheduler→packed-row reordering, compared client-side."],
       matchedReplay: false,
       matched: [],
-      unavailable: [
-        "CUPTI per-kernel GPU timing (Step 3, deferred — no live kernel launches yet).",
-        "SASS microscope (offline diagnostic replay only).",
-        "Exact prompt/output tokenizer strings (the query-capture side channel is not wired into live mode).",
-      ],
+      unavailable: ["CUPTI per-kernel timing, SASS replay, exact tokenizer strings — offline only."],
     },
     metrics: { engineSteps: 0, cuptiKernels: 0 },
     steps: [],

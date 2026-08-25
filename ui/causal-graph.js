@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=graph35";
-import { layerStages, QWEN3_14B } from "./kernel-graph.js?v=graph35";
+} from "./graph-primitives.js?v=graph36";
+import { layerStages, QWEN3_14B } from "./kernel-graph.js?v=graph36";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -230,7 +230,7 @@ function renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liv
 // right this instant. A big hero panel names the current stage; a small
 // history ticker underneath gives just enough of "what just happened" for
 // context, without requiring anyone to decode a diagram first.
-const HERO_WIDTH = 968;
+const HERO_WIDTH = 1084;
 const LAYER_CHIP = 12;
 const LAYER_GAP = 3;
 const LAYER_COUNT = 40;
@@ -245,10 +245,10 @@ const ANATOMY_BAR_HEIGHT = 10;
 // derived, not hand-picked, so the 5-node bottom row spans the exact same
 // total width as the 6-node top row -- the row-transition edges (attn to
 // o_proj) land vertically aligned instead of a long diagonal.
-const DAG_NODE_W = 144;
-const DAG_NODE_H = 46;
-const DAG_NODE_GAP = 14;
-const DAG_ROW_GAP = 34;
+const DAG_NODE_W = 160;
+const DAG_NODE_H = 56;
+const DAG_NODE_GAP = 18;
+const DAG_ROW_GAP = 44;
 const DAG_TOP_COUNT = 6;
 const DAG_BOTTOM_COUNT = 5;
 const DAG_TOP_WIDTH = DAG_TOP_COUNT * DAG_NODE_W + (DAG_TOP_COUNT - 1) * DAG_NODE_GAP;
