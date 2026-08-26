@@ -38,8 +38,8 @@ p { color: var(--muted); }
 .status.illustrative { color: var(--cyan); }
 .hidden { display: none !important; }
 .error-panel { margin-bottom: 14px; padding: 14px; color: #ffd8d1; border: 1px solid rgba(255,139,122,.4); border-radius: 12px; background: rgba(255,139,122,.08); }
-.hero-grid, .microscope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-.graph-card, .query-card, .answer-card, .token-card, .kernel-detail-card, .sass-card, .evidence-card {
+.microscope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.graph-card, .token-card, .kernel-detail-card, .sass-card, .evidence-card {
   border: 1px solid var(--line); border-radius: 17px; background: rgba(12,24,22,.9);
 }
 .chat-card, .output-card { border: 1px solid var(--line); border-radius: 17px; background: rgba(12,24,22,.9); margin-bottom: 12px; padding: 18px; }
@@ -72,13 +72,8 @@ p { color: var(--muted); }
 .chat-confirmed:empty { display: none; }
 .status.connected { color: var(--mint); }
 .status.disconnected { color: var(--red); }
-.query-card, .answer-card, .kernel-detail-card, .sass-card { padding: 18px; }
+.kernel-detail-card, .sass-card { padding: 18px; }
 .card-head { display: flex; align-items: center; gap: 10px; }
-.stage-number { display: grid; place-items: center; flex: 0 0 31px; width: 31px; height: 31px; color: var(--mint); border: 1px solid rgba(114,227,177,.28); border-radius: 9px; background: rgba(114,227,177,.08); font: 800 10px ui-monospace, monospace; }
-blockquote { margin: 18px 0 13px; padding-left: 15px; border-left: 2px solid var(--mint); color: var(--text); font-size: 15px; line-height: 1.55; }
-.answer-card > p { min-height: 72px; margin: 18px 0 13px; font-size: 13px; line-height: 1.6; }
-.text-button { padding: 0; color: var(--cyan); border: 0; background: none; cursor: pointer; font-size: 10px; }
-.rendered-prompt { max-height: 260px; overflow: auto; white-space: pre-wrap; margin: 12px 0 0; padding: 12px; color: #c3d3cd; border: 1px solid var(--line); border-radius: 10px; background: #07100f; font: 10px/1.55 ui-monospace, monospace; }
 .token-card { margin-bottom: 12px; padding: 18px; }
 .section-title { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 13px; }
 /* Compact by design -- a footnote-tier legend, not a competing section. Kept
@@ -268,7 +263,7 @@ footer { padding: 8px; color: var(--dim); text-align: center; font-size: 8px; }
   .app { width: min(100% - 20px, 1540px); }
   .topbar, .section-title { align-items: flex-start; flex-direction: column; }
   .graph-controls { justify-content: flex-start; }
-  .hero-grid, .microscope-grid { grid-template-columns: 1fr; }
+  .microscope-grid { grid-template-columns: 1fr; }
   .evidence-card { grid-template-columns: 1fr; }
   .evidence-grid { grid-template-columns: 1fr; }
   .detail-grid { grid-template-columns: 1fr 1fr; }

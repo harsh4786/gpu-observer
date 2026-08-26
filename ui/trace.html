@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>GPU Observer — Query to SASS</title>
-  <link rel="stylesheet" href="./trace.css?v=graph42">
+  <link rel="stylesheet" href="./trace.css?v=graph43">
 </head>
 <body>
   <main class="app">
@@ -100,20 +100,6 @@
       <div id="sm-grid" class="sm-grid"></div>
     </section>
 
-    <section class="hero-grid">
-      <article class="query-card">
-        <div class="card-head"><span class="stage-number">1</span><div><span class="eyebrow">Human intent</span><h2>Foreground query</h2></div></div>
-        <blockquote id="query-text"></blockquote>
-        <button id="prompt-toggle" class="text-button" type="button">Show rendered model prompt</button>
-        <pre id="rendered-prompt" class="rendered-prompt hidden"></pre>
-      </article>
-      <article class="answer-card">
-        <div class="card-head"><span class="stage-number">3</span><div><span class="eyebrow">Latency outcome</span><h2>Model response</h2></div></div>
-        <p id="answer-text"></p>
-        <div id="outcome-metrics" class="metric-row"></div>
-      </article>
-    </section>
-
     <section class="token-card">
       <div class="section-title">
         <div><span class="eyebrow">Exact tokenizer boundary</span><h2>Prompt token ribbon</h2></div>
@@ -126,7 +112,7 @@
 
     <section class="microscope-grid">
       <article class="kernel-detail-card">
-        <div class="card-head"><span class="stage-number">2</span><div><span class="eyebrow">Validated attribution boundary</span><h2>Kernel work ownership</h2></div></div>
+        <div class="card-head"><div><span class="eyebrow">Validated attribution boundary</span><h2>Kernel work ownership</h2></div></div>
         <div id="kernel-detail"></div>
         <div id="ownership-list" class="ownership-list"></div>
       </article>
@@ -149,6 +135,6 @@
       Sealed traces are rendered offline. Raw ring, CUPTI, and sanitizer artifacts remain the source of truth.
     </footer>
   </main>
-  <script type="module" src="./trace.js?v=graph42"></script>
+  <script type="module" src="./trace.js?v=graph43"></script>
 </body>
 </html>

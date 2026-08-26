@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph42";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph42";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph42";
+import { renderCausalGraph } from "./causal-graph.js?v=graph43";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph43";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph43";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -77,20 +77,6 @@ function validateTrace(trace) {
   return trace;
 }
 
-function messageContent(content) {
-  if (typeof content === "string") return content;
-  if (Array.isArray(content)) {
-    return content.map((part) => typeof part === "string" ? part : part?.text ?? JSON.stringify(part)).join("");
-  }
-  return content == null ? "" : JSON.stringify(content);
-}
-
-function naturalQuery(query) {
-  const messages = query.request?.messages;
-  if (!Array.isArray(messages)) return query.rendered_prompt ?? "(query text unavailable)";
-  return messages.map((message) => `${message.role ?? "user"}: ${messageContent(message.content)}`).join("\n\n");
-}
-
 function metric(label, value) {
   return `<div class="metric"><strong>${escapeMarkup(value)}</strong><small>${escapeMarkup(label)}</small></div>`;
 }
@@ -155,22 +141,6 @@ function renderHeader() {
     status.textContent = fixture ? "schema fixture — not evidence" : "sealed measured trace";
     status.className = fixture ? "status fixture" : "status";
   }
-}
-
-function renderQuery() {
-  byId("query-text").textContent = naturalQuery(state.trace.query);
-  byId("rendered-prompt").textContent = state.trace.query.rendered_prompt ?? "(rendered prompt unavailable)";
-  const output = state.trace.outputManifest?.choices?.[0];
-  byId("answer-text").textContent = output?.text ?? "Output text was not captured in this sealed trace.";
-  const promptCount = state.trace.query.tokens?.length ?? 0;
-  const outputCount = output?.tokens?.length
-    ?? currentStep()?.acceptedOutputTokens?.length
-    ?? 0;
-  byId("outcome-metrics").innerHTML = [
-    metric("prompt tokens", promptCount),
-    metric("output tokens", outputCount),
-    metric("finish", output?.finish_reason ?? "unknown"),
-  ].join("");
 }
 
 function renderTokenRibbon(containerId, tokens, kind) {
@@ -327,7 +297,6 @@ function renderEvidence() {
 
 function render() {
   renderHeader();
-  renderQuery();
   renderTokens();
   renderStep();
   renderEvidence();
@@ -563,7 +532,6 @@ function applyPatch(patch) {
       });
       onGpuConfirmedToken(patch.output_position);
       renderStep();
-      renderQuery();
       break;
     }
     case "step_end": {
@@ -807,13 +775,6 @@ byId("chat-form").addEventListener("submit", (event) => {
 connectWebSocket();
 connectKernelActivity();
 connectCuptiActivity();
-
-byId("prompt-toggle").addEventListener("click", () => {
-  const prompt = byId("rendered-prompt");
-  prompt.classList.toggle("hidden");
-  byId("prompt-toggle").textContent =
-    prompt.classList.contains("hidden") ? "Show rendered model prompt" : "Hide rendered model prompt";
-});
 
 byId("trace-file").addEventListener("change", async (event) => {
   try {
