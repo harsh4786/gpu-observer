@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph41";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph41";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters } from "./cupti-activity.js?v=graph41";
+import { renderCausalGraph } from "./causal-graph.js?v=graph42";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph42";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph42";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -754,6 +754,13 @@ async function sendChatMessage(text) {
           reply.textContent += delta;
           chatTotalCount += 1;
           updateChatConfirmedBadge();
+          // Real content boundary (Qwen3's own <think>/</think> tags) driving
+          // the kernel-count graphic's thinking/response split -- see
+          // cupti-activity.js's inThinkingPhase for why this is a
+          // reconstructed correlation, not a measured one.
+          const hasOpenThink = reply.textContent.includes("<think>");
+          const hasCloseThink = reply.textContent.includes("</think>");
+          setThinkingPhase(hasOpenThink && !hasCloseThink);
         }
       }
     }

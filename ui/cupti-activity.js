@@ -25,7 +25,7 @@
 //   reshape_and_cache -> attn -> o_proj -> post_attention_layernorm ->
 //   gate_up_proj -> SiluAndMul -> down_proj -> (next layer's input_layernorm)
 
-import { STAGE_TITLES } from "./kernel-graph.js?v=graph41";
+import { STAGE_TITLES } from "./kernel-graph.js?v=graph42";
 
 const [
   INPUT_LAYERNORM, QKV_PROJ, QK_NORM, ROTARY_EMB, RESHAPE_AND_CACHE,
@@ -51,8 +51,19 @@ const state = {
   // trace.js's sendChatMessage), not per step. Answers "how many times was
   // this kernel-stage actually called for this prompt", e.g. attn/qkv_proj/
   // etc. firing once per layer per step, accumulated across every step of
-  // the response so far.
-  queryStageCounts: new Array(STAGE_TITLES.length).fill(0),
+  // the response so far -- split into thinking vs response buckets by
+  // inThinkingPhase below.
+  queryStageCounts: new Array(STAGE_TITLES.length).fill(null).map(() => ({ thinking: 0, response: 0 })),
+  // Set by trace.js's setThinkingPhase(), driven by watching the streamed
+  // SSE reply text for Qwen3's own <think>/</think> tags -- a real content
+  // boundary, but arriving over a completely separate channel (the HTTP
+  // chat stream) from the kernel-launch events counted below (the CUPTI
+  // WS). So a launch's thinking/response bucket is a reconstructed
+  // correlation of two independent real streams, accurate to roughly
+  // "whichever phase was current when this launch was processed" -- not
+  // a measured per-token attribution. Defaults false (response) so output
+  // with no thinking block at all is never miscategorized as thinking.
+  inThinkingPhase: false,
   reshapeAndCacheCountThisStep: 0,
   lastRecognizedStage: null, // for disambiguating the two grid_x=1280 gemvx cases
   // Per-layer retention for this step: index 0..39, null until that layer's
@@ -187,7 +198,7 @@ function handleEvent(event) {
     // attn's 3 physical launches (flash_fwd_splitkv[_combine] + memcpy) only
     // land here once, on the transition in, matching the "attn ran once
     // this layer" the DAG shows rather than triple-counting it.
-    state.queryStageCounts[stageIndex] += 1;
+    state.queryStageCounts[stageIndex][state.inThinkingPhase ? "thinking" : "response"] += 1;
   }
 }
 
@@ -195,7 +206,17 @@ function handleEvent(event) {
 // step -- these are per-query totals, so they should only zero when the
 // query itself changes.
 export function resetCuptiQueryCounters() {
-  state.queryStageCounts = new Array(STAGE_TITLES.length).fill(0);
+  state.queryStageCounts = new Array(STAGE_TITLES.length).fill(null).map(() => ({ thinking: 0, response: 0 }));
+  state.inThinkingPhase = false;
+}
+
+// Called by trace.js's sendChatMessage on every streamed SSE chunk, from
+// watching the reply text itself for <think>/</think> -- see the state.
+// inThinkingPhase comment above for why this is a reconstructed boundary,
+// not a measured one. Idempotent (just an assignment), so it's safe to call
+// on every chunk rather than needing a "did we already flip this" guard.
+export function setThinkingPhase(isThinking) {
+  state.inThinkingPhase = isThinking;
 }
 
 // Called by trace.js on every step_begin patch from the semantic-ring WS --
@@ -255,7 +276,7 @@ export function getCuptiSnapshot() {
       entry,
       live: latest !== null && index === latest.stageIndex && now - latest.at < RECENCY_LIVE_MS,
     })),
-    queryStageCounts: state.queryStageCounts.slice(),
+    queryStageCounts: state.queryStageCounts.map((counts) => ({ ...counts })),
     history: state.recentSequence.map(({ stageIndex, at }) => ({
       stageIndex,
       title: STAGE_TITLES[stageIndex],

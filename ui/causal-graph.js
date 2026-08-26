@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=graph41";
-import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=graph41";
+} from "./graph-primitives.js?v=graph42";
+import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=graph42";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -481,40 +481,77 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
     });
   });
 
-  // ---- Kernel call counts: real launches per stage, this query ----------
-  // One bar per DAG stage -- how many times it has actually fired
+  // ---- Kernel call counts: real launches per stage, thinking vs response -
+  // One split bar per DAG stage -- how many times it has actually fired
   // (cupti-activity.js's queryStageCounts, real classified launches, zeroed
-  // once per chat turn) since this response started, not this step. A
+  // once per chat turn) since this response started, not this step, broken
+  // into Qwen3's own <think> block vs the actual response after it. A
   // multi-token response makes every stage's real count large and roughly
   // even (layers x steps so far) except attn, which is the same layers x
   // steps count too since its 3 physical launches collapse into 1 stage
   // occurrence -- if the bars are visibly uneven, that itself is real
-  // signal (a stage being skipped or double-counted), not decoration.
+  // signal (a stage being skipped or double-counted), not decoration. The
+  // thinking/response split itself is a reconstructed correlation of two
+  // independent streams (see cupti-activity.js's inThinkingPhase) -- drawn
+  // as two separate pill segments with a visible gap rather than one
+  // seamless bar, so the split reads as "two real but separately-sourced
+  // numbers," not one precise measurement.
   const countsLabel = svgElement("text", { x: heroX, y: countsY - 8, class: "graph-footnote" });
-  countsLabel.textContent = "kernel calls this query · real classified launches per stage";
+  countsLabel.textContent = "kernel calls this query · thinking vs response";
   svg.append(countsLabel);
 
-  const stageCounts = snapshot.queryStageCounts ?? new Array(dagStages.length).fill(0);
-  const maxStageCount = Math.max(1, ...stageCounts);
   const countsBarX = heroX + COUNTS_LABEL_W;
   const countsBarW = (dagOriginX + DAG_TOP_WIDTH) - countsBarX - COUNTS_COUNT_W;
+  const countsRight = countsBarX + countsBarW + COUNTS_COUNT_W;
+  [
+    { label: "response", color: "#72e3b1", w: 58 },
+    { label: "thinking", color: "#64c7e8", w: 58 },
+  ].reduce((edgeX, item) => {
+    const itemX = edgeX - item.w;
+    svg.append(svgElement("rect", { x: itemX, y: countsY - 16, width: 8, height: 8, rx: 2, fill: item.color }));
+    const legendText = svgElement("text", { x: itemX + 12, y: countsY - 8, class: "graph-footnote" });
+    legendText.textContent = item.label;
+    svg.append(legendText);
+    return itemX;
+  }, countsRight);
+
+  const stageCounts = snapshot.queryStageCounts ?? dagStages.map(() => ({ thinking: 0, response: 0 }));
+  const maxStageTotal = Math.max(1, ...stageCounts.map((c) => (c?.thinking ?? 0) + (c?.response ?? 0)));
+  const barH = COUNTS_ROW_H - 6;
+  const segmentGap = 2;
   dagStages.forEach((stage, index) => {
     const rowY = countsY + index * (COUNTS_ROW_H + COUNTS_ROW_GAP);
-    const count = stageCounts[index] ?? 0;
+    const counts = stageCounts[index] ?? { thinking: 0, response: 0 };
+    const total = counts.thinking + counts.response;
     const label = svgElement("text", {
       x: heroX, y: rowY + COUNTS_ROW_H - 4, class: "graph-node-line",
     });
     label.textContent = truncate(stage.title, 18);
     svg.append(label);
-    addProgressBar(svg, {
-      x: countsBarX, y: rowY + 2, width: countsBarW, height: COUNTS_ROW_H - 6,
-      fraction: count / maxStageCount, color: count > 0 ? "#72e3b1" : "#20332e",
-    });
+
+    svg.append(svgElement("rect", {
+      x: countsBarX, y: rowY + 2, width: countsBarW, height: barH, rx: barH / 2,
+      class: "progress-bar-track",
+    }));
+    const thinkingW = counts.thinking > 0 ? Math.max(2, countsBarW * (counts.thinking / maxStageTotal)) : 0;
+    const responseW = counts.response > 0 ? Math.max(2, countsBarW * (counts.response / maxStageTotal)) : 0;
+    if (thinkingW > 0) {
+      svg.append(svgElement("rect", {
+        x: countsBarX, y: rowY + 2, width: thinkingW, height: barH, rx: barH / 2, fill: "#64c7e8",
+      }));
+    }
+    if (responseW > 0) {
+      const gap = thinkingW > 0 ? segmentGap : 0;
+      svg.append(svgElement("rect", {
+        x: countsBarX + thinkingW + gap, y: rowY + 2, width: responseW, height: barH, rx: barH / 2, fill: "#72e3b1",
+      }));
+    }
+
     const countText = svgElement("text", {
       x: countsBarX + countsBarW + COUNTS_COUNT_W - 4, y: rowY + COUNTS_ROW_H - 4,
       class: "graph-node-line", "text-anchor": "end",
     });
-    countText.textContent = String(count);
+    countText.textContent = String(total);
     svg.append(countText);
   });
 
