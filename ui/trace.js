@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph40";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph40";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters } from "./cupti-activity.js?v=graph40";
+import { renderCausalGraph } from "./causal-graph.js?v=graph41";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph41";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters } from "./cupti-activity.js?v=graph41";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -113,7 +113,14 @@ function renderGraph() {
     kernelIndex: state.kernelIndex,
     onKernelSelect: selectKernel,
     liveActive,
-    cuptiSnapshot: liveActive ? getCuptiSnapshot() : null,
+    // Gated on liveMode, NOT liveActive: liveActive goes false on every
+    // step_end (including the final one when decoding stops), and gating
+    // the whole snapshot on it wiped real cumulative data -- the per-query
+    // kernel-call counts, the DAG's last-seen entries -- back to nothing
+    // right when the response finished. liveActive still separately gates
+    // the "flowing"/pulse animation (see renderLiveGraph) -- only whether
+    // real accumulated data is SHOWN AT ALL should track liveMode.
+    cuptiSnapshot: state.liveMode ? getCuptiSnapshot() : null,
     promptTokenCount: state.liveFocusPromptTokens,
   });
 }

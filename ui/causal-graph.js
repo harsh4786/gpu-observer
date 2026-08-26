@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=graph40";
-import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=graph40";
+} from "./graph-primitives.js?v=graph41";
+import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=graph41";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -390,7 +390,7 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
   // forward edges are the real DAG, and exactly one dashed violet loop-back
   // edge (down_proj -> input_layernorm, "×40 layers") represents the
   // repetition -- never drawn as just another forward edge.
-  const snapshot = cuptiSnapshot ?? { connected: false, layerCount: 0, history: [], stages: [] };
+  const snapshot = cuptiSnapshot ?? { connected: false, layerCount: 0, history: [], stages: [], queryStageCounts: [] };
   const dagStages = layerStages(QWEN3_14B);
   const dagOriginX = heroX + 34; // extra left margin so the loop-back arc has room to bulge without clipping
   const dagLabel = svgElement("text", { x: heroX, y: heroY - 8, class: "graph-footnote" });
