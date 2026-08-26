@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=graph39";
-import { layerStages, QWEN3_14B } from "./kernel-graph.js?v=graph39";
+} from "./graph-primitives.js?v=graph40";
+import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=graph40";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -236,6 +236,19 @@ const LAYER_GAP = 3;
 const LAYER_COUNT = 40;
 const ANATOMY_BAR_HEIGHT = 10;
 
+// Per-query kernel-call counts: one horizontal bar per DAG stage, showing
+// how many times that stage has actually fired (real classified launches,
+// cupti-activity.js's queryStageCounts) since this chat turn began -- not
+// this step, the whole query so far, which is what makes it a genuinely
+// different signal from the layer sweep above (this step's progress) or
+// the DAG's per-node pulse (right now). attn collapses its 3 physical
+// launches into 1 count, matching the single DAG node it fires for.
+const COUNTS_ROW_H = 16;
+const COUNTS_ROW_GAP = 4;
+const COUNTS_LABEL_W = 150;
+const COUNTS_COUNT_W = 56;
+const COUNTS_BLOCK_H = KERNEL_STAGE_COUNT * COUNTS_ROW_H + (KERNEL_STAGE_COUNT - 1) * COUNTS_ROW_GAP;
+
 // Kernel DAG: one node per real kernel-stage type within a single layer (11
 // nodes -- the smallest unit where every edge is a genuine measured
 // dependency, not per-launch which would be 440+ nodes, not per-layer which
@@ -293,7 +306,8 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
   const heroX = 18;
   const heroY = 76;
   const layerY = heroY + DAG_HEIGHT + 40;
-  const anatomyY = layerY + LAYER_CHIP + 30;
+  const countsY = layerY + LAYER_CHIP + 34;
+  const anatomyY = countsY + COUNTS_BLOCK_H + 34;
   const graphHeight = anatomyY + ANATOMY_BAR_HEIGHT + 44;
   svg.setAttribute("viewBox", `0 0 ${graphWidth} ${graphHeight}`);
   svg.setAttribute("height", graphHeight);
@@ -465,6 +479,43 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
         ? `layer ${index}: ${entry.stageCount}/11 stages seen this step`
         : `layer ${index}: not reached yet this step`,
     });
+  });
+
+  // ---- Kernel call counts: real launches per stage, this query ----------
+  // One bar per DAG stage -- how many times it has actually fired
+  // (cupti-activity.js's queryStageCounts, real classified launches, zeroed
+  // once per chat turn) since this response started, not this step. A
+  // multi-token response makes every stage's real count large and roughly
+  // even (layers x steps so far) except attn, which is the same layers x
+  // steps count too since its 3 physical launches collapse into 1 stage
+  // occurrence -- if the bars are visibly uneven, that itself is real
+  // signal (a stage being skipped or double-counted), not decoration.
+  const countsLabel = svgElement("text", { x: heroX, y: countsY - 8, class: "graph-footnote" });
+  countsLabel.textContent = "kernel calls this query · real classified launches per stage";
+  svg.append(countsLabel);
+
+  const stageCounts = snapshot.queryStageCounts ?? new Array(dagStages.length).fill(0);
+  const maxStageCount = Math.max(1, ...stageCounts);
+  const countsBarX = heroX + COUNTS_LABEL_W;
+  const countsBarW = (dagOriginX + DAG_TOP_WIDTH) - countsBarX - COUNTS_COUNT_W;
+  dagStages.forEach((stage, index) => {
+    const rowY = countsY + index * (COUNTS_ROW_H + COUNTS_ROW_GAP);
+    const count = stageCounts[index] ?? 0;
+    const label = svgElement("text", {
+      x: heroX, y: rowY + COUNTS_ROW_H - 4, class: "graph-node-line",
+    });
+    label.textContent = truncate(stage.title, 18);
+    svg.append(label);
+    addProgressBar(svg, {
+      x: countsBarX, y: rowY + 2, width: countsBarW, height: COUNTS_ROW_H - 6,
+      fraction: count / maxStageCount, color: count > 0 ? "#72e3b1" : "#20332e",
+    });
+    const countText = svgElement("text", {
+      x: countsBarX + countsBarW + COUNTS_COUNT_W - 4, y: rowY + COUNTS_ROW_H - 4,
+      class: "graph-node-line", "text-anchor": "end",
+    });
+    countText.textContent = String(count);
+    svg.append(countText);
   });
 
   // ---- Latency anatomy: real GPU-busy time over a rolling window --------

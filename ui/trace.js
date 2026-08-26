@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph39";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph39";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter } from "./cupti-activity.js?v=graph39";
+import { renderCausalGraph } from "./causal-graph.js?v=graph40";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph40";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters } from "./cupti-activity.js?v=graph40";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -692,6 +692,7 @@ async function sendChatMessage(text) {
   const controller = new AbortController();
   state.activeAbort = controller;
   ensureLiveTrace();
+  resetCuptiQueryCounters();
   state.pendingFocusReset = true;
   state.liveFocusHash = null;
   state.liveFocusPromptTokens = null;

@@ -25,7 +25,7 @@
 //   reshape_and_cache -> attn -> o_proj -> post_attention_layernorm ->
 //   gate_up_proj -> SiluAndMul -> down_proj -> (next layer's input_layernorm)
 
-import { STAGE_TITLES } from "./kernel-graph.js?v=graph39";
+import { STAGE_TITLES } from "./kernel-graph.js?v=graph40";
 
 const [
   INPUT_LAYERNORM, QKV_PROJ, QK_NORM, ROTARY_EMB, RESHAPE_AND_CACHE,
@@ -46,6 +46,13 @@ const state = {
   // stage (e.g. attn's 3 physical kernels) collapse into one entry so the ticker
   // reads as a clean transition log, not a flood of repeats.
   recentSequence: [],
+  // Real classified-launch tally per stage, scoped to the current query --
+  // zeroed once per chat turn (resetCuptiQueryCounters, called from
+  // trace.js's sendChatMessage), not per step. Answers "how many times was
+  // this kernel-stage actually called for this prompt", e.g. attn/qkv_proj/
+  // etc. firing once per layer per step, accumulated across every step of
+  // the response so far.
+  queryStageCounts: new Array(STAGE_TITLES.length).fill(0),
   reshapeAndCacheCountThisStep: 0,
   lastRecognizedStage: null, // for disambiguating the two grid_x=1280 gemvx cases
   // Per-layer retention for this step: index 0..39, null until that layer's
@@ -176,7 +183,19 @@ function handleEvent(event) {
   } else {
     state.recentSequence.push({ stageIndex, at: now });
     if (state.recentSequence.length > HISTORY_LIMIT) state.recentSequence.shift();
+    // One distinct stage occurrence, same unit the DAG node represents --
+    // attn's 3 physical launches (flash_fwd_splitkv[_combine] + memcpy) only
+    // land here once, on the transition in, matching the "attn ran once
+    // this layer" the DAG shows rather than triple-counting it.
+    state.queryStageCounts[stageIndex] += 1;
   }
+}
+
+// Called by trace.js once per new chat turn (sendChatMessage), not per
+// step -- these are per-query totals, so they should only zero when the
+// query itself changes.
+export function resetCuptiQueryCounters() {
+  state.queryStageCounts = new Array(STAGE_TITLES.length).fill(0);
 }
 
 // Called by trace.js on every step_begin patch from the semantic-ring WS --
@@ -236,6 +255,7 @@ export function getCuptiSnapshot() {
       entry,
       live: latest !== null && index === latest.stageIndex && now - latest.at < RECENCY_LIVE_MS,
     })),
+    queryStageCounts: state.queryStageCounts.slice(),
     history: state.recentSequence.map(({ stageIndex, at }) => ({
       stageIndex,
       title: STAGE_TITLES[stageIndex],
