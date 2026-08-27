@@ -1,5 +1,6 @@
 /target/
 target/
+ui-qwen38/pkg/
 *.raw.jsonl
 *.report.json
 benchmarks/results/

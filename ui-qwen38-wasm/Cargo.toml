@@ -1,0 +1,79 @@
+# Standalone workspace root -- deliberately NOT a member of the repo's root
+# Cargo.toml workspace. Cargo profiles are workspace-wide (a member crate's
+# own [profile.*] sections are ignored), and the root workspace already
+# fixes [profile.release] codegen-units=1 for the native collector/agent
+# binaries. This crate needs two independently-toggleable release profiles
+# (thin LTO for fast iteration, fat LTO for the "sure about the design"
+# ship build) without touching or being touched by that shared profile --
+# the empty [workspace] table below tells Cargo to treat this directory as
+# its own workspace root instead of auto-joining the parent one.
+[workspace]
+
+[package]
+name = "ui-qwen38-wasm"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+js-sys = "0.3"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+console_error_panic_hook = "0.1"
+
+[dependencies.web-sys]
+version = "0.3"
+features = [
+  "console",
+  "Document",
+  "Element",
+  "HtmlElement",
+  "HtmlInputElement",
+  "HtmlButtonElement",
+  "Window",
+  "Location",
+  "Performance",
+  "WebSocket",
+  "MessageEvent",
+  "ErrorEvent",
+  "CloseEvent",
+  "BinaryType",
+  "Event",
+  "EventTarget",
+  "Request",
+  "RequestInit",
+  "RequestMode",
+  "Response",
+  "ReadableStream",
+  "ReadableStreamDefaultReader",
+  "AbortController",
+  "AbortSignal",
+  "Headers",
+  "CssStyleDeclaration",
+  "DomTokenList",
+  "TextDecoder",
+  "SubmitEvent",
+  "KeyboardEvent",
+]
+
+# Default day-to-day iteration build: thin LTO, parallel codegen, fast to
+# rebuild. Always release (never debug) per explicit instruction -- a debug
+# wasm build is both slow to run and much larger to serve.
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 16
+panic = "abort"
+
+# "Sure about the design" / ship build: fat LTO, single codegen unit --
+# smaller, faster-at-runtime .wasm, much slower to compile. Built via
+# build.sh's --fat flag, not the default.
+[profile.release-fat]
+inherits = "release"
+lto = "fat"
+codegen-units = 1

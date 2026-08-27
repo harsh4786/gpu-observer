@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Qwen3.8-27B · live kernel feed</title>
+  <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <div>
+        <h1>Qwen3.8-27B</h1>
+        <p class="sub">Live, generic kernel feed — real launches, no assumed stage structure</p>
+      </div>
+      <div class="status-row">
+        <span>semantic <span id="semantic-status" class="pill disconnected">connecting…</span></span>
+        <span>cupti <span id="cupti-status" class="pill disconnected">connecting…</span></span>
+      </div>
+    </header>
+
+    <section class="card">
+      <form id="chat-form" class="chat-form">
+        <input id="chat-input" type="text" placeholder="Ask something…" autocomplete="off">
+        <button type="submit" id="chat-send">Send</button>
+        <button type="button" id="chat-stop" disabled>Stop</button>
+      </form>
+      <div class="meta-row">
+        <span>prompt <span id="prompt-tokens">— tokens</span></span>
+      </div>
+    </section>
+
+    <section class="card">
+      <p class="label">now executing</p>
+      <p class="now-executing"><span class="dot"></span><span id="now-executing">waiting for the first real launch…</span></p>
+    </section>
+
+    <section class="card hero">
+      <div class="hero-head">
+        <p class="label">kernel calls this query</p>
+        <div class="legend">
+          <span><i class="swatch thinking"></i>thinking</span>
+          <span><i class="swatch response"></i>response</span>
+        </div>
+      </div>
+      <div id="kernel-rows" class="kernel-rows"></div>
+      <p id="kernel-overflow" class="overflow"></p>
+    </section>
+
+    <section class="card">
+      <p class="label">rolling GPU-busy</p>
+      <div class="busy-track"><div id="busy-bar-fill" class="busy-fill"></div></div>
+      <p id="busy-caption" class="caption">waiting for the first real launch…</p>
+    </section>
+
+    <section class="card">
+      <p class="label">decoded output</p>
+      <div id="chat-reply" class="reply"></div>
+      <p id="chat-waiting" class="waiting"></p>
+    </section>
+  </main>
+  <script type="module">
+    import init from "./pkg/ui_qwen38.js";
+    await init();
+  </script>
+</body>
+</html>
