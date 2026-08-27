@@ -14,6 +14,7 @@
 //! the same cell would be real aliasing UB even in this single-threaded
 //! model (see `global.rs`'s doc comment).
 
+use serde::Deserialize;
 use serde_json::Value;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
@@ -108,15 +109,35 @@ fn schedule_reconnect(port: u16, is_semantic: bool) {
     callback.forget();
 }
 
-fn handle_message(state: &mut AppState, is_semantic: bool, text: &str) {
-    let value: Value = match serde_json::from_str(text) {
-        Ok(v) => v,
-        Err(_) => return, // a malformed frame must never take down the live feed
-    };
-    let kind = value.get("kind").and_then(Value::as_str).unwrap_or("");
+// Every frame on the CUPTI connection is `kind: "kernel_launch"`
+// (cupti_stream_server.rs emits nothing else on this port -- confirmed by
+// reading it directly) at a real measured rate of ~11,500 messages/sec
+// during Qwen3.8-27B's decode (far chattier than Qwen3-14B's ui/ was ever
+// tuned against: 64 hybrid layers with many more distinct kernel names per
+// layer than a uniform 11-stage cycle). At that rate, per-message overhead
+// matters: this borrows `name`/`startNs`/`endNs` as `&str` slices directly
+// out of the input buffer (no allocation for fields we don't touch, no
+// dynamic Value tree built just to read 3 of its 11 keys) instead of the
+// generic serde_json::Value path the semantic-ring handler below still
+// uses (much lower volume there, not worth the extra type).
+#[derive(Deserialize)]
+struct KernelLaunchMsg<'a> {
+    name: &'a str,
+    #[serde(rename = "startNs")]
+    start_ns: &'a str,
+    #[serde(rename = "endNs")]
+    end_ns: &'a str,
+}
 
+fn handle_message(state: &mut AppState, is_semantic: bool, text: &str) {
     if is_semantic {
-        if kind == "request_slice" && state.prompt_tokens.is_none() {
+        let value: Value = match serde_json::from_str(text) {
+            Ok(v) => v,
+            Err(_) => return, // a malformed frame must never take down the live feed
+        };
+        if value.get("kind").and_then(Value::as_str) == Some("request_slice")
+            && state.prompt_tokens.is_none()
+        {
             if let Some(tokens) = value.get("tokens").and_then(Value::as_u64) {
                 state.prompt_tokens = Some(tokens as u32);
             }
@@ -124,24 +145,12 @@ fn handle_message(state: &mut AppState, is_semantic: bool, text: &str) {
         return;
     }
 
-    if kind != "kernel_launch" {
-        return;
-    }
-    let Some(name) = value.get("name").and_then(Value::as_str) else { return };
     // startNs/endNs are real nanosecond epoch timestamps (~1.8e18), well
-    // past JS's safe-integer range (2^53) -- the Rust producer
-    // (cupti_stream_server.rs) deliberately quotes them as JSON strings to
-    // avoid silent float-precision loss on the JS-consumer side. Parse
-    // accordingly rather than expecting a native JSON number.
-    let start_ns = parse_ns_field(&value, "startNs");
-    let end_ns = parse_ns_field(&value, "endNs");
-    state.record_launch(name, start_ns, end_ns);
-}
-
-fn parse_ns_field(value: &Value, field: &str) -> i64 {
-    match value.get(field) {
-        Some(Value::String(s)) => s.parse().unwrap_or(0),
-        Some(v) => v.as_i64().unwrap_or(0),
-        None => 0,
-    }
+    // past JS's safe-integer range (2^53) -- the Rust producer quotes them
+    // as JSON strings to avoid silent float-precision loss on JS
+    // consumers, so they land here as &str, not a JSON number.
+    let Ok(launch) = serde_json::from_str::<KernelLaunchMsg>(text) else { return };
+    let start_ns = launch.start_ns.parse().unwrap_or(0);
+    let end_ns = launch.end_ns.parse().unwrap_or(0);
+    state.record_launch(launch.name, start_ns, end_ns);
 }

@@ -102,9 +102,19 @@ impl AppState {
     /// design, so there is no classify() at all -- every real launch is
     /// bucketed straight under its own raw (already-demangled) kernel name.
     pub fn record_launch(&mut self, name: &str, start_ns: i64, end_ns: i64) {
-        self.now_executing = Some(name.to_string());
+        // At ~11.5k launches/sec (Qwen3.8-27B's real measured rate -- see
+        // ws.rs's comment), the same kernel name repeats far more often
+        // than a genuinely new one appears, so both allocations below are
+        // worth avoiding on the repeat path: `to_string()` unconditionally
+        // on every single message adds up fast at this volume.
+        if self.now_executing.as_deref() != Some(name) {
+            self.now_executing = Some(name.to_string());
+        }
 
-        let stat = self.kernel_stats.entry(name.to_string()).or_default();
+        let stat = match self.kernel_stats.get_mut(name) {
+            Some(stat) => stat,
+            None => self.kernel_stats.entry(name.to_string()).or_default(),
+        };
         match self.phase {
             Phase::Thinking => stat.thinking += 1,
             Phase::Response => stat.response += 1,
