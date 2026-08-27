@@ -61,8 +61,14 @@
     </section>
   </main>
   <script type="module">
-    import init from "./pkg/ui_qwen38.js";
-    await init();
+    // Cache-busting version -- bump on every rebuild (same discipline ui/
+    // uses for ?v=graphN). Without this, browsers can silently keep
+    // serving a stale cached .wasm/.js pair across a plain reload, so a
+    // real fix on disk never actually reaches the tab until a hard
+    // refresh -- bumping this instead makes every rebuild unconditionally
+    // fetch fresh, no reliance on the viewer remembering to hard-refresh.
+    import init from "./pkg/ui_qwen38.js?v=2";
+    await init("./pkg/ui_qwen38_bg.wasm?v=2");
   </script>
 </body>
 </html>
