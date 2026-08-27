@@ -128,7 +128,20 @@ fn handle_message(state: &mut AppState, is_semantic: bool, text: &str) {
         return;
     }
     let Some(name) = value.get("name").and_then(Value::as_str) else { return };
-    let start_ns = value.get("startNs").and_then(Value::as_i64).unwrap_or(0);
-    let end_ns = value.get("endNs").and_then(Value::as_i64).unwrap_or(0);
+    // startNs/endNs are real nanosecond epoch timestamps (~1.8e18), well
+    // past JS's safe-integer range (2^53) -- the Rust producer
+    // (cupti_stream_server.rs) deliberately quotes them as JSON strings to
+    // avoid silent float-precision loss on the JS-consumer side. Parse
+    // accordingly rather than expecting a native JSON number.
+    let start_ns = parse_ns_field(&value, "startNs");
+    let end_ns = parse_ns_field(&value, "endNs");
     state.record_launch(name, start_ns, end_ns);
+}
+
+fn parse_ns_field(value: &Value, field: &str) -> i64 {
+    match value.get(field) {
+        Some(Value::String(s)) => s.parse().unwrap_or(0),
+        Some(v) => v.as_i64().unwrap_or(0),
+        None => 0,
+    }
 }

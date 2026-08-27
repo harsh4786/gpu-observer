@@ -39,7 +39,8 @@ h1 { margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -.01em; }
 
 .label { margin: 0 0 10px; color: var(--dim); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
 
-.now-executing { display: flex; align-items: center; gap: 9px; margin: 0; font: 14px ui-monospace, monospace; }
+.now-executing { display: flex; align-items: center; gap: 9px; margin: 0; font: 14px ui-monospace, monospace; min-width: 0; }
+.now-executing span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 0 color-mix(in srgb, var(--mint) 60%, transparent); animation: pulse 1.6s ease-in-out infinite; flex: none; }
 @keyframes pulse {
   0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--mint) 45%, transparent); }
