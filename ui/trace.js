@@ -1,13 +1,12 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph43";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph43";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph43";
+import { renderCausalGraph } from "./causal-graph.js?v=graph44";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph44";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph44";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
   trace: null,
   stepIndex: 0,
   kernelIndex: 0,
-  selectedToken: null,
   // Live-mode fields. Unused (stay at defaults) when viewing a sealed
   // TraceBundle file -- offline viewing behaves exactly as before.
   liveMode: false,
@@ -143,36 +142,6 @@ function renderHeader() {
   }
 }
 
-function renderTokenRibbon(containerId, tokens, kind) {
-  const container = byId(containerId);
-  container.innerHTML = "";
-  if (!tokens?.length) {
-    container.innerHTML = `<div class="empty-state">No ${escapeMarkup(kind)} tokenizer strings were captured.</div>`;
-    return;
-  }
-  tokens.forEach((token) => {
-    const button = document.createElement("button");
-    button.className = "token";
-    button.type = "button";
-    const display = token.display ?? token.raw ?? `#${token.id}`;
-    button.innerHTML = `<strong>${escapeMarkup(display || "∅")}</strong><small>${escapeMarkup(token.position)} · ${escapeMarkup(token.id)}</small>`;
-    button.title = `${kind} token ${token.position}: id=${token.id}, raw=${token.raw ?? "unknown"}`;
-    button.addEventListener("click", () => {
-      document.querySelectorAll(".token.selected").forEach((node) => node.classList.remove("selected"));
-      button.classList.add("selected");
-      state.selectedToken = { ...token, kind };
-      byId("token-detail").textContent =
-        `${kind}[${token.position}] id=${token.id} raw=${JSON.stringify(token.raw)} display=${JSON.stringify(token.display)}`;
-    });
-    container.append(button);
-  });
-}
-
-function renderTokens() {
-  renderTokenRibbon("prompt-tokens", state.trace.query.tokens, "prompt");
-  renderTokenRibbon("output-tokens", state.trace.outputManifest?.choices?.[0]?.tokens, "output");
-}
-
 function renderStepControls() {
   const focus = state.trace.focus.requestHash;
   const preferred = state.trace.steps.findIndex((step) =>
@@ -297,7 +266,6 @@ function renderEvidence() {
 
 function render() {
   renderHeader();
-  renderTokens();
   renderStep();
   renderEvidence();
 }
