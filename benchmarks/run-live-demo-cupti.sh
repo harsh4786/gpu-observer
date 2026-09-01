@@ -33,6 +33,7 @@ cupti_stream_server="$root/target/release/cupti_stream_server"
 semantic_core="$root/vllm-adapter/overlay/vllm/v1/engine/core.py"
 semantic_py="$root/vllm-adapter/gpu_observer_semantic.py"
 semantic_hash="$root/vllm-adapter/gpu_observer_hash.py"
+attention_observer="$root/vllm-adapter/gpu_observer_attention.py"
 packing_runner="$root/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py"
 frontend_serving="$root/vllm-adapter/frontend-overlay/vllm/entrypoints/openai/chat_completion/serving.py"
 query_capture="$root/vllm-adapter/gpu_observer_query_capture.py"
@@ -45,7 +46,7 @@ mkdir -p "$run_dir/semantic-shm"
 chmod 0777 "$run_dir" "$run_dir/semantic-shm"
 
 for required in "$semantic_lib" "$semantic_stream_server" "$cupti_stream_server" \
-                "$semantic_core" "$semantic_py" "$semantic_hash" "$packing_runner" \
+                "$semantic_core" "$semantic_py" "$semantic_hash" "$attention_observer" "$packing_runner" \
                 "$frontend_serving" "$query_capture" "$cupti_lib"; do
   [[ -f "$required" ]] || { echo "missing required artifact: $required" >&2; exit 1; }
 done
@@ -85,6 +86,7 @@ docker run -d \
   -v "$semantic_core:/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py:ro" \
   -v "$semantic_py:/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/gpu_observer_semantic.py:ro" \
   -v "$semantic_hash:/usr/local/lib/python3.12/dist-packages/vllm/gpu_observer_hash.py:ro" \
+  -v "$attention_observer:/usr/local/lib/python3.12/dist-packages/vllm/gpu_observer_attention.py:ro" \
   -v "$packing_runner:/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu_model_runner.py:ro" \
   -v "$frontend_serving:/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/openai/chat_completion/serving.py:ro" \
   -v "$query_capture:/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/openai/chat_completion/gpu_observer_query_capture.py:ro" \
