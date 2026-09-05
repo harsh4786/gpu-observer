@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph44";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph44";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph44";
+import { renderCausalGraph } from "./causal-graph.js?v=graph45";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph45";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph45";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -740,9 +740,28 @@ byId("chat-form").addEventListener("submit", (event) => {
   sendChatMessage(text);
 });
 
-connectWebSocket();
-connectKernelActivity();
-connectCuptiActivity();
+// Hosted/offline mode (?offline=1). The page is static -- ui/ is just files,
+// and renderOfflineGraph needs no backend at all -- so it can be served
+// publicly (GitHub Pages) with a sealed TraceBundle via ?trace=. But three
+// panels only mean anything against a live container: the chat box, the
+// shadow-container SM-occupancy card, and the decoded-output card fed by the
+// chat stream. Left alone they actively mislead: the WS status pill sits on
+// "connecting" forever against nothing, and the SM grid renders 48 dead
+// cells, which reads as broken rather than as not-applicable. So skip every
+// live connection and hide exactly those panels, leaving a coherent
+// sealed-trace viewer. Everything that makes the offline view worth showing
+// -- the lane graph, kernel ownership, SASS microscope, evidence tiers --
+// is untouched, because none of it depends on a socket.
+const offlineMode = params.get("offline") === "1";
+if (offlineMode) {
+  for (const selector of [".chat-card", ".kernel-activity-card", ".output-card", "#output-connector"]) {
+    document.querySelector(selector)?.classList.add("hidden");
+  }
+} else {
+  connectWebSocket();
+  connectKernelActivity();
+  connectCuptiActivity();
+}
 
 byId("trace-file").addEventListener("change", async (event) => {
   try {
