@@ -24,6 +24,7 @@ semantic_lib="$root/target/release/libgpu_observer_vllm_bridge.so"
 semantic_stream_server="$root/target/release/semantic_stream_server"
 semantic_core="$root/vllm-adapter/overlay/vllm/v1/engine/core.py"
 semantic_py="$root/vllm-adapter/gpu_observer_semantic.py"
+attention_observer="$root/vllm-adapter/gpu_observer_attention.py"
 semantic_hash="$root/vllm-adapter/gpu_observer_hash.py"
 packing_runner="$root/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py"
 frontend_serving="$root/vllm-adapter/frontend-overlay/vllm/entrypoints/openai/chat_completion/serving.py"
@@ -69,6 +70,7 @@ docker run -d \
   -v "$semantic_lib:/observer/libgpu_observer_vllm_bridge.so:ro" \
   -v "$semantic_core:/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py:ro" \
   -v "$semantic_py:/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/gpu_observer_semantic.py:ro" \
+  -v "$attention_observer:/usr/local/lib/python3.12/dist-packages/vllm/gpu_observer_attention.py:ro" \
   -v "$semantic_hash:/usr/local/lib/python3.12/dist-packages/vllm/gpu_observer_hash.py:ro" \
   -v "$packing_runner:/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu_model_runner.py:ro" \
   -v "$frontend_serving:/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/openai/chat_completion/serving.py:ro" \
