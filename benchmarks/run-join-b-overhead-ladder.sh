@@ -29,22 +29,27 @@ mkdir -p "$experiment_root"
   echo "arm_scheduler=engine_step_and_scheduler_slices"
   echo "arm_packed=scheduler_plus_authoritative_packed_rows"
   echo "arm_sass=packed_plus_selected_cache_kernel_block_events"
+  echo "arm_cupti=packed_plus_unfiltered_cupti_activity_capture"
+  echo "note=cupti and sass are alternatives on top of packed, not successive rungs"
   sha256sum "$rung"
 } > "$experiment_root/manifest.txt"
 
 order=(
-  $'1\t1\tsass'
-  $'2\t1\tpacked'
-  $'3\t1\tscheduler'
-  $'4\t1\tclean'
-  $'5\t2\tclean'
-  $'6\t2\tscheduler'
-  $'7\t2\tpacked'
+  $'1\t1\tcupti'
+  $'2\t1\tsass'
+  $'3\t1\tpacked'
+  $'4\t1\tscheduler'
+  $'5\t1\tclean'
+  $'6\t2\tclean'
+  $'7\t2\tscheduler'
   $'8\t2\tsass'
-  $'9\t3\tscheduler'
-  $'10\t3\tclean'
-  $'11\t3\tsass'
-  $'12\t3\tpacked'
+  $'9\t2\tpacked'
+  $'10\t2\tcupti'
+  $'11\t3\tpacked'
+  $'12\t3\tcupti'
+  $'13\t3\tscheduler'
+  $'14\t3\tclean'
+  $'15\t3\tsass'
 )
 printf 'ordinal\trepeat\tarm\n%s\n' "${order[@]}" > "$experiment_root/run-order.tsv"
 

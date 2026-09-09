@@ -11,7 +11,7 @@ import statistics
 from pathlib import Path
 
 
-ARMS = ("clean", "scheduler", "packed", "sass")
+ARMS = ("clean", "scheduler", "packed", "sass", "cupti")
 CLIENT_METRICS = (
     "duration",
     "request_throughput",
@@ -124,8 +124,13 @@ def main() -> None:
     root = args.experiment_root.resolve(strict=True)
     runs: list[dict[str, object]] = []
 
+    present_arms = tuple(
+        arm for arm in ARMS if (root / "repeat-1" / arm / "client.json").exists()
+    )
+    if "clean" not in present_arms:
+        raise ValueError(f"no clean arm found under {root}")
     for repeat in (1, 2, 3):
-        for arm in ARMS:
+        for arm in present_arms:
             run_dir = root / f"repeat-{repeat}" / arm
             with (run_dir / "client.json").open() as source:
                 client = json.load(source)
@@ -148,7 +153,7 @@ def main() -> None:
                     semantic.get("packed_begins") != 0 or semantic.get("packed_slices") != 0
                 ):
                     raise ValueError(f"scheduler arm contains packed telemetry: {run_dir}")
-                if arm in {"packed", "sass"} and semantic.get("packed_begins") != semantic.get("begins"):
+                if arm in {"packed", "sass", "cupti"} and semantic.get("packed_begins") != semantic.get("begins"):
                     raise ValueError(f"incomplete packed telemetry: {run_dir}")
 
             join = read_join(run_dir / "join-b-cache.log")
@@ -184,7 +189,7 @@ def main() -> None:
             )
 
     arm_stats: dict[str, dict[str, dict[str, float]]] = {}
-    for arm in ARMS:
+    for arm in present_arms:
         arm_runs = [run for run in runs if run["arm"] == arm]
         arm_stats[arm] = {
             metric: median_range(
@@ -194,7 +199,7 @@ def main() -> None:
         }
 
     paired_deltas: dict[str, dict[str, dict[str, float]]] = {}
-    for arm in ARMS[1:]:
+    for arm in present_arms[1:]:
         paired_deltas[arm] = {}
         for metric in CLIENT_METRICS:
             deltas: list[float] = []
@@ -221,9 +226,14 @@ def main() -> None:
         ("scheduler_vs_clean", "clean", "scheduler"),
         ("packed_vs_scheduler", "scheduler", "packed"),
         ("sass_vs_packed", "packed", "sass"),
+        # cupti is an alternative to sass on top of packed, not a further rung:
+        # the two device sensors cannot coexist in one process.
+        ("cupti_vs_packed", "packed", "cupti"),
     )
     incremental_deltas: dict[str, dict[str, dict[str, float]]] = {}
     for label, baseline_arm, observed_arm in stage_pairs:
+        if baseline_arm not in present_arms or observed_arm not in present_arms:
+            continue
         incremental_deltas[label] = {}
         for metric in CLIENT_METRICS:
             deltas = []
@@ -279,7 +289,7 @@ def main() -> None:
         "| Arm | Output tok/s | TTFT p99 (ms) | ITL p99 (ms) | E2E p99 (ms) |",
         "|---|---:|---:|---:|---:|",
     ]
-    for arm in ARMS:
+    for arm in present_arms:
         lines.append(
             f"| {arm} | {med(arm, 'output_throughput'):.3f} | "
             f"{med(arm, 'p99_ttft_ms'):.3f} | {med(arm, 'p99_itl_ms'):.3f} | "
@@ -292,7 +302,7 @@ def main() -> None:
         "| Arm | Output throughput | TTFT p99 | ITL p99 | E2E p99 |",
         "|---|---:|---:|---:|---:|",
     ]
-    for arm in ARMS[1:]:
+    for arm in present_arms[1:]:
         delta = paired_deltas[arm]
         lines.append(
         f"| {arm} | {delta['output_throughput']['median']:+.2f}% | "
@@ -308,6 +318,8 @@ def main() -> None:
         "|---|---:|---:|---:|---:|",
     ]
     for label, _, _ in stage_pairs:
+        if label not in incremental_deltas:
+            continue
         delta = incremental_deltas[label]
         def cell(metric: str) -> str:
             values = delta[metric]

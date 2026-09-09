@@ -2,7 +2,7 @@
 set -euo pipefail
 
 usage() {
-  echo "usage: $0 EXPERIMENT_ROOT {clean|scheduler|packed|sass} REPEAT" >&2
+  echo "usage: $0 EXPERIMENT_ROOT {clean|scheduler|packed|sass|cupti} REPEAT" >&2
   exit 2
 }
 
@@ -11,7 +11,7 @@ experiment_root=$(realpath -m "$1")
 arm=$2
 repeat=$3
 case "$arm" in
-  clean|scheduler|packed|sass) ;;
+  clean|scheduler|packed|sass|cupti) ;;
   *) usage ;;
 esac
 [[ "$repeat" =~ ^[1-9][0-9]*$ ]] || usage
@@ -49,16 +49,27 @@ join_b="$root/target/release/join_b_cache"
 semantic_core="$root/vllm-adapter/overlay/vllm/v1/engine/core.py"
 semantic_py="$root/vllm-adapter/gpu_observer_semantic.py"
 packed_runner="$root/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py"
+attention_observer="$root/vllm-adapter/gpu_observer_attention.py"
 san_build="$root/device-probes/compute-sanitizer/build"
+cupti_lib="$root/cupti-agent/activity/build-cuda1321/libgpu_observer_cupti_activity.so"
 
 semantic_enabled=0
 packed_enabled=0
 sass_enabled=0
+cupti_enabled=0
 case "$arm" in
   scheduler) semantic_enabled=1 ;;
   packed) semantic_enabled=1; packed_enabled=1 ;;
   sass) semantic_enabled=1; packed_enabled=1; sass_enabled=1 ;;
+  cupti) semantic_enabled=1; packed_enabled=1; cupti_enabled=1 ;;
 esac
+
+# CUPTI and Compute Sanitizer cannot share a process on this stack (one CUPTI
+# subscriber slot), so the sass and cupti arms are alternatives, never combined.
+if [[ "$sass_enabled" == 1 && "$cupti_enabled" == 1 ]]; then
+  echo "sass and cupti arms are mutually exclusive" >&2
+  exit 2
+fi
 
 if [[ "$semantic_enabled" == 1 ]]; then
   mkdir -p "$run_dir/semantic-shm"
@@ -70,12 +81,19 @@ if [[ "$semantic_enabled" == 1 ]]; then
 fi
 if [[ "$packed_enabled" == 1 ]]; then
   [[ -f "$packed_runner" ]] || { echo "missing packed runner: $packed_runner" >&2; exit 1; }
+  # The packed overlay imports vllm.gpu_observer_attention; the hook is inert
+  # unless GPU_OBSERVER_ATTENTION_TENSOR_RANGES is set, but the module must be
+  # importable or EngineCore dies at gpu_model_runner import time.
+  [[ -f "$attention_observer" ]] || { echo "missing attention observer: $attention_observer" >&2; exit 1; }
 fi
 if [[ "$sass_enabled" == 1 ]]; then
   for required in "$join_b" "$san_build/libgpu_observer_sanitizer.so" \
                   "$san_build/gpu_observer_sanitizer_patches.cubin"; do
     [[ -f "$required" ]] || { echo "missing required artifact: $required" >&2; exit 1; }
   done
+fi
+if [[ "$cupti_enabled" == 1 ]]; then
+  [[ -f "$cupti_lib" ]] || { echo "missing required artifact: $cupti_lib" >&2; exit 1; }
 fi
 
 monitor_pid=
@@ -115,6 +133,7 @@ trap cleanup EXIT INT TERM
   echo "semantic_enabled=$semantic_enabled"
   echo "packed_enabled=$packed_enabled"
   echo "sass_enabled=$sass_enabled"
+  echo "cupti_enabled=$cupti_enabled"
   echo "semantic_capacity=$semantic_capacity"
   echo "semantic_record_bytes=96"
   echo "semantic_buffer_bytes=$((semantic_capacity * 96 + 256))"
@@ -124,6 +143,8 @@ trap cleanup EXIT INT TERM
   echo "sass_event_capacity=$event_capacity"
   echo "sass_event_bytes=64"
   echo "sass_event_buffer_bytes=$((event_capacity * 64))"
+  echo "cupti_kernel_filter=none_unfiltered"
+  echo "cupti_defer=1"
   uname -a
   nvidia-smi --query-gpu=name,driver_version,temperature.gpu,power.draw --format=csv,noheader
   docker image inspect "$image" --format 'image_id={{.Id}} image_digests={{json .RepoDigests}}'
@@ -131,11 +152,14 @@ trap cleanup EXIT INT TERM
     sha256sum "$semantic_lib" "$semantic_core" "$semantic_py"
   fi
   if [[ "$packed_enabled" == 1 ]]; then
-    sha256sum "$packed_runner"
+    sha256sum "$packed_runner" "$attention_observer"
   fi
   if [[ "$sass_enabled" == 1 ]]; then
     sha256sum "$san_build/libgpu_observer_sanitizer.so" \
               "$san_build/gpu_observer_sanitizer_patches.cubin" "$join_b"
+  fi
+  if [[ "$cupti_enabled" == 1 ]]; then
+    sha256sum "$cupti_lib"
   fi
 } > "$run_dir/manifest.txt"
 
@@ -166,6 +190,7 @@ fi
 if [[ "$packed_enabled" == 1 ]]; then
   docker_args+=(
     -v "$packed_runner:/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu_model_runner.py:ro"
+    -v "$attention_observer:/usr/local/lib/python3.12/dist-packages/vllm/gpu_observer_attention.py:ro"
   )
 fi
 
@@ -179,6 +204,18 @@ if [[ "$sass_enabled" == 1 ]]; then
     -e GPU_OBSERVER_SAN_KERNEL_SUBSTRING="$target_kernel"
     -e GPU_OBSERVER_SAN_LAUNCH_ID=1
     -v "$san_build:/observer-sanitizer:ro"
+  )
+fi
+
+# Deliberately UNFILTERED (no GPU_OBSERVER_CUPTI_KERNEL_SUBSTRING), matching
+# run-live-demo-cupti.sh -- the point of this arm is to price the configuration
+# the live demo actually runs, which captures every kernel launch.
+if [[ "$cupti_enabled" == 1 ]]; then
+  docker_args+=(
+    -e LD_PRELOAD=/observer-cupti/libgpu_observer_cupti_activity.so
+    -e GPU_OBSERVER_CUPTI_DEFER=1
+    -e GPU_OBSERVER_CUPTI_OUTPUT_PREFIX=/results/cupti-%p
+    -v "$cupti_lib:/observer-cupti/libgpu_observer_cupti_activity.so:ro"
   )
 fi
 
@@ -291,6 +328,26 @@ if [[ "$sass_enabled" == 1 ]]; then
   echo "sass_capture_armed_after_warmup=true" >> "$run_dir/manifest.txt"
 fi
 
+if [[ "$cupti_enabled" == 1 ]]; then
+  engine_container_pid=$(docker exec "$container" bash -lc \
+    "ps -eo pid,comm | awk '\$2 ~ /^VLLM::EngineCor/ {print \$1; exit}'")
+  [[ "$engine_container_pid" =~ ^[0-9]+$ ]] || { echo "could not resolve EngineCore PID" >&2; exit 1; }
+  echo "$engine_container_pid" > "$run_dir/engine-container-pid.txt"
+  cupti_fifo="/tmp/gpu-observer-cupti-$engine_container_pid.fifo"
+  docker exec -e LD_PRELOAD= "$container" test -p "$cupti_fifo"
+  docker exec -e LD_PRELOAD= "$container" sh -c "printf S > $cupti_fifo"
+  cupti_started=0
+  for _ in $(seq 1 100); do
+    if grep -Fq "gpu-observer-cupti: control command=S status=0" "$run_dir/server.log"; then
+      cupti_started=1
+      break
+    fi
+    sleep 0.1
+  done
+  [[ "$cupti_started" == 1 ]] || { echo "CUPTI deferred start failed" >&2; tail -50 "$run_dir/server.log" >&2; exit 1; }
+  echo "cupti_capture_armed_after_warmup=true" >> "$run_dir/manifest.txt"
+fi
+
 {
   echo 'realtime_ns,total_jiffies,idle_jiffies,mem_total_kb,mem_available_kb,engine_cpu_pct,engine_rss_kb,engine_threads,gpu_util_pct,gpu_memory_mib,gpu_temp_c,gpu_power_w'
   while docker ps --format '{{.Names}}' | grep -Fxq "$container"; do
@@ -334,6 +391,24 @@ if [[ "$sass_enabled" == 1 ]]; then
   [[ -s "$run_dir/device-probe.summary.tsv" ]] || { echo "device snapshot missing" >&2; exit 1; }
   "$join_b" "$run_dir/semantic.bin" "$run_dir/device-probe.launches.tsv" \
     "$run_dir/device-probe.events.bin" --require-packed > "$run_dir/join-b-cache.log"
+fi
+
+if [[ "$cupti_enabled" == 1 ]]; then
+  docker exec -e LD_PRELOAD= "$container" sh -c "printf F > $cupti_fifo"
+  cupti_activity="$run_dir/cupti-$engine_container_pid.activities.tsv"
+  cupti_runtime="$run_dir/cupti-$engine_container_pid.runtime.tsv"
+  cupti_summary="$run_dir/cupti-$engine_container_pid.summary.tsv"
+  for _ in $(seq 1 300); do
+    if [[ -s "$cupti_summary" && -s "$cupti_activity" && -s "$cupti_runtime" ]] \
+      && grep -Fq "gpu-observer-cupti: control command=F status=0" "$run_dir/server.log"; then
+      break
+    fi
+    sleep 0.1
+  done
+  for required in "$cupti_summary" "$cupti_activity" "$cupti_runtime"; do
+    [[ -s "$required" ]] || { echo "missing CUPTI output: $required" >&2; exit 1; }
+  done
+  echo "cupti_kernel_rows=$(($(wc -l < "$cupti_activity") - 1))" >> "$run_dir/manifest.txt"
 fi
 
 jq -r '
