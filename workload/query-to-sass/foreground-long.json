@@ -1,0 +1,14 @@
+{
+  "model": "Qwen/Qwen3-14B",
+  "request_id": "go-agentic-debug-foreground",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Walk me through, step by step, what happens inside a vLLM V1 engine step when a single decode request is scheduled: how the scheduler picks it, how its tokens are packed into rows for the GPU, which CUDA kernels each transformer layer dispatches in order, and where the KV cache is written. Be specific about the ordering."
+    }
+  ],
+  "temperature": 0,
+  "seed": 7,
+  "max_completion_tokens": 256,
+  "stream": false
+}

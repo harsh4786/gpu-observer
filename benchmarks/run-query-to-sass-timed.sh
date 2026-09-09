@@ -6,7 +6,7 @@ image=gpu-observer/vllm-sanitizer:cuda13.2
 model=Qwen/Qwen3-14B
 revision=40c069824f4251a91eefaf281ebe4c544efd3e18
 backgrounds="$root/benchmarks/mixed-prefill/exp0012-20260811T143000Z/controlled-workload/interactive-payloads-corrected.jsonl"
-focus_payload="$root/workload/query-to-sass/foreground.json"
+focus_payload="${GPU_OBSERVER_FOCUS_PAYLOAD:-$root/workload/query-to-sass/foreground.json}"
 semantic_lib="$root/target/release/libgpu_observer_vllm_bridge.so"
 semantic_capture="$root/target/release/semantic_capture"
 semantic_dump="$root/target/release/semantic_dump"
@@ -23,7 +23,7 @@ focus_external=go-agentic-debug-foreground
 focus_internal=chatcmpl-go-agentic-debug-foreground
 port=8000
 stamp=$(date -u +%Y%m%dT%H%M%SZ)
-run_dir="$root/benchmarks/query-to-sass/$stamp-timed"
+run_dir="$root/benchmarks/query-to-sass/$stamp-timed${GPU_OBSERVER_RUN_SUFFIX:-}"
 container="go-query-sass-$stamp"
 
 cd "$root"
