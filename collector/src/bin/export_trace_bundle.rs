@@ -280,7 +280,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
 
     let kernels = load_kernels(path_arg(&args, "--activities")?)?;
-    let runtimes = load_runtimes(path_arg(&args, "--runtime")?)?;
+    let (runtimes, runtime_max_records) = load_runtimes(path_arg(&args, "--runtime")?)?;
     let (clock, _quality) = load_clock(path_arg(&args, "--summary")?)?;
     let mut runtime_by_correlation = BTreeMap::new();
     for runtime in runtimes {
@@ -299,7 +299,13 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    let assigned = assign_kernels(&semantic, kernels, &runtime_by_correlation, clock)?;
+    let assigned = assign_kernels(
+        &semantic,
+        kernels,
+        &runtime_by_correlation,
+        clock,
+        runtime_max_records,
+    )?;
     let deep_replay = if let Some(path) = args.get("--deep") {
         let deep = load_json(Path::new(path))?;
         validate_replay(&run, &deep)?;
@@ -489,6 +495,7 @@ fn assign_kernels(
     kernels: Vec<KernelActivity>,
     runtimes: &BTreeMap<u32, RuntimeActivity>,
     clock: ClockMap,
+    runtime_max_records: Option<u64>,
 ) -> Result<BTreeMap<usize, Vec<AssignedKernel>>, Box<dyn Error>> {
     let mut timeline = Vec::new();
     for (index, step) in semantic.steps.iter().enumerate() {
@@ -507,7 +514,25 @@ fn assign_kernels(
         let runtime = runtimes
             .get(&kernel.correlation)
             .copied()
-            .ok_or_else(|| format!("missing runtime correlation {}", kernel.correlation))?;
+            .ok_or_else(|| {
+                // The CUPTI agent caps its runtime/driver API table at
+                // kMaxApiRecords and counts the overflow in api_drops; the
+                // activity table has no such cap. A capture that outruns the
+                // cap therefore has kernels whose submit record was dropped,
+                // which is truncation, not a corrupt trace -- say so, because
+                // "missing runtime correlation 65941" reads like the latter.
+                match runtime_max_records {
+                    Some(cap) if runtimes.len() as u64 >= cap => format!(
+                        "runtime API table hit its {cap}-record cap \
+                         (kMaxApiRecords in cupti-agent/activity), so kernel \
+                         correlation {} has no submit record. Shorten the \
+                         capture or raise the cap and re-run; api_drops in the \
+                         summary reports how many were lost.",
+                        kernel.correlation
+                    ),
+                    _ => format!("missing runtime correlation {}", kernel.correlation),
+                }
+            })?;
         let submit_ns = clock.normalize(runtime.start_ns)?;
         let owner = timeline
             .iter()
@@ -912,8 +937,9 @@ fn load_kernels(path: &Path) -> Result<Vec<KernelActivity>, Box<dyn Error>> {
     Ok(output)
 }
 
-fn load_runtimes(path: &Path) -> Result<Vec<RuntimeActivity>, Box<dyn Error>> {
+fn load_runtimes(path: &Path) -> Result<(Vec<RuntimeActivity>, Option<u64>), Box<dyn Error>> {
     let file = bounded_file(path, MAX_TEXT_BYTES)?;
+    let mut max_records = None;
     let mut format = false;
     let mut header = false;
     let mut output = Vec::new();
@@ -926,6 +952,13 @@ fn load_runtimes(path: &Path) -> Result<Vec<RuntimeActivity>, Box<dyn Error>> {
             || line.starts_with("# format=GOCUPTI_API01 ")
         {
             format = true;
+            // The agent writes its own cap into the header (max_records=N) and
+            // counts what it dropped past it; carry the cap so a truncated
+            // table can be reported as truncation rather than as corruption.
+            max_records = line
+                .split_whitespace()
+                .find_map(|field| field.strip_prefix("max_records="))
+                .and_then(|value| value.parse::<u64>().ok());
             continue;
         }
         if line.starts_with("start_ns\tend_ns\tprocess\t") {
@@ -960,7 +993,7 @@ fn load_runtimes(path: &Path) -> Result<Vec<RuntimeActivity>, Box<dyn Error>> {
     if !format || !header || output.is_empty() {
         return Err("CUPTI runtime trace lacks its header or records".into());
     }
-    Ok(output)
+    Ok((output, max_records))
 }
 
 fn load_clock(path: &Path) -> Result<(ClockMap, Value), Box<dyn Error>> {

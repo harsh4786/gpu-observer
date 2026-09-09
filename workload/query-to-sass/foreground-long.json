@@ -9,6 +9,6 @@
   ],
   "temperature": 0,
   "seed": 7,
-  "max_completion_tokens": 256,
+  "max_completion_tokens": 96,
   "stream": false
 }
