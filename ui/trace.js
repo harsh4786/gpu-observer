@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph47";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph47";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph47";
+import { renderCausalGraph } from "./causal-graph.js?v=graph48";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph48";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph48";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -780,6 +780,18 @@ byId("trace-file").addEventListener("change", async (event) => {
 // explicit ?trace= still works for pointing at a specific sealed bundle;
 // otherwise the graph only appears once the user opens a file or sends a
 // live chat message (ensureLiveTrace / loadObject both call showGraphArea).
+// A real sealed capture, so anyone opening the hosted viewer sees measured
+// data without needing a bundle of their own. Same path as ?trace=.
+byId("load-sample").addEventListener("click", () => {
+  byId("load-sample").disabled = true;
+  loadUrl("./data/sample-qwen3-14b-trace-v2.json")
+    .catch((error) => {
+      byId("error-panel").textContent = `${error.message} Serve ui/ over HTTP, or choose a local TraceBundle v2 file.`;
+      byId("error-panel").classList.remove("hidden");
+    })
+    .finally(() => { byId("load-sample").disabled = false; });
+});
+
 const explicitTraceUrl = new URLSearchParams(location.search).get("trace");
 if (explicitTraceUrl) {
   loadUrl(explicitTraceUrl).catch((error) => {
