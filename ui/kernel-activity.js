@@ -27,7 +27,7 @@
 // Only this one anchor kernel is patched (see the plan this was built
 // from); there is nothing here to generalize to other kernels yet.
 
-import { requestColor } from "./graph-primitives.js?v=graph45";
+import { requestColor } from "./graph-primitives.js?v=graph47";
 
 const LAYERS_PER_STEP = 40;
 const RECENT_LIMIT = 8;
