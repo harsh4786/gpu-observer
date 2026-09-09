@@ -99,6 +99,8 @@ struct Focus {
     external_request_id: String,
     internal_request_id: String,
     request_hash: String,
+    frontend_request_hash: String,
+    engine_id_suffixed: bool,
 }
 
 #[derive(Serialize)]
@@ -236,14 +238,38 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let internal_request_id = required_string(&query, "internal_request_id")?.to_owned();
     let external_request_id = required_string(&query, "external_request_id")?.to_owned();
-    let request_hash = stable_request_id(&internal_request_id);
+    let frontend_request_hash = stable_request_id(&internal_request_id);
+
+    // EngineCore rebases a request onto its own id by appending a `-<8 hex>`
+    // suffix, so the frontend's hash does not key the scheduler slices. The
+    // patched engine emits an ENGINE_REQUEST_ADMITTED record carrying the
+    // engine-side hash in `request_id` and the frontend hash in `sequence_id`;
+    // follow that alias rather than requiring the two to be equal.
+    let mut request_hash = frontend_request_hash;
+    let mut engine_id_suffixed = false;
+    if !semantic
+        .slices
+        .iter()
+        .any(|record| record.request_id == request_hash)
+    {
+        if let Some(admission) = semantic
+            .admissions
+            .iter()
+            .find(|record| record.sequence_id == frontend_request_hash)
+        {
+            request_hash = admission.request_id;
+            engine_id_suffixed = true;
+        }
+    }
+
     if !semantic
         .slices
         .iter()
         .any(|record| record.request_id == request_hash)
     {
         return Err(format!(
-            "focused request {internal_request_id} ({request_hash:#018x}) is absent from semantic membership"
+            "focused request {internal_request_id} ({frontend_request_hash:#018x}) is absent \
+             from semantic membership, and no ENGINE_REQUEST_ADMITTED alias resolves it"
         )
         .into());
     }
@@ -401,6 +427,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             external_request_id,
             internal_request_id,
             request_hash: hex_id(request_hash),
+            frontend_request_hash: hex_id(frontend_request_hash),
+            engine_id_suffixed,
         },
         evidence: Evidence {
             measured,
