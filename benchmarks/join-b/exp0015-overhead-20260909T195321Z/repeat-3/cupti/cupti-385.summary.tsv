@@ -1,0 +1,8 @@
+# format=GOCUPTI01 activity_clock=CUPTI_TIMESTAMP_NS buffer_count=8 buffer_bytes=1048576 total_buffer_bytes=8388608 api_activity=1
+register_result	enable_result	runtime_enable_result	buffers_requested	buffers_completed	buffer_exhaustions	records_seen	target_records	invalid_records	dropped_records	api_records	api_drops	driver_enable_result
+0	0	0	279	279	0	5742366	340240	0	0	5402126	5336590	0
+clock	cupti_ns	midpoint_ns	uncertainty_ns	offset_ns
+CLOCK_MONOTONIC_START	1788986593360658346	76775788633765	64	-1788909817572024581
+CLOCK_MONOTONIC_END	1788986670347662963	76852775638382	64	-1788909817572024581
+CLOCK_MONOTONIC_RAW_START	1788986593360665978	76775929584592	64	-1788909817431081386
+CLOCK_MONOTONIC_RAW_END	1788986670347668115	76852916437408	64	-1788909817431230707

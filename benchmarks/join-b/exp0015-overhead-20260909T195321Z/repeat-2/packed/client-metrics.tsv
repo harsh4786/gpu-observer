@@ -1,0 +1,16 @@
+metric	value	unit
+completed	64	requests
+failed	0	requests
+duration	69.32041036199371	seconds
+request_throughput	0.9232490065449651	requests_per_second
+output_throughput	59.08793641887777	tokens_per_second
+total_token_throughput	177.26380925663332	tokens_per_second
+ttft_p50	509.20653699722607	ms
+ttft_p95	515.5872065093718	ms
+ttft_p99	515.8718527089513	ms
+itl_p50	128.9443229979952	ms
+itl_p95	133.65890519562527	ms
+itl_p99	134.86362540905247	ms
+e2e_p50	8663.762489501096	ms
+e2e_p95	8695.014420806547	ms
+e2e_p99	8696.22681735942	ms

@@ -1,0 +1,39 @@
+experiment=EXP-0015
+started_utc=2026-09-09T20:01:48Z
+arm=packed
+repeat=1
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+image=gpu-observer/vllm-sanitizer:cuda13.2
+execution_mode=eager
+async_scheduling=false
+prefix_caching=false
+seed=20260812
+warmup_prompts=8
+measured_prompts=64
+measured_input_tokens=128
+measured_output_tokens=64
+max_concurrency=8
+semantic_enabled=1
+packed_enabled=1
+sass_enabled=0
+cupti_enabled=0
+semantic_capacity=65536
+semantic_record_bytes=96
+semantic_buffer_bytes=6291712
+max_packed_slices=1024
+packed_ctypes_bytes=40960
+sass_target_kernel=reshape_and_cache_flash_kernel
+sass_event_capacity=1048576
+sass_event_bytes=64
+sass_event_buffer_bytes=67108864
+cupti_kernel_filter=none_unfiltered
+cupti_defer=1
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+NVIDIA GB10, 580.173.02, 55, 14.53 W
+image_id=sha256:e4409f94c58463513df2e5abca7855b906fcb78b87d1f7190af2b7968d3de4f4 image_digests=[]
+d4434266c6509d1ac25c1980e7bc9d13429b534a34ee9f3e7ecf5273a6ba0b33  /home/harsh4786/gpu-observer/target/release/libgpu_observer_vllm_bridge.so
+c9a13de84b99e40daebc530c87b73a06d816ae9d0d538e0eaa23f777c18ca607  /home/harsh4786/gpu-observer/vllm-adapter/overlay/vllm/v1/engine/core.py
+e4516fa6533436219f49fcdc99cc457faa21fc339a9003cd412a2ef88d7dacb5  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_semantic.py
+ae12d68118cdc85a1979683a124bf138a32816b0089fde65ff0f0c88141b4006  /home/harsh4786/gpu-observer/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py
+8c224b2217e35e95d68e078524bc9fa165145c1b587d846f13d15944e9fe11c8  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_attention.py

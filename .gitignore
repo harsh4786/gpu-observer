@@ -8,6 +8,7 @@ benchmarks/live-demo/
 .cache/
 workload/datasets/
 *.activities.tsv
+*.runtime.tsv
 *.events.bin
 *.ring
 *.safetensors
