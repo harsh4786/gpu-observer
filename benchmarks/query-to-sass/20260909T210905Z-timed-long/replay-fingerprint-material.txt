@@ -1,0 +1,10 @@
+52709475e2b2238d9b99cfc6614b660466467f4aea4e4def932df1c40c7674cc  /home/harsh4786/gpu-observer/benchmarks/query-to-sass/20260909T210905Z-timed-long/requests/focus.json
+Qwen/Qwen3-14B
+40c069824f4251a91eefaf281ebe4c544efd3e18
+gpu-observer/vllm-sanitizer:cuda13.2
+--dtype=bfloat16
+--max-model-len=4096
+--kv-cache-memory-bytes=8G
+--max-num-seqs=32
+--no-async-scheduling
+--no-enable-prefix-caching

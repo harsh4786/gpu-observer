@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "can you design a referral system similar on how dropbox did? I need a technical overview on how it should work, instead of free space we use the generic term \"credits\" where users can get more credits for every 3 friends they recommend."
+    }
+  ],
+  "model": "Qwen/Qwen3-14B",
+  "stream": false,
+  "max_completion_tokens": 64,
+  "temperature": 0,
+  "ignore_eos": true,
+  "request_id": "query-to-sass-background-4",
+  "seed": 7
+}

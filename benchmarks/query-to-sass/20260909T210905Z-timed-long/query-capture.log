@@ -1,0 +1,1 @@
+query_capture frames=2 bytes=9324 socket=/home/harsh4786/gpu-observer/benchmarks/query-to-sass/20260909T210905Z-timed-long/semantic-shm/query.sock output=/home/harsh4786/gpu-observer/benchmarks/query-to-sass/20260909T210905Z-timed-long/query.msgpack.frames

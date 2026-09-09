@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "how do I add multiple new columns in m for power query or power bi?"
+    }
+  ],
+  "model": "Qwen/Qwen3-14B",
+  "stream": false,
+  "max_completion_tokens": 64,
+  "temperature": 0,
+  "ignore_eos": true,
+  "request_id": "query-to-sass-background-5",
+  "seed": 7
+}

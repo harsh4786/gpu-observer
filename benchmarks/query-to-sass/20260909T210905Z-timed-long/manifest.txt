@@ -1,0 +1,27 @@
+experiment=QUERY-TO-SASS-TIMED
+started_utc=2026-09-09T21:09:06Z
+model=Qwen/Qwen3-14B
+revision=40c069824f4251a91eefaf281ebe4c544efd3e18
+image=gpu-observer/vllm-sanitizer:cuda13.2
+focus_external=go-agentic-debug-foreground
+focus_internal=chatcmpl-go-agentic-debug-foreground
+replay_fingerprint=17469bf777e1c5e6af84061dc197f0b893b5370e22b30b9937375ee3f99f43a4
+scheduling=synchronous
+execution=CUDA_Graph
+cupti_filter=reshape_and_cache_flash_kernel
+Linux spark-3be9 6.17.0-1029-nvidia #29-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 00:13:52 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:     130663165952  6552289280 81329926144     5562368 43963068416 124110876672
+Swap:    17179865088           0 17179865088
+NVIDIA GB10, 580.173.02, 40, 5.62 W
+image_id=sha256:e4409f94c58463513df2e5abca7855b906fcb78b87d1f7190af2b7968d3de4f4 image_digests=[]
+52709475e2b2238d9b99cfc6614b660466467f4aea4e4def932df1c40c7674cc  /home/harsh4786/gpu-observer/workload/query-to-sass/foreground-long.json
+d4434266c6509d1ac25c1980e7bc9d13429b534a34ee9f3e7ecf5273a6ba0b33  /home/harsh4786/gpu-observer/target/release/libgpu_observer_vllm_bridge.so
+c9a13de84b99e40daebc530c87b73a06d816ae9d0d538e0eaa23f777c18ca607  /home/harsh4786/gpu-observer/vllm-adapter/overlay/vllm/v1/engine/core.py
+e4516fa6533436219f49fcdc99cc457faa21fc339a9003cd412a2ef88d7dacb5  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_semantic.py
+ae12d68118cdc85a1979683a124bf138a32816b0089fde65ff0f0c88141b4006  /home/harsh4786/gpu-observer/vllm-adapter/packed-overlay/vllm/v1/worker/gpu_model_runner.py
+2ae977b86c959311ae2fa1caedb72f994027b33f28344b2432cacf252b7fc51b  /home/harsh4786/gpu-observer/vllm-adapter/frontend-overlay/vllm/entrypoints/openai/chat_completion/serving.py
+cf4fbe09ad48f69de5adc9660cd2f5928ddb521c36be8fdc3844561ab3233da8  /home/harsh4786/gpu-observer/vllm-adapter/gpu_observer_query_capture.py
+b8bb8c6add6641494408b629c6f8297756a755eb7df74c44fa6d3eff6039b0a6  /home/harsh4786/gpu-observer/cupti-agent/activity/build-cuda1321/libgpu_observer_cupti_activity.so
+2a9d163429ccc13ad866982b2e5456f1557e18ad2abf44fce664838724fa0c61  /home/harsh4786/gpu-observer/target/release/export_trace_bundle
+semantic_signature=0d06fb8efd05d656e8a4910434aa2f0b95dfbd848b06c656adb7d98a82b2edd5

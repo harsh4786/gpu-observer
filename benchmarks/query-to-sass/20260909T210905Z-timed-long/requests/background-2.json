@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "How to tell if a customer segment is well segmented? In 3 bullet points."
+    }
+  ],
+  "model": "Qwen/Qwen3-14B",
+  "stream": false,
+  "max_completion_tokens": 64,
+  "temperature": 0,
+  "ignore_eos": true,
+  "request_id": "query-to-sass-background-2",
+  "seed": 7
+}

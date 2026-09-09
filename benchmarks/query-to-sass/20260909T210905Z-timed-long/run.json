@@ -1,0 +1,19 @@
+{
+  "experiment": "QUERY-TO-SASS-TIMED",
+  "startedUtc": "2026-09-09T21:09:06Z",
+  "captureStatus": "measured_sealed_trace",
+  "model": "Qwen/Qwen3-14B",
+  "modelRevision": "40c069824f4251a91eefaf281ebe4c544efd3e18",
+  "image": "gpu-observer/vllm-sanitizer:cuda13.2",
+  "executionMode": "CUDA Graph, synchronous scheduling",
+  "replayFingerprint": "17469bf777e1c5e6af84061dc197f0b893b5370e22b30b9937375ee3f99f43a4",
+  "focusPolicy": "one explicit foreground request",
+  "cuptiFilter": "reshape_and_cache_flash_kernel",
+  "semanticAbi": 3,
+  "notes": [
+    "CUPTI is the actual-time source.",
+    "Exact block ownership is claimed only for the validated cache kernel.",
+    "A deep sanitizer replay must use the same replayFingerprint."
+  ],
+  "semanticSignature": "0d06fb8efd05d656e8a4910434aa2f0b95dfbd848b06c656adb7d98a82b2edd5"
+}
