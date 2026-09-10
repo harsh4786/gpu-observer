@@ -79,31 +79,17 @@ export function addNode(svg, options) {
   }
   group.append(svgElement("rect", { width, height, rx: 10 }));
 
-  // Character budgets derived from the node's actual width instead of fixed
-  // limits: the monospace advances below match trace.css's .graph-node-*
-  // rules (13.5px title, 11px line, 9px badge). Fixed limits let a 30-char
-  // line spill past a 168px node -- visible on the offline graph as the
-  // query text running under the "tokenize" edge label.
-  const PAD_X = 23;
-  const badgeWidth = badge ? String(badge).length * 5.4 + 10 : 0;
-  const titleBudget = Math.max(6, Math.floor((width - PAD_X - badgeWidth) / 8.1));
-  const lineBudget = Math.max(6, Math.floor((width - PAD_X) / 6.6));
-
-  // Only a node with NO lines gets a vertically centered title. Centering it
-  // for a one-line node put the title's baseline at height/2+5 while the line
-  // stayed pinned at 39 -- for the 68px-tall GPU node those are both y=39, so
-  // the kernel name rendered directly on top of "N kernels".
-  const titleOnly = lines.length === 0;
+  const singleLine = lines.length <= 1;
   const titleNode = svgElement("text", {
     x: 13,
-    y: titleOnly ? Math.round(height / 2) + 5 : 22,
+    y: singleLine ? Math.round(height / 2) + 5 : 22,
     class: "graph-node-title",
   });
-  titleNode.textContent = truncate(title, Math.min(titleLimit, titleBudget));
+  titleNode.textContent = truncate(title, titleLimit);
   group.append(titleNode);
   lines.slice(0, 2).forEach((line, index) => {
     const lineNode = svgElement("text", { x: 13, y: 39 + index * 16, class: "graph-node-line" });
-    lineNode.textContent = truncate(line, lineBudget);
+    lineNode.textContent = truncate(line, 30);
     group.append(lineNode);
   });
   if (badge) {
@@ -142,29 +128,15 @@ export function addEdge(svg, from, to, options = {}) {
   });
   if (dashed && !flowing) path.setAttribute("stroke-dasharray", "7 6");
   svg.insertBefore(path, svg.querySelector(".graph-node"));
-  // Edge labels used to sit at min(cy) - 8, which is *inside* the vertical
-  // span of both nodes: with only 24px between the query and tokenizer nodes,
-  // "tokenize" rendered straight across both borders. Prefer the gap when the
-  // label fits there, else lift it clear above the nodes, else drop it --
-  // never draw a label on top of a node. y=43 is the lane subtitle baseline,
-  // so anything above ~50 would collide with the column headings instead.
   if (label) {
-    const gap = to.left - from.right;
-    const labelWidth = String(label).length * 6 + 8;
-    const above = Math.min(from.top, to.top) - 7;
-    let y = null;
-    if (gap >= labelWidth) y = Math.min(from.cy, to.cy) - 8;
-    else if (above >= 50) y = above;
-    if (y !== null) {
-      const text = svgElement("text", {
-        x: bend,
-        y,
-        class: `graph-edge-label ${kind}`,
-        "text-anchor": "middle",
-      });
-      text.textContent = label;
-      svg.append(text);
-    }
+    const text = svgElement("text", {
+      x: bend,
+      y: Math.min(from.cy, to.cy) - 8,
+      class: `graph-edge-label ${kind}`,
+      "text-anchor": "middle",
+    });
+    text.textContent = label;
+    svg.append(text);
   }
 }
 

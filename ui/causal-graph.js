@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=graph48";
-import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=graph48";
+} from "./graph-primitives.js?v=graph50";
+import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=graph50";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -90,14 +90,7 @@ function renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liv
   const laneCount = Math.max(scheduler.length, packed.length, 1);
   const rowGap = Math.max(48, Math.min(64, 320 / laneCount));
   const firstRowY = 76;
-  // Tall enough for the lanes, or for the output/SASS stack that straddles
-  // centerY (top centerY-70, bottom centerY+74), plus room for the footnote.
-  // The old flat 360 floor left ~160px of empty canvas on single-lane steps.
-  const stackBottom = firstRowY + (laneCount - 1) * rowGap / 2 + 74;
-  const graphHeight = Math.max(
-    stackBottom + 34,
-    firstRowY + laneCount * rowGap + 100,
-  );
+  const graphHeight = Math.max(360, firstRowY + laneCount * rowGap + 100);
   svg.setAttribute("viewBox", `0 0 1470 ${graphHeight}`);
   svg.setAttribute("height", graphHeight);
 
