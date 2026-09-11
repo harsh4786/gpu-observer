@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=graph50";
-import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=graph50";
+} from "./graph-primitives.js?v=graph51";
+import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=graph51";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -322,12 +322,11 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
   const focusPacked = packed.find((slice) => slice.requestId === trace.focus.requestHash);
   const peerCount = Math.max(scheduler.length, packed.length, 1) - 1;
 
-  const queryNode = addNode(svg, {
-    x: 18, y: stripY, width: 210, height: stripH,
-    color: "#72e3b1", kind: "measured", title: "Query",
-    lines: [truncate(naturalQuery(trace.query), 40)],
-    onActivate: () => scrollToCard("query-text"),
-  });
+  // No Query node: in live mode the query is the chat box directly above the
+  // graph, and trace.html's #input-connector arrow runs from it into the
+  // tokens node below -- the first thing the graph itself shows is what the
+  // prompt became. (Sealed traces keep their own query node; theirs never came
+  // from this chat box. See renderOfflineGraph.)
   // promptTokenCount: the real tokenized prompt length, captured off this
   // turn's first request_slice patch (see resolveLiveFocus in trace.js) --
   // not trace.query.tokens.length, which is always empty in live mode
@@ -335,18 +334,20 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
   // Falls back to trace.query.tokens.length for offline fixtures, and shows
   // "unknown" styling before that first patch lands for this turn.
   const tokenNode = addNode(svg, {
-    x: 242, y: stripY, width: 130, height: stripH,
+    x: 18, y: stripY, width: 130, height: stripH,
     color: promptTokenCount != null ? "#64c7e8" : "#60756d",
     kind: promptTokenCount != null ? "measured" : "unknown",
     title: promptTokenCount != null ? `${promptTokenCount} tokens` : `${trace.query.tokens.length} tokens`,
     onActivate: () => scrollToCard("prompt-tokens"),
   });
-  addEdge(svg, queryNode, tokenNode, { color: "#72e3b1", marker: "arrow-measured", width: 1.2 });
+  // addNode appends its group last; tag it so trace.js can pin the chat-box
+  // arrow under this node's real on-screen position.
+  svg.lastElementChild.dataset.entry = "prompt-tokens";
 
   let lastStripNode = tokenNode;
   if (step) {
     const schedNode = addNode(svg, {
-      x: 386, y: stripY, width: 190, height: stripH,
+      x: 162, y: stripY, width: 190, height: stripH,
       color: focusSlice ? requestColor(focusSlice.requestId) : "#60756d",
       kind: focusSlice ? "measured" : "unknown",
       title: focusSlice ? `step ${step.id} · ${focusSlice.phase}` : `step ${step.id}`,
@@ -359,7 +360,7 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
 
     if (focusPacked) {
       const packedNode = addNode(svg, {
-        x: 592, y: stripY, width: 190, height: stripH,
+        x: 368, y: stripY, width: 190, height: stripH,
         color: requestColor(focusPacked.requestId), kind: "measured",
         title: `rows [${focusPacked.rowBegin}, ${focusPacked.rowEnd})`,
         pulse: liveActive,

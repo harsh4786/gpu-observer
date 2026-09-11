@@ -57,6 +57,14 @@ p { color: var(--muted); }
 .output-connector.active { color: var(--mint); }
 .output-connector.active .connector-shaft { stroke-dasharray: 6 6; animation: graph-dash-flow .5s linear infinite; }
 .output-connector.active .connector-head { --node-color: var(--mint); animation: graph-pulse-glow 1s ease-in-out infinite; }
+/* Chat box -> tokens arrow: same look as .output-connector, but pinned under
+   the live graph's tokens node (trace.js sets --entry-x from that node's real
+   position) rather than centered, so the prompt visibly lands on the node it
+   becomes. */
+.input-connector { display: flex; flex-direction: column; align-items: center; gap: 3px; width: max-content; margin: -2px 0 6px var(--entry-x, 50%); transform: translateX(-50%); color: var(--dim); font-size: 9px; font-family: ui-monospace, monospace; letter-spacing: .06em; text-transform: uppercase; }
+.input-connector.active { color: var(--mint); }
+.input-connector.active .connector-shaft { stroke-dasharray: 6 6; animation: graph-dash-flow .5s linear infinite; }
+.input-connector.active .connector-head { --node-color: var(--mint); animation: graph-pulse-glow 1s ease-in-out infinite; }
 .chat-form { display: flex; gap: 8px; margin-top: 10px; }
 .chat-form input { flex: 1; padding: 11px 13px; color: var(--text); border: 1px solid var(--line-strong); border-radius: 10px; background: var(--panel-2); font-size: 13px; }
 .chat-form input:focus { outline: none; border-color: var(--mint); }

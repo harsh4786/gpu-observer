@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph50";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph50";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph50";
+import { renderCausalGraph } from "./causal-graph.js?v=graph51";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph51";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph51";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -108,6 +108,35 @@ function renderGraph() {
     cuptiSnapshot: state.liveMode ? getCuptiSnapshot() : null,
     promptTokenCount: state.liveFocusPromptTokens,
   });
+  positionInputConnector();
+}
+
+// The live graph has no Query node of its own -- the chat box above IS the
+// query -- so this arrow joins the two, pinned under the graph's tokens node
+// (renderLiveGraph tags it data-entry="prompt-tokens") so the prompt visibly
+// lands on what it becomes. Shown only while that live graph is on screen: a
+// sealed trace's query never came from this chat box, and ?offline=1 hides
+// the chat box entirely. It flows while a request is in flight (Stop is
+// enabled) and the tokenized prompt length has not arrived yet; keying off
+// Stop means an error or abort settles it too, via sendChatMessage's finally.
+function positionInputConnector() {
+  const connector = byId("input-connector");
+  if (!connector) return;
+  const entry = state.liveMode
+    ? byId("causal-graph").querySelector('[data-entry="prompt-tokens"]')
+    : null;
+  if (!entry) {
+    connector.classList.add("hidden");
+    connector.classList.remove("active");
+    return;
+  }
+  connector.classList.remove("hidden");
+  const node = entry.getBoundingClientRect();
+  const parent = connector.parentElement.getBoundingClientRect();
+  const x = Math.max(12, node.left + node.width / 2 - parent.left);
+  connector.style.setProperty("--entry-x", `${x}px`);
+  const inFlight = !byId("chat-stop").disabled;
+  connector.classList.toggle("active", inFlight && state.liveFocusPromptTokens == null);
 }
 
 function selectStep(index) {
@@ -719,6 +748,11 @@ byId("chat-stop").addEventListener("click", () => {
   state.activeAbort?.abort();
 });
 
+window.addEventListener("resize", positionInputConnector);
+byId("graph-scroll").addEventListener("scroll", positionInputConnector);
+new MutationObserver(positionInputConnector)
+  .observe(byId("chat-stop"), { attributes: true, attributeFilter: ["disabled"] });
+
 // Escape as the keyboard shortcut, not Ctrl+C: browsers reserve Ctrl+C for
 // copy and won't let a page reliably intercept it without breaking that
 // convention (and stealing it while text is selected would be actively
@@ -754,7 +788,7 @@ byId("chat-form").addEventListener("submit", (event) => {
 // is untouched, because none of it depends on a socket.
 const offlineMode = params.get("offline") === "1";
 if (offlineMode) {
-  for (const selector of [".chat-card", ".kernel-activity-card", ".output-card", "#output-connector"]) {
+  for (const selector of [".chat-card", ".kernel-activity-card", ".output-card", "#output-connector", "#input-connector"]) {
     document.querySelector(selector)?.classList.add("hidden");
   }
 } else {

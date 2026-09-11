@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>GPU Observer — Query to SASS</title>
-  <link rel="stylesheet" href="./trace.css?v=graph50">
+  <link rel="stylesheet" href="./trace.css?v=graph51">
 </head>
 <body>
   <main class="app">
@@ -35,6 +35,14 @@
         <button type="button" id="chat-stop" class="chat-stop" disabled>Stop</button>
       </form>
     </section>
+
+    <div id="input-connector" class="input-connector hidden" aria-hidden="true">
+      <span>prompt</span>
+      <svg class="connector-arrow" viewBox="0 0 24 52" width="24" height="52">
+        <line x1="12" y1="2" x2="12" y2="38" class="connector-shaft"/>
+        <path d="M2 32 L12 47 L22 32 Z" class="connector-head"/>
+      </svg>
+    </div>
 
     <section class="graph-card" aria-label="Interactive causal execution graph">
       <div class="section-title graph-title">
@@ -126,6 +134,6 @@
       Sealed traces are rendered offline. Raw ring, CUPTI, and sanitizer artifacts remain the source of truth.
     </footer>
   </main>
-  <script type="module" src="./trace.js?v=graph50"></script>
+  <script type="module" src="./trace.js?v=graph51"></script>
 </body>
 </html>
