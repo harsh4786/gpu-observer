@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph51";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph51";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph51";
+import { renderCausalGraph } from "./causal-graph.js?v=graph52";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph52";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph52";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -345,6 +345,13 @@ const MODEL_NAME = params.get("model") ?? "Qwen/Qwen3-14B";
 // is mirrored here purely to generate GPU telemetry for the kernel-activity
 // card; its reply is never shown.
 const SHADOW_VLLM_BASE = params.get("shadowVllm") ?? `http://${location.hostname}:8001`;
+// The shadow container is opt-in (?shadow=1). Its card shows real block-entry
+// events, but live it cannot place an event in the step it ran in: delivery
+// is batched and the events carry only a device-clock timestamp, so its
+// per-step counters and request attribution are joined by arrival time.
+// It also costs a second 14B container. The default demo therefore runs the
+// primary alone; ?shadow=1 restores the card, its two sockets and the mirror.
+const shadowEnabled = params.get("shadow") === "1";
 
 function phaseFromRaw(raw) {
   return Number(raw) === 1 ? "prefill" : "decode";
@@ -678,7 +685,7 @@ async function sendChatMessage(text) {
   byId("chat-waiting").textContent = "Request sent — waiting for the scheduler to admit it…";
   render();
 
-  sendShadowRequest(text, controller.signal); // fire-and-forget: generates GPU telemetry on the shadow container, never shown
+  if (shadowEnabled) sendShadowRequest(text, controller.signal); // fire-and-forget: generates GPU telemetry on the shadow container, never shown
 
   try {
     const response = await fetch(`${VLLM_BASE}/v1/chat/completions`, {
@@ -793,7 +800,10 @@ if (offlineMode) {
   }
 } else {
   connectWebSocket();
-  connectKernelActivity();
+  if (shadowEnabled) {
+    document.querySelector(".kernel-activity-card")?.classList.remove("hidden");
+    connectKernelActivity();
+  }
   connectCuptiActivity();
 }
 
