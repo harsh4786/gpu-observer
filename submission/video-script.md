@@ -1,5 +1,9 @@
 # Video script — GPU Observer (target 4:30, hard limit 5:00)
 
+A captioned, voice-free 2:18 walkthrough built from this script is already in
+`submission/gpu-observer-walkthrough.mp4`. Use this script if you record your own
+narrated version over the live demo.
+
 Record at 1920×1080 on your Mac (QuickTime → File → New Screen Recording),
 browser full-screen, voice-over live. Export as MP4 under 300 MB.
 
@@ -42,8 +46,9 @@ experiments: they stop the demo containers.
 
 1. **2:30** Open the hosted URL. Click **Load sample trace**.
    > This is a real capture you can open yourself — no GPU needed.
-2. **2:40** Change the **Graph step** selector to a step with several lanes.
-   > Here our request shares the GPU with seven others. Where the colored edges cross, vLLM reordered rows between the scheduler and the GPU — which is exactly why naive attribution goes wrong.
+2. **2:40** Change the **Graph step** selector to **Step 5**, then **Step 67**.
+   > On step 5, our request's prefill shares the GPU with seven decoding requests. On step 67, the scheduler's order and the GPU's row order disagree for six requests — the colored edges cross — which is exactly why naive attribution goes wrong.
+   (In the sample trace, crossing edges appear only on step 67.)
 3. **3:00** Click the **GPU node**; show **Kernel work ownership**.
    > And this is the payoff: this kernel's real GPU interval, and the cache blocks that belong to our request — reconstructed with the row-to-block rule we validated against actual device events.
 4. **3:15** Point at **What each edge means**.
