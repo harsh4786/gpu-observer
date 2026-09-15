@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GPU Observer — AI Infra Summit Hackathon</title>
+<style>
+  @page { size: 1280px 720px; margin: 0; }
+  :root {
+    --bg: #07100f; --panel: #0e1b19; --line: #1f3330; --text: #e6f2ec; --muted: #9fb5ab; --dim: #6b8078;
+    --mint: #72e3b1; --cyan: #64c7e8; --amber: #ffc66d; --red: #ff8b7a; --violet: #b89cff;
+    --sans: "Inter", "Segoe UI", "DejaVu Sans", system-ui, sans-serif;
+    --mono: "JetBrains Mono", "DejaVu Sans Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide.mid { justify-content: center; padding-bottom: 80px; }
+  .slide { width: 1280px; height: 720px; padding: 54px 72px; position: relative; overflow: hidden; page-break-after: always; break-after: page; background: radial-gradient(1200px 500px at 85% -10%, rgba(114,227,177,.07), transparent 60%), var(--bg); display: flex; flex-direction: column; }
+  .kicker { font: 700 13px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--mint); margin-bottom: 14px; }
+  h1 { font-size: 64px; line-height: 1.02; margin: 0 0 18px; letter-spacing: -.02em; }
+  h2 { font-size: 40px; line-height: 1.1; margin: 0 0 26px; letter-spacing: -.01em; max-width: 1040px; }
+  p, li { font-size: 22px; line-height: 1.45; color: var(--muted); }
+  p { margin: 0 0 14px; max-width: 1000px; }
+  ul { margin: 0; padding-left: 26px; }
+  li { margin: 0 0 12px; }
+  strong { color: var(--text); font-weight: 650; }
+  code { font-family: var(--mono); font-size: .86em; color: var(--text); }
+  .foot { position: absolute; left: 72px; right: 72px; bottom: 26px; display: flex; justify-content: space-between; font: 12px var(--mono); color: var(--dim); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .card { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 22px 24px; }
+  .card h3 { margin: 0 0 8px; font-size: 22px; }
+  .card p { font-size: 18px; margin: 0; }
+  .shot { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .shot img { display: block; width: 100%; }
+  /* cover */
+  .cover { justify-content: center; }
+  .cover > :not(.art) { position: relative; z-index: 1; }
+  .cover .sub { font-size: 30px; color: var(--text); max-width: 560px; margin-bottom: 26px; line-height: 1.25; }
+  .cover .meta { font: 16px var(--mono); color: var(--muted); }
+  .cover .url { font: 600 20px var(--mono); color: var(--mint); margin-top: 18px; }
+  .cover .art { position: absolute; z-index: 0; right: -250px; top: 150px; width: 760px; opacity: .5; transform: perspective(1400px) rotateY(-14deg); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, #000 45%, transparent 95%); mask-image: linear-gradient(90deg, #000 45%, transparent 95%); }
+  .cover .art img { width: 100%; display: block; }
+  /* chain */
+  .chain { display: flex; align-items: stretch; gap: 0; margin: 18px 0 30px; }
+  .stage { width: 162px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); padding: 16px 14px; }
+  .stage b { display: block; font-size: 19px; color: var(--text); margin-bottom: 6px; }
+  .stage span { font: 12.5px var(--mono); color: var(--muted); line-height: 1.4; }
+  .stage.gpu { border-color: rgba(114,227,177,.5); }
+  .arrow { width: 33px; display: flex; align-items: center; justify-content: center; color: var(--mint); font-size: 24px; }
+  /* numbers */
+  .nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin: 8px 0 26px; }
+  .num { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 22px 20px; }
+  .num b { display: block; font-size: 44px; letter-spacing: -.02em; color: var(--text); line-height: 1; margin-bottom: 10px; }
+  .num span { font-size: 16px; color: var(--muted); line-height: 1.35; }
+  .boundary { font-size: 17px; color: var(--dim); border-left: 3px solid var(--line); padding-left: 16px; max-width: 1080px; }
+  .tier { display: inline-block; font: 700 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; border: 1px solid currentColor; margin-right: 10px; }
+  .t-measured { color: var(--mint); } .t-reconstructed { color: var(--amber); } .t-matched { color: var(--violet); } .t-unavailable { color: var(--red); }
+  .tiers .card p { font-size: 17px; margin-top: 10px; }
+  /* chart */
+  .chart text { font-family: var(--mono); }
+  .timeline { display: grid; grid-template-columns: 250px 1fr; gap: 14px 26px; font-size: 20px; }
+  .timeline .when { font: 600 16px var(--mono); color: var(--mint); padding-top: 3px; }
+  .timeline .what { color: var(--muted); line-height: 1.4; }
+</style>
+</head>
+<body>
+
+<!-- 1 · cover -->
+<section class="slide cover">
+  <div class="art"><img src="img/live-graph.png" alt=""></div>
+  <div class="kicker">AI Infra Summit Hackathon · 2026</div>
+  <h1>GPU Observer</h1>
+  <div class="sub">See exactly what one LLM request does on the GPU.</div>
+  <div class="meta">NVIDIA DGX Spark · vLLM V1 · Qwen3-14B · CUPTI · Compute Sanitizer</div>
+  <div class="url">harsh4786.github.io/gpu-observer</div>
+</section>
+
+<!-- 2 · problem -->
+<section class="slide mid">
+  <div class="kicker">The problem</div>
+  <h2>Between “request in” and “tokens out”, an inference server is a black box.</h2>
+  <div class="grid2" style="margin-top:8px">
+    <div class="card"><h3>Requests lose their identity</h3><p>The scheduler batches requests; the model runner packs and reorders their tokens into GPU rows. Scheduler order is not GPU row order.</p></div>
+    <div class="card"><h3>Kernels have no owner</h3><p>Profilers show CUDA kernels, but not whose work they are — and CUDA Graphs replay them with little host-side visibility.</p></div>
+  </div>
+  <p style="margin-top:34px"><strong>So basic questions have no direct answer:</strong> which request is this GPU work for? What did this prompt cost on the GPU? Why did this request slow down?</p>
+  <div class="foot"><span>GPU Observer</span><span>2</span></div>
+</section>
+
+<!-- 3 · chain -->
+<section class="slide mid">
+  <div class="kicker">What it does</div>
+  <h2>Keep one request’s identity all the way down to the GPU.</h2>
+  <div class="chain">
+    <div class="stage"><b>Prompt</b><span>chat request<br>frontend</span></div><div class="arrow">→</div>
+    <div class="stage"><b>Tokens</b><span>exact token IDs<br>tokenizer</span></div><div class="arrow">→</div>
+    <div class="stage"><b>Engine step</b><span>scheduler slices<br>vLLM V1</span></div><div class="arrow">→</div>
+    <div class="stage"><b>Packed rows</b><span>post-compaction<br>GPUModelRunner</span></div><div class="arrow">→</div>
+    <div class="stage gpu"><b>GPU kernels</b><span>actual intervals<br>CUPTI</span></div><div class="arrow">→</div>
+    <div class="stage gpu"><b>KV blocks</b><span>request-owned<br>Compute Sanitizer</span></div>
+  </div>
+  <ul>
+    <li><strong>Hot path stays cheap:</strong> fixed-size records into bounded lock-free rings — no JSON, locks or allocation in the inference process.</li>
+    <li><strong>Joins are explicit:</strong> each hop is matched on authoritative identifiers and timestamps, and each states its precision limit.</li>
+  </ul>
+  <div class="foot"><span>GPU Observer</span><span>3</span></div>
+</section>
+
+<!-- 4 · live view -->
+<section class="slide">
+  <div class="kicker">Live view</div>
+  <h2 style="margin-bottom:18px">Type a prompt, watch it become GPU work.</h2>
+  <div class="shot" style="width:900px"><img src="img/live-graph.png" alt="Live GPU Observer UI: chat box, prompt arrow into the tokens node, engine step and packed rows, and the per-layer kernel DAG"></div>
+  <p style="margin-top:18px; font-size:19px; max-width:1100px">Tokenized prompt → engine step and phase → packed rows → the 11 kernel stages of one transformer layer, lit by real CUPTI launches and repeated ×40 per token. Kernel calls are split into thinking and response tokens.</p>
+  <div class="foot"><span>GPU Observer</span><span>4</span></div>
+</section>
+
+<!-- 5 · why hard -->
+<section class="slide mid">
+  <div class="kicker">Why this is hard</div>
+  <h2>Three things break naive attribution.</h2>
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:22px">
+    <div class="card"><h3>Rows get reordered</h3><p>vLLM compacts its batch by moving requests into freed rows. Only the post-compaction layout says which row is whose.</p></div>
+    <div class="card"><h3>Graphs hide launches</h3><p>Under CUDA Graphs, kernels replay on the device without ordinary host launches; correlation must be graph-node aware.</p></div>
+    <div class="card"><h3>Tools can’t coexist</h3><p>CUPTI and Compute Sanitizer compete for one subscriber slot on this stack, so timing and block events come from two explicit modes.</p></div>
+  </div>
+  <p style="margin-top:34px">GPU Observer never turns temporal overlap into ownership: a request owns a block only when an authoritative row range contains it.</p>
+  <div class="foot"><span>GPU Observer</span><span>5</span></div>
+</section>
+
+<!-- 6 · sealed trace -->
+<section class="slide">
+  <div class="kicker">Try it yourself · no GPU needed</div>
+  <h2 style="margin-bottom:18px">Sealed traces: one request’s complete causal record.</h2>
+  <div class="shot" style="width:1000px"><img src="img/sealed-cards.png" alt="Sealed trace viewer: kernel work ownership with validated cache row-to-block rule, SASS microscope, and the evidence contract"></div>
+  <p style="margin-top:18px; font-size:19px">Real capture from the DGX Spark: 1 focused request with 7 concurrent requests, 65 engine steps, 2,600 GPU intervals of the KV-cache write kernel. <strong style="font-family:var(--mono); color:var(--mint)">harsh4786.github.io/gpu-observer</strong></p>
+  <div class="foot"><span>GPU Observer</span><span>6</span></div>
+</section>
+
+<!-- 7 · ownership -->
+<section class="slide mid">
+  <div class="kicker">Result 1 · EXP-0019</div>
+  <h2>Per-request KV-cache block ownership, observed directly on the device.</h2>
+  <div class="nums">
+    <div class="num"><b>7,560</b><span>device block-entry events under CUDA Graph replay</span></div>
+    <div class="num"><b>6,400</b><span>request-owned blocks, plus 1,160 padding blocks</span></div>
+    <div class="num"><b>0</b><span>drops, geometry or request-count mismatches</span></div>
+    <div class="num"><b>25</b><span>of 35 steps exercised scheduler-vs-GPU row reordering</span></div>
+  </div>
+  <div class="boundary">Scope: <code>reshape_and_cache_flash_kernel</code>, single-stream decode suffix, Qwen3-14B BF16 on GB10. Not claimed: attention, GEMM or fused kernels; multi-stream graphs; other models or stacks.</div>
+  <div class="foot"><span>GPU Observer</span><span>7</span></div>
+</section>
+
+<!-- 8 · timing -->
+<section class="slide mid">
+  <div class="kicker">Result 2 · EXP-0020</div>
+  <h2>The same requests, joined to real GPU kernel intervals.</h2>
+  <div class="nums">
+    <div class="num"><b>1,400</b><span>target-kernel activities under async CUDA Graphs</span></div>
+    <div class="num"><b>40 / step</b><span>exactly one per transformer layer, every step</span></div>
+    <div class="num"><b>0</b><span>semantic loss, CUPTI drops or correlation misses</span></div>
+    <div class="num"><b>64 ns</b><span>clock-calibration uncertainty, zero offset drift</span></div>
+  </div>
+  <div class="boundary">Scope: request rows → CUDA correlation IDs → actual CUPTI intervals for the same kernel family. Block counts in this run are inferred from rows and launch geometry; direct block evidence is EXP-0019.</div>
+  <div class="foot"><span>GPU Observer</span><span>8</span></div>
+</section>
+
+<!-- 9 · overhead chart -->
+<section class="slide">
+  <div class="kicker">Result 3 · EXP-0015 overhead study</div>
+  <h2 style="margin-bottom:6px">No instrumentation setting is distinguishable from unmodified vLLM.</h2>
+  <p style="font-size:18px; margin-bottom:18px">Output-throughput change vs unmodified vLLM, drift-corrected · 15 fresh-server runs, 3 counterordered repeats · Qwen3-14B, 64 requests (128 in / 64 out), concurrency 8</p>
+  <svg class="chart" width="1136" height="330" viewBox="0 0 1136 330" role="img" aria-label="Dot plot: scheduler -0.07%, packed rows -0.06%, device block events +0.19%, unfiltered CUPTI +0.51%, all inside the plus or minus 0.52% residual noise band">
+    <!-- plot area: x 300..900 maps -1%..+1% (300px per 1%) -->
+    <rect x="444" y="16" width="312" height="252" fill="rgba(159,181,171,.13)"/>
+    <text x="600" y="12" text-anchor="middle" font-size="13" fill="#9fb5ab">±1 residual s.d. = 0.52%</text>
+    <line x1="600" y1="16" x2="600" y2="268" stroke="#6b8078" stroke-width="1.5"/>
+    <!-- axis -->
+    <line x1="300" y1="268" x2="900" y2="268" stroke="#1f3330" stroke-width="1"/>
+    <g font-size="13" fill="#6b8078" text-anchor="middle">
+      <text x="300" y="290">−1.0%</text><text x="450" y="290">−0.5%</text><text x="600" y="290">0</text><text x="750" y="290">+0.5%</text><text x="900" y="290">+1.0%</text>
+    </g>
+    <text x="600" y="316" text-anchor="middle" font-size="13" fill="#9fb5ab">← slower · throughput change · faster →</text>
+    <!-- rows -->
+    <g font-size="17" fill="#e6f2ec" text-anchor="end">
+      <text x="280" y="56">Scheduler semantics</text>
+      <text x="280" y="116">+ packed rows</text>
+      <text x="280" y="176">+ device block events</text>
+      <text x="280" y="236">+ unfiltered CUPTI</text>
+    </g>
+    <g stroke="#1f3330" stroke-width="1">
+      <line x1="300" y1="51" x2="900" y2="51"/><line x1="300" y1="111" x2="900" y2="111"/>
+      <line x1="300" y1="171" x2="900" y2="171"/><line x1="300" y1="231" x2="900" y2="231"/>
+    </g>
+    <g fill="#72e3b1" stroke="#07100f" stroke-width="2">
+      <circle cx="579" cy="51" r="9"/><circle cx="582" cy="111" r="9"/><circle cx="657" cy="171" r="9"/><circle cx="753" cy="231" r="9"/>
+    </g>
+    <g font-size="17" fill="#9fb5ab">
+      <text x="930" y="56">−0.07%</text><text x="930" y="116">−0.06%</text><text x="930" y="176">+0.19%</text><text x="930" y="236">+0.51%</text>
+    </g>
+  </svg>
+  <div class="boundary" style="margin-top:6px">The honest claim is a bound: overhead is below this method’s ~0.5% resolution. Execution order alone explained 92% of throughput variance (−6.4% from first run to last); it was corrected for and is documented, not hidden.</div>
+  <div class="foot"><span>GPU Observer</span><span>9</span></div>
+</section>
+
+<!-- 10 · evidence -->
+<section class="slide mid tiers">
+  <div class="kicker">Honest by construction</div>
+  <h2>Every value on screen says how it was obtained.</h2>
+  <div class="grid2">
+    <div class="card"><span class="tier t-measured">measured</span><p>Emitted directly by an observer: scheduler slices, packed rows, CUPTI kernel intervals, device block events.</p></div>
+    <div class="card"><span class="tier t-reconstructed">reconstructed</span><p>Joined from measured identifiers and timestamps — e.g. block ownership from authoritative row ranges.</p></div>
+    <div class="card"><span class="tier t-matched">matched</span><p>Validated against an independent source, such as a replay with the same fingerprint.</p></div>
+    <div class="card"><span class="tier t-unavailable">unavailable</span><p>Shown as missing, never invented — e.g. instruction-level data the shipped binaries don’t expose.</p></div>
+  </div>
+  <div class="foot"><span>GPU Observer</span><span>10</span></div>
+</section>
+
+<!-- 11 · limits & next -->
+<section class="slide mid">
+  <div class="kicker">Limits and next steps</div>
+  <h2>What is proven today, and what comes next.</h2>
+  <div class="grid2">
+    <div class="card"><h3>Limits</h3>
+      <ul style="margin-top:8px">
+        <li style="font-size:17px">Exact ownership for one kernel family, single-stream graph replay.</li>
+        <li style="font-size:17px">Live kernel view is specific to Qwen3-14B’s layer shape.</li>
+        <li style="font-size:17px">Live system is pinned to DGX Spark and this container image.</li>
+        <li style="font-size:17px">Sealed traces are bounded to ~90 output tokens by a CUPTI table cap.</li>
+      </ul></div>
+    <div class="card"><h3>Next</h3>
+      <ul style="margin-top:8px">
+        <li style="font-size:17px">Discover kernel structure from captures, so any model renders.</li>
+        <li style="font-size:17px">Extend ownership to more kernel families and multi-stream batches.</li>
+        <li style="font-size:17px">A recorded replay of the live view that anyone can run.</li>
+        <li style="font-size:17px">One logged closed-loop action that improves a declared SLO.</li>
+      </ul></div>
+  </div>
+  <div class="foot"><span>GPU Observer</span><span>11</span></div>
+</section>
+
+<!-- 12 · timeline & links -->
+<section class="slide mid">
+  <div class="kicker">Timeline and links</div>
+  <h2>Built on a pre-event foundation; stated plainly.</h2>
+  <div class="timeline">
+    <div class="when">Aug 19 – Sep 9</div><div class="what">Foundation: bounded transport, vLLM semantic events, CUPTI and Compute Sanitizer probes, the joins, and the experiments on the previous slides.</div>
+    <div class="when">Sep 10 – 16 · event</div><div class="what">Live graph flow from the chat box into the tokenized prompt; diagnosed the shadow view’s batched-delivery join and made it opt-in; public hosted viewer; this submission.</div>
+  </div>
+  <div style="margin-top:40px; font: 600 22px var(--mono); line-height:1.8">
+    <div><span style="color:var(--dim)">demo&nbsp;&nbsp;</span> <span style="color:var(--mint)">harsh4786.github.io/gpu-observer</span></div>
+    <div><span style="color:var(--dim)">code&nbsp;&nbsp;</span> <span style="color:var(--mint)">github.com/harsh4786/gpu-observer</span></div>
+  </div>
+  <div class="foot"><span>GPU Observer</span><span>12</span></div>
+</section>
+
+</body>
+</html>

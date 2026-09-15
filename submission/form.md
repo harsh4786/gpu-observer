@@ -34,8 +34,8 @@ The observer and experiments were built before the event, from August 19; the ha
 - Demo platform: GitHub Pages (static viewer; the live system requires a DGX Spark)
 - Public repository: https://github.com/harsh4786/gpu-observer
 - Video: TODO (MP4, ≤ 5 min, < 300 MB)
-- Slides: TODO (PDF)
-- Cover image: TODO (16:9 PNG/JPG)
+- Slides: https://github.com/harsh4786/gpu-observer/raw/main/submission/deck.pdf (upload this PDF)
+- Cover image: https://github.com/harsh4786/gpu-observer/raw/main/submission/cover.png (1920×1080 PNG; upload this file)
 
 ## Technologies / tags
 
