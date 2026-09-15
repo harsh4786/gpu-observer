@@ -1,12 +1,97 @@
-# gpu-observer
+# GPU Observer
 
-Programmable request-to-GPU observability for vLLM V1 on NVIDIA DGX Spark.
+**See exactly what one LLM request does on the GPU** — from the prompt you type
+to the tokens, scheduler steps, packed GPU rows and CUDA kernel launches it
+becomes, down to the KV-cache blocks it owns. Every number on screen is labeled
+by how it was obtained: *measured*, *reconstructed*, *matched*, or *unavailable*.
 
-The repository now implements a DGX Spark vertical slice: fixed-layout bounded
-transport, vLLM V1 engine-step and authoritative packed-row events, external
-CUDA launch observation, graph-safe SASS block probes for one cache-kernel
-family, and a bounded CUPTI agent for actual kernel intervals. Observation and
-policy remain separate, and every attribution mode states its precision limit.
+Built on an NVIDIA DGX Spark (GB10) with vLLM V1 and Qwen3-14B.
+
+**Try it:** <https://harsh4786.github.io/gpu-observer/> → click
+**Load sample trace**. It is a real sealed capture from the DGX Spark: one
+focused request alongside 7 concurrent requests, 65 engine steps, and 2,600
+measured GPU intervals of the KV-cache write kernel. No GPU needed to explore it.
+
+## The problem
+
+Between "request in" and "tokens out", an inference server is opaque. The
+scheduler batches requests, the model runner packs and reorders their tokens
+into GPU rows, and CUDA Graphs replay kernels with little host-side
+visibility. Profilers show kernels, but not *whose* work they are. So basic
+operator questions have no direct answer: which request is this GPU work for?
+What did this prompt cost on the GPU? Why did this request slow down?
+
+## What GPU Observer does
+
+```text
+chat prompt -> tokens -> vLLM scheduler step -> packed GPU rows
+            -> CUDA kernel launches (CUPTI) -> request-owned KV-cache blocks
+```
+
+- **Live view.** Type a prompt and watch the causal graph build: the tokenized
+  prompt, each engine step and its phase, the packed rows it ran on, and a
+  per-layer kernel DAG that lights up from real CUPTI launches — with per-stage
+  kernel-call counts split into thinking and response tokens, and a rolling
+  GPU-busy window.
+- **Sealed traces.** Export one request's complete causal record
+  (`GPU_OBSERVER_TRACE_V2`) and explore it offline, step by step — including
+  where vLLM reordered rows between the scheduler and the GPU. This is what the
+  hosted demo shows.
+- **Honest evidence.** The inference hot path emits fixed-size records into
+  bounded lock-free rings; nothing is drawn as measured unless an observer
+  emitted it, and every join states its precision limit.
+
+## Results
+
+**Request-to-block ownership, directly observed** ([EXP-0019](benchmarks/join-b/exp0019-graph-ownership/20260814T130704Z/claims.md)).
+For `reshape_and_cache_flash_kernel` under CUDA Graph replay, authoritative
+post-compaction packed rows were joined to device block-entry events to recover
+per-request cache-block ownership over a single-stream decode suffix: 35 steps,
+1,400 graph nodes, 7,560 device block events (6,400 request-owned, 1,160
+padding), zero drops and zero geometry or request-count mismatches, with 25 of
+those steps exercising scheduler-versus-packed-row reordering.
+
+**Request rows joined to real GPU intervals** ([EXP-0020](benchmarks/join-b/exp0020-cupti-ownership/20260814T144544Z/claims.md)).
+The same rows joined to CUDA correlation IDs and actual CUPTI kernel intervals
+under asynchronous CUDA Graph execution: 1,400 activities, exactly 40 per step,
+zero loss or correlation misses, 64 ns clock-calibration uncertainty.
+
+**Overhead below the measurement floor** ([EXP-0015](benchmarks/join-b/exp0015-overhead-20260909T195321Z/analysis.md)).
+15 fresh-server runs across 5 configurations — unmodified vLLM, scheduler
+semantics, packed rows, device block events, and unfiltered CUPTI capture of
+every kernel launch — in 3 counterordered repeats (Qwen3-14B, 64 requests of
+128 in / 64 out, concurrency 8). After correcting for a run-wide throughput
+drift, no configuration is distinguishable from unmodified vLLM: changes of
+−0.07% to +0.51% against a residual noise of 0.52%. The honest claim is a
+bound — client-visible overhead is too small for this method to resolve. The
+same study found that execution order alone explained 92% of the throughput
+variance (−6.4% from first run to last), which is documented rather than
+hidden.
+
+## Limits
+
+- Exact per-request ownership is validated for one kernel family
+  (`reshape_and_cache_flash_kernel`) and single-stream graph replay; it is not
+  claimed for attention, GEMM, or fused kernels, or for multi-stream graphs.
+- CUPTI and Compute Sanitizer cannot share a process on this stack, so timed
+  kernels and device block events come from two explicit modes (a mirrored
+  "shadow" container supplies the live block view, off by default; enable it
+  with `?shadow=1`).
+- The live kernel view is specific to Qwen3-14B's layer shape; other
+  architectures need their kernel structure described first.
+- The CUPTI agent caps its runtime-API table at 65,536 records, which bounds a
+  sealed trace to roughly 90 output tokens.
+- The live system is pinned to this hardware and container image; reproducing
+  it elsewhere is not yet packaged. The hosted viewer runs anywhere.
+
+## Timeline
+
+This repository was started on 2026-08-19; the observer, probes, joins and
+experiments above were built before the AI Infra Summit Hackathon. Work done
+during the hackathon window (Sept 10–16) was the live graph flow from the chat
+box into the tokenized prompt, diagnosing the shadow view's batched-delivery
+join and making it opt-in, the public hosted viewer, and this submission.
+The full history is in the commit log.
 
 ## Data path
 
@@ -43,7 +128,7 @@ boundary so traces remain easy to inspect.
 - Allocation-free prefill-interference detector.
 - Cold JSONL validation, raw-copy, and JSON report CLI.
 - Opt-in focused query capture with rendered prompt, exact token IDs, and tokenizer strings.
-- Semantic ABI v3 records authoritative packed token rows and accepted output tokens.
+- Semantic records carry authoritative packed token rows and accepted output tokens.
 - Sealed `GPU_OBSERVER_TRACE_V2` export with measured/reconstructed/matched evidence labels.
 - Progressive query-to-token-to-step-to-kernel UI with an optional replay-matched SASS microscope.
 
@@ -61,14 +146,14 @@ cargo run --release -p gpu-observer-core --example ring_bench -- \
   5000000 65536
 ```
 
-Open the schema-only UI fixture without starting a model:
+Open the trace viewer without a GPU (or use the hosted copy above):
 
 ```bash
-python3 -m http.server 8088 --directory /home/harsh4786/gpu-observer
+python3 -m http.server 8088 --directory .
 ```
 
-Then visit `http://127.0.0.1:8088/ui/trace.html`. For a measured Qwen3-14B
-trace, run `./benchmarks/run-query-to-sass-timed.sh`; see
+Then visit `http://127.0.0.1:8088/ui/trace.html?offline=1` and click
+**Load sample trace**. The live system is described in
 [the visualization guide](ui/USAGE.md).
 
 The checked-in fixture demonstrates a decode request sharing an engine step
