@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=graph52";
-import { connectKernelActivity } from "./kernel-activity.js?v=graph52";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph52";
+import { renderCausalGraph } from "./causal-graph.js?v=graph53";
+import { connectKernelActivity } from "./kernel-activity.js?v=graph53";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=graph53";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -798,6 +798,13 @@ if (offlineMode) {
   for (const selector of [".chat-card", ".kernel-activity-card", ".output-card", "#output-connector", "#input-connector"]) {
     document.querySelector(selector)?.classList.add("hidden");
   }
+  // The idle and header copy both tell you to send a message -- but the chat
+  // box is one of the panels just hidden, so in offline mode they have to say
+  // what is actually true of a static, GPU-less page.
+  byId("graph-idle").textContent = params.get("trace")
+    ? "Loading a real sealed capture from an NVIDIA DGX Spark…"
+    : "Click “Load sample trace” above to open a real capture from an NVIDIA DGX Spark — no GPU needed.";
+  byId("run-subtitle").textContent = "Sealed trace viewer — real captured data, no GPU required.";
 } else {
   connectWebSocket();
   if (shadowEnabled) {
