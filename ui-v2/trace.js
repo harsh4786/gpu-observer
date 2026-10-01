@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2a7";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2a7";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2a7";
+import { renderCausalGraph } from "./causal-graph.js?v=v2a9";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2a9";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2a9";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -424,6 +424,7 @@ function renderSass() {
   const kernel = currentKernel();
   const status = byId("sass-status");
   const content = byId("sass-content");
+  if (!status || !content) return; // SASS card is not part of this shell
   if (!deep || !kernel) {
     status.className = "badge unknown";
     status.textContent = "not captured";
