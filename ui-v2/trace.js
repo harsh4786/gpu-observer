@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2c2";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2c2";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2c2";
+import { renderCausalGraph } from "./causal-graph.js?v=v2c4";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2c4";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2c4";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -10,6 +10,10 @@ const state = {
   // Live-mode fields. Unused (stay at defaults) when viewing a sealed
   // TraceBundle file -- offline viewing behaves exactly as before.
   liveMode: false,
+  // liveMode only turns true once a chat message starts a live trace. livePage
+  // is true for the whole session of a non-offline page, so the engine's state
+  // can be read and shown before anything has been sent.
+  livePage: false,
   liveStepIds: new Map(), // step-id string -> index into trace.steps, for O(1) patch application
   liveFocusHash: null, // which request's hash this chat turn is about; see resolveLiveFocus()
   liveFocusPromptTokens: null, // real prompt token count, captured off this turn's first request_slice patch -- see resolveLiveFocus()
@@ -216,6 +220,24 @@ function startPlayback() {
 // PAUSED_ALL sets the scheduler's token budget to zero: no request is
 // scheduled, no kernel launches, KV cache is kept, and resume continues the
 // same token stream.
+// The pause flag lives in a file on the host and outlives the page: pause the
+// engine, close the tab, and it is still paused on the next load. state
+// .enginePaused starts false, so without this the UI would assert "running"
+// about an engine it never asked, and every message sent would hang with no
+// explanation -- which is exactly what a left-over pause looks like from the
+// chat box. Ask once at startup and show what is actually true.
+async function syncEnginePaused() {
+  if (!state.livePage) return;
+  try {
+    const response = await fetch(`${CONTROL_BASE}/state`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    state.enginePaused = Boolean((await response.json()).paused);
+  } catch (error) {
+    state.enginePaused = null; // no control endpoint: the freeze is view-only
+  }
+  renderSpine();
+}
+
 async function setEnginePaused(paused) {
   if (!state.liveMode) return; // a sealed trace has no engine to pause
   try {
@@ -302,8 +324,8 @@ function renderSpine() {
   const previous = svg.querySelector("rect.tick.current");
   if (previous) previous.classList.remove("current");
   svg.querySelector(`rect.tick[data-i="${state.stepIndex}"]`)?.classList.add("current");
-  const engineNote = state.liveMode && state.enginePaused === true ? " · engine paused (PAUSED_ALL)"
-    : state.liveMode && state.enginePaused === null ? " · view only, no engine control"
+  const engineNote = state.livePage && state.enginePaused === true ? " · engine paused (PAUSED_ALL)"
+    : state.livePage && state.enginePaused === null ? " · view only, no engine control"
     : "";
   const step = steps[state.stepIndex];
   byId("spine-label").textContent = (step
@@ -1035,7 +1057,9 @@ if (offlineMode) {
     : "Click “Load sample trace” above to open a real capture from an NVIDIA DGX Spark — no GPU needed.";
   byId("run-subtitle").textContent = "Sealed trace viewer — real captured data, no GPU required.";
 } else {
+  state.livePage = true;
   connectWebSocket();
+  syncEnginePaused();
   if (shadowEnabled) {
     document.querySelector(".kernel-activity-card")?.classList.remove("hidden");
     connectKernelActivity();
