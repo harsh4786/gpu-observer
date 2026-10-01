@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2c1";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2c1";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2c1";
+import { renderCausalGraph } from "./causal-graph.js?v=v2c2";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2c2";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2c2";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -124,11 +124,14 @@ function renderGraph() {
 }
 
 // The live graph has no Query node of its own -- the chat box above IS the
-// query -- so this arrow joins the two, pinned under the graph's tokens node
-// (renderLiveGraph tags it data-entry="prompt-tokens") so the prompt visibly
-// lands on what it becomes. Shown only while that live graph is on screen: a
-// sealed trace's query never came from this chat box, and ?offline=1 hides
-// the chat box entirely. It flows while a request is in flight (Stop is
+// query -- so this arrow joins the two. It used to be pinned under the graph's
+// tokens node (renderLiveGraph tags it data-entry="prompt-tokens"), but that
+// node sits at the far left of the lane layout, which left the arrow stranded
+// off to one side under a centred chat box; it now sits centred, matching the
+// chat box it descends from. The tokens node still decides *whether* it shows,
+// so the arrow only appears once there is something for the prompt to land on.
+// Shown only while that live graph is on screen: a sealed trace's query never
+// came from this chat box, and ?offline=1 hides the chat box entirely. It flows while a request is in flight (Stop is
 // enabled) and the tokenized prompt length has not arrived yet; keying off
 // Stop means an error or abort settles it too, via sendChatMessage's finally.
 function positionInputConnector() {
@@ -143,10 +146,7 @@ function positionInputConnector() {
     return;
   }
   connector.classList.remove("hidden");
-  const node = entry.getBoundingClientRect();
-  const parent = connector.parentElement.getBoundingClientRect();
-  const x = Math.max(12, node.left + node.width / 2 - parent.left);
-  connector.style.setProperty("--entry-x", `${x}px`);
+  connector.style.removeProperty("--entry-x"); // fall back to the CSS 50% centre
   const inFlight = !byId("chat-stop").disabled;
   connector.classList.toggle("active", inFlight && state.liveFocusPromptTokens == null);
 }
