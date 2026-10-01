@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2a5";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2a5";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2a5";
+import { renderCausalGraph } from "./causal-graph.js?v=v2a6";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2a6";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2a6";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -366,8 +366,11 @@ function renderStep() {
     // step exists yet. Show that honestly instead of crashing on a null
     // step. The causal graph itself still renders (query/tokenizer lanes
     // form immediately -- see renderCausalGraph's null-step handling).
-    byId("kernel-detail").innerHTML = '<div class="empty-state">No engine step yet.</div>';
-    byId("ownership-list").innerHTML = "";
+    // The kernel-ownership card was removed from this shell; phase 2 brings it
+    // back inside the inspector drawer, so these renders are now optional.
+    const idleDetail = byId("kernel-detail");
+    if (idleDetail) idleDetail.innerHTML = '<div class="empty-state">No engine step yet.</div>';
+    byId("ownership-list")?.replaceChildren();
     renderGraph();
     return;
   }
@@ -380,6 +383,7 @@ function renderKernelDetail() {
   const kernel = currentKernel();
   const detail = byId("kernel-detail");
   const owners = byId("ownership-list");
+  if (!detail || !owners) return; // card not present in this shell
   owners.innerHTML = "";
   if (!kernel) {
     detail.innerHTML = '<div class="empty-state">Select a step with CUPTI kernels.</div>';

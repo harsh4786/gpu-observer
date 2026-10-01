@@ -38,7 +38,7 @@ p { color: var(--muted); }
 .status.illustrative { color: var(--cyan); }
 .hidden { display: none !important; }
 .error-panel { margin-bottom: 14px; padding: 14px; color: #ffd8d1; border: 1px solid rgba(255,139,122,.4); border-radius: 12px; background: rgba(255,139,122,.08); }
-.microscope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.microscope-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 12px; }
 .graph-card, .kernel-detail-card, .sass-card, .evidence-card {
   border: 1px solid var(--line); border-radius: 17px; background: rgba(12,24,22,.9);
 }
