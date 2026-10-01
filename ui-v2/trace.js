@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2a9";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2a9";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2a9";
+import { renderCausalGraph } from "./causal-graph.js?v=v2c1";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2c1";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2c1";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -267,6 +267,9 @@ function updateTransportEnabled() {
     const button = byId(id);
     if (button) button.disabled = count === 0;
   }
+  // With no steps the full-height spine is 64px of empty box. Collapse it to a
+  // baseline so the shell reads as an axis awaiting data, not a dead band.
+  byId("timeline")?.classList.toggle("empty", count === 0);
 }
 
 function renderSpine() {
@@ -451,6 +454,8 @@ function renderSass() {
 }
 
 function renderEvidence() {
+  const grid = byId("evidence-grid");
+  if (!grid) return; // evidence tiers are not part of this shell
   const evidence = state.trace.evidence;
   const columns = [
     ["measured", "Measured", evidence.measured ?? []],
@@ -465,7 +470,7 @@ function renderEvidence() {
     ]]);
   }
   columns.push(["unknown", "Unavailable", evidence.unavailable ?? []]);
-  byId("evidence-grid").innerHTML = columns.map(([kind, title, values]) =>
+  grid.innerHTML = columns.map(([kind, title, values]) =>
     `<div class="evidence-column"><span class="badge ${kind}">${escapeMarkup(title)}</span><ul>${values.map((value) => `<li>${escapeMarkup(value)}</li>`).join("")}</ul></div>`
   ).join("");
 }

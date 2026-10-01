@@ -17,6 +17,28 @@ export function truncate(value, limit) {
   return text.length > limit ? `${text.slice(0, limit - 1)}…` : text;
 }
 
+// Character counts cannot predict rendered width: the same budget that fits on
+// one machine's monospace fallback overflows on another's. Measure the laid-out
+// text instead and trim until it fits, so a node's text never leaves its box
+// regardless of which font the browser actually resolved. The node must already
+// be in the document -- getComputedTextLength() returns 0 while detached, and
+// that case is left alone rather than trimmed to nothing.
+function fitToWidth(textNode, maxWidth) {
+  if (!textNode.getComputedTextLength || maxWidth <= 0) return;
+  let width = textNode.getComputedTextLength();
+  if (!width || width <= maxWidth) return;
+  const full = textNode.textContent;
+  let lo = 0;
+  let hi = full.length;
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    textNode.textContent = `${full.slice(0, mid).trimEnd()}…`;
+    width = textNode.getComputedTextLength();
+    if (width <= maxWidth) lo = mid; else hi = mid - 1;
+  }
+  textNode.textContent = lo > 0 ? `${full.slice(0, lo).trimEnd()}…` : "";
+}
+
 // Stable, deterministic per-request color from a hash of the request id --
 // same request always gets the same color within a page load, with no
 // server-side coordination needed. Shared so any view attributing evidence
@@ -91,13 +113,15 @@ export function addNode(svg, options) {
   });
   titleNode.textContent = truncate(title, titleLimit);
   group.append(titleNode);
-  lines.slice(0, 2).forEach((line, index) => {
+  const lineNodes = lines.slice(0, 2).map((line, index) => {
     const lineNode = svgElement("text", { x: 13, y: 39 + index * 16, class: "graph-node-line" });
     lineNode.textContent = truncate(line, 30);
     group.append(lineNode);
+    return lineNode;
   });
+  let badgeNode = null;
   if (badge) {
-    const badgeNode = svgElement("text", {
+    badgeNode = svgElement("text", {
       x: width - 9,
       y: 18,
       class: "graph-node-badge",
@@ -107,6 +131,23 @@ export function addNode(svg, options) {
     group.append(badgeNode);
   }
   svg.append(group);
+  // Measured once the group is attached. The badge shares the title's baseline,
+  // so the title only gets the width the badge leaves. For a long title in a
+  // narrow box that is not enough -- "Foreground query" in 168px came out as
+  // "Foregroun...". Rather than truncate the title, drop the badge to its own
+  // row at the bottom when the node has the vertical room for one, and give the
+  // title the whole width. Only if there is no room does the title give way.
+  const badgeWidth = badgeNode?.getComputedTextLength ? badgeNode.getComputedTextLength() : 0;
+  const titleWidth = titleNode.getComputedTextLength ? titleNode.getComputedTextLength() : 0;
+  const inlineRoom = width - 26 - (badgeWidth ? badgeWidth + 10 : 0);
+  const lastLineY = lineNodes.length ? 39 + (lineNodes.length - 1) * 16 : 22;
+  if (badgeNode && titleWidth > inlineRoom && height - lastLineY >= 16) {
+    badgeNode.setAttribute("y", String(height - 8));
+    fitToWidth(titleNode, width - 26);
+  } else {
+    fitToWidth(titleNode, inlineRoom);
+  }
+  for (const lineNode of lineNodes) fitToWidth(lineNode, width - 26);
   return {
     left: x,
     right: x + width,
@@ -141,6 +182,13 @@ export function addEdge(svg, from, to, options = {}) {
     });
     text.textContent = label;
     svg.append(text);
+    // The label is centred on the gap between the two nodes, 8px above their
+    // centre line -- which is still inside both boxes. When the label is wider
+    // than that gap it overprints the node text (measured: "tokenize" ran 56px
+    // into the query node). Lift it clear of the taller box instead.
+    const gap = to.left - from.right;
+    const textWidth = text.getComputedTextLength ? text.getComputedTextLength() : 0;
+    if (textWidth > gap - 6) text.setAttribute("y", String(Math.min(from.top, to.top) - 11));
   }
 }
 

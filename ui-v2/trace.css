@@ -116,6 +116,7 @@ p { color: var(--muted); }
 .transport button[aria-pressed="true"] { color: var(--bg); border-color: var(--mint); background: var(--mint); font-weight: 700; }
 .transport .tp-live { color: var(--mint); border-color: var(--mint); }
 .spine { grid-area: spine; width: 100%; height: 64px; display: block; cursor: col-resize; }
+.timeline.empty .spine { height: 18px; cursor: default; border-bottom: 1px dashed var(--line-strong); }
 .spine rect.tick { fill: rgba(220, 240, 231, .22); }
 .spine rect.tick.prefill { fill: rgba(220, 240, 231, .46); }
 .spine rect.tick.mixed { fill: rgba(220, 240, 231, .66); }

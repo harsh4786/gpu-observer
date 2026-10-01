@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=v2a9";
-import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=v2a9";
+} from "./graph-primitives.js?v=v2c1";
+import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=v2c1";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -88,8 +88,19 @@ export function renderCausalGraph({ svg, trace, step, kernelIndex, onKernelSelec
 function renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liveActive, scheduler }) {
   const packed = step.packedSlices ?? [];
   const laneCount = Math.max(scheduler.length, packed.length, 1);
-  const rowGap = Math.max(48, Math.min(64, 320 / laneCount));
-  const firstRowY = 76;
+  // Lane nodes carry a title plus two lines; the second line's baseline is at
+  // y=55, so the node needs LANE_NODE_H to contain it and the pitch needs to
+  // clear that. The old floor of 48 against a 50px box let every lane node's
+  // request-hash line render outside its own card and collide with the node
+  // below it (measured: 180x12 overlap on every step with 7 lanes).
+  const rowGap = Math.max(LANE_NODE_H + 12, Math.min(72, 320 / laneCount));
+  // The outcome lane's upper node is drawn at centerY - 70. On a sparse step
+  // (one scheduler lane) centerY was 76, which put that node at y=6 -- on top
+  // of the lane headings, whose subtitles end at y~47. Start the rows low
+  // enough that the highest node clears them; a busy step already does.
+  const LANE_HEADING_BOTTOM = 47;
+  const TALLEST_RISE = 70;
+  const firstRowY = Math.max(76, LANE_HEADING_BOTTOM + 12 + TALLEST_RISE - (laneCount - 1) * rowGap / 2);
   const graphHeight = Math.max(360, firstRowY + laneCount * rowGap + 100);
   svg.setAttribute("viewBox", `0 0 1470 ${graphHeight}`);
   svg.setAttribute("height", graphHeight);
@@ -103,7 +114,7 @@ function renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liv
 
   const centerY = firstRowY + (laneCount - 1) * rowGap / 2;
   const queryNode = addNode(svg, {
-    x: 18, y: centerY - 26, width: 168, height: 52,
+    x: 18, y: centerY - 33, width: 168, height: 66,
     color: "#72e3b1", title: "Foreground query",
     lines: [naturalQuery(trace.query)], badge: "measured", focus: true,
     onActivate: () => scrollToCard("query-text"),
@@ -112,7 +123,7 @@ function renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liv
     .map((token) => token.display ?? token.raw ?? `#${token.id}`)
     .join(" · ");
   const tokenNode = addNode(svg, {
-    x: 210, y: centerY - 26, width: 168, height: 52,
+    x: 210, y: centerY - 33, width: 168, height: 66,
     color: "#64c7e8", title: `${trace.query.tokens.length} prompt tokens`,
     lines: preview ? [preview] : [], badge: "measured",
     onActivate: () => scrollToCard("prompt-tokens"),
@@ -123,7 +134,7 @@ function renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liv
   scheduler.forEach((slice, index) => {
     const focus = slice.requestId === trace.focus.requestHash;
     const node = addNode(svg, {
-      x: 405, y: firstRowY + index * rowGap, width: 178, height: 50,
+      x: 405, y: firstRowY + index * rowGap, width: 178, height: LANE_NODE_H,
       color: requestColor(slice.requestId),
       title: focus ? "Focused slice" : `Peer request ${index}`,
       lines: [`${slice.scheduledTokens} token${slice.scheduledTokens === 1 ? "" : "s"} · ${slice.phase}`, shortId(slice.requestId)],
@@ -140,7 +151,7 @@ function renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liv
   packed.forEach((slice, index) => {
     const focus = slice.requestId === trace.focus.requestHash;
     const node = addNode(svg, {
-      x: 650, y: firstRowY + index * rowGap, width: 182, height: 50,
+      x: 650, y: firstRowY + index * rowGap, width: 182, height: LANE_NODE_H,
       color: requestColor(slice.requestId),
       title: focus ? "Focused rows" : `Packed P${slice.packedIndex}`,
       lines: [`rows [${slice.rowBegin}, ${slice.rowEnd})`, `${slice.scheduledTokens} token${slice.scheduledTokens === 1 ? "" : "s"} · ${slice.phase}`],
@@ -187,7 +198,7 @@ function renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liv
 
   const hasOutput = step.acceptedOutputTokens.length > 0;
   const outputNode = addNode(svg, {
-    x: 1250, y: centerY - 70, width: 195, height: 52,
+    x: 1250, y: centerY - 70, width: 195, height: 66,
     color: hasOutput ? "#72e3b1" : "#60756d", kind: hasOutput ? "measured" : "unknown",
     title: "Accepted output", lines: [outputPreview(trace, step)],
     badge: hasOutput ? "measured" : undefined, pulse: hasOutput && liveActive,
@@ -262,6 +273,10 @@ const DAG_NODE_W = 160;
 const DAG_NODE_H = 56;
 const DAG_NODE_GAP = 18;
 const DAG_ROW_GAP = 44;
+// Title at y=22, lines at y=39 and y=55: the box must reach past the second
+// line's descender or that line renders outside the card.
+const LANE_NODE_H = 60;
+
 const DAG_TOP_COUNT = 6;
 const DAG_BOTTOM_COUNT = 5;
 const DAG_TOP_WIDTH = DAG_TOP_COUNT * DAG_NODE_W + (DAG_TOP_COUNT - 1) * DAG_NODE_GAP;
