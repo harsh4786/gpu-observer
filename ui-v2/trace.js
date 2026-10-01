@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2a3";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2a3";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2a3";
+import { renderCausalGraph } from "./causal-graph.js?v=v2a4";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2a4";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2a4";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -157,26 +157,48 @@ function selectStep(index, { manual = false } = {}) {
 
 // ---- v2 transport ---------------------------------------------------------
 
+// "Moving" is what the eye sees: stepping through buffered steps, or riding the
+// newest live step. Pause has to stop BOTH, otherwise a live view keeps being
+// yanked forward by step_begin and the DAG keeps repainting, which is what
+// "pause does nothing" looked like.
+function isMoving() {
+  return state.transport.playing || (state.liveMode && state.transport.pinned);
+}
+
+// Frozen means the stage holds still. Capture keeps running: steps keep being
+// appended and new ticks keep appearing on the spine, so you can see data still
+// arriving while the view stays put.
+function isFrozen() {
+  return state.liveMode && !state.transport.pinned && !state.transport.playing;
+}
+
+function updatePlayButton() {
+  const button = byId("tp-play");
+  if (!button) return;
+  const moving = isMoving();
+  button.textContent = moving ? "\u275A\u275A" : "\u25B6";
+  button.setAttribute("aria-pressed", moving ? "true" : "false");
+  button.setAttribute("aria-label", moving ? "Pause" : "Play");
+}
+
 function stopPlayback() {
   if (state.transport.timer) clearInterval(state.transport.timer);
   state.transport.timer = null;
   state.transport.playing = false;
-  const button = byId("tp-play");
-  if (button) { button.textContent = "\u25B6"; button.setAttribute("aria-pressed", "false"); }
+  updatePlayButton();
 }
 
 function startPlayback() {
   if (!state.trace?.steps.length) return;
   stopPlayback();
   state.transport.playing = true;
-  const button = byId("tp-play");
-  if (button) { button.textContent = "\u275A\u275A"; button.setAttribute("aria-pressed", "true"); }
+  updatePlayButton();
   state.transport.timer = setInterval(() => {
     const last = state.trace.steps.length - 1;
     if (state.stepIndex >= last) {
       // Live: playback caught up with capture, so hand control back to the
       // live playhead rather than stopping dead at the newest step.
-      if (state.liveMode) { state.transport.pinned = true; stopPlayback(); return; }
+      if (state.liveMode) { state.transport.pinned = true; stopPlayback(); renderSpine(); return; }
       stopPlayback();
       return;
     }
@@ -185,7 +207,14 @@ function startPlayback() {
 }
 
 function togglePlayback() {
-  if (state.transport.playing) stopPlayback(); else startPlayback();
+  if (isMoving()) {
+    // Freeze: detach from the live playhead as well as stopping playback.
+    stopPlayback();
+    state.transport.pinned = false;
+    renderSpine();
+    return;
+  }
+  startPlayback();
 }
 
 function cycleSpeed(direction = 1) {
@@ -251,6 +280,7 @@ function renderSpine() {
     ? `step ${step.id} · ${step.phase} · ${step.scheduledTokens} tokens · ${step.kernels.length} kernels · ${state.stepIndex + 1}/${steps.length}`
     : "no steps yet";
   byId("tp-live").classList.toggle("hidden", !(state.liveMode && !state.transport.pinned));
+  updatePlayButton();
 }
 
 function selectKernel(index) {
@@ -719,6 +749,7 @@ function scheduleReconnect() {
 
 setInterval(() => {
   if (!state.liveStepActive) return;
+  if (isFrozen()) return; // paused: hold the stage still while capture continues
   // Real CUPTI kernel_launch events arrive continuously via cupti-activity.js
   // (often many per millisecond during decode); re-rendering the SVG graph
   // on every single message would be wasteful, so this throttles the actual
