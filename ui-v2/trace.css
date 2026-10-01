@@ -110,6 +110,8 @@ p { color: var(--muted); }
 .transport { grid-area: transport; display: flex; align-items: center; gap: 6px; }
 .transport button { min-width: 34px; height: 30px; padding: 0 9px; color: var(--text); border: 1px solid var(--line-strong); border-radius: 8px; background: var(--panel); font: 12px ui-monospace, monospace; cursor: pointer; }
 .transport button:hover { border-color: var(--mint); }
+.transport button:disabled { opacity: .4; cursor: default; }
+.transport button:disabled:hover { border-color: var(--line-strong); }
 .transport button:active { transform: translateY(1px); }
 .transport button[aria-pressed="true"] { color: var(--bg); border-color: var(--mint); background: var(--mint); font-weight: 700; }
 .transport .tp-live { color: var(--mint); border-color: var(--mint); }

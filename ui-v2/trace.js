@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2a2";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2a2";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2a2";
+import { renderCausalGraph } from "./causal-graph.js?v=v2a3";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2a3";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2a3";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -208,10 +208,19 @@ function spineIndexFromEvent(event) {
 // Ticks are appended, never rebuilt: each step owns a fixed SPINE_TICK slice of
 // the viewBox and the viewBox grows, so a 400-step live run costs one <rect>
 // per step instead of re-laying-out every tick at the 150ms render cadence.
+function updateTransportEnabled() {
+  const count = state.trace?.steps.length ?? 0;
+  for (const id of ["tp-prev", "tp-play", "tp-next", "tp-speed"]) {
+    const button = byId(id);
+    if (button) button.disabled = count === 0;
+  }
+}
+
 function renderSpine() {
   const svg = byId("spine");
   if (!svg) return;
   const steps = state.trace?.steps ?? [];
+  updateTransportEnabled();
   const built = Number(svg.dataset.built ?? 0);
   if (steps.length < built) { svg.innerHTML = ""; svg.dataset.built = "0"; }
   const from = Number(svg.dataset.built ?? 0);
@@ -864,6 +873,10 @@ async function sendChatMessage(text) {
 function installTransport() {
   const svg = byId("spine");
   if (!svg) return;
+  // Show the instrument shell immediately. Waiting for the first trace made a
+  // fresh live load look exactly like the old page, with no transport at all.
+  byId("timeline").classList.remove("hidden");
+  updateTransportEnabled();
   const seek = (event) => {
     if (!state.trace?.steps.length) return;
     selectStep(spineIndexFromEvent(event), { manual: true });
