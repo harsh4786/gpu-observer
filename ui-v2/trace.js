@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2a4";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2a4";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2a4";
+import { renderCausalGraph } from "./causal-graph.js?v=v2a5";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2a5";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2a5";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -18,6 +18,9 @@ const state = {
   // Transport. `pinned` keeps the playhead on the newest live step; any manual
   // seek detaches it (the log-viewer contract) and "jump to live" re-attaches.
   transport: { playing: false, speed: 1, pinned: true, timer: null },
+  // true/false once the control endpoint answers, null when it is unreachable
+  // (then pause is view-only and the engine keeps generating).
+  enginePaused: false,
   ws: null,
   wsReconnectTimer: null,
   chatBusy: false,
@@ -206,14 +209,35 @@ function startPlayback() {
   }, Math.max(40, PLAY_BASE_MS / state.transport.speed));
 }
 
+// Pausing the view is only half the story: the engine keeps generating unless
+// vLLM's own scheduler is paused. EngineCore exposes no RPC for that, so the
+// overlay watches a flag file in the bind-mounted run directory and this talks
+// to the small host endpoint that writes it (ui-v2/tools/pause-control.py).
+// PAUSED_ALL sets the scheduler's token budget to zero: no request is
+// scheduled, no kernel launches, KV cache is kept, and resume continues the
+// same token stream.
+async function setEnginePaused(paused) {
+  if (!state.liveMode) return; // a sealed trace has no engine to pause
+  try {
+    const response = await fetch(`${CONTROL_BASE}/${paused ? "pause" : "resume"}`, { method: "POST" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    state.enginePaused = Boolean((await response.json()).paused);
+  } catch (error) {
+    state.enginePaused = null; // no control endpoint: the freeze is view-only
+  }
+  renderSpine();
+}
+
 function togglePlayback() {
   if (isMoving()) {
     // Freeze: detach from the live playhead as well as stopping playback.
     stopPlayback();
     state.transport.pinned = false;
+    setEnginePaused(true);
     renderSpine();
     return;
   }
+  setEnginePaused(false);
   startPlayback();
 }
 
@@ -275,10 +299,13 @@ function renderSpine() {
   const previous = svg.querySelector("rect.tick.current");
   if (previous) previous.classList.remove("current");
   svg.querySelector(`rect.tick[data-i="${state.stepIndex}"]`)?.classList.add("current");
+  const engineNote = state.liveMode && state.enginePaused === true ? " · engine paused (PAUSED_ALL)"
+    : state.liveMode && state.enginePaused === null ? " · view only, no engine control"
+    : "";
   const step = steps[state.stepIndex];
-  byId("spine-label").textContent = step
+  byId("spine-label").textContent = (step
     ? `step ${step.id} · ${step.phase} · ${step.scheduledTokens} tokens · ${step.kernels.length} kernels · ${state.stepIndex + 1}/${steps.length}`
-    : "no steps yet";
+    : "no steps yet") + engineNote;
   byId("tp-live").classList.toggle("hidden", !(state.liveMode && !state.transport.pinned));
   updatePlayButton();
 }
@@ -490,6 +517,7 @@ const MODEL_NAME = params.get("model") ?? "Qwen/Qwen3-14B";
 // is mirrored here purely to generate GPU telemetry for the kernel-activity
 // card; its reply is never shown.
 const SHADOW_VLLM_BASE = params.get("shadowVllm") ?? `http://${location.hostname}:8001`;
+const CONTROL_BASE = params.get("control") ?? `http://${location.hostname}:8091`;
 // The shadow container is opt-in (?shadow=1). Its card shows real block-entry
 // events, but live it cannot place an event in the step it ran in: delivery
 // is batched and the events carry only a device-clock timestamp, so its
@@ -925,6 +953,7 @@ function installTransport() {
   byId("tp-next").addEventListener("click", () => step(1));
   byId("tp-speed").addEventListener("click", () => cycleSpeed(1));
   byId("tp-live").addEventListener("click", () => {
+    setEnginePaused(false); // following live again implies the engine should run
     state.transport.pinned = true;
     if (state.trace?.steps.length) selectStep(state.trace.steps.length - 1);
   });

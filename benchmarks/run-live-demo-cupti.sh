@@ -75,6 +75,7 @@ docker run -d \
   --security-opt label=disable \
   -e GPU_OBSERVER_SEMANTIC_LIB=/observer/libgpu_observer_vllm_bridge.so \
   -e GPU_OBSERVER_SEMANTIC_SHM=/observer-shm/semantic.ring \
+  -e GPU_OBSERVER_PAUSE_FILE=/observer-shm/pause.flag \
   -e GPU_OBSERVER_SEMANTIC_CAPACITY=65536 \
   -e GPU_OBSERVER_MAX_SLICES=1024 \
   -e GPU_OBSERVER_MAX_FOCUSED_TOKENS=8192 \

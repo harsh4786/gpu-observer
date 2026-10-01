@@ -1197,11 +1197,68 @@ class EngineCoreProc(EngineCore):
         """Returns true if shutdown has not been requested."""
         return self.shutdown_state == EngineShutdownState.RUNNING
 
+    def _gpu_observer_start_pause_watcher(self):
+        """Drive vLLM's own scheduler pause from a shared-memory flag file.
+
+        EngineCore is a separate process with no RPC for pause_scheduler, and
+        the UI cannot reach it directly. The run directory is bind-mounted into
+        the container, so a flag file there is the control channel: "1" pauses,
+        anything else resumes.
+
+        PAUSED_ALL sets the scheduler's token budget to zero, so no request is
+        scheduled and no kernel is launched, while requests keep their place in
+        self.running with their KV blocks. Resume therefore continues the same
+        token stream instead of recomputing it, which is why clear_cache is
+        False here: the default would drop caches and make a pause lossy.
+        """
+        path = os.environ.get("GPU_OBSERVER_PAUSE_FILE")
+        if not path or getattr(self, "_gpu_observer_pause_thread", None) is not None:
+            return
+
+        def watch():
+            paused = False
+            while True:
+                try:
+                    with open(path) as handle:
+                        requested = handle.read(8).strip() == "1"
+                except FileNotFoundError:
+                    requested = False
+                except OSError:
+                    requested = paused  # transient read error: hold current state
+                if requested != paused:
+                    paused = requested
+                    if paused:
+                        self.pause_scheduler(mode="keep", clear_cache=False)
+                        logger.info("gpu-observer: scheduler PAUSED_ALL")
+                    else:
+                        self.resume_scheduler()
+                        # The busy loop blocks on the input queue once the
+                        # scheduler reports no work, so resuming the state is
+                        # not enough; WAKEUP is a no-op request that unblocks it.
+                        try:
+                            self.input_queue.put_nowait((EngineCoreRequestType.WAKEUP, None))
+                        except Exception:  # queue absent or full: next client request wakes it
+                            logger.warning("gpu-observer: could not enqueue WAKEUP after resume")
+                        logger.info("gpu-observer: scheduler UNPAUSED")
+                time.sleep(0.1)
+
+        thread = threading.Thread(target=watch, name="gpu-observer-pause", daemon=True)
+        self._gpu_observer_pause_thread = thread
+        thread.start()
+        logger.info("gpu-observer: pause watcher armed on %s", path)
+
     def run_busy_loop(self):
         """Core busy loop of the EngineCore."""
+        self._gpu_observer_start_pause_watcher()
         while self._handle_shutdown():
             # 1) Poll the input queue until there is work to do.
             self._process_input_queue()
+            # While paused the scheduler schedules nothing, so stepping would
+            # either spin hot or do nothing; idle instead and let the watcher
+            # thread flip the state back.
+            if self.is_scheduler_paused():
+                time.sleep(0.02)
+                continue
             # 2) Step the engine core and return the outputs.
             self._process_engine_step()
 
