@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=v2c4";
-import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=v2c4";
+} from "./graph-primitives.js?v=v2d1";
+import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=v2d1";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -280,16 +280,25 @@ const LANE_NODE_H = 60;
 const DAG_TOP_COUNT = 6;
 const DAG_BOTTOM_COUNT = 5;
 const DAG_TOP_WIDTH = DAG_TOP_COUNT * DAG_NODE_W + (DAG_TOP_COUNT - 1) * DAG_NODE_GAP;
-const DAG_BOTTOM_GAP = (DAG_TOP_WIDTH - DAG_BOTTOM_COUNT * DAG_NODE_W) / (DAG_BOTTOM_COUNT - 1);
+// Both rows span DAG_TOP_WIDTH. Spreading 5 same-width nodes across it left a
+// 62.5px gap against the top row's 18px -- two different rhythms stacked, which
+// read as sloppy rather than as one diagram. Widen the bottom nodes instead so
+// every gap in the DAG is DAG_NODE_GAP, and the rows still end flush (keeping
+// the attn -> o_proj hop vertical).
+const DAG_BOTTOM_W = (DAG_TOP_WIDTH - (DAG_BOTTOM_COUNT - 1) * DAG_NODE_GAP) / DAG_BOTTOM_COUNT;
 const DAG_HEIGHT = DAG_NODE_H * 2 + DAG_ROW_GAP;
 
 function dagNodePosition(index, originX, originY) {
   if (index < DAG_TOP_COUNT) {
-    return { x: originX + index * (DAG_NODE_W + DAG_NODE_GAP), y: originY };
+    return { x: originX + index * (DAG_NODE_W + DAG_NODE_GAP), y: originY, width: DAG_NODE_W };
   }
   const bottomIndex = index - DAG_TOP_COUNT;
   const slotFromLeft = (DAG_BOTTOM_COUNT - 1) - bottomIndex; // o_proj (first bottom stage) sits rightmost, under attn
-  return { x: originX + slotFromLeft * (DAG_NODE_W + DAG_BOTTOM_GAP), y: originY + DAG_NODE_H + DAG_ROW_GAP };
+  return {
+    x: originX + slotFromLeft * (DAG_BOTTOM_W + DAG_NODE_GAP),
+    y: originY + DAG_NODE_H + DAG_ROW_GAP,
+    width: DAG_BOTTOM_W,
+  };
 }
 
 // Most stage-to-stage edges are a normal left-to-right hop within one row;
@@ -301,6 +310,24 @@ function dagNodePosition(index, originX, originY) {
 function connectDagStage(svg, from, to, options) {
   const verticalTransition = Math.abs(from.cx - to.cx) < DAG_NODE_W && to.top >= from.bottom - 4;
   if (!verticalTransition) {
+    if (to.cx < from.cx) {
+      // The bottom row runs right-to-left. addEdge always draws from.right to
+      // to.left, so a leftward hop started at the source's far right and ended
+      // at the target's far left -- crossing back over both boxes. Edges paint
+      // underneath the nodes, so all of that hid except the gap segment, and
+      // the arrowhead ended up beneath the target: the bottom row rendered as
+      // five bare connectors with no direction at all. Mirror the curve.
+      const bend = (from.left + to.right) / 2;
+      const back = svgElement("path", {
+        d: `M ${from.left} ${from.cy} C ${bend} ${from.cy}, ${bend} ${to.cy}, ${to.right} ${to.cy}`,
+        class: `graph-edge ${options.kind ?? "measured"}${options.flowing ? " flowing" : ""}`,
+        stroke: options.color ?? "#72e3b1",
+        "stroke-width": Math.max(1.2, options.width ?? 1.4),
+        "marker-end": `url(#${options.marker ?? "arrow-measured"})`,
+      });
+      svg.insertBefore(back, svg.querySelector(".graph-node"));
+      return;
+    }
     addEdge(svg, from, to, options);
     return;
   }
@@ -420,12 +447,12 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
     const stageState = snapshot.stages?.[index] ?? null;
     const entry = stageState?.entry ?? null;
     return addNode(svg, {
-      x: pos.x, y: pos.y, width: DAG_NODE_W, height: DAG_NODE_H,
+      x: pos.x, y: pos.y, width: pos.width, height: DAG_NODE_H,
       color: entry ? "#72e3b1" : "#64c7e8",
       kind: entry ? "measured" : "illustrative",
       pulse: Boolean(stageState?.live),
       title: stage.title,
-      titleLimit: 16,
+      titleLimit: index < DAG_TOP_COUNT ? 16 : 22,
       tooltip: entry
         ? `${stage.title} — ${stage.lines?.[0] ?? ""} · ${truncate(entry.name, 48)} · grid[${entry.grid.join(",")}]`
         : `${stage.title} — ${stage.lines?.[0] ?? ""} · no real launch observed yet this session`,
@@ -436,10 +463,18 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
   for (let i = 0; i < dagAnchors.length - 1; i += 1) {
     const toState = snapshot.stages?.[i + 1] ?? null;
     const bothMeasured = Boolean(snapshot.stages?.[i]?.entry) && Boolean(toState?.entry);
+    // Flow was gated on the target stage being "live", a ~250ms window. CUPTI
+    // delivers in bursts on its own clock, so that window is true for a
+    // different stage each repaint and the animation blinked around the ring
+    // instead of showing the sweep -- and the stages whose classification
+    // depends on what ran before them (o_proj, down_proj) rarely won the race
+    // at all. Gate on both ends having a real observed launch instead: during
+    // an active step every one of the 11 stages genuinely executes, once per
+    // layer, 40 times. An edge with an unclassified end still stays static.
     connectDagStage(svg, dagAnchors[i], dagAnchors[i + 1], {
       color: "#72e3b1", marker: "arrow-measured", width: 1.4,
       kind: bothMeasured ? "measured" : "illustrative",
-      flowing: liveActive && Boolean(toState?.live),
+      flowing: liveActive && bothMeasured,
     });
   }
 
