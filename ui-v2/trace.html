@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>GPU Observer v2 — timeline</title>
-  <link rel="stylesheet" href="./trace.css?v=v2d1">
+  <link rel="stylesheet" href="./trace.css?v=v2d2">
 </head>
 <body>
   <main class="app">
@@ -76,7 +76,6 @@
       <div id="graph-scroll" class="graph-scroll hidden">
         <svg id="causal-graph" role="img" aria-label="Query to tokenizer to scheduler slices to packed rows to GPU execution, accepted output, and SASS replay"></svg>
       </div>
-      <p class="graph-help">Choose an engine step, click a node to jump to its evidence, or click the GPU node to cycle kernels. Crossing request-colored edges expose vLLM row reordering.</p>
     </section>
 
     <div id="output-connector" class="output-connector" aria-hidden="true">
@@ -125,6 +124,6 @@
       Sealed traces are rendered offline. Raw ring, CUPTI, and sanitizer artifacts remain the source of truth.
     </footer>
   </main>
-  <script type="module" src="./trace.js?v=v2d1"></script>
+  <script type="module" src="./trace.js?v=v2d2"></script>
 </body>
 </html>

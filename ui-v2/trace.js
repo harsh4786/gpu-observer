@@ -1,6 +1,6 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2d1";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2d1";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2d1";
+import { renderCausalGraph } from "./causal-graph.js?v=v2d2";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2d2";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2d2";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {

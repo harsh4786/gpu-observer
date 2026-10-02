@@ -205,7 +205,6 @@ p { color: var(--muted); }
 .graph-edge-label.unknown { fill: var(--red); }
 .graph-edge-label.illustrative { fill: var(--cyan); }
 .graph-footnote { fill: var(--dim); font: 10.5px ui-monospace, monospace; }
-.graph-help { margin: 10px 2px 0; color: var(--dim); font-size: 9px; }
 .badge { display: inline-block; padding: 4px 7px; border: 1px solid var(--line); border-radius: 999px; font-size: 8px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .badge.measured { color: var(--mint); border-color: rgba(114,227,177,.3); background: rgba(114,227,177,.07); }
 .badge.reconstructed { color: var(--amber); border-color: rgba(255,198,109,.3); }
