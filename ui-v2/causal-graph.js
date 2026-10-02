@@ -9,8 +9,9 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=v2d5";
-import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=v2d5";
+  measureTextWidth,
+} from "./graph-primitives.js?v=v2d7";
+import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=v2d7";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -279,26 +280,52 @@ const LANE_NODE_H = 60;
 
 const DAG_TOP_COUNT = 6;
 const DAG_BOTTOM_COUNT = 5;
-const DAG_TOP_WIDTH = DAG_TOP_COUNT * DAG_NODE_W + (DAG_TOP_COUNT - 1) * DAG_NODE_GAP;
-// Both rows span DAG_TOP_WIDTH. Spreading 5 same-width nodes across it left a
-// 62.5px gap against the top row's 18px -- two different rhythms stacked, which
-// read as sloppy rather than as one diagram. Widen the bottom nodes instead so
-// every gap in the DAG is DAG_NODE_GAP, and the rows still end flush (keeping
-// the attn -> o_proj hop vertical).
-const DAG_BOTTOM_W = (DAG_TOP_WIDTH - (DAG_BOTTOM_COUNT - 1) * DAG_NODE_GAP) / DAG_BOTTOM_COUNT;
+// The row still spans this, but it is now a budget rather than a grid: boxes
+// take the width their own text needs and the leftover becomes gap. A fixed
+// 160px box made "RoPE" as wide as "reshape & cache" and left only 18px
+// between them, which is where the edge animation has to live.
+const DAG_ROW_WIDTH = DAG_TOP_COUNT * DAG_NODE_W + (DAG_TOP_COUNT - 1) * DAG_NODE_GAP;
+const DAG_PAD_X = 15;      // breathing room each side of the centred title
+const DAG_MIN_W = 74;      // "attn" and "RoPE" stay tappable, not slivers
+const DAG_MAX_W = 232;     // "post_attention_layernorm" fits whole at 13.5px
 const DAG_HEIGHT = DAG_NODE_H * 2 + DAG_ROW_GAP;
 
-function dagNodePosition(index, originX, originY) {
-  if (index < DAG_TOP_COUNT) {
-    return { x: originX + index * (DAG_NODE_W + DAG_NODE_GAP), y: originY, width: DAG_NODE_W };
-  }
-  const bottomIndex = index - DAG_TOP_COUNT;
-  const slotFromLeft = (DAG_BOTTOM_COUNT - 1) - bottomIndex; // o_proj (first bottom stage) sits rightmost, under attn
-  return {
-    x: originX + slotFromLeft * (DAG_BOTTOM_W + DAG_NODE_GAP),
-    y: originY + DAG_NODE_H + DAG_ROW_GAP,
-    width: DAG_BOTTOM_W,
-  };
+// Lays both rows out from the measured title widths. One gap value is shared by
+// both rows -- mixed gaps read as two diagrams stacked -- and it comes from the
+// top row, which is the wider of the two. The bottom row is then right-aligned
+// so o_proj still sits directly under attn and that hop stays vertical.
+function dagLayout(svg, titles, originX, originY) {
+  const widths = titles.map((title) => {
+    const text = measureTextWidth(svg, title, "graph-node-title");
+    return Math.max(DAG_MIN_W, Math.min(DAG_MAX_W, Math.round(text + DAG_PAD_X * 2)));
+  });
+  const topWidths = widths.slice(0, DAG_TOP_COUNT);
+  const bottomWidths = widths.slice(DAG_TOP_COUNT);
+  const sum = (list) => list.reduce((total, value) => total + value, 0);
+  const gap = Math.max(
+    DAG_NODE_GAP,
+    (DAG_ROW_WIDTH - sum(topWidths)) / Math.max(1, DAG_TOP_COUNT - 1),
+  );
+
+  const placed = [];
+  let cursor = originX;
+  topWidths.forEach((width) => {
+    placed.push({ x: cursor, y: originY, width });
+    cursor += width + gap;
+  });
+
+  const bottomSpan = sum(bottomWidths) + gap * Math.max(0, bottomWidths.length - 1);
+  // right edge of the bottom row == right edge of the top row
+  let bottomCursor = originX + DAG_ROW_WIDTH - bottomSpan;
+  const bottomY = originY + DAG_NODE_H + DAG_ROW_GAP;
+  // stages run right-to-left along the bottom, so fill the slots in reverse
+  const bottomSlots = [];
+  bottomWidths.slice().reverse().forEach((width) => {
+    bottomSlots.push({ x: bottomCursor, y: bottomY, width });
+    bottomCursor += width + gap;
+  });
+  bottomSlots.reverse().forEach((slot) => placed.push(slot));
+  return placed;
 }
 
 // Most stage-to-stage edges are a normal left-to-right hop within one row;
@@ -442,8 +469,9 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
     : "connecting to CUPTI…";
   svg.append(dagLabel);
 
+  const dagSlots = dagLayout(svg, dagStages.map((stage) => stage.title), dagOriginX, heroY);
   const dagAnchors = dagStages.map((stage, index) => {
-    const pos = dagNodePosition(index, dagOriginX, heroY);
+    const pos = dagSlots[index];
     const stageState = snapshot.stages?.[index] ?? null;
     const entry = stageState?.entry ?? null;
     return addNode(svg, {
@@ -452,7 +480,9 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
       kind: entry ? "measured" : "illustrative",
       pulse: Boolean(stageState?.live),
       title: stage.title,
-      titleLimit: index < DAG_TOP_COUNT ? 16 : 22,
+      align: "center",
+      // the box is sized from this title, so only a clamped one needs trimming
+      titleLimit: 48,
       tooltip: entry
         ? `${stage.title} — ${stage.lines?.[0] ?? ""} · ${truncate(entry.name, 48)} · grid[${entry.grid.join(",")}]`
         : `${stage.title} — ${stage.lines?.[0] ?? ""} · no real launch observed yet this session`,
@@ -555,7 +585,7 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
   svg.append(countsLabel);
 
   const countsBarX = heroX + COUNTS_LABEL_W;
-  const countsBarW = (dagOriginX + DAG_TOP_WIDTH) - countsBarX - COUNTS_COUNT_W;
+  const countsBarW = (dagOriginX + DAG_ROW_WIDTH) - countsBarX - COUNTS_COUNT_W;
   const countsRight = countsBarX + countsBarW + COUNTS_COUNT_W;
   [
     { label: "response", color: "#72e3b1", w: 58 },

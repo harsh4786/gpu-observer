@@ -12,6 +12,19 @@ export function svgElement(name, attributes = {}) {
   return node;
 }
 
+// Width of `text` as this browser would render it in `className`, without
+// committing a node to the diagram: the caller needs the number before it can
+// decide how wide the box should be. Measured off a throwaway element in the
+// live svg, so it reflects the font actually resolved, not an assumed advance.
+export function measureTextWidth(svg, text, className) {
+  const probe = svgElement("text", { x: -9999, y: -9999, class: className });
+  probe.textContent = text;
+  svg.append(probe);
+  const width = probe.getComputedTextLength ? probe.getComputedTextLength() : 0;
+  probe.remove();
+  return width;
+}
+
 export function truncate(value, limit) {
   const text = String(value ?? "").replaceAll("\n", " ").replace(/\s+/g, " ").trim();
   return text.length > limit ? `${text.slice(0, limit - 1)}…` : text;
@@ -77,7 +90,11 @@ export function addNode(svg, options) {
   const {
     x, y, width = 176, height = 58, color = "#60756d", kind = "measured",
     title, titleLimit = 26, lines = [], badge, focus = false, pulse = false, onActivate, tooltip,
+    align = "left",
   } = options;
+  const centred = align === "center";
+  const textX = centred ? Math.round(width / 2) : 13;
+  const anchor = centred ? "middle" : "start";
   const group = svgElement("g", {
     class: `graph-node ${kind}${focus ? " focus" : ""}${pulse ? " live-active" : ""}${onActivate ? " interactive" : ""}`,
     transform: `translate(${x} ${y})`,
@@ -107,14 +124,15 @@ export function addNode(svg, options) {
   // why "40 kernels" printed on top of the kernel name.
   const singleLine = lines.length === 0;
   const titleNode = svgElement("text", {
-    x: 13,
+    x: textX,
     y: singleLine ? Math.round(height / 2) + 5 : 22,
     class: "graph-node-title",
+    "text-anchor": anchor,
   });
   titleNode.textContent = truncate(title, titleLimit);
   group.append(titleNode);
   const lineNodes = lines.slice(0, 2).map((line, index) => {
-    const lineNode = svgElement("text", { x: 13, y: 39 + index * 16, class: "graph-node-line" });
+    const lineNode = svgElement("text", { x: textX, y: 39 + index * 16, class: "graph-node-line", "text-anchor": anchor });
     lineNode.textContent = truncate(line, 30);
     group.append(lineNode);
     return lineNode;
