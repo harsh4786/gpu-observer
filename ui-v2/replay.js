@@ -46,7 +46,7 @@ function nsOf(value) {
   }
 }
 
-function buildTimeline(frames) {
+export function buildTimeline(frames) {
   const bySource = { semantic: [], cupti: [], chat: [] };
   for (const frame of frames) {
     const list = bySource[frame.src];
@@ -104,6 +104,103 @@ class ReplaySocket {
   }
 }
 
+// The transport core, shared by a recorded file (installReplay, below) and by
+// a session the page recorded itself (session-recorder.js). It owns the clock,
+// the cursor and the token stops; `deliver` is the only thing that differs --
+// for a file it feeds stand-in sockets, for a live recording it calls the same
+// consumers the sockets would have called.
+export function createPlayer({ timeline, deliver, manifest = null, onEnd = null }) {
+  const player = {
+    manifest,
+    frameCount: timeline.length,
+    speed: 1,
+    playing: false,
+    virtualMs: 0,
+    cursor: 0,
+    onProgress: null,
+    onReset: null,
+    onChatDelta: null,
+    resetQueues: null,
+  };
+
+  let lastTick = 0;
+  const tick = (now) => {
+    if (!player.playing) return;
+    const delta = lastTick ? now - lastTick : 0;
+    lastTick = now;
+    player.virtualMs += delta * player.speed;
+    while (player.cursor < timeline.length && timeline[player.cursor].at <= player.virtualMs) {
+      deliver(timeline[player.cursor]);
+      player.cursor += 1;
+    }
+    player.onProgress?.(player.cursor, timeline.length);
+    if (player.cursor >= timeline.length) {
+      player.playing = false;
+      onEnd?.();
+      return;
+    }
+    requestAnimationFrame(tick);
+  };
+
+  // One accepted output token per engine step, so these are the natural rewind
+  // stops: stepping back one is a backspace on the decoded text, and because
+  // the seek re-feeds the capture up to that point, the kernels, layer sweep
+  // and stage counts land exactly where they stood when that token was emitted.
+  const tokenMarks = [];
+  timeline.forEach((entry, index) => {
+    if (entry.src === "semantic" && entry.msg?.kind === "accepted_output_token") tokenMarks.push(index);
+  });
+  player.tokenCount = tokenMarks.length;
+  player.tokensEmitted = () => tokenMarks.filter((index) => index < player.cursor).length;
+
+  // Rewinding cannot un-apply events -- every consumer accumulates -- so a seek
+  // resets them all and replays from the start at no delay. 15k frames costs a
+  // few tens of ms, which is cheap enough to do on a button press.
+  // Stepping always leaves the recording paused. Resuming after a seek made the
+  // rewind invisible: it stepped back one token and then immediately raced
+  // forward again from there, which reads as a restart from the beginning.
+  player.seekToToken = (count) => {
+    const target = Math.max(0, Math.min(tokenMarks.length, count));
+    const stop = target === 0 ? 0 : tokenMarks[target - 1] + 1;
+    player.playing = false;
+    player.onReset?.();
+    player.cursor = 0;
+    player.virtualMs = 0;
+    player.resetQueues?.();
+    for (let index = 0; index < stop; index += 1) deliver(timeline[index]);
+    player.cursor = stop;
+    player.virtualMs = stop > 0 ? timeline[stop - 1].at : 0;
+    player.onProgress?.(player.cursor, timeline.length);
+  };
+
+  // A session the page recorded itself is armed with the LAST frame already on
+  // screen -- the user just watched it happen. Leaving the cursor at zero made
+  // the first press of rewind step back from "nothing delivered yet", which
+  // clamped to zero and wiped the answer instead of removing one token from it.
+  // This marks the recording as already played without re-delivering anything.
+  player.assumePlayed = () => {
+    player.cursor = timeline.length;
+    player.virtualMs = timeline.length ? timeline[timeline.length - 1].at : 0;
+    player.onProgress?.(player.cursor, timeline.length);
+  };
+  player.atEnd = () => player.cursor >= timeline.length;
+
+  player.start = () => {
+    if (player.playing || !timeline.length) return;
+    player.playing = true;
+    lastTick = 0;
+    requestAnimationFrame(tick);
+  };
+  player.pause = () => { player.playing = false; };
+  player.setSpeed = (value) => { player.speed = value; };
+  player.restart = () => {
+    player.cursor = 0;
+    player.virtualMs = 0;
+    player.resetQueues?.();
+  };
+  return player;
+}
+
 export async function installReplay(url) {
   const base = new URL(url, location.href);
   const sessionUrl = base.href.endsWith(".ndjson")
@@ -141,18 +238,19 @@ export async function installReplay(url) {
   };
   window.WebSocket.OPEN = RealWebSocket?.OPEN ?? 1;
 
-  const player = {
+  const player = createPlayer({
+    timeline,
     manifest,
-    frameCount: timeline.length,
-    speed: 1,
-    playing: false,
-    virtualMs: 0,
-    cursor: 0,
-    chatWaiters: [],
-    chatQueue: [],
-    chatDone: false,
-    onProgress: null,
-  };
+    deliver: (entry) => {
+      if (entry.src === "semantic") sockets.semantic?.deliver(entry.msg);
+      else if (entry.src === "cupti") sockets.cupti?.deliver(entry.msg);
+      else if (entry.src === "chat") deliverChat(entry.msg);
+    },
+    onEnd: () => { player.chatDone = true; pumpChat(); },
+  });
+  player.chatWaiters = [];
+  player.chatQueue = [];
+  player.chatDone = false;
 
   const pumpChat = () => {
     while (player.chatWaiters.length && (player.chatQueue.length || player.chatDone)) {
@@ -163,90 +261,22 @@ export async function installReplay(url) {
   };
 
   const encoder = new TextEncoder();
-  const deliver = (entry) => {
-    if (entry.src === "semantic") sockets.semantic?.deliver(entry.msg);
-    else if (entry.src === "cupti") sockets.cupti?.deliver(entry.msg);
-    else if (entry.src === "chat") {
-      if (entry.msg.kind === "done") {
-        player.chatDone = true;
-        player.chatQueue.push(encoder.encode("data: [DONE]\n\n"));
-      } else if (entry.msg.kind === "delta") {
-        player.chatQueue.push(encoder.encode(`data: ${JSON.stringify(entry.msg.delta)}\n\n`));
-        // Also handed over directly: the fetch shim only runs when something
-        // submitted the chat form, but pressing play has to show the text too.
-        const piece = entry.msg.delta?.choices?.[0]?.delta?.content;
-        if (piece) player.onChatDelta?.(piece);
-      }
-      pumpChat();
-    }
-  };
-
-  let lastTick = 0;
-  const tick = (now) => {
-    if (!player.playing) return;
-    const delta = lastTick ? now - lastTick : 0;
-    lastTick = now;
-    player.virtualMs += delta * player.speed;
-    while (player.cursor < timeline.length && timeline[player.cursor].at <= player.virtualMs) {
-      deliver(timeline[player.cursor]);
-      player.cursor += 1;
-    }
-    player.onProgress?.(player.cursor, timeline.length);
-    if (player.cursor >= timeline.length) {
-      player.playing = false;
+  const deliverChat = (msg) => {
+    if (msg.kind === "done") {
       player.chatDone = true;
-      pumpChat();
-      return;
+      player.chatQueue.push(encoder.encode("data: [DONE]\n\n"));
+    } else if (msg.kind === "delta") {
+      player.chatQueue.push(encoder.encode(`data: ${JSON.stringify(msg.delta)}\n\n`));
+      // Also handed over directly: the fetch shim only runs when something
+      // submitted the chat form, but pressing play has to show the text too.
+      const piece = msg.delta?.choices?.[0]?.delta?.content;
+      if (piece) player.onChatDelta?.(piece);
     }
-    requestAnimationFrame(tick);
+    pumpChat();
   };
 
-  // One accepted output token per engine step, so these are the natural rewind
-  // stops: stepping back one is a backspace on the decoded text, and because
-  // the seek re-feeds the capture up to that point, the kernels, layer sweep
-  // and stage counts land exactly where they stood when that token was emitted.
-  const tokenMarks = [];
-  timeline.forEach((entry, index) => {
-    if (entry.src === "semantic" && entry.msg?.kind === "accepted_output_token") tokenMarks.push(index);
-  });
-  player.tokenCount = tokenMarks.length;
-  player.tokensEmitted = () => tokenMarks.filter((index) => index < player.cursor).length;
-
-  // Rewinding cannot un-apply events -- every consumer accumulates -- so a seek
-  // resets them all and replays from the start at no delay. 15k frames costs a
-  // few tens of ms, which is cheap enough to do on a button press.
-  // Stepping always leaves the recording paused. Resuming after a seek made the
-  // rewind invisible: it stepped back one token and then immediately raced
-  // forward again from there, which reads as a restart from the beginning.
-  player.seekToToken = (count) => {
-    const target = Math.max(0, Math.min(tokenMarks.length, count));
-    const stop = target === 0 ? 0 : tokenMarks[target - 1] + 1;
-    player.playing = false;
-    player.onReset?.();
-    player.cursor = 0;
-    player.virtualMs = 0;
-    player.chatQueue = [];
-    player.chatDone = false;
-    for (let index = 0; index < stop; index += 1) deliver(timeline[index]);
-    player.cursor = stop;
-    player.virtualMs = stop > 0 ? timeline[stop - 1].at : 0;
-    player.onProgress?.(player.cursor, timeline.length);
-  };
-
-  player.start = () => {
-    if (player.playing) return;
-    player.playing = true;
-    lastTick = 0;
-    requestAnimationFrame(tick);
-  };
-  player.pause = () => { player.playing = false; };
-  player.setSpeed = (value) => { player.speed = value; };
-  player.restart = () => {
-    player.cursor = 0;
-    player.virtualMs = 0;
-    player.chatQueue = [];
-    player.chatDone = false;
-  };
+  const baseReset = player.resetQueues;
+  player.resetQueues = () => { baseReset?.(); player.chatQueue = []; player.chatDone = false; };
 
   const realFetch = window.fetch.bind(window);
   window.fetch = (input, init) => {
@@ -278,22 +308,29 @@ export async function installReplay(url) {
 // A replay must never be mistaken for a live session: the data is measured, the
 // timing is reproduced, and at 0.02x what you are watching took 50x less time
 // than it appears to.
+// The marker is also the only place the rewind hint can live. chat-waiting is
+// owned by the live patch handler, which overwrites it on the next frame, so a
+// hint put there vanished a moment after it appeared.
 export function showReplayMarker(player) {
   const manifest = player.manifest;
-  const bar = document.createElement("div");
+  const existing = document.getElementById("replay-marker");
+  const bar = existing ?? document.createElement("div");
   bar.id = "replay-marker";
   bar.className = "replay-marker";
-  const when = manifest?.recordedAt
-    ? new Date(manifest.recordedAt).toISOString().replace("T", " ").slice(0, 19)
-    : "unknown time";
-  const host = manifest?.host ?? "unknown host";
   const counts = manifest?.counts
     ? `${manifest.counts.cupti ?? 0} kernel launches · ${manifest.counts.semantic ?? 0} engine frames`
     : `${player.frameCount} frames`;
   const prompt = manifest?.prompt;
-  bar.innerHTML = `<strong>REPLAY</strong> recorded ${when} UTC on ${host} · ${counts}`
-    + (prompt ? ` · prompt: <em>${prompt.replace(/[<&]/g, (c) => (c === "<" ? "&lt;" : "&amp;"))}</em>` : "")
-    + ` · <span id="replay-speed">1x</span>`;
-  document.querySelector(".app")?.prepend(bar);
+  const origin = player.live
+    ? `recorded in this page · ${player.tokenCount} output token(s) · ${counts}`
+    : `recorded ${manifest?.recordedAt
+        ? new Date(manifest.recordedAt).toISOString().replace("T", " ").slice(0, 19) + " UTC"
+        : "at an unknown time"} on ${manifest?.host ?? "unknown host"} · ${counts}`;
+  bar.innerHTML = `<strong>REPLAY</strong> ${origin}`
+    + (prompt ? ` · <em>${prompt.replace(/[<&]/g, (c) => (c === "<" ? "&lt;" : "&amp;"))}</em>` : "")
+    + ` · \u25C0 rewinds one token and its kernels, \u25B6 replays`
+    + (manifest?.truncated ? " · hit the frame cap, tail not rewindable" : "")
+    + ` · <span id="replay-speed">${player.speed}x</span>`;
+  if (!existing) document.querySelector(".app")?.prepend(bar);
   return bar;
 }

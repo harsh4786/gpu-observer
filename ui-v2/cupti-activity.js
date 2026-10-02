@@ -25,7 +25,7 @@
 //   reshape_and_cache -> attn -> o_proj -> post_attention_layernorm ->
 //   gate_up_proj -> SiluAndMul -> down_proj -> (next layer's input_layernorm)
 
-import { STAGE_TITLES } from "./kernel-graph.js?v=v2f1";
+import { STAGE_TITLES } from "./kernel-graph.js?v=v2g1";
 
 const [
   INPUT_LAYERNORM, QKV_PROJ, QK_NORM, ROTARY_EMB, RESHAPE_AND_CACHE,
@@ -306,6 +306,19 @@ function wsUrl() {
   return params.get("cupti") ?? `ws://${location.hostname}:8090`;
 }
 
+// The page records the live session so it can be rewound (session-recorder.js).
+// The tap sits here rather than in trace.js because this is where a CUPTI frame
+// is parsed; trace.js never sees one. It runs BEFORE handleEvent so a frame is
+// recorded exactly as it arrived, not as the classifier left it.
+let frameTap = null;
+export function setCuptiFrameTap(fn) { frameTap = fn; }
+
+// Re-feeds a recorded frame through the same classifier the socket feeds, so a
+// replay drives the real view code rather than a reconstruction of it.
+export function feedCuptiEvent(event) {
+  if (event?.kind === "kernel_launch") handleEvent(event);
+}
+
 export function connectCuptiActivity() {
   let socket;
   try {
@@ -326,7 +339,9 @@ export function connectCuptiActivity() {
     } catch (error) {
       return; // a malformed frame must never take down the live feed
     }
-    if (event.kind === "kernel_launch") handleEvent(event);
+    if (event.kind !== "kernel_launch") return;
+    frameTap?.(event); // in-browser recording: keep the frame before it is consumed
+    handleEvent(event);
   });
   socket.addEventListener("close", () => {
     state.connected = false;

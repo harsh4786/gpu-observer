@@ -1,7 +1,8 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2f1";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2f1";
-import { installReplay, showReplayMarker } from "./replay.js?v=v2f1";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, resetCuptiAll, setThinkingPhase } from "./cupti-activity.js?v=v2f1";
+import { renderCausalGraph } from "./causal-graph.js?v=v2g1";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2g1";
+import { installReplay, showReplayMarker } from "./replay.js?v=v2g1";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, resetCuptiAll, setThinkingPhase, setCuptiFrameTap, feedCuptiEvent } from "./cupti-activity.js?v=v2g1";
+import { createSessionRecorder } from "./session-recorder.js?v=v2g1";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -26,7 +27,10 @@ const state = {
   // true/false once the control endpoint answers, null when it is unreachable
   // (then pause is view-only and the engine keeps generating).
   enginePaused: false,
-  replay: null, // the ?replay= player, when a recording is driving the page
+  // The transport over a recording: either the session this page just
+  // recorded itself (the normal path -- your own query, rewindable) or a
+  // capture loaded from a file via ?replay= on a machine with no GPU.
+  replay: null,
   ws: null,
   wsReconnectTimer: null,
   chatBusy: false,
@@ -178,6 +182,9 @@ function isMoving() {
 // appended and new ticks keep appearing on the spine, so you can see data still
 // arriving while the view stays put.
 function isFrozen() {
+  // A replay drives the graph itself -- seeking and playing both have to
+  // repaint, whatever the live playhead was doing when the recording ended.
+  if (state.replay) return false;
   return state.liveMode && !state.transport.pinned && !state.transport.playing;
 }
 
@@ -259,6 +266,9 @@ async function setEnginePaused(paused) {
 // trace a real request would before its first frame arrives.
 function startReplay() {
   if (!state.replay) return;
+  // A session recording is armed at its end, so the first press of play has
+  // nothing left to deliver. Rewind to the start, then run it.
+  if (state.replay.atEnd?.()) state.replay.seekToToken(0);
   if (state.replay.cursor === 0) {
     ensureLiveTrace();
     resetCuptiQueryCounters();
@@ -405,9 +415,10 @@ function renderHeader() {
     // loaded was overwritten by the first frame and the page went back to
     // calling itself live.
     const prompt = state.replay.manifest?.prompt;
+    const where = state.replay.live ? "Replay of this session" : "Replay of a capture";
     byId("run-subtitle").textContent =
-      `Replay · ${run.model ?? "unknown model"} · ${state.trace.steps.length} engine steps`
-      + (prompt ? ` · recorded prompt: "${prompt}"` : "");
+      `${where} · ${run.model ?? "unknown model"} · ${state.trace.steps.length} engine steps`
+      + (prompt ? ` · "${prompt}"` : "");
     return;
   }
   byId("run-subtitle").textContent = [
@@ -617,7 +628,6 @@ const SHADOW_VLLM_BASE = params.get("shadowVllm") ?? `http://${location.hostname
 const CONTROL_BASE = params.get("control") ?? `http://${location.hostname}:8091`;
 // ?replay=<dir or session.ndjson> swaps the live transport for a recording.
 const replayUrl = params.get("replay");
-const DEFAULT_REPLAY = "/ui-v2/data/replay-demo/"; // the capture committed with the repo
 // The shadow container is opt-in (?shadow=1). Its card shows real block-entry
 // events, but live it cannot place an event in the step it ran in: delivery
 // is batched and the events carry only a device-clock timestamp, so its
@@ -853,7 +863,13 @@ function connectWebSocket() {
   });
   socket.addEventListener("message", (event) => {
     try {
-      applyPatch(JSON.parse(event.data));
+      const patch = JSON.parse(event.data);
+      recorder.capture("semantic", patch);
+      // The semantic ring broadcasts every engine step on the box, not just
+      // this page's request. While a recording is being inspected it owns the
+      // view, so unrelated live frames would scribble over the step being
+      // examined. Asking a new question clears the recording and live resumes.
+      if (!state.replay?.live) applyPatch(patch);
     } catch (error) {
       // A malformed patch must never take down the live view.
       console.warn("gpu-observer: dropped malformed WS patch", error);
@@ -885,6 +901,13 @@ setInterval(() => {
   // state updates immediately on every message.
   renderGraph();
 }, GPU_REFRESH_INTERVAL_MS);
+
+// Every live frame is kept while a query is in flight, so the answer you just
+// watched can be rewound token by token with the kernels that produced it. See
+// session-recorder.js for why this is the only honest way to show a sweep that
+// is over before the browser can paint it.
+const recorder = createSessionRecorder();
+setCuptiFrameTap((event) => recorder.capture("cupti", event));
 
 // ---- Chat: text from vLLM's own streaming endpoint, correlated with ring
 // accepted_output_token events by output_position (see plan). ----
@@ -935,6 +958,12 @@ async function sendShadowRequest(text, signal) {
 }
 
 async function sendChatMessage(text) {
+  // ?replay= has no engine behind it, so there is nothing to ask. The input and
+  // send button are disabled in that mode, but a submit event can still be
+  // dispatched (tests, assistive tech, a stray Enter), and letting it through
+  // ran the live send path against the fetch shim: every delta was appended
+  // twice, once by the shim's reader and once by the player's own callback.
+  if (replayUrl) return;
   if (state.chatBusy || !text.trim()) return;
   state.chatBusy = true;
   byId("chat-send").disabled = true;
@@ -946,6 +975,11 @@ async function sendChatMessage(text) {
   // out a full generation every time).
   const controller = new AbortController();
   state.activeAbort = controller;
+  // A new question invalidates the previous recording: the transport must not
+  // rewind into an answer that is no longer on screen.
+  state.replay = null;
+  document.getElementById("replay-marker")?.remove();
+  recorder.begin(text);
   ensureLiveTrace();
   resetCuptiQueryCounters();
   state.pendingFocusReset = true;
@@ -960,6 +994,18 @@ async function sendChatMessage(text) {
   reply.textContent = "";
   byId("chat-waiting").textContent = "Request sent — waiting for the scheduler to admit it…";
   render();
+
+  // A paused engine accepts the request and then sits on it, so the page showed
+  // "waiting for the scheduler to admit it" indefinitely -- which reads as a
+  // hung model rather than as a pause somebody left on. Asking a question means
+  // you want it answered, so clear the pause first. The control endpoint is
+  // re-read rather than trusting state.enginePaused, which goes stale the moment
+  // anything else touches the flag (another tab, an earlier session, a probe).
+  await syncEnginePaused();
+  if (state.enginePaused) {
+    byId("chat-waiting").textContent = "Engine was paused — resuming before the request can be scheduled…";
+    await setEnginePaused(false);
+  }
 
   if (shadowEnabled) sendShadowRequest(text, controller.signal); // fire-and-forget: generates GPU telemetry on the shadow container, never shown
 
@@ -999,6 +1045,7 @@ async function sendChatMessage(text) {
         }
         const delta = chunk.choices?.[0]?.delta?.content;
         if (delta) {
+          recorder.capture("chat", { kind: "delta", delta: chunk });
           reply.textContent += delta;
           chatTotalCount += 1;
           updateChatConfirmedBadge();
@@ -1024,7 +1071,52 @@ async function sendChatMessage(text) {
     state.activeAbort = null;
     byId("chat-send").disabled = false;
     byId("chat-stop").disabled = true;
+    // Stopped generations are worth rewinding too -- the frames up to the stop
+    // are real -- so this runs whether the stream finished or was aborted.
+    recorder.stop();
+    armReplayOfThisSession();
   }
+}
+
+// Hands the transport a player over what this page just recorded. The handlers
+// are the same consumers the live sockets fed, so rewinding re-drives the real
+// view code: applyPatch rebuilds the steps and the layer sweep, the CUPTI
+// classifier re-sees every launch in order, and the text comes back one piece
+// at a time.
+function armReplayOfThisSession() {
+  if (recorder.count() === 0) return; // nothing arrived: leave the live transport alone
+  const player = recorder.buildPlayer({
+    semantic: (msg) => applyPatch(msg),
+    cupti: (msg) => feedCuptiEvent(msg),
+    chat: (piece) => {
+      const reply = byId("chat-reply");
+      reply.textContent += piece;
+      const open = reply.textContent.includes("<think>");
+      const close = reply.textContent.includes("</think>");
+      setThinkingPhase(open && !close);
+    },
+  });
+  // A seek cannot un-apply frames -- every consumer accumulates -- so it
+  // replays from the start, and everything that accumulates clears first.
+  player.onReset = () => {
+    ensureLiveTrace();
+    resetCuptiAll();
+    state.trace.query.request.messages = [{ role: "user", content: player.manifest.prompt }];
+    byId("chat-reply").textContent = "";
+    setThinkingPhase(false);
+  };
+  player.onProgress = () => { renderSpine(); updatePlayButton(); };
+  state.replay = player;
+  state.transport.pinned = false;
+  stopPlayback();
+  // The answer is already on screen, so the recording starts at its end: the
+  // first rewind takes one token off what you are looking at.
+  player.assumePlayed();
+  showReplayMarker(player);
+  updateTransportEnabled();
+  updatePlayButton();
+  renderHeader();
+  renderSpine();
 }
 
 // Transport wiring. Seeks are flagged manual so they unpin the live playhead;
@@ -1105,14 +1197,18 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// Replay was reachable only by hand-editing the URL, which is not a feature.
+// The live page records itself (armReplayOfThisSession), so replay needs no
+// entry point of its own: you ask your question and then rewind it. The button
+// that used to be here loaded a committed capture of a different prompt, which
+// put someone else's question in the input box. ?replay= still loads a capture
+// for hosting the demo with no GPU attached; it is not a click away any more.
+// Ships hidden, so there is no flash of a button on the normal live page.
 const replayButton = byId("open-replay");
-if (replayButton) {
-  replayButton.textContent = replayUrl ? "Back to live" : "Replay a capture";
+if (replayButton && replayUrl) {
+  replayButton.classList.remove("hidden");
   replayButton.addEventListener("click", () => {
     const params = new URLSearchParams(location.search);
-    if (replayUrl) params.delete("replay");
-    else params.set("replay", DEFAULT_REPLAY);
+    params.delete("replay");
     location.search = params.toString();
   });
 }
@@ -1176,12 +1272,15 @@ if (offlineMode) {
     };
     const input = byId("chat-input");
     if (input) {
-      // A recording answers one prompt: the one it was captured with. Leaving
-      // the box editable invited a question the replay silently ignored.
-      input.value = player.manifest?.prompt ?? "";
+      // Never prefill the box: text sitting in it reads as a default prompt
+      // this page chose for you. A file capture answers only the prompt it was
+      // recorded with, so say that where it belongs -- as a fact about the
+      // recording -- and send people back to live to ask their own.
+      input.value = "";
       input.disabled = true;
-      input.placeholder = "Replaying a recorded session";
-      input.title = "This is a recording. Press play, or Back to live to ask something new.";
+      input.placeholder = player.manifest?.prompt
+        ? `Recorded answer to "${player.manifest.prompt}" — Back to live to ask your own`
+        : "Replaying a capture — Back to live to ask your own";
     }
     byId("chat-send")?.setAttribute("disabled", "disabled");
     showReplayMarker(player);
