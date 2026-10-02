@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=v2d2";
-import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=v2d2";
+} from "./graph-primitives.js?v=v2d4";
+import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=v2d4";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -136,9 +136,9 @@ function renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liv
     const node = addNode(svg, {
       x: 405, y: firstRowY + index * rowGap, width: 178, height: LANE_NODE_H,
       color: requestColor(slice.requestId),
-      title: focus ? "Focused slice" : `Peer request ${index}`,
+      title: focus ? "This request" : `Other request ${index}`,
       lines: [`${slice.scheduledTokens} token${slice.scheduledTokens === 1 ? "" : "s"} · ${slice.phase}`, shortId(slice.requestId)],
-      badge: focus ? "focus" : "peer", focus, pulse: focus && liveActive,
+      focus, pulse: focus && liveActive,
       onActivate: () => scrollToCard("scheduler-slices"),
     });
     schedulerNodes.set(slice.requestId, node);
@@ -153,9 +153,9 @@ function renderOfflineGraph(svg, { trace, step, kernelIndex, onKernelSelect, liv
     const node = addNode(svg, {
       x: 650, y: firstRowY + index * rowGap, width: 182, height: LANE_NODE_H,
       color: requestColor(slice.requestId),
-      title: focus ? "Focused rows" : `Packed P${slice.packedIndex}`,
+      title: focus ? "This request" : `Packed P${slice.packedIndex}`,
       lines: [`rows [${slice.rowBegin}, ${slice.rowEnd})`, `${slice.scheduledTokens} token${slice.scheduledTokens === 1 ? "" : "s"} · ${slice.phase}`],
-      badge: focus ? "focus" : undefined, focus, pulse: focus && liveActive,
+      focus, pulse: focus && liveActive,
       onActivate: () => scrollToCard("packed-slices"),
     });
     packedNodes.set(slice.requestId, node);
@@ -362,7 +362,7 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
   const stripH = 40;
   const focusSlice = scheduler.find((slice) => slice.requestId === trace.focus.requestHash);
   const focusPacked = packed.find((slice) => slice.requestId === trace.focus.requestHash);
-  const peerCount = Math.max(scheduler.length, packed.length, 1) - 1;
+  const otherCount = Math.max(scheduler.length, packed.length, 1) - 1;
 
   // No Query node: in live mode the query is the chat box directly above the
   // graph, and trace.html's #input-connector arrow runs from it into the
@@ -393,7 +393,7 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
       color: focusSlice ? requestColor(focusSlice.requestId) : "#60756d",
       kind: focusSlice ? "measured" : "unknown",
       title: focusSlice ? `step ${step.id} · ${focusSlice.phase}` : `step ${step.id}`,
-      lines: peerCount > 0 ? [`+${peerCount} peer request${peerCount === 1 ? "" : "s"}`] : [],
+      lines: otherCount > 0 ? [`+${otherCount} other request${otherCount === 1 ? "" : "s"}`] : [],
       pulse: Boolean(focusSlice) && liveActive,
       onActivate: () => scrollToCard("scheduler-slices"),
     });
