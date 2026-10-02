@@ -165,8 +165,30 @@ p { color: var(--muted); }
    .live-active only: the specific node(s) actually responsible for the step
    in flight, not the graph as a whole. */
 @keyframes graph-pulse-glow {
-  0%, 100% { filter: drop-shadow(0 0 3px var(--node-color)); }
-  50% { filter: drop-shadow(0 0 11px var(--node-color)); }
+  0%, 100% {
+    filter: drop-shadow(0 0 2px color-mix(in srgb, var(--node-color) 60%, transparent))
+            drop-shadow(0 0 6px color-mix(in srgb, var(--node-color) 10%, transparent));
+  }
+  /* Peak before the midpoint: a quick bloom with a longer settle reads as a
+     breath rather than a metronome, and leaves the bright state on screen
+     long enough to catch at a glance. */
+  45% {
+    filter: drop-shadow(0 0 8px var(--node-color))
+            drop-shadow(0 0 22px color-mix(in srgb, var(--node-color) 50%, transparent));
+  }
+}
+
+/* The glow alone only lit the air around the node. Carrying the outline and
+   the face through the same cycle makes the node itself brighten, which is
+   what reads as a flash. Base values match .graph-node rect / .stage-chip
+   rect so the resting end of the cycle is exactly the static style. */
+@keyframes graph-pulse-face {
+  0%, 100% { stroke: color-mix(in srgb, var(--node-color) 55%, transparent); stroke-width: 1.5; fill: #10201d; }
+  45% { stroke: var(--node-color); stroke-width: 2.6; fill: color-mix(in srgb, var(--node-color) 15%, #10201d); }
+}
+@keyframes graph-pulse-chip-face {
+  0%, 100% { stroke: color-mix(in srgb, var(--node-color) 55%, transparent); stroke-width: 1.4; fill: #10201d; }
+  45% { stroke: var(--node-color); stroke-width: 2.3; fill: color-mix(in srgb, var(--node-color) 18%, #10201d); }
 }
 @keyframes graph-dash-flow { to { stroke-dashoffset: -24; } }
 
@@ -176,7 +198,17 @@ p { color: var(--muted); }
    (Kiali/Istio, Datadog service map) to distinguish "happening now" from
    "already happened." Every other node renders statically. */
 .graph-node.live-active rect {
-  animation: graph-pulse-glow 1.3s ease-in-out infinite;
+  animation: graph-pulse-glow 1.25s ease-in-out infinite,
+             graph-pulse-face 1.25s ease-in-out infinite;
+}
+/* A running animation outranks every non-!important declaration, so the face
+   cycle was also overriding the hover and focus outline on a live node --
+   pointing at the one node that is actually busy gave no feedback at all.
+   Dropping just the face animation on hover lets the static style through
+   while the glow keeps saying "this one is live". */
+.graph-node.live-active.interactive:hover rect,
+.graph-node.live-active.interactive:focus rect {
+  animation-name: graph-pulse-glow;
 }
 /* flowing: data actually in transit along this edge right now -- traveling
    dashes are the standard way live network/service graphs show direction
@@ -199,7 +231,10 @@ p { color: var(--muted); }
 .stage-chip rect { fill: #10201d; stroke: color-mix(in srgb, var(--node-color) 55%, transparent); stroke-width: 1.4; }
 .stage-chip.interactive { cursor: pointer; }
 .stage-chip.interactive:hover rect, .stage-chip.interactive:focus rect { fill: #17302a; stroke-width: 2; outline: none; }
-.stage-chip.active rect { animation: graph-pulse-glow 1.3s ease-in-out infinite; }
+.stage-chip.active rect {
+  animation: graph-pulse-glow 1.25s ease-in-out infinite,
+             graph-pulse-chip-face 1.25s ease-in-out infinite;
+}
 .stage-chip-label { fill: var(--text); font: 700 9.5px ui-monospace, monospace; text-anchor: middle; }
 
 /* Layer sweep rail: 40 small cells read as a heatmap/progress rail at a
@@ -295,4 +330,29 @@ footer { padding: 8px; color: var(--dim); text-align: center; font-size: 8px; }
   .evidence-card { grid-template-columns: 1fr; }
   .evidence-grid { grid-template-columns: 1fr; }
   .detail-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* The pulse is deliberately strong, so it needs a way out. Anyone who has
+   asked their system to reduce motion still has to be able to tell which node
+   is live, so the animations stop at their bright end rather than disappearing
+   -- the state stays legible, only the movement goes. */
+@media (prefers-reduced-motion: reduce) {
+  .graph-node.live-active rect,
+  .stage-chip.active rect,
+  .graph-edge.flowing,
+  .dag-loop-edge.flowing,
+  .sm-cell.blink,
+  .output-connector.active .connector-shaft,
+  .output-connector.active .connector-head,
+  .input-connector.active .connector-shaft,
+  .input-connector.active .connector-head { animation: none; }
+  .graph-node.live-active rect, .stage-chip.active rect {
+    stroke: var(--node-color);
+    stroke-width: 2.4;
+    fill: color-mix(in srgb, var(--node-color) 15%, #10201d);
+    filter: drop-shadow(0 0 7px color-mix(in srgb, var(--node-color) 70%, transparent));
+  }
+  .graph-edge.flowing, .dag-loop-edge.flowing { stroke-dasharray: none; }
+  .output-connector.active .connector-head,
+  .input-connector.active .connector-head { --node-color: var(--mint); filter: drop-shadow(0 0 6px var(--mint)); }
 }

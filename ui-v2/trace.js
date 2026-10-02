@@ -1,8 +1,8 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2g3";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2g3";
-import { installReplay, showReplayMarker } from "./replay.js?v=v2g3";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, resetCuptiAll, setThinkingPhase, setCuptiFrameTap, feedCuptiEvent } from "./cupti-activity.js?v=v2g3";
-import { createSessionRecorder } from "./session-recorder.js?v=v2g3";
+import { renderCausalGraph } from "./causal-graph.js?v=v2g5";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2g5";
+import { installReplay, showReplayMarker } from "./replay.js?v=v2g5";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, resetCuptiAll, setThinkingPhase, setCuptiFrameTap, feedCuptiEvent } from "./cupti-activity.js?v=v2g5";
+import { createSessionRecorder } from "./session-recorder.js?v=v2g5";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {

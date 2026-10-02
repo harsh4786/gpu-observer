@@ -19,7 +19,7 @@
 // kernels that produced it, in reverse order, because the seek re-feeds the
 // recording up to exactly that token.
 
-import { buildTimeline, createPlayer } from "./replay.js?v=v2g3";
+import { buildTimeline, createPlayer } from "./replay.js?v=v2g5";
 
 // CUPTI alone runs ~4,500 frames/s on this box, so an unbounded recording of a
 // long generation would grow without limit. The cap stops recording and SAYS
