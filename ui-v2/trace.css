@@ -178,6 +178,11 @@ p { color: var(--muted); }
    dashes are the standard way live network/service graphs show direction
    and activity (same technique Kiali uses for in-flight request traffic). */
 .graph-edge.flowing { stroke-dasharray: 6 6; animation: graph-dash-flow .7s linear infinite; }
+/* The loop-back arc is the x40 layer repetition, not a forward step: it flows
+   when the forward edges do, but slower, so "repeat" still reads differently
+   from "next". Its label matches the lane headings' weight and tracking. */
+.dag-loop-edge.flowing { animation-duration: 1.15s; }
+.dag-loop-label { fill: var(--violet); font: 700 12px ui-monospace, monospace; letter-spacing: .1em; stroke: #07100f; stroke-width: 5px; stroke-linejoin: round; paint-order: stroke; }
 .progress-ring-track { fill: none; stroke: rgba(220,240,231,.14); stroke-width: 3; }
 .progress-ring-arc { fill: none; stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset .4s ease; }
 .progress-ring-label { fill: var(--text); font: 800 8px ui-monospace, monospace; }

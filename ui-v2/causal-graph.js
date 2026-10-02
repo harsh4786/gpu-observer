@@ -9,8 +9,8 @@ import {
   scrollToCard,
   requestColor,
   addProgressBar,
-} from "./graph-primitives.js?v=v2d4";
-import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=v2d4";
+} from "./graph-primitives.js?v=v2d5";
+import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=v2d5";
 
 function shortId(value) {
   const text = String(value ?? "");
@@ -488,18 +488,21 @@ function renderLiveGraph(svg, { trace, step, liveActive, cuptiSnapshot, schedule
   const loopTo = dagAnchors[0];
   const loopBendX = dagOriginX - 30;
   const loopMidY = (loopFrom.cy + loopTo.cy) / 2;
+  const loopMeasured = Boolean(snapshot.stages?.[dagAnchors.length - 1]?.entry)
+    && Boolean(snapshot.stages?.[0]?.entry);
   const loopPath = svgElement("path", {
     d: `M ${loopFrom.left} ${loopFrom.cy} C ${loopBendX} ${loopFrom.cy}, ${loopBendX} ${loopTo.cy}, ${loopTo.left} ${loopTo.cy}`,
-    class: "graph-edge matched dag-loop-edge",
+    class: `graph-edge matched dag-loop-edge${liveActive && loopMeasured ? " flowing" : ""}`,
     stroke: "#b89cff",
     "stroke-width": 1.6,
     "stroke-dasharray": "7 6",
     "marker-end": "url(#arrow-matched)",
   });
   svg.insertBefore(loopPath, svg.querySelector(".graph-node"));
+  const loopLabelX = loopBendX - 11; // clear of the arc instead of printed on it
   const loopLabel = svgElement("text", {
-    x: loopBendX, y: loopMidY, class: "graph-edge-label matched", "text-anchor": "middle",
-    transform: `rotate(-90 ${loopBendX} ${loopMidY})`,
+    x: loopLabelX, y: loopMidY, class: "dag-loop-label", "text-anchor": "middle",
+    transform: `rotate(-90 ${loopLabelX} ${loopMidY})`,
   });
   loopLabel.textContent = "×40 layers";
   svg.append(loopLabel);
