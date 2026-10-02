@@ -37,6 +37,10 @@ p { color: var(--muted); }
 .status.fixture { color: var(--amber); }
 .status.illustrative { color: var(--cyan); }
 .hidden { display: none !important; }
+/* A replay is measured data with reproduced timing, and at 0.02x it looks like
+   the GPU is 50x slower than it is. It says so, permanently, above everything. */
+.replay-marker { margin-bottom: 14px; padding: 8px 12px; color: var(--violet); border: 1px solid color-mix(in srgb, var(--violet) 45%, transparent); border-radius: 10px; background: color-mix(in srgb, var(--violet) 10%, transparent); font: 10px ui-monospace, monospace; letter-spacing: .06em; text-transform: uppercase; }
+.replay-marker strong { font-weight: 850; letter-spacing: .12em; }
 .error-panel { margin-bottom: 14px; padding: 14px; color: #ffd8d1; border: 1px solid rgba(255,139,122,.4); border-radius: 12px; background: rgba(255,139,122,.08); }
 .microscope-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 12px; }
 .graph-card, .kernel-detail-card, .sass-card, .evidence-card {

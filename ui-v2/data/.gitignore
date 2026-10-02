@@ -1,0 +1,3 @@
+# Captures are committed gzipped; the raw NDJSON a recording leaves behind is
+# ~16x larger and is only an input to `gzip -9`.
+*/session.ndjson

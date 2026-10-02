@@ -1,6 +1,7 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2d7";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2d7";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2d7";
+import { renderCausalGraph } from "./causal-graph.js?v=v2e4";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2e4";
+import { installReplay, showReplayMarker } from "./replay.js?v=v2e4";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2e4";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -25,6 +26,7 @@ const state = {
   // true/false once the control endpoint answers, null when it is unreachable
   // (then pause is view-only and the engine keeps generating).
   enginePaused: false,
+  replay: null, // the ?replay= player, when a recording is driving the page
   ws: null,
   wsReconnectTimer: null,
   chatBusy: false,
@@ -263,12 +265,32 @@ function togglePlayback() {
   startPlayback();
 }
 
+// Two different speeds share one button. Scrubbing recorded steps wants to go
+// FASTER than real time; replaying a capture wants to go much slower, because
+// the thing worth seeing -- 440 kernel launches inside one 106ms step -- is
+// otherwise over before the browser can paint it twice.
+const STEP_SPEEDS = [1, 2, 4];
+const REPLAY_SPEEDS = [1, 0.5, 0.1, 0.02];
+
+function speedLabel(value) {
+  return value >= 1 ? `${value}x` : `${value}`.replace(/^0/, "") + "x";
+}
+
 function cycleSpeed(direction = 1) {
-  const speeds = [1, 2, 4];
-  const next = speeds[(speeds.indexOf(state.transport.speed) + direction + speeds.length) % speeds.length];
-  state.transport.speed = next;
+  const replay = state.replay;
+  const speeds = replay ? REPLAY_SPEEDS : STEP_SPEEDS;
+  const current = replay ? replay.speed : state.transport.speed;
+  const index = speeds.indexOf(current);
+  const next = speeds[((index < 0 ? 0 : index) + direction + speeds.length) % speeds.length];
   const button = byId("tp-speed");
-  if (button) button.textContent = `${next}x`;
+  if (button) button.textContent = speedLabel(next);
+  if (replay) {
+    replay.setSpeed(next);
+    const readout = byId("replay-speed");
+    if (readout) readout.textContent = speedLabel(next);
+    return;
+  }
+  state.transport.speed = next;
   if (state.transport.playing) startPlayback(); // restart at the new cadence
 }
 
@@ -289,6 +311,11 @@ function updateTransportEnabled() {
     const button = byId(id);
     if (button) button.disabled = count === 0;
   }
+  // In a replay the speed button sets the playback rate, not the step cadence,
+  // so it has to work before the first frame has been delivered -- picking the
+  // speed is the first thing anyone does with a recording.
+  const speedButton = byId("tp-speed");
+  if (speedButton && state.replay) speedButton.disabled = false;
   // With no steps the full-height spine is 64px of empty box. Collapse it to a
   // baseline so the shell reads as an axis awaiting data, not a dead band.
   byId("timeline")?.classList.toggle("empty", count === 0);
@@ -550,6 +577,8 @@ const MODEL_NAME = params.get("model") ?? "Qwen/Qwen3-14B";
 // card; its reply is never shown.
 const SHADOW_VLLM_BASE = params.get("shadowVllm") ?? `http://${location.hostname}:8001`;
 const CONTROL_BASE = params.get("control") ?? `http://${location.hostname}:8091`;
+// ?replay=<dir or session.ndjson> swaps the live transport for a recording.
+const replayUrl = params.get("replay");
 // The shadow container is opt-in (?shadow=1). Its card shows real block-entry
 // events, but live it cannot place an event in the step it ran in: delivery
 // is batched and the events carry only a device-clock timestamp, so its
@@ -1056,6 +1085,24 @@ if (offlineMode) {
     ? "Loading a real sealed capture from an NVIDIA DGX Spark…"
     : "Click “Load sample trace” above to open a real capture from an NVIDIA DGX Spark — no GPU needed.";
   byId("run-subtitle").textContent = "Sealed trace viewer — real captured data, no GPU required.";
+} else if (replayUrl) {
+  // Replay stands in for the transport, so it has to be installed before any
+  // socket is opened -- connectWebSocket() and connectCuptiActivity() capture
+  // window.WebSocket at call time. Nothing downstream knows the difference.
+  state.livePage = true;
+  state.enginePaused = null; // a recording has no engine to pause
+  installReplay(replayUrl).then((player) => {
+    state.replay = player;
+    showReplayMarker(player);
+    byId("run-subtitle").textContent =
+      `Replay of a capture recorded on ${player.manifest?.host ?? "a DGX Spark"} — real measured data, reproduced timing.`;
+    connectWebSocket();
+    connectCuptiActivity();
+    renderSpine();
+  }).catch((error) => {
+    byId("error-panel").textContent = `Could not load the replay capture: ${error.message}`;
+    byId("error-panel").classList.remove("hidden");
+  });
 } else {
   state.livePage = true;
   connectWebSocket();
