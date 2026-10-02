@@ -172,6 +172,10 @@ export async function installReplay(url) {
         player.chatQueue.push(encoder.encode("data: [DONE]\n\n"));
       } else if (entry.msg.kind === "delta") {
         player.chatQueue.push(encoder.encode(`data: ${JSON.stringify(entry.msg.delta)}\n\n`));
+        // Also handed over directly: the fetch shim only runs when something
+        // submitted the chat form, but pressing play has to show the text too.
+        const piece = entry.msg.delta?.choices?.[0]?.delta?.content;
+        if (piece) player.onChatDelta?.(piece);
       }
       pumpChat();
     }
@@ -195,6 +199,37 @@ export async function installReplay(url) {
       return;
     }
     requestAnimationFrame(tick);
+  };
+
+  // One accepted output token per engine step, so these are the natural rewind
+  // stops: stepping back one is a backspace on the decoded text, and because
+  // the seek re-feeds the capture up to that point, the kernels, layer sweep
+  // and stage counts land exactly where they stood when that token was emitted.
+  const tokenMarks = [];
+  timeline.forEach((entry, index) => {
+    if (entry.src === "semantic" && entry.msg?.kind === "accepted_output_token") tokenMarks.push(index);
+  });
+  player.tokenCount = tokenMarks.length;
+  player.tokensEmitted = () => tokenMarks.filter((index) => index < player.cursor).length;
+
+  // Rewinding cannot un-apply events -- every consumer accumulates -- so a seek
+  // resets them all and replays from the start at no delay. 15k frames costs a
+  // few tens of ms, which is cheap enough to do on a button press.
+  player.seekToToken = (count) => {
+    const target = Math.max(0, Math.min(tokenMarks.length, count));
+    const stop = target === 0 ? 0 : tokenMarks[target - 1] + 1;
+    const wasPlaying = player.playing;
+    player.playing = false;
+    player.onReset?.();
+    player.cursor = 0;
+    player.virtualMs = 0;
+    player.chatQueue = [];
+    player.chatDone = false;
+    for (let index = 0; index < stop; index += 1) deliver(timeline[index]);
+    player.cursor = stop;
+    player.virtualMs = stop > 0 ? timeline[stop - 1].at : 0;
+    player.onProgress?.(player.cursor, timeline.length);
+    if (wasPlaying) { player.playing = true; lastTick = 0; requestAnimationFrame(tick); }
   };
 
   player.start = () => {

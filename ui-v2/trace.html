@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>GPU Observer v2 — timeline</title>
-  <link rel="stylesheet" href="./trace.css?v=v2e4">
+  <link rel="stylesheet" href="./trace.css?v=v2e8">
 </head>
 <body>
   <main class="app">
@@ -17,6 +17,7 @@
       </div>
       <div class="top-actions">
         <button type="button" id="load-sample" class="file-button">Load sample trace</button>
+        <button type="button" id="open-replay" class="file-button">Replay a capture</button>
         <label class="file-button">Open TraceBundle v2<input id="trace-file" type="file" accept=".json,application/json"></label>
         <span id="capture-status" class="status hidden">loading</span>
       </div>
@@ -124,6 +125,6 @@
       Sealed traces are rendered offline. Raw ring, CUPTI, and sanitizer artifacts remain the source of truth.
     </footer>
   </main>
-  <script type="module" src="./trace.js?v=v2e4"></script>
+  <script type="module" src="./trace.js?v=v2e8"></script>
 </body>
 </html>

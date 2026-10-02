@@ -25,7 +25,7 @@
 //   reshape_and_cache -> attn -> o_proj -> post_attention_layernorm ->
 //   gate_up_proj -> SiluAndMul -> down_proj -> (next layer's input_layernorm)
 
-import { STAGE_TITLES } from "./kernel-graph.js?v=v2e4";
+import { STAGE_TITLES } from "./kernel-graph.js?v=v2e8";
 
 const [
   INPUT_LAYERNORM, QKV_PROJ, QK_NORM, ROTARY_EMB, RESHAPE_AND_CACHE,
@@ -222,6 +222,21 @@ export function setThinkingPhase(isThinking) {
 // Called by trace.js on every step_begin patch from the semantic-ring WS --
 // reshape_and_cache fires exactly once per layer, so counting it since this
 // step began is a real, measured "how far into the 40-layer sweep" signal.
+// Clears every accumulator, for a replay seeking backwards. Rewinding cannot
+// un-apply events -- the classifier's state is cumulative -- so a seek clears
+// everything and re-feeds the capture up to the target point. The socket
+// fields are left alone: the transport is not what is being rewound.
+export function resetCuptiAll() {
+  state.stages = new Array(STAGE_TITLES.length).fill(null);
+  state.recentSequence = [];
+  state.lastRecognizedStage = null;
+  state.recentLaunches = [];
+  state.latestEndNs = 0;
+  state.firstStartNs = null; // null, not 0 -- handleEvent tests `=== null`
+  resetCuptiQueryCounters();
+  resetCuptiStepCounter();
+}
+
 export function resetCuptiStepCounter() {
   state.reshapeAndCacheCountThisStep = 0;
   state.currentLayerIndex = -1;

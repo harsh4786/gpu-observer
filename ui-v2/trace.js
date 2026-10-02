@@ -1,7 +1,7 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2e4";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2e4";
-import { installReplay, showReplayMarker } from "./replay.js?v=v2e4";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, setThinkingPhase } from "./cupti-activity.js?v=v2e4";
+import { renderCausalGraph } from "./causal-graph.js?v=v2e8";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2e8";
+import { installReplay, showReplayMarker } from "./replay.js?v=v2e8";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, resetCuptiAll, setThinkingPhase } from "./cupti-activity.js?v=v2e8";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -184,7 +184,7 @@ function isFrozen() {
 function updatePlayButton() {
   const button = byId("tp-play");
   if (!button) return;
-  const moving = isMoving();
+  const moving = state.replay ? state.replay.playing : isMoving();
   button.textContent = moving ? "\u275A\u275A" : "\u25B6";
   button.setAttribute("aria-pressed", moving ? "true" : "false");
   button.setAttribute("aria-label", moving ? "Pause" : "Play");
@@ -252,7 +252,33 @@ async function setEnginePaused(paused) {
   renderSpine();
 }
 
+// applyPatch() drops every frame unless state.liveMode is set, and only
+// ensureLiveTrace() sets it -- which until now only sendChatMessage() called.
+// So pressing play fed frames into a view that was throwing them away, and the
+// recording appeared to do nothing. A replay has to open the same empty live
+// trace a real request would before its first frame arrives.
+function startReplay() {
+  if (!state.replay) return;
+  if (state.replay.cursor === 0) {
+    ensureLiveTrace();
+    resetCuptiQueryCounters();
+    state.trace.query.request.messages = [
+      { role: "user", content: state.replay.manifest?.prompt ?? "(recorded prompt)" },
+    ];
+    render();
+  }
+  state.replay.start();
+}
+
 function togglePlayback() {
+  // With a recording loaded, play/pause means the recording -- there is no
+  // engine to pause and no live playhead to detach from.
+  if (state.replay) {
+    if (state.replay.playing) state.replay.pause();
+    else startReplay();
+    updatePlayButton();
+    return;
+  }
   if (isMoving()) {
     // Freeze: detach from the live playhead as well as stopping playback.
     stopPlayback();
@@ -314,8 +340,10 @@ function updateTransportEnabled() {
   // In a replay the speed button sets the playback rate, not the step cadence,
   // so it has to work before the first frame has been delivered -- picking the
   // speed is the first thing anyone does with a recording.
-  const speedButton = byId("tp-speed");
-  if (speedButton && state.replay) speedButton.disabled = false;
+  for (const id of ["tp-speed", "tp-play", "tp-prev", "tp-next"]) {
+    const button = byId(id);
+    if (button && state.replay) button.disabled = false;
+  }
   // With no steps the full-height spine is 64px of empty box. Collapse it to a
   // baseline so the shell reads as an axis awaiting data, not a dead band.
   byId("timeline")?.classList.toggle("empty", count === 0);
@@ -579,6 +607,7 @@ const SHADOW_VLLM_BASE = params.get("shadowVllm") ?? `http://${location.hostname
 const CONTROL_BASE = params.get("control") ?? `http://${location.hostname}:8091`;
 // ?replay=<dir or session.ndjson> swaps the live transport for a recording.
 const replayUrl = params.get("replay");
+const DEFAULT_REPLAY = "/ui-v2/data/replay-demo/"; // the capture committed with the repo
 // The shadow container is opt-in (?shadow=1). Its card shows real block-entry
 // events, but live it cannot place an event in the step it ran in: delivery
 // is batched and the events carry only a device-clock timestamp, so its
@@ -1008,7 +1037,20 @@ function installTransport() {
   svg.addEventListener("pointercancel", () => { dragging = false; });
   svg.addEventListener("click", seek); // synthetic clicks (tests, assistive tech)
 
-  const step = (delta) => { if (state.trace?.steps.length) selectStep(state.stepIndex + delta, { manual: true }); };
+  // In a replay these step the RECORDING, one accepted output token at a time:
+  // back one is a backspace on the decoded text, and because the seek re-feeds
+  // the capture to that point the kernels, layer sweep and stage counts go back
+  // with it, in the order they really happened. Outside a replay they just move
+  // the playhead over already-captured steps.
+  const step = (delta) => {
+    if (state.replay) {
+      state.replay.seekToToken(state.replay.tokensEmitted() + delta);
+      renderSpine();
+      updatePlayButton();
+      return;
+    }
+    if (state.trace?.steps.length) selectStep(state.stepIndex + delta, { manual: true });
+  };
   byId("tp-play").addEventListener("click", togglePlayback);
   byId("tp-prev").addEventListener("click", () => step(-1));
   byId("tp-next").addEventListener("click", () => step(1));
@@ -1053,6 +1095,18 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+// Replay was reachable only by hand-editing the URL, which is not a feature.
+const replayButton = byId("open-replay");
+if (replayButton) {
+  replayButton.textContent = replayUrl ? "Back to live" : "Replay a capture";
+  replayButton.addEventListener("click", () => {
+    const params = new URLSearchParams(location.search);
+    if (replayUrl) params.delete("replay");
+    else params.set("replay", DEFAULT_REPLAY);
+    location.search = params.toString();
+  });
+}
+
 byId("chat-form").addEventListener("submit", (event) => {
   event.preventDefault();
   const input = byId("chat-input");
@@ -1093,9 +1147,30 @@ if (offlineMode) {
   state.enginePaused = null; // a recording has no engine to pause
   installReplay(replayUrl).then((player) => {
     state.replay = player;
+    // Seeking backwards replays from the start, so everything that accumulates
+    // has to be cleared first: the trace, the CUPTI classifier, and the text.
+    player.onReset = () => {
+      ensureLiveTrace();
+      resetCuptiAll();
+      state.trace.query.request.messages = [
+        { role: "user", content: player.manifest?.prompt ?? "(recorded prompt)" },
+      ];
+      byId("chat-reply").textContent = "";
+      setThinkingPhase(false);
+    };
+    player.onChatDelta = (piece) => {
+      const reply = byId("chat-reply");
+      reply.textContent += piece;
+      if (piece.includes("<think>")) setThinkingPhase(true);
+      if (piece.includes("</think>")) setThinkingPhase(false);
+    };
     showReplayMarker(player);
     byId("run-subtitle").textContent =
       `Replay of a capture recorded on ${player.manifest?.host ?? "a DGX Spark"} — real measured data, reproduced timing.`;
+    byId("graph-idle").textContent =
+      "Press \u25B6 to play the recording. Set the speed to .02x first to watch one step's kernel sweep unfold.";
+    updateTransportEnabled();
+    updatePlayButton();
     connectWebSocket();
     connectCuptiActivity();
     renderSpine();
