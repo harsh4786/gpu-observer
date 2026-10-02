@@ -215,10 +215,12 @@ export async function installReplay(url) {
   // Rewinding cannot un-apply events -- every consumer accumulates -- so a seek
   // resets them all and replays from the start at no delay. 15k frames costs a
   // few tens of ms, which is cheap enough to do on a button press.
+  // Stepping always leaves the recording paused. Resuming after a seek made the
+  // rewind invisible: it stepped back one token and then immediately raced
+  // forward again from there, which reads as a restart from the beginning.
   player.seekToToken = (count) => {
     const target = Math.max(0, Math.min(tokenMarks.length, count));
     const stop = target === 0 ? 0 : tokenMarks[target - 1] + 1;
-    const wasPlaying = player.playing;
     player.playing = false;
     player.onReset?.();
     player.cursor = 0;
@@ -229,7 +231,6 @@ export async function installReplay(url) {
     player.cursor = stop;
     player.virtualMs = stop > 0 ? timeline[stop - 1].at : 0;
     player.onProgress?.(player.cursor, timeline.length);
-    if (wasPlaying) { player.playing = true; lastTick = 0; requestAnimationFrame(tick); }
   };
 
   player.start = () => {
@@ -289,7 +290,9 @@ export function showReplayMarker(player) {
   const counts = manifest?.counts
     ? `${manifest.counts.cupti ?? 0} kernel launches · ${manifest.counts.semantic ?? 0} engine frames`
     : `${player.frameCount} frames`;
+  const prompt = manifest?.prompt;
   bar.innerHTML = `<strong>REPLAY</strong> recorded ${when} UTC on ${host} · ${counts}`
+    + (prompt ? ` · prompt: <em>${prompt.replace(/[<&]/g, (c) => (c === "<" ? "&lt;" : "&amp;"))}</em>` : "")
     + ` · <span id="replay-speed">1x</span>`;
   document.querySelector(".app")?.prepend(bar);
   return bar;

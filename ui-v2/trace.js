@@ -1,7 +1,7 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2e8";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2e8";
-import { installReplay, showReplayMarker } from "./replay.js?v=v2e8";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, resetCuptiAll, setThinkingPhase } from "./cupti-activity.js?v=v2e8";
+import { renderCausalGraph } from "./causal-graph.js?v=v2f1";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2f1";
+import { installReplay, showReplayMarker } from "./replay.js?v=v2f1";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, resetCuptiAll, setThinkingPhase } from "./cupti-activity.js?v=v2f1";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -400,6 +400,16 @@ function selectKernel(index) {
 function renderHeader() {
   const run = state.trace.run ?? {};
   const fixture = String(run.captureStatus ?? "").includes("fixture");
+  if (state.replay) {
+    // renderHeader runs on every patch, so a one-off line set when the replay
+    // loaded was overwritten by the first frame and the page went back to
+    // calling itself live.
+    const prompt = state.replay.manifest?.prompt;
+    byId("run-subtitle").textContent =
+      `Replay · ${run.model ?? "unknown model"} · ${state.trace.steps.length} engine steps`
+      + (prompt ? ` · recorded prompt: "${prompt}"` : "");
+    return;
+  }
   byId("run-subtitle").textContent = [
     run.model ?? "unknown model",
     run.executionMode ?? "unknown execution mode",
@@ -1164,6 +1174,16 @@ if (offlineMode) {
       if (piece.includes("<think>")) setThinkingPhase(true);
       if (piece.includes("</think>")) setThinkingPhase(false);
     };
+    const input = byId("chat-input");
+    if (input) {
+      // A recording answers one prompt: the one it was captured with. Leaving
+      // the box editable invited a question the replay silently ignored.
+      input.value = player.manifest?.prompt ?? "";
+      input.disabled = true;
+      input.placeholder = "Replaying a recorded session";
+      input.title = "This is a recording. Press play, or Back to live to ask something new.";
+    }
+    byId("chat-send")?.setAttribute("disabled", "disabled");
     showReplayMarker(player);
     byId("run-subtitle").textContent =
       `Replay of a capture recorded on ${player.manifest?.host ?? "a DGX Spark"} — real measured data, reproduced timing.`;
