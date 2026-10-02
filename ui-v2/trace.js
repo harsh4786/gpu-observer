@@ -1,8 +1,8 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2g2";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2g2";
-import { installReplay, showReplayMarker } from "./replay.js?v=v2g2";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, resetCuptiAll, setThinkingPhase, setCuptiFrameTap, feedCuptiEvent } from "./cupti-activity.js?v=v2g2";
-import { createSessionRecorder } from "./session-recorder.js?v=v2g2";
+import { renderCausalGraph } from "./causal-graph.js?v=v2g3";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2g3";
+import { installReplay, showReplayMarker } from "./replay.js?v=v2g3";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, resetCuptiAll, setThinkingPhase, setCuptiFrameTap, feedCuptiEvent } from "./cupti-activity.js?v=v2g3";
+import { createSessionRecorder } from "./session-recorder.js?v=v2g3";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -1049,9 +1049,12 @@ async function sendChatMessage(text) {
         const delta = chunk.choices?.[0]?.delta?.content;
         if (delta) {
           recorder.capture("chat", { kind: "delta", delta: chunk });
-          reply.textContent += delta;
           chatTotalCount += 1;
           updateChatConfirmedBadge();
+          // Held back in a recording: the frame is kept, but appending it now
+          // would fight the rewind -- the text grew while the user pressed back.
+          if (state.replay?.live) continue;
+          reply.textContent += delta;
           // Real content boundary (Qwen3's own <think>/</think> tags) driving
           // the kernel-count graphic's thinking/response split -- see
           // cupti-activity.js's inThinkingPhase for why this is a
@@ -1074,10 +1077,22 @@ async function sendChatMessage(text) {
     state.activeAbort = null;
     byId("chat-send").disabled = false;
     byId("chat-stop").disabled = true;
+    // The edge-flow animation is driven by "a step is in flight", which
+    // step_end clears. That step_end can go missing at exactly this moment: on
+    // an abort it may never be emitted, and once a recording is armed the
+    // socket gate stops applying live frames, so a step_end arriving after the
+    // last step_begin is dropped. Either way the flag stayed set with nothing
+    // generating, and the arrows kept flowing until the next request. Whether
+    // the flag is still set here is a race against the final frame, which is
+    // why this was intermittent rather than always wrong. The generation is
+    // over, so say so outright instead of waiting for a frame to say it.
+    state.liveStepActive = false;
+    byId("output-connector")?.classList.remove("active");
     // Stopped generations are worth rewinding too -- the frames up to the stop
     // are real -- so this runs whether the stream finished or was aborted.
     recorder.stop();
     armReplayOfThisSession();
+    renderGraph(); // one last paint, with nothing in flight, to clear the flow
   }
 }
 
@@ -1086,8 +1101,7 @@ async function sendChatMessage(text) {
 // view code: applyPatch rebuilds the steps and the layer sweep, the CUPTI
 // classifier re-sees every launch in order, and the text comes back one piece
 // at a time.
-function armReplayOfThisSession() {
-  if (recorder.count() === 0) return; // nothing arrived: leave the live transport alone
+function buildSessionPlayer() {
   const player = recorder.buildPlayer({
     semantic: (msg) => applyPatch(msg),
     cupti: (msg) => feedCuptiEvent(msg),
@@ -1109,17 +1123,52 @@ function armReplayOfThisSession() {
     setThinkingPhase(false);
   };
   player.onProgress = () => { renderSpine(); updatePlayButton(); };
+  return player;
+}
+
+// Arms the transport over what has been recorded SO FAR. Rewind used to become
+// available only once the generation finished, and a generation is long -- 37s
+// measured for "Name three colors.", 284 engine steps -- so for the whole time
+// anyone would actually want to step back through it, pressing back moved the
+// playhead over captured steps while live frames kept appending text, and the
+// answer grew instead of shrinking. There is no reason to wait: the frames are
+// already in hand, so the recording is built on demand the moment it is asked
+// for. Recording continues in the background, so returning to live loses
+// nothing that arrived while you were looking backwards.
+function armReplayOfThisSession() {
+  if (state.replay?.live) return true; // already armed
+  if (recorder.count() === 0) return false; // nothing arrived yet
+  const player = buildSessionPlayer();
   state.replay = player;
   state.transport.pinned = false;
   stopPlayback();
-  // The answer is already on screen, so the recording starts at its end: the
-  // first rewind takes one token off what you are looking at.
+  // What is on screen is the latest frame, so the recording starts at its end:
+  // the first rewind takes one token off what you are looking at.
   player.assumePlayed();
   showReplayMarker(player);
   updateTransportEnabled();
   updatePlayButton();
   renderHeader();
   renderSpine();
+  return true;
+}
+
+// Rebuilds over everything recorded, including the frames that arrived while
+// the view was held back, runs it to the end, and hands the view back to the
+// live stream. Without the rebuild, returning to live would resume from a
+// recording that stopped where it was armed.
+function returnToLiveFromRecording() {
+  if (!state.replay?.live) return;
+  const player = buildSessionPlayer();
+  player.seekToToken(player.tokenCount);
+  state.replay = null;
+  document.getElementById("replay-marker")?.remove();
+  state.transport.pinned = true;
+  updateTransportEnabled();
+  updatePlayButton();
+  renderHeader();
+  renderSpine();
+  renderStep();
 }
 
 // Transport wiring. Seeks are flagged manual so they unpin the live playhead;
@@ -1148,6 +1197,10 @@ function installTransport() {
   // with it, in the order they really happened. Outside a replay they just move
   // the playhead over already-captured steps.
   const step = (delta) => {
+    // Stepping back means "take a token off what I am looking at", whether or
+    // not the generation has finished. If a recording is not armed yet, arming
+    // it is what makes that possible.
+    if (!state.replay && delta < 0) armReplayOfThisSession();
     if (state.replay) {
       state.replay.seekToToken(state.replay.tokensEmitted() + delta);
       renderSpine();
@@ -1162,6 +1215,10 @@ function installTransport() {
   byId("tp-speed").addEventListener("click", () => cycleSpeed(1));
   byId("tp-live").addEventListener("click", () => {
     setEnginePaused(false); // following live again implies the engine should run
+    if (state.replay?.live) {
+      returnToLiveFromRecording();
+      return;
+    }
     state.transport.pinned = true;
     if (state.trace?.steps.length) selectStep(state.trace.steps.length - 1);
   });

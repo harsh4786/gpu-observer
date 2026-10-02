@@ -25,7 +25,7 @@
 //   reshape_and_cache -> attn -> o_proj -> post_attention_layernorm ->
 //   gate_up_proj -> SiluAndMul -> down_proj -> (next layer's input_layernorm)
 
-import { STAGE_TITLES } from "./kernel-graph.js?v=v2g2";
+import { STAGE_TITLES } from "./kernel-graph.js?v=v2g3";
 
 const [
   INPUT_LAYERNORM, QKV_PROJ, QK_NORM, ROTARY_EMB, RESHAPE_AND_CACHE,
