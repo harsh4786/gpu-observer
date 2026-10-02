@@ -10,8 +10,8 @@ import {
   requestColor,
   addProgressBar,
   measureTextWidth,
-} from "./graph-primitives.js?v=v2g1";
-import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=v2g1";
+} from "./graph-primitives.js?v=v2g2";
+import { layerStages, QWEN3_14B, KERNEL_STAGE_COUNT } from "./kernel-graph.js?v=v2g2";
 
 function shortId(value) {
   const text = String(value ?? "");

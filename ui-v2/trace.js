@@ -1,8 +1,8 @@
-import { renderCausalGraph } from "./causal-graph.js?v=v2g1";
-import { connectKernelActivity } from "./kernel-activity.js?v=v2g1";
-import { installReplay, showReplayMarker } from "./replay.js?v=v2g1";
-import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, resetCuptiAll, setThinkingPhase, setCuptiFrameTap, feedCuptiEvent } from "./cupti-activity.js?v=v2g1";
-import { createSessionRecorder } from "./session-recorder.js?v=v2g1";
+import { renderCausalGraph } from "./causal-graph.js?v=v2g2";
+import { connectKernelActivity } from "./kernel-activity.js?v=v2g2";
+import { installReplay, showReplayMarker } from "./replay.js?v=v2g2";
+import { connectCuptiActivity, getCuptiSnapshot, resetCuptiStepCounter, resetCuptiQueryCounters, resetCuptiAll, setThinkingPhase, setCuptiFrameTap, feedCuptiEvent } from "./cupti-activity.js?v=v2g2";
+import { createSessionRecorder } from "./session-recorder.js?v=v2g2";
 const GPU_REFRESH_INTERVAL_MS = 150; // re-render cadence for freshly arrived real CUPTI data, not a paced sweep
 
 const state = {
@@ -957,12 +957,15 @@ async function sendShadowRequest(text, signal) {
   }
 }
 
+// A question typed while a file capture was loaded has to survive the reload
+// that leaves replay mode, because ?replay= is a page mode, not a panel.
+const PENDING_PROMPT_KEY = "gpu-observer:pending-prompt";
+
 async function sendChatMessage(text) {
-  // ?replay= has no engine behind it, so there is nothing to ask. The input and
-  // send button are disabled in that mode, but a submit event can still be
-  // dispatched (tests, assistive tech, a stray Enter), and letting it through
-  // ran the live send path against the fetch shim: every delta was appended
-  // twice, once by the shim's reader and once by the player's own callback.
+  // ?replay= has no engine behind it, so there is nothing here to ask. The
+  // submit handler sends these to live instead; this stays as a guard because
+  // running the live path against the fetch shim appended every delta twice,
+  // once from the shim's reader and once from the player's own callback.
   if (replayUrl) return;
   if (state.chatBusy || !text.trim()) return;
   state.chatBusy = true;
@@ -1217,7 +1220,22 @@ byId("chat-form").addEventListener("submit", (event) => {
   event.preventDefault();
   const input = byId("chat-input");
   const text = input.value;
+  if (!text.trim()) return;
   input.value = "";
+  // Asking a question while a capture is loaded means you want it answered, so
+  // leave the recording rather than refusing. ?replay= is in the URL, so this
+  // is a navigation; the prompt rides along and is sent on the way back in.
+  if (replayUrl) {
+    try {
+      sessionStorage.setItem(PENDING_PROMPT_KEY, text);
+    } catch (error) {
+      // Private mode / blocked storage: still leave replay, just unprompted.
+    }
+    const params = new URLSearchParams(location.search);
+    params.delete("replay");
+    location.search = params.toString();
+    return;
+  }
   sendChatMessage(text);
 });
 
@@ -1272,18 +1290,15 @@ if (offlineMode) {
     };
     const input = byId("chat-input");
     if (input) {
-      // Never prefill the box: text sitting in it reads as a default prompt
-      // this page chose for you. A file capture answers only the prompt it was
-      // recorded with, so say that where it belongs -- as a fact about the
-      // recording -- and send people back to live to ask their own.
+      // Never prefill the box and never disable it. Disabling it left anyone
+      // whose URL still carried ?replay= -- from a reload, a bookmark or a
+      // restored tab -- staring at a chat box that silently refused to take a
+      // question, with no way to tell why. Typing one here now leaves the
+      // recording and asks it live (see the submit handler).
       input.value = "";
-      input.disabled = true;
-      input.placeholder = player.manifest?.prompt
-        ? `Recorded answer to "${player.manifest.prompt}" — Back to live to ask your own`
-        : "Replaying a capture — Back to live to ask your own";
+      input.placeholder = "Ask your own question — this leaves the recording";
     }
-    byId("chat-send")?.setAttribute("disabled", "disabled");
-    showReplayMarker(player);
+      showReplayMarker(player);
     byId("run-subtitle").textContent =
       `Replay of a capture recorded on ${player.manifest?.host ?? "a DGX Spark"} — real measured data, reproduced timing.`;
     byId("graph-idle").textContent =
@@ -1301,6 +1316,17 @@ if (offlineMode) {
   state.livePage = true;
   connectWebSocket();
   syncEnginePaused();
+  // Sent a moment late on purpose: the semantic socket has to be open before
+  // the request is admitted, or the first engine steps arrive with nothing
+  // listening and the recording starts mid-answer.
+  let carried = null;
+  try {
+    carried = sessionStorage.getItem(PENDING_PROMPT_KEY);
+    sessionStorage.removeItem(PENDING_PROMPT_KEY);
+  } catch (error) {
+    carried = null; // blocked storage: nothing was carried
+  }
+  if (carried) setTimeout(() => sendChatMessage(carried), 600);
   if (shadowEnabled) {
     document.querySelector(".kernel-activity-card")?.classList.remove("hidden");
     connectKernelActivity();
