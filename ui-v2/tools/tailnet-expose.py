@@ -15,7 +15,7 @@ location.hostname (see ui-v2/trace.js), so loading the page from this address
 makes every other socket follow it automatically. vLLM already listens on
 0.0.0.0 and needs no forwarding.
 
-    python3 ui-v2/tools/tailnet-expose.py --bind 100.103.230.46
+    python3 ui-v2/tools/tailnet-expose.py --bind <your-tailnet-ip>
 
 Exposes the page to every device on that network, so bind to a private
 interface, never to 0.0.0.0 on an untrusted network.
